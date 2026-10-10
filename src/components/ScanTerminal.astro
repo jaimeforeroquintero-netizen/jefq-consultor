@@ -1,0 +1,104 @@
+---
+// Terminal animado de "escaneo en vivo" para el hero.
+// Simulación ilustrativa con efecto de escritura; respeta prefers-reduced-motion
+// (muestra el estado final estático) y funciona sin JS.
+const LINES = [
+  { t: "$ jefq-scan --objetivo empresa.com", c: "cmd" },
+  { t: "✓ Conexión autorizada · alcance verificado", c: "ok" },
+  { t: "✓ Enumerando activos expuestos...", c: "ok" },
+  { t: "✓ Revisando configuraciones...", c: "ok" },
+  { t: "⚠ 3 hallazgos relevantes detectados", c: "warn" },
+  { t: "✓ Informe ejecutivo generado", c: "ok" },
+  { t: "→ Listo para remediación priorizada", c: "info" },
+];
+---
+
+<div class="scan-term" id="scan-term" role="img" aria-label="Simulación ilustrativa de un escaneo de seguridad de JEFQ Consultor">
+  <div class="scan-term-bar"><span></span><span></span><span></span><em>jefq-scan · evaluación</em></div>
+  <div class="scan-term-body" id="scan-term-body" data-lines={JSON.stringify(LINES)}>
+    {LINES.map((l) => <div class={"st-line st-" + l.c}>{l.t}</div>)}
+  </div>
+</div>
+
+<script>
+(function () {
+  var body = document.getElementById('scan-term-body');
+  if (!body) return;
+  var reduce = false;
+  try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  if (reduce) return; // estado final estático ya renderizado en HTML
+  var lines;
+  try { lines = JSON.parse(body.getAttribute('data-lines')); } catch (e) { return; }
+
+  var li = 0, ci = 0, timer = null;
+  function clearAll() { body.innerHTML = ''; }
+  function current() { return body.children[li] || null; }
+  function newLine() {
+    var d = document.createElement('div');
+    d.className = 'st-line st-' + lines[li].c;
+    body.appendChild(d);
+  }
+  function tick() {
+    if (li >= lines.length) {
+      timer = setTimeout(function () { li = 0; ci = 0; clearAll(); loop(); }, 4200);
+      return;
+    }
+    if (ci === 0) newLine();
+    var full = lines[li].t;
+    var el = current();
+    ci++;
+    el.textContent = full.slice(0, ci);
+    el.classList.add('st-cursor');
+    if (ci >= full.length) {
+      el.classList.remove('st-cursor');
+      li++; ci = 0;
+      timer = setTimeout(tick, 380);
+    } else {
+      timer = setTimeout(tick, lines[li].c === 'cmd' ? 34 : 13);
+    }
+  }
+  function loop() { clearAll(); tick(); }
+  // Solo anima cuando el hero es visible (ahorra CPU)
+  var started = false;
+  function maybeStart() {
+    if (started) return;
+    started = true;
+    loop();
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { maybeStart(); io.disconnect(); }
+      });
+    }, { threshold: 0.15 });
+    io.observe(document.getElementById('scan-term'));
+    setTimeout(maybeStart, 4000); // respaldo por si el observer no dispara
+  } else {
+    maybeStart();
+  }
+})();
+</script>
+
+<style>
+  .scan-term { margin-top: 18px; overflow: hidden; background: #040d1a; border: 1px solid rgba(35,215,255,.22); border-radius: 14px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .scan-term-bar { display: flex; align-items: center; gap: 7px; padding: 10px 14px; background: rgba(13,37,64,.9); border-bottom: 1px solid rgba(125,181,225,.16); }
+  .scan-term-bar span { width: 10px; height: 10px; border-radius: 50%; background: rgba(125,181,225,.35); }
+  .scan-term-bar span:first-child { background: rgba(255,110,110,.75); }
+  .scan-term-bar span:nth-child(2) { background: rgba(255,190,90,.75); }
+  .scan-term-bar span:nth-child(3) { background: rgba(94,240,180,.75); }
+  .scan-term-bar em { margin-left: 6px; color: #7890a8; font-style: normal; font-size: .68rem; letter-spacing: .06em; }
+  .scan-term-body { min-height: 168px; padding: 14px 16px 16px; font-size: .8rem; line-height: 1.75; }
+  .st-line { white-space: pre-wrap; word-break: break-word; }
+  .st-cmd { color: #eaf3fa; }
+  .st-ok { color: #5ef0b4; }
+  .st-warn { color: #ffc46b; }
+  .st-info { color: #23d7ff; }
+  .st-cursor::after { content: "▌"; margin-left: 2px; color: #23d7ff; animation: st-blink 1s steps(1) infinite; }
+  @keyframes st-blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .st-cursor::after { animation: none; }
+  }
+  @media (max-width: 680px) {
+    .scan-term-body { min-height: 186px; font-size: .74rem; }
+  }
+</style>
