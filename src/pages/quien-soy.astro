@@ -1,8 +1,23 @@
 ---
 import Layout from "../layouts/Layout.astro";
 ---
-<Layout title="Quién está detrás de JEFQ Consultor" description="Conozca el enfoque profesional, los principios y la atención directa de JEFQ Consultor.">
-<section class="authority-hero"><div class="container authority-narrow"><span class="section-label">QUIÉN SOY</span><h1>Atención directa, criterio profesional y responsabilidad sobre cada servicio</h1><p>JEFQ Consultor está dirigido por Jaime Forero, responsable de acompañar personalmente cada etapa, desde la valoración inicial hasta la presentación de resultados.</p></div></section>
+<Layout title="Quién está detrás de JEFQ Consultor" description="Jaime Forero, consultor en ciberseguridad para pymes en Colombia: trayectoria, credenciales y principios de trabajo de JEFQ Consultor.">
+<section class="authority-hero"><div class="container authority-narrow"><span class="section-label">QUIÉN SOY</span><h1>Jaime Forero, consultor en ciberseguridad para pymes</h1><p>JEFQ Consultor está dirigido por Jaime Forero, responsable de acompañar personalmente cada etapa, desde la valoración inicial hasta la presentación de resultados.</p></div></section>
+<section class="perfil"><div class="container authority-narrow perfil-grid">
+<div class="perfil-foto">
+<img src="/foto-jaime.jpg" alt="Jaime Forero, consultor de ciberseguridad" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" />
+<div class="perfil-foto-fallback" style="display:none" aria-hidden="true"><span>JF</span></div>
+</div>
+<div class="perfil-datos">
+<h2>Trayectoria y credenciales</h2>
+<ul class="perfil-lista">
+<li><b>Experiencia</b><span class="pendiente">Pendiente: años de experiencia y resumen de trayectoria en seguridad de la información.</span></li>
+<li><b>Formación y certificaciones</b><span class="pendiente">Pendiente: títulos, certificaciones o formación relevante.</span></li>
+<li><b>Enfoque</b><span>Diagnóstico, hardening y pruebas autorizadas para pymes en Colombia.</span></li>
+<li><b>Cobertura</b><span>Bogotá y toda Colombia, con atención remota.</span></li>
+</ul>
+</div>
+</div></section>
 <section class="authority-body"><div class="container authority-narrow">
 <h2>Una consultoría cercana y rigurosa</h2><p>El trabajo comienza comprendiendo el contexto, los activos y las prioridades de la organización. No parte de soluciones predeterminadas, sino de una evaluación proporcional que permita reconocer qué merece atención y qué conviene corregir primero.</p>
 <blockquote>No vendemos miedo ni prometemos seguridad absoluta. Aportamos visibilidad, criterio y una ruta clara de mejora.</blockquote>
@@ -10,3 +25,18 @@ import Layout from "../layouts/Layout.astro";
 <h2>Límites profesionales</h2><ul><li>No se realizan actividades sin autorización.</li><li>No se amplía el alcance sin aprobación.</li><li>No se solicitan contraseñas, códigos MFA o llaves privadas por WhatsApp.</li><li>No se presentan escenarios ilustrativos como clientes reales.</li><li>No se ofrecen garantías absolutas.</li></ul>
 <div class="authority-actions"><a class="button primary" href="/valoracion">Solicitar valoración inicial</a><a class="button secondary" href="/como-trabajamos">Cómo trabajamos</a></div>
 </div></section></Layout>
+<style>
+.perfil{padding:64px 0 8px}
+.perfil-grid{display:grid;grid-template-columns:280px 1fr;gap:44px;align-items:start}
+.perfil-foto{position:relative;width:280px;aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:linear-gradient(145deg,rgba(18,52,85,.65),rgba(5,16,31,.96))}
+.perfil-foto img{width:100%;height:100%;object-fit:cover;display:block}
+.perfil-foto-fallback{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(145deg,rgba(18,52,85,.65),rgba(5,16,31,.96))}
+.perfil-foto-fallback span{display:grid;width:96px;height:96px;place-items:center;color:#001018;background:linear-gradient(145deg,var(--cyan),var(--green));clip-path:polygon(50% 0,100% 18%,91% 78%,50% 100%,9% 78%,0 18%);font-size:1.9rem;font-weight:950}
+.perfil-datos h2{margin:0 0 18px;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.03em}
+.perfil-lista{margin:0;padding:0;list-style:none;display:grid;gap:16px}
+.perfil-lista li{display:grid;gap:6px;padding:16px 18px;background:rgba(10,30,52,.64);border:1px solid var(--line);border-radius:14px}
+.perfil-lista b{color:var(--cyan);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
+.perfil-lista span{color:#d1deea}
+.perfil-lista .pendiente{display:inline-block;padding:8px 12px;border:1px dashed rgba(125,181,225,.45);border-radius:9px;color:var(--muted);font-size:.86rem;background:rgba(5,16,31,.5)}
+@media(max-width:680px){.perfil-grid{grid-template-columns:1fr}.perfil-foto{width:min(100%,280px);margin-inline:auto}}
+</style>
