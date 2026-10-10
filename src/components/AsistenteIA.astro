@@ -1,8 +1,7 @@
 ---
 // Asistente virtual de JEFQ Consultor.
 // Burbuja flotante abajo-IZQUIERDA (el flotante de WhatsApp vive abajo-derecha).
-// Habla con /api/chat (Gemini). Sin GEMINI_API_KEY muestra fallback a WhatsApp.
-const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hola Jaime, quiero información sobre los servicios de JEFQ Consultor.");
+// Habla con /api/chat (Gemini). Sin GEMINI_API_KEY muestra el modal de WhatsApp (@JaimeByte).
 ---
 
 <div class="jefq-ia" id="jefq-ia">
@@ -14,7 +13,7 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
   <section class="jefq-ia-panel" id="jefq-ia-panel" role="dialog" aria-label="Asistente virtual de JEFQ Consultor" hidden>
     <header class="jefq-ia-head">
       <span class="jefq-ia-dot" aria-hidden="true"></span>
-      <div><b>Asistente JEFQ</b><small>En línea · responde al instante</small></div>
+      <div><b id="jefq-ia-head-title">Asistente JEFQ</b><small id="jefq-ia-head-sub">En línea · responde al instante</small></div>
       <button class="jefq-ia-close" id="jefq-ia-close" type="button" aria-label="Cerrar asistente">✕</button>
     </header>
 
@@ -63,13 +62,16 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
   var chipsBox = document.getElementById('jefq-ia-chips');
   var teaser = document.getElementById('jefq-ia-teaser');
   var teaserClose = document.getElementById('jefq-ia-teaser-close');
-  var WA = "https://wa.me/573174832132?text=" + encodeURIComponent("Hola Jaime, quiero información sobre los servicios de JEFQ Consultor.");
+  var headTitle = document.getElementById('jefq-ia-head-title');
+  var headSub = document.getElementById('jefq-ia-head-sub');
+  var WA_MSG = "Hola Jaime, quiero información sobre los servicios de JEFQ Consultor.";
 
   var history = [];
   var greeted = false;
   var emailOffered = false;
   var interacted = false;
   var chipsHidden = false;
+  var jaimeMode = false;
 
   var SUGGESTIONS = [
     "¿Cuánto cuesta un diagnóstico?",
@@ -164,10 +166,29 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
     }
   }
 
+  function openWaModal(message) {
+    if (window.JEFQ_wa) {
+      window.JEFQ_wa.open(message || WA_MSG);
+    } else {
+      bubble('assistant', 'Puede escribirme por WhatsApp como <b>@JaimeByte</b> (búsqueme por mi usuario). Atención 24/7.', true);
+    }
+  }
+
   function fallback() {
-    bubble('assistant',
-      'Por ahora no puedo responder desde aquí. Le atiendo con gusto por <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>.',
-      true);
+    openWaModal(WA_MSG);
+  }
+
+  // Activa el modo "Asistente de Jaime": cambia el encabezado y las
+  // siguientes peticiones usan mode:'jaime' en /api/chat.
+  function activateJaimeMode() {
+    if (jaimeMode) return;
+    jaimeMode = true;
+    if (headTitle) headTitle.textContent = 'Asistente de Jaime';
+    if (headSub) headSub.textContent = 'En línea · atención 24/7';
+  }
+
+  function wantsJaime(text) {
+    return /jaime|hablar\s+con|persona|humano|asesor|alguien\s+real|operador/i.test(text || '');
   }
 
   function open() {
@@ -178,7 +199,7 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
     fab.setAttribute('aria-label', 'Cerrar asistente virtual');
     if (!greeted) {
       greeted = true;
-      bubble('assistant', 'Hola, soy el asistente de JEFQ Consultor. Puedo orientarle sobre nuestros servicios, precios y cuál se ajusta mejor a su empresa. ¿En qué le ayudo?');
+      bubble('assistant', 'Hola, soy el asistente de JEFQ Consultor. Puedo orientarle sobre nuestros servicios, precios y cuál se ajusta mejor a su empresa. Atendemos 24/7. ¿En qué le ayudo?');
       renderChips();
     }
     setTimeout(function () { input.focus(); }, 60);
@@ -196,6 +217,7 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
   function sendUser(text) {
     markInteracted();
     input.value = '';
+    if (wantsJaime(text)) activateJaimeMode();
     history.push({ role: 'user', content: text });
     bubble('user', text);
     typing(true);
@@ -203,7 +225,7 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
     fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: history })
+      body: JSON.stringify({ messages: history, mode: jaimeMode ? 'jaime' : 'normal' })
     })
       .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
       .then(function (res) {
@@ -255,7 +277,9 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
     }
     var msg = 'Hola Jaime, mi correo es ' + mail + '. Hablé con el asistente de la web sobre: ' + (lastUser ? lastUser.slice(0, 140) : 'sus servicios') + '. Quedo atento(a).';
     emailBox.hidden = true;
-    bubble('assistant', 'Gracias. Para que Jaime le contacte directamente, pulse aquí: <a href="https://wa.me/573174832132?text=' + encodeURIComponent(msg) + '" target="_blank" rel="noopener">Enviar mi correo por WhatsApp</a>.', true);
+    var wrap = bubble('assistant', 'Gracias. Para que Jaime le contacte directamente, pulse el botón y cópieme su mensaje en WhatsApp (@JaimeByte):<br><button type="button" class="jefq-ia-wa-btn" id="jefq-ia-wa-btn">Abrir WhatsApp @JaimeByte</button>', true);
+    var waBtn = document.getElementById('jefq-ia-wa-btn');
+    if (waBtn) waBtn.addEventListener('click', function () { openWaModal(msg); });
   });
 })();
 </script>
@@ -279,6 +303,7 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
   .jefq-ia-assistant ul { margin: 6px 0 6px; padding-left: 18px; }
   .jefq-ia-assistant li { margin: 4px 0; }
   .jefq-ia-assistant strong { color: #ffffff; }
+  .jefq-ia-wa-btn { display: inline-block; margin-top: 8px; padding: 9px 15px; color: #001018; background: linear-gradient(135deg, #23d7ff, #5ef0b4); border: 0; border-radius: 9px; font-weight: 800; font-size: 0.8rem; cursor: pointer; }
   .jefq-ia-typing span { display: inline-block; width: 7px; height: 7px; margin-right: 4px; background: #23d7ff; border-radius: 50%; animation: jefq-ia-blink 1.1s infinite; }
   .jefq-ia-typing span:nth-child(2) { animation-delay: .18s; }
   .jefq-ia-typing span:nth-child(3) { animation-delay: .36s; }

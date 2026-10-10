@@ -5,14 +5,14 @@ export function getStaticPaths() {
   return cities.map((city) => ({ params: { ciudad: city.slug }, props: { city } }));
 }
 const { city } = Astro.props;
-const whatsapp = `https://wa.me/573174832132?text=${encodeURIComponent(`Hola Jaime, quiero información sobre ciberseguridad para una organización en ${city.name}.`)}`;
+const waMessage = `Hola Jaime, quiero información sobre ciberseguridad para una organización en ${city.name}.`;
 ---
 <Layout title={`Ciberseguridad en ${city.name} | JEFQ Consultor`} description={`${city.intro} Atención remota con alcance controlado e informes accionables.`}>
   <section class="local-hero"><div class="container conversion-narrow">
     <span class="section-label">COBERTURA EN {city.region.toUpperCase()}</span>
     <h1>Ciberseguridad para empresas en {city.name}</h1>
     <p>{city.intro}</p>
-    <div class="hero-actions"><a class="button primary" href="/valoracion">Solicitar valoración</a><a class="button secondary" href={whatsapp} target="_blank" rel="noopener">Consultar por WhatsApp</a></div>
+    <div class="hero-actions"><a class="button primary" href="/valoracion">Solicitar valoración</a><a class="button secondary" href="#" data-wa-modal data-wa-message={waMessage}>Consultar por WhatsApp</a></div>
   </div></section>
   <section class="section"><div class="container local-grid">
     <article><span>01</span><h2>Diagnóstico</h2><p>Revisión inicial de exposición, configuraciones y prioridades de mejora.</p></article>

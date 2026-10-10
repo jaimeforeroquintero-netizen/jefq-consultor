@@ -5,7 +5,7 @@ export function getStaticPaths(){return blogPosts.map(post=>({params:{slug:post.
 const { post } = Astro.props;
 ---
 <Layout title={post.title} description={post.description}>
-<article class="article"><header><div class="container narrow"><span>{post.category} · {post.readingTime}</span><h1>{post.title}</h1><p>{post.intro}</p></div></header><div class="container narrow body">{post.sections.map(section=><section><h2>{section.heading}</h2>{section.paragraphs?.map(p=><p>{p}</p>)}{section.bullets&&<ul>{section.bullets.map(item=><li>{item}</li>)}</ul>}</section>)}<aside><h2>¿Necesita una valoración proporcional?</h2><p>Definimos alcance, activos y objetivos antes de proponer un servicio.</p><a href="https://wa.me/573174832132?text=Hola%20Jaime%2C%20quiero%20una%20valoraci%C3%B3n%20de%20ciberseguridad." target="_blank" rel="noopener">Contactar por WhatsApp</a></aside></div></article>
+<article class="article"><header><div class="container narrow"><span>{post.category} · {post.readingTime}</span><h1>{post.title}</h1><p>{post.intro}</p></div></header><div class="container narrow body">{post.sections.map(section=><section><h2>{section.heading}</h2>{section.paragraphs?.map(p=><p>{p}</p>)}{section.bullets&&<ul>{section.bullets.map(item=><li>{item}</li>)}</ul>}</section>)}<aside><h2>¿Necesita una valoración proporcional?</h2><p>Definimos alcance, activos y objetivos antes de proponer un servicio.</p><a href="#" data-wa-modal data-wa-message="Hola Jaime, quiero una valoración de ciberseguridad.">Contactar por WhatsApp</a></aside></div></article>
 
   <!-- JEFQ-SEO-AUTHORITY-CONTEXT -->
   <section class="section dark-section">

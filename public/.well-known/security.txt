@@ -1,4 +1,4 @@
-Contact: https://wa.me/573174832132
+Contact: mailto:contacto@jefq-consultor.com
 Preferred-Languages: es
 Canonical: https://jefq-consultor.vercel.app/.well-known/security.txt
 Policy: https://jefq-consultor.vercel.app/seguridad-autorizacion-alcance

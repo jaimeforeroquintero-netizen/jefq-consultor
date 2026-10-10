@@ -3,9 +3,7 @@ import '../styles/fase-f.css';
 import Layout from "../layouts/Layout.astro";
 import AuthorityCard from "../components/AuthorityCard.astro";
 
-const whatsapp = "https://wa.me/573174832132?text=" + encodeURIComponent(
-  "Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad."
-);
+const waMessage = "Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.";
 
 const strengths = [
   { icon: "01", title: "Atención directa", text: "La comunicación y el seguimiento se realizan directamente con Jaime Forero, responsable de JEFQ Consultor." },
@@ -13,7 +11,7 @@ const strengths = [
   { icon: "03", title: "Priorización práctica", text: "Las recomendaciones se organizan según riesgo, impacto, urgencia y esfuerzo de implementación." },
   { icon: "04", title: "Alcance controlado", text: "Las pruebas se ejecutan únicamente con autorización previa, límites definidos y condiciones acordadas." },
   { icon: "05", title: "Informes accionables", text: "La entrega busca convertir los hallazgos en tareas concretas, responsables y próximos pasos." },
-  { icon: "06", title: "Cobertura nacional", text: "Atención remota para organizaciones en Bogotá y toda Colombia, de lunes a sábado en horario de oficina." }
+  { icon: "06", title: "Cobertura nacional", text: "Atención remota para organizaciones en Bogotá y toda Colombia, con atención 24/7." }
 ];
 ---
 <Layout
@@ -78,7 +76,7 @@ const strengths = [
       <span class="f-kicker">SIGUIENTE PASO</span>
       <h2>Definamos una valoración proporcional a su organización</h2>
       <p>Cuéntenos qué necesita proteger, revisar o fortalecer.</p>
-      <a class="button primary" href={whatsapp} target="_blank" rel="noopener noreferrer">Hablar con Jaime por WhatsApp</a>
+      <a class="button primary" href="#" data-wa-modal data-wa-message={waMessage}>Hablar con Jaime por WhatsApp</a>
     </div>
   </section>
 

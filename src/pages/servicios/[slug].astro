@@ -8,7 +8,7 @@ export function getStaticPaths() {
 
 const { service } = Astro.props;
 const related = service.related.map((slug: string) => serviceBySlug[slug]).filter(Boolean);
-const whatsapp = `https://wa.me/573174832132?text=${encodeURIComponent(`Hola Jaime, quiero solicitar información sobre ${service.title}.`)}`;
+const waMessage = `Hola Jaime, quiero solicitar información sobre ${service.title}.`;
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -31,7 +31,7 @@ const breadcrumbSchema = {
         <strong class="service-detail-promise">{service.promise}</strong>
         <div class="hero-actions">
           <a class="button primary" href="/valoracion">Solicitar valoración</a>
-          <a class="button secondary" href={whatsapp} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+          <a class="button secondary" href="#" data-wa-modal data-wa-message={waMessage}>Consultar por WhatsApp</a>
         </div>
       </div>
       <div class="service-orbit" aria-hidden="true">

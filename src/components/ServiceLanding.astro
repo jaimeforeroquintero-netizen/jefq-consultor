@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { service } = Astro.props;
-const whatsapp = `https://wa.me/573174832132?text=${encodeURIComponent(service.whatsappMessage)}`;
+const waMessage = service.whatsappMessage;
 const titleKey = service.title.toLocaleLowerCase("es");
 
 type PremiumProfile = {
@@ -133,7 +133,7 @@ const combinedFaq = [...service.faq, ...premium.specificFaq];
         <p>{service.intro}</p>
         <div class="landing-actions">
           <a class="button primary" href="/valoracion">Solicitar valoración</a>
-          <a class="button secondary" href={whatsapp} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+          <a class="button secondary" href="#" data-wa-modal data-wa-message={waMessage}>Consultar por WhatsApp</a>
         </div>
         <p class="service-security-note">
           No envíe contraseñas, códigos MFA, llaves privadas, vulnerabilidades explotables ni datos personales sensibles.
@@ -143,8 +143,8 @@ const combinedFaq = [...service.faq, ...premium.specificFaq];
         <strong>JEFQ Consultor</strong>
         <span>Responsable: Jaime Forero</span>
         <span>Bogotá y toda Colombia</span>
-        <span>Atención remota, lunes a sábado</span>
-        <a href="tel:+573174832132">317 483 2132</a>
+        <span>Atención remota 24/7</span>
+        <a href="#" data-wa-modal>WhatsApp: @JaimeByte</a>
       </aside>
     </div>
   </section>
@@ -272,7 +272,7 @@ const combinedFaq = [...service.faq, ...premium.specificFaq];
         </p>
         <div class="landing-actions landing-actions--center">
           <a class="button primary" href="/valoracion">Solicitar valoración</a>
-          <a class="button secondary" href={whatsapp} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+          <a class="button secondary" href="#" data-wa-modal data-wa-message={waMessage}>Consultar por WhatsApp</a>
         </div>
       </div>
     </div>

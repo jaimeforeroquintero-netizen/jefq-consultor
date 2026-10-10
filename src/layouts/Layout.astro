@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import AsistenteIA from "../components/AsistenteIA.astro";
+import WhatsAppModal from "../components/WhatsAppModal.astro";
 import "../styles/seo-authority.css";
 import "../styles/service-premium-v2.css";
 import "../styles/conversion-evidence.css";
@@ -14,14 +15,14 @@ interface Props { title:string; description:string; canonicalPath?:string; noind
 const { title, description, canonicalPath = Astro.url.pathname, noindex = false } = Astro.props;
 const baseUrl = "https://jefq-consultor.vercel.app";
 const canonical = new URL(canonicalPath, baseUrl).toString();
-const wa = "https://wa.me/573174832132?text=" + encodeURIComponent("Hola Jaime, quiero información sobre los servicios de ciberseguridad de JEFQ Consultor.");
+const waMessage = "Hola Jaime, quiero información sobre los servicios de ciberseguridad de JEFQ Consultor.";
 const schema = {
   "@context":"https://schema.org", "@type":"ProfessionalService",
-  name:"JEFQ Consultor", url:baseUrl, telephone:"+573174832132",
+  name:"JEFQ Consultor", url:baseUrl,
   founder:{"@type":"Person",name:"Jaime Forero"},
   areaServed:{"@type":"Country",name:"Colombia"},
   address:{"@type":"PostalAddress",addressLocality:"Bogotá",addressCountry:"CO"},
-  description, openingHours:"Mo-Sa 08:00-18:00", priceRange:"$$"
+  description, openingHours:"Mo-Su 00:00-23:59", priceRange:"$$"
 };
 import "../styles/evidencia-premium.css";
 import "../styles/audit-v2-fixes.css";
@@ -59,12 +60,12 @@ import "../styles/jefq-diseno-hibrido-v1.css";
 </head>
 <body>
   <a class="skip" href="#contenido">Saltar al contenido</a>
-  <div class="topbar"><div class="container topbar-inner"><span>Bogotá y toda Colombia</span><span>Atención remota, lunes a sábado</span><a href="tel:+573174832132">317 483 2132</a></div></div>
+  <div class="topbar"><div class="container topbar-inner"><span>Bogotá y toda Colombia</span><span>Atención remota 24/7</span><span>WhatsApp: <b>@JaimeByte</b></span></div></div>
   <header class="header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="JEFQ Consultor, inicio"><span class="brand-mark">J</span><span><b>JEFQ</b><small>CONSULTOR</small></span></a>
       <button class="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false"><i></i><i></i><i></i></button>
-      <nav class="menu" aria-label="Navegación principal"><a href="/#servicios">Servicios</a><a href="/#metodologia">Metodología</a><a href="/#planes">Planes</a><a href="/#casos">Ejemplos de intervención</a><a class="nav-cta" href={wa} target="_blank" rel="noopener">Solicitar valoración</a>          <a href="/quien-soy">Quién soy</a>
+      <nav class="menu" aria-label="Navegación principal"><a href="/#servicios">Servicios</a><a href="/#metodologia">Metodología</a><a href="/#planes">Planes</a><a href="/#casos">Ejemplos de intervención</a><a class="nav-cta" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.">Solicitar valoración</a>          <a href="/quien-soy">Quién soy</a>
           <a href="/blog">Blog</a>
           <a href="/preguntas-frecuentes">FAQ</a>
           <a href="/seguridad-autorizacion-alcance">Autorización y alcance</a>
@@ -75,7 +76,7 @@ import "../styles/jefq-diseno-hibrido-v1.css";
     </div>
   </header>
   <main id="contenido"><slot /></main>
-  <footer class="footer"><div class="container footer-grid"><div class="footer-main"><a class="brand" href="/"><span class="brand-mark">J</span><span><b>JEFQ</b><small>CONSULTOR</small></span></a><p>Ciberseguridad práctica, controlada y comprensible para organizaciones colombianas.</p><a class="footer-cta" href={wa} target="_blank" rel="noopener">Solicitar valoración</a></div><div><h2>Servicios</h2><a href="/servicios/diagnostico-seguridad">Diagnóstico</a><a href="/servicios/hardening">Hardening</a><a href="/servicios/pruebas-autorizadas">Pruebas autorizadas</a><a href="/servicios/informes-tecnicos">Informes</a><a href="/seguridad-inteligencia-artificial">Seguridad para IA</a></div><div><h2>Legal</h2><a href="/privacidad">Privacidad</a><a href="/terminos">Términos</a><a href="/tratamiento-datos">Datos personales</a></div><div><h2>Contacto</h2><a href="tel:+573174832132">317 483 2132</a><a href={wa} target="_blank" rel="noopener">WhatsApp</a><p>Bogotá y toda Colombia</p></div></div>      <div class="container footer-trust-access">
+  <footer class="footer"><div class="container footer-grid"><div class="footer-main"><a class="brand" href="/"><span class="brand-mark">J</span><span><b>JEFQ</b><small>CONSULTOR</small></span></a><p>Ciberseguridad práctica, controlada y comprensible para organizaciones colombianas.</p><a class="footer-cta" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.">Solicitar valoración</a></div><div><h2>Servicios</h2><a href="/servicios/diagnostico-seguridad">Diagnóstico</a><a href="/servicios/hardening">Hardening</a><a href="/servicios/pruebas-autorizadas">Pruebas autorizadas</a><a href="/servicios/informes-tecnicos">Informes</a><a href="/seguridad-inteligencia-artificial">Seguridad para IA</a></div><div><h2>Legal</h2><a href="/privacidad">Privacidad</a><a href="/terminos">Términos</a><a href="/tratamiento-datos">Datos personales</a></div><div><h2>Contacto</h2><a href="#" data-wa-modal>WhatsApp: @JaimeByte</a><a href="mailto:contacto@jefq-consultor.com">contacto@jefq-consultor.com</a><p>Bogotá y toda Colombia · Atención 24/7</p></div></div>      <div class="container footer-trust-access">
         <div><strong>Atención directa</strong><span>Comunicación con el responsable del servicio.</span></div>
         <div><strong>Intervenciones autorizadas</strong><span>Alcance y límites definidos previamente.</span></div>
         <div><strong>Resultados documentados</strong><span>Prioridades, recomendaciones y próximos pasos.</span></div>
@@ -96,8 +97,9 @@ import "../styles/jefq-diseno-hibrido-v1.css";
     </div>
   </div>
 </footer>
-  <a class="whatsapp" href={wa} target="_blank" rel="noopener" aria-label="Contactar por WhatsApp"><span>WA</span><b>Solicitar valoración</b></a>
+  <a class="whatsapp" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad." aria-label="Contactar por WhatsApp"><span>WA</span><b>Solicitar valoración</b></a>
   <AsistenteIA />
+  <WhatsAppModal />
   <script>
     const b=document.querySelector('.menu-button'); const m=document.querySelector('.menu');
     b?.addEventListener('click',()=>{const o=m?.classList.toggle('menu-open');b.setAttribute('aria-expanded',String(Boolean(o)));});
