@@ -7,7 +7,7 @@ export function getStaticPaths() {
 const { city } = Astro.props;
 const whatsapp = `https://wa.me/573174832132?text=${encodeURIComponent(`Hola Jaime, quiero información sobre ciberseguridad para una organización en ${city.name}.`)}`;
 ---
-<Layout title={`Ciberseguridad para empresas en ${city.name} | JEFQ Consultor`} description={`${city.intro} Atención remota con alcance controlado e informes accionables.`}>
+<Layout title={`Ciberseguridad en ${city.name} | JEFQ Consultor`} description={`${city.intro} Atención remota con alcance controlado e informes accionables.`}>
   <section class="local-hero"><div class="container conversion-narrow">
     <span class="section-label">COBERTURA EN {city.region.toUpperCase()}</span>
     <h1>Ciberseguridad para empresas en {city.name}</h1>

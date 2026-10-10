@@ -9,6 +9,15 @@ export function getStaticPaths() {
 const { service } = Astro.props;
 const related = service.related.map((slug: string) => serviceBySlug[slug]).filter(Boolean);
 const whatsapp = `https://wa.me/573174832132?text=${encodeURIComponent(`Hola Jaime, quiero solicitar información sobre ${service.title}.`)}`;
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://jefq-consultor.vercel.app/" },
+    { "@type": "ListItem", "position": 2, "name": "Servicios", "item": "https://jefq-consultor.vercel.app/servicios" },
+    { "@type": "ListItem", "position": 3, "name": service.title, "item": `https://jefq-consultor.vercel.app/servicios/${service.slug}` }
+  ]
+};
 ---
 <Layout title={`${service.title} | JEFQ Consultor`} description={service.description}>
   <section class="service-detail-hero">
@@ -74,4 +83,5 @@ const whatsapp = `https://wa.me/573174832132?text=${encodeURIComponent(`Hola Jai
     </div>
   </div>
 </section>
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </Layout>

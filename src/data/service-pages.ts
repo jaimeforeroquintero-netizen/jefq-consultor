@@ -15,7 +15,7 @@ export const servicePages: ServicePage[] = [
   {
     slug: "diagnostico-seguridad-bogota",
     eyebrow: "DIAGNÓSTICO EN BOGOTÁ Y COLOMBIA",
-    title: "Diagnóstico de seguridad para empresas en Bogotá",
+    title: "Diagnóstico de seguridad en Bogotá",
     description: "Diagnóstico de ciberseguridad para pymes y organizaciones en Bogotá, con revisión priorizada, informe ejecutivo y plan de mejora.",
     intro: "Identificamos configuraciones débiles, exposiciones y prácticas de riesgo para convertirlas en un plan de mejora entendible y ejecutable.",
     audience: ["Pymes que necesitan conocer su nivel actual", "Empresas antes de ampliar su operación digital", "Equipos con incidentes, dudas o configuraciones heredadas"],
@@ -35,7 +35,7 @@ export const servicePages: ServicePage[] = [
   {
     slug: "hardening-windows-colombia",
     eyebrow: "FORTALECIMIENTO DE EQUIPOS",
-    title: "Hardening de Windows para empresas en Colombia",
+    title: "Hardening de Windows en Colombia",
     description: "Servicio de hardening de Windows para reducir exposición, fortalecer configuraciones y documentar cambios en equipos empresariales.",
     intro: "Fortalecemos equipos Windows con cambios controlados, trazables y proporcionales al uso real de cada organización.",
     audience: ["Empresas con equipos sin una línea base común", "Organizaciones que manejan información sensible", "Pymes que quieren reducir configuraciones innecesarias"],
@@ -55,7 +55,7 @@ export const servicePages: ServicePage[] = [
   {
     slug: "consultoria-ciberseguridad-colombia",
     eyebrow: "CONSULTORÍA REMOTA NACIONAL",
-    title: "Consultoría de ciberseguridad para empresas en Colombia",
+    title: "Consultoría de ciberseguridad para pymes",
     description: "Consultoría de ciberseguridad para pymes colombianas: diagnóstico, priorización, informes y acompañamiento remoto.",
     intro: "Aterrizamos decisiones de seguridad a la capacidad, presupuesto y prioridades reales de la organización.",
     audience: ["Pymes sin responsable interno de seguridad", "Empresas que necesitan priorizar inversiones", "Organizaciones que requieren una segunda opinión técnica"],

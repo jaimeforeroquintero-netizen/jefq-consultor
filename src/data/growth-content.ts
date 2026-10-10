@@ -12,7 +12,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "checklist-hardening-windows-11",
     title: "Checklist de hardening para Windows 11 en empresas",
-    description: "Lista práctica para reforzar equipos Windows 11 y reducir configuraciones inseguras en organizaciones.",
+    description: "Checklist práctico para reforzar equipos Windows 11 en empresas: controles prioritarios, validación posterior y reducción de configuraciones inseguras.",
     category: "Hardening",
     readingTime: "7 min",
     intro: "El endurecimiento debe aplicarse por capas y validarse para evitar interrupciones. Esta guía resume una ruta inicial para equipos empresariales.",
@@ -25,7 +25,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "como-proteger-pyme-colombia",
     title: "Cómo fortalecer la ciberseguridad de una pyme en Colombia",
-    description: "Prioridades prácticas para proteger cuentas, equipos, información y continuidad operativa de una pyme.",
+    description: "Cómo fortalecer la ciberseguridad de una pyme en Colombia: prioridades prácticas para proteger cuentas, equipos, información y continuidad operativa.",
     category: "Pymes",
     readingTime: "6 min",
     intro: "Una pyme no necesita empezar por herramientas costosas. El mayor avance suele venir de ordenar activos, accesos, copias y responsabilidades.",
@@ -38,7 +38,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "phishing-empresarial-senales",
     title: "Señales de phishing empresarial que conviene revisar",
-    description: "Indicadores comunes para analizar mensajes sospechosos sin exponer cuentas ni dispositivos.",
+    description: "Señales de phishing empresarial: indicadores comunes para analizar mensajes sospechosos sin exponer las cuentas ni los dispositivos de su empresa.",
     category: "Phishing",
     readingTime: "5 min",
     intro: "Los mensajes fraudulentos suelen combinar urgencia, suplantación y enlaces diseñados para capturar credenciales o inducir pagos.",
@@ -51,7 +51,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "seguridad-microsoft-365-pyme",
     title: "Seguridad básica de Microsoft 365 para pymes",
-    description: "Controles iniciales para fortalecer identidades, correo y colaboración en entornos Microsoft 365.",
+    description: "Seguridad básica de Microsoft 365 para pymes: controles iniciales para fortalecer identidades, correo electrónico y colaboración en su organización.",
     category: "Microsoft 365",
     readingTime: "6 min",
     intro: "Las identidades y el correo suelen concentrar buena parte del riesgo. Una revisión ordenada permite priorizar cuentas, permisos y mecanismos de recuperación.",
@@ -64,7 +64,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "copias-seguridad-empresa",
     title: "Copias de seguridad empresariales: qué conviene verificar",
-    description: "Guía para revisar alcance, aislamiento, retención y restauración de copias de seguridad.",
+    description: "Copias de seguridad empresariales: guía para revisar alcance, aislamiento, retención y restauración efectiva de la información de su empresa.",
     category: "Continuidad",
     readingTime: "5 min",
     intro: "Una copia no está validada hasta que la organización demuestra que puede restaurar información útil dentro de un tiempo aceptable.",
@@ -89,7 +89,7 @@ export const localPages: LocalPage[] = [
   {
     slug: "ciberseguridad-bogota",
     title: "Ciberseguridad para empresas en Bogotá | JEFQ Consultor",
-    description: "Consultoría, diagnóstico, hardening y pruebas autorizadas para empresas en Bogotá.",
+    description: "Ciberseguridad para empresas en Bogotá: consultoría, diagnóstico, hardening y pruebas autorizadas con informes que su gerencia sí entiende.",
     heading: "Ciberseguridad para empresas en Bogotá",
     intro: "Acompañamiento remoto para identificar riesgos, priorizar mejoras y fortalecer equipos, cuentas y procesos.",
     points: ["Valoración inicial", "Alcance autorizado", "Informes técnicos y ejecutivos", "Plan de remediación", "Atención directa"]
@@ -97,7 +97,7 @@ export const localPages: LocalPage[] = [
   {
     slug: "ciberseguridad-colombia",
     title: "Servicios de ciberseguridad en Colombia | JEFQ Consultor",
-    description: "Servicios remotos de ciberseguridad para pymes y organizaciones en Colombia.",
+    description: "Servicios remotos de ciberseguridad para pymes en Colombia: diagnóstico, priorización de riesgos e informes accionables para su empresa.",
     heading: "Ciberseguridad remota para organizaciones en Colombia",
     intro: "Evaluaciones proporcionales y documentadas para organizaciones que necesitan una ruta clara de mejora.",
     points: ["Cobertura nacional remota", "Diagnóstico de seguridad", "Hardening", "Pruebas controladas", "Acompañamiento"]
@@ -105,7 +105,7 @@ export const localPages: LocalPage[] = [
   {
     slug: "consultor-ciberseguridad-bogota",
     title: "Consultor de ciberseguridad en Bogotá | Jaime Forero",
-    description: "Consultoría directa en ciberseguridad para empresas y pymes en Bogotá y Colombia.",
+    description: "Jaime Forero, consultor de ciberseguridad en Bogotá: atención directa para convertir hallazgos técnicos en decisiones claras para su empresa.",
     heading: "Consultoría directa de ciberseguridad en Bogotá",
     intro: "Atención con Jaime Forero para convertir hallazgos técnicos en decisiones comprensibles y priorizadas.",
     points: ["Atención directa", "Lenguaje claro", "Evidencia y prioridad", "Alcance proporcional", "Seguimiento"]
