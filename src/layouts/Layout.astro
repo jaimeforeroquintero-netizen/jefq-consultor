@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import AsistenteIA from "../components/AsistenteIA.astro";
 import "../styles/seo-authority.css";
 import "../styles/final-consistency.css";
 import "../styles/service-premium-v2.css";
@@ -77,7 +78,7 @@ import "../styles/jefq-diseno-hibrido-v1.css";
     </div>
   </header>
   <main id="contenido"><slot /></main>
-  <footer class="footer"><div class="container footer-grid"><div class="footer-main"><a class="brand" href="/"><span class="brand-mark">J</span><span><b>JEFQ</b><small>CONSULTOR</small></span></a><p>Ciberseguridad práctica, controlada y comprensible para organizaciones colombianas.</p><a class="footer-cta" href={wa} target="_blank" rel="noopener">Solicitar valoración</a></div><div><h2>Servicios</h2><a href="/servicios/diagnostico-seguridad">Diagnóstico</a><a href="/servicios/hardening">Hardening</a><a href="/servicios/pruebas-autorizadas">Pruebas autorizadas</a><a href="/servicios/informes-tecnicos">Informes</a></div><div><h2>Legal</h2><a href="/privacidad">Privacidad</a><a href="/terminos">Términos</a><a href="/tratamiento-datos">Datos personales</a></div><div><h2>Contacto</h2><a href="tel:+573174832132">317 483 2132</a><a href={wa} target="_blank" rel="noopener">WhatsApp</a><p>Bogotá y toda Colombia</p></div></div>      <div class="container footer-trust-access">
+  <footer class="footer"><div class="container footer-grid"><div class="footer-main"><a class="brand" href="/"><span class="brand-mark">J</span><span><b>JEFQ</b><small>CONSULTOR</small></span></a><p>Ciberseguridad práctica, controlada y comprensible para organizaciones colombianas.</p><a class="footer-cta" href={wa} target="_blank" rel="noopener">Solicitar valoración</a></div><div><h2>Servicios</h2><a href="/servicios/diagnostico-seguridad">Diagnóstico</a><a href="/servicios/hardening">Hardening</a><a href="/servicios/pruebas-autorizadas">Pruebas autorizadas</a><a href="/servicios/informes-tecnicos">Informes</a><a href="/seguridad-inteligencia-artificial">Seguridad para IA</a></div><div><h2>Legal</h2><a href="/privacidad">Privacidad</a><a href="/terminos">Términos</a><a href="/tratamiento-datos">Datos personales</a></div><div><h2>Contacto</h2><a href="tel:+573174832132">317 483 2132</a><a href={wa} target="_blank" rel="noopener">WhatsApp</a><p>Bogotá y toda Colombia</p></div></div>      <div class="container footer-trust-access">
         <div><strong>Atención directa</strong><span>Comunicación con el responsable del servicio.</span></div>
         <div><strong>Intervenciones autorizadas</strong><span>Alcance y límites definidos previamente.</span></div>
         <div><strong>Resultados documentados</strong><span>Prioridades, recomendaciones y próximos pasos.</span></div>
@@ -99,6 +100,7 @@ import "../styles/jefq-diseno-hibrido-v1.css";
   </div>
 </footer>
   <a class="whatsapp" href={wa} target="_blank" rel="noopener" aria-label="Contactar por WhatsApp"><span>WA</span><b>Solicitar valoración</b></a>
+  <AsistenteIA />
   <script>
     const b=document.querySelector('.menu-button'); const m=document.querySelector('.menu');
     b?.addEventListener('click',()=>{const o=m?.classList.toggle('menu-open');b.setAttribute('aria-expanded',String(Boolean(o)));});

@@ -111,6 +111,28 @@ export const servicePages: ServicePage[] = [
       { question: "¿Qué recibe la gerencia?", answer: "Un resumen ejecutivo, prioridades y próximos pasos, además del detalle técnico acordado." }
     ],
     whatsappMessage: "Hola Jaime, quiero Solicitar valoración una auditoría de ciberseguridad para una pyme."
+  },
+  {
+    slug: "seguridad-inteligencia-artificial",
+    eyebrow: "IA BAJO CONTROL",
+    title: "Seguridad para sistemas de inteligencia artificial",
+    description: "Evaluación del uso de herramientas de IA en su pyme: datos en prompts, aplicaciones sin gobierno, riesgos de suplantación y controles proporcionales.",
+    intro: "Las herramientas de IA ya están en su empresa, las haya aprobado o no. Revisamos cómo se usan, qué datos circulan por ellas y qué controles necesita para usarlas sin exponerse.",
+    audience: ["Pymes cuyo equipo ya usa ChatGPT, Copilot u otras herramientas de IA", "Empresas que manejan datos de clientes o información sensible", "Negocios que quieren reglas claras antes de ampliar el uso de IA"],
+    includes: ["Inventario de herramientas de IA en uso", "Revisión de datos compartidos en prompts", "Evaluación de configuraciones y accesos", "Política básica de uso de IA", "Sesión de concienciación para el equipo"],
+    process: [
+      { title: "Descubrir", text: "Identificamos qué herramientas de IA se usan y quién las usa." },
+      { title: "Evaluar", text: "Revisamos datos expuestos, configuraciones y accesos." },
+      { title: "Ordenar", text: "Definimos reglas de uso y controles proporcionales." },
+      { title: "Entregar", text: "Presentamos hallazgos, política sugerida y próximos pasos." }
+    ],
+    faq: [
+      { question: "¿Usar herramientas de IA es un riesgo para mi empresa?", answer: "Depende de cómo se usen. El riesgo real está en compartir datos sensibles en prompts y en usar aplicaciones sin ningún control. Una evaluación muestra dónde está expuesto." },
+      { question: "¿Tenemos que dejar de usar la IA?", answer: "No. El objetivo es usarla con reglas claras: qué datos pueden compartirse, qué herramientas están aprobadas y quién responde por su uso." },
+      { question: "¿Qué pasa con los fraudes por voz o video falsos?", answer: "La suplantación con voz sintética es una amenaza real para pymes. La evaluación incluye recomendaciones prácticas de verificación para transferencias y solicitudes sensibles." },
+      { question: "¿Esto reemplaza un diagnóstico de seguridad general?", answer: "No. Es un complemento enfocado en el uso de IA. Si su empresa no tiene una visión básica de su seguridad, conviene empezar por el diagnóstico general." }
+    ],
+    whatsappMessage: "Hola Jaime, quiero información sobre la evaluación de seguridad para el uso de IA en mi empresa."
   }
 ];
 

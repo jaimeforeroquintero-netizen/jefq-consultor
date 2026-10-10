@@ -1,0 +1,18 @@
+---
+import ServiceLanding from "../components/ServiceLanding.astro";
+import { servicePages } from "../data/service-pages";
+const service = servicePages.find((item) => item.slug === "seguridad-inteligencia-artificial");
+if (!service) throw new Error("No se encontro el servicio seguridad-inteligencia-artificial");
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": service.faq.map((f) => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": { "@type": "Answer", "text": f.answer }
+  }))
+};
+---
+<ServiceLanding service={service} />
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />

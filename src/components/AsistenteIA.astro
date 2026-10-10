@@ -1,0 +1,207 @@
+---
+// Asistente virtual de JEFQ Consultor.
+// Burbuja flotante abajo-IZQUIERDA (el flotante de WhatsApp vive abajo-derecha).
+// Habla con /api/chat (Gemini). Sin GEMINI_API_KEY muestra fallback a WhatsApp.
+const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hola Jaime, quiero información sobre los servicios de JEFQ Consultor.");
+---
+
+<div class="jefq-ia" id="jefq-ia">
+  <button class="jefq-ia-fab" id="jefq-ia-fab" type="button" aria-label="Abrir asistente virtual" aria-expanded="false" aria-controls="jefq-ia-panel">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="9" cy="11" r="1" fill="currentColor" stroke="none"/><circle cx="13" cy="11" r="1" fill="currentColor" stroke="none"/><circle cx="17" cy="11" r="1" fill="currentColor" stroke="none"/></svg>
+    <span class="jefq-ia-fab-label">Asistente IA</span>
+  </button>
+
+  <section class="jefq-ia-panel" id="jefq-ia-panel" role="dialog" aria-label="Asistente virtual de JEFQ Consultor" hidden>
+    <header class="jefq-ia-head">
+      <span class="jefq-ia-dot" aria-hidden="true"></span>
+      <div><b>Asistente JEFQ</b><small>En línea · responde al instante</small></div>
+      <button class="jefq-ia-close" id="jefq-ia-close" type="button" aria-label="Cerrar asistente">✕</button>
+    </header>
+
+    <div class="jefq-ia-msgs" id="jefq-ia-msgs" aria-live="polite"></div>
+
+    <div class="jefq-ia-email" id="jefq-ia-email" hidden>
+      <p>¿Desea que Jaime le contacte? Déjenos su correo:</p>
+      <form id="jefq-ia-email-form">
+        <input type="email" id="jefq-ia-email-input" placeholder="su@correo.com" aria-label="Correo electrónico" required />
+        <button type="submit">Enviar</button>
+        <button type="button" id="jefq-ia-email-dismiss" aria-label="Descartar">✕</button>
+      </form>
+      <small>Solo usaremos su correo para contactarle sobre su consulta. <a href="/privacidad">Política de privacidad</a>.</small>
+    </div>
+
+    <form class="jefq-ia-input" id="jefq-ia-form">
+      <input type="text" id="jefq-ia-text" placeholder="Escriba su pregunta…" aria-label="Escriba su pregunta" autocomplete="off" maxlength="500" />
+      <button type="submit" aria-label="Enviar mensaje">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </form>
+  </section>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('jefq-ia');
+  if (!root) return;
+  var fab = document.getElementById('jefq-ia-fab');
+  var panel = document.getElementById('jefq-ia-panel');
+  var closeBtn = document.getElementById('jefq-ia-close');
+  var msgs = document.getElementById('jefq-ia-msgs');
+  var form = document.getElementById('jefq-ia-form');
+  var input = document.getElementById('jefq-ia-text');
+  var emailBox = document.getElementById('jefq-ia-email');
+  var emailForm = document.getElementById('jefq-ia-email-form');
+  var emailInput = document.getElementById('jefq-ia-email-input');
+  var emailDismiss = document.getElementById('jefq-ia-email-dismiss');
+  var WA = "https://wa.me/573174832132?text=" + encodeURIComponent("Hola Jaime, quiero información sobre los servicios de JEFQ Consultor.");
+
+  var history = [];
+  var greeted = false;
+  var emailOffered = false;
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function bubble(role, text, isHtml) {
+    var d = document.createElement('div');
+    d.className = 'jefq-ia-msg jefq-ia-' + role;
+    d.innerHTML = isHtml ? text : esc(text);
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+
+  function typing(on) {
+    var t = document.getElementById('jefq-ia-typing');
+    if (on && !t) {
+      t = document.createElement('div');
+      t.id = 'jefq-ia-typing';
+      t.className = 'jefq-ia-msg jefq-ia-assistant jefq-ia-typing';
+      t.innerHTML = '<span></span><span></span><span></span>';
+      msgs.appendChild(t);
+      msgs.scrollTop = msgs.scrollHeight;
+    } else if (!on && t) {
+      t.remove();
+    }
+  }
+
+  function fallback() {
+    bubble('assistant',
+      'Por ahora no puedo responder desde aquí. Le atiendo con gusto por <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>.',
+      true);
+  }
+
+  function open() {
+    panel.hidden = false;
+    fab.setAttribute('aria-expanded', 'true');
+    fab.setAttribute('aria-label', 'Cerrar asistente virtual');
+    if (!greeted) {
+      greeted = true;
+      bubble('assistant', 'Hola, soy el asistente virtual de JEFQ Consultor. ¿En qué puedo ayudarle? Puedo orientarle sobre nuestros servicios de ciberseguridad para pymes en Colombia.');
+    }
+    setTimeout(function () { input.focus(); }, 60);
+  }
+
+  function close() {
+    panel.hidden = true;
+    fab.setAttribute('aria-expanded', 'false');
+    fab.setAttribute('aria-label', 'Abrir asistente virtual');
+  }
+
+  fab.addEventListener('click', function () { panel.hidden ? open() : close(); });
+  closeBtn.addEventListener('click', close);
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    history.push({ role: 'user', content: text });
+    bubble('user', text);
+    typing(true);
+
+    fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: history })
+    })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+      .then(function (res) {
+        typing(false);
+        if (res.ok && res.d && res.d.reply) {
+          history.push({ role: 'assistant', content: res.d.reply });
+          bubble('assistant', res.d.reply);
+          if (!emailOffered) {
+            emailOffered = true;
+            setTimeout(function () { emailBox.hidden = false; }, 1200);
+          }
+        } else {
+          fallback();
+        }
+      })
+      .catch(function () { typing(false); fallback(); });
+  });
+
+  emailDismiss.addEventListener('click', function () { emailBox.hidden = true; });
+
+  emailForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var mail = emailInput.value.trim();
+    if (!mail) return;
+    var lastUser = '';
+    for (var i = history.length - 1; i >= 0; i--) {
+      if (history[i].role === 'user') { lastUser = history[i].content; break; }
+    }
+    var msg = 'Hola Jaime, mi correo es ' + mail + '. Hablé con el asistente de la web sobre: ' + (lastUser ? lastUser.slice(0, 140) : 'sus servicios') + '. Quedo atento(a).';
+    emailBox.hidden = true;
+    bubble('assistant', 'Gracias. Para que Jaime le contacte directamente, pulse aquí: <a href="https://wa.me/573174832132?text=' + encodeURIComponent(msg) + '" target="_blank" rel="noopener">Enviar mi correo por WhatsApp</a>.', true);
+  });
+})();
+</script>
+
+<style>
+  .jefq-ia { position: fixed; z-index: 901; left: 20px; bottom: 20px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+  .jefq-ia-fab { display: flex; align-items: center; gap: 9px; padding: 13px 18px 13px 14px; color: #001018; background: linear-gradient(135deg, #23d7ff, #5ef0b4); border: 0; border-radius: 999px; font-weight: 850; font-size: .85rem; cursor: pointer; box-shadow: 0 13px 35px rgba(0,0,0,.4); transition: transform .18s ease; }
+  .jefq-ia-fab:hover { transform: translateY(-2px); }
+  .jefq-ia-panel { position: absolute; left: 0; bottom: 68px; width: min(380px, calc(100vw - 40px)); height: 480px; max-height: calc(100vh - 120px); display: flex; flex-direction: column; overflow: hidden; color: #f4f8ff; background: #071426; border: 1px solid rgba(35,215,255,.28); border-radius: 18px; box-shadow: 0 24px 80px rgba(0,0,0,.5); }
+  .jefq-ia-panel[hidden] { display: none; }
+  .jefq-ia-head { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: rgba(9,31,54,.9); border-bottom: 1px solid rgba(125,181,225,.2); }
+  .jefq-ia-head b { display: block; font-size: .92rem; }
+  .jefq-ia-head small { color: #9eb3ca; font-size: .72rem; }
+  .jefq-ia-dot { width: 10px; height: 10px; background: #5ef0b4; border-radius: 50%; box-shadow: 0 0 10px #5ef0b4; }
+  .jefq-ia-close { margin-left: auto; background: transparent; border: 0; color: #9eb3ca; font-size: 1rem; cursor: pointer; padding: 4px 8px; }
+  .jefq-ia-msgs { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .jefq-ia-msg { max-width: 85%; padding: 10px 13px; border-radius: 14px; font-size: .86rem; line-height: 1.5; word-wrap: break-word; }
+  .jefq-ia-user { align-self: flex-end; color: #001018; background: linear-gradient(135deg, #23d7ff, #5ef0b4); border-bottom-right-radius: 4px; }
+  .jefq-ia-assistant { align-self: flex-start; color: #dfe9f2; background: rgba(20,45,72,.85); border: 1px solid rgba(125,181,225,.18); border-bottom-left-radius: 4px; }
+  .jefq-ia-assistant a { color: #23d7ff; font-weight: 700; }
+  .jefq-ia-typing span { display: inline-block; width: 7px; height: 7px; margin-right: 4px; background: #9eb3ca; border-radius: 50%; animation: jefq-ia-blink 1.1s infinite; }
+  .jefq-ia-typing span:nth-child(2) { animation-delay: .18s; }
+  .jefq-ia-typing span:nth-child(3) { animation-delay: .36s; }
+  @keyframes jefq-ia-blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+  .jefq-ia-email { padding: 12px 16px; background: rgba(35,215,255,.06); border-top: 1px solid rgba(125,181,225,.18); font-size: .78rem; }
+  .jefq-ia-email[hidden] { display: none; }
+  .jefq-ia-email p { margin: 0 0 8px; color: #d1deea; }
+  .jefq-ia-email form { display: flex; gap: 6px; }
+  .jefq-ia-email input { flex: 1; min-width: 0; padding: 8px 10px; color: #fff; background: #061421; border: 1px solid rgba(125,181,225,.24); border-radius: 8px; font-size: .8rem; }
+  .jefq-ia-email button { padding: 8px 12px; color: #001018; background: #5ef0b4; border: 0; border-radius: 8px; font-weight: 800; font-size: .78rem; cursor: pointer; }
+  .jefq-ia-email #jefq-ia-email-dismiss { background: transparent; color: #9eb3ca; }
+  .jefq-ia-email small { display: block; margin-top: 8px; color: #7890a8; font-size: .68rem; }
+  .jefq-ia-email small a { color: #23d7ff; }
+  .jefq-ia-input { display: flex; gap: 8px; padding: 12px 14px; border-top: 1px solid rgba(125,181,225,.18); }
+  .jefq-ia-input input { flex: 1; min-width: 0; padding: 11px 13px; color: #fff; background: #061421; border: 1px solid rgba(125,181,225,.24); border-radius: 10px; font-size: .85rem; outline: 0; }
+  .jefq-ia-input input:focus { border-color: #23d7ff; }
+  .jefq-ia-input button { display: grid; place-items: center; width: 44px; height: 44px; color: #001018; background: linear-gradient(135deg, #23d7ff, #5ef0b4); border: 0; border-radius: 10px; cursor: pointer; }
+  @media (prefers-reduced-motion: reduce) {
+    .jefq-ia-typing span { animation: none; opacity: 1; }
+    .jefq-ia-fab:hover { transform: none; }
+  }
+  @media (max-width: 680px) {
+    .jefq-ia { left: 12px; bottom: 12px; }
+    .jefq-ia-fab-label { display: none; }
+    .jefq-ia-fab { padding: 13px 14px; }
+  }
+</style>
