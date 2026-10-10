@@ -15,4 +15,66 @@ const faqSchema = {
 };
 ---
 <ServiceLanding service={service} />
+
+<section class="section">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <span>SEÑALES DE ALERTA</span>
+      <h2>Señales de que su empresa lo necesita</h2>
+      <p>Si reconoce dos o más de estas situaciones, conviene revisar el uso de IA antes de ampliarlo.</p>
+    </header>
+    <div class="landing-two-columns" data-reveal>
+      <article>
+        <ul class="landing-list">
+          <li>Su equipo usa ChatGPT, Copilot u otras herramientas de IA sin reglas claras de qué se puede compartir.</li>
+          <li>Han pegado datos de clientes, contratos o cifras internas en prompts.</li>
+          <li>Nadie sabe exactamente qué aplicaciones de IA usa cada área.</li>
+        </ul>
+      </article>
+      <article>
+        <ul class="landing-list">
+          <li>Reciben solicitudes urgentes por WhatsApp o correo que podrían ser voz o texto suplantados.</li>
+          <li>Quieren ampliar el uso de IA pero no tienen una política básica aprobada.</li>
+          <li>Dependen de un solo proveedor de IA sin plan de contingencia.</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section contrast">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <span>CASOS DE USO</span>
+      <h2>Cómo se aplica según su tipo de empresa</h2>
+    </header>
+    <div class="landing-card-grid" data-reveal>
+      <article class="landing-card">
+        <span>COMERCIALIZADORAS Y OFICINAS</span>
+        <h3>Datos de clientes en prompts</h3>
+        <p>Revisamos qué información de clientes circula por herramientas de IA, definimos qué datos nunca deben compartirse y dejamos reglas simples para el equipo comercial y administrativo.</p>
+      </article>
+      <article class="landing-card">
+        <span>FIRMAS DE SERVICIOS PROFESIONALES</span>
+        <h3>Documentos sensibles y confidencialidad</h3>
+        <p>Evaluamos el uso de IA en la elaboración de documentos, protegemos la confidencialidad frente a clientes y definimos qué herramientas están aprobadas para cada tipo de información.</p>
+      </article>
+      <article class="landing-card">
+        <span>EMPRESAS CON OPERACIÓN REMOTA</span>
+        <h3>Suplantación por voz y mensajes</h3>
+        <p>Diseñamos verificaciones prácticas contra fraudes con voz sintética o mensajes falsos: protocolos para transferencias, validación de solicitudes urgentes y concienciación del equipo.</p>
+      </article>
+      <article class="landing-card">
+        <span>PYMES EN CRECIMIENTO DIGITAL</span>
+        <h3>Gobierno mínimo antes de escalar</h3>
+        <p>Dejamos una política básica de uso de IA, inventario de herramientas aprobadas y controles proporcionales para crecer sin multiplicar la exposición.</p>
+      </article>
+    </div>
+    <div class="section-cta" data-reveal>
+      <span>¿Reconoce alguna de estas situaciones en su empresa?</span>
+      <a class="button primary" href="/valoracion">Solicitar valoración</a>
+    </div>
+  </div>
+</section>
+
 <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />

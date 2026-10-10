@@ -22,3 +22,53 @@
 .conversion-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:start}.valuation-card,.valuation-summary{padding:30px;background:rgba(8,24,44,.88);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}.valuation-card label{display:block;margin-bottom:16px;color:#cedbe7;font-size:.86rem;font-weight:700}.valuation-card select,.valuation-card textarea{width:100%;margin-top:7px;padding:13px 14px;color:#fff;background:#071523;border:1px solid rgba(117,170,216,.25);border-radius:10px}.valuation-card option{background:#071523}.valuation-card small{display:block;margin-top:12px;color:var(--muted);text-align:center}.valuation-consent{display:flex!important;gap:10px}.valuation-consent input{width:18px}.valuation-consent a{color:var(--cyan);text-decoration:underline}.valuation-summary ol{padding-left:22px}.valuation-summary li{margin:16px 0;color:#cbd8e5}.scope-note{margin-top:25px;padding:18px;background:rgba(37,215,255,.06);border:1px solid rgba(37,215,255,.2);border-radius:14px}.scope-note p{margin-bottom:0;color:var(--muted)}
 .local-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.local-grid article{padding:24px;background:rgba(9,28,50,.72);border:1px solid var(--border);border-radius:var(--radius)}.local-grid article>span{color:var(--cyan);font-weight:900}.local-grid h2{font-size:1.25rem}.local-grid p{color:var(--muted)}.conversion-band{padding:70px 0;text-align:center;background:linear-gradient(180deg,rgba(8,22,40,.8),rgba(3,8,19,.3));border-block:1px solid var(--border)}.conversion-band h2{max-width:760px;margin:12px auto 24px;font-size:clamp(2rem,5vw,3.6rem);line-height:1.05}
 @media(max-width:900px){.conversion-grid{grid-template-columns:1fr}.local-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.local-grid{grid-template-columns:1fr}.valuation-card,.valuation-summary{padding:22px}}
+/* ===== JEFQ Premium v2 (2026-10-10): pulimento visual ===== */
+
+/* Foco visible consistente */
+:focus-visible{outline:3px solid rgba(35,215,255,.55);outline-offset:3px;border-radius:6px}
+
+/* Tarjetas de precio: elevación en hover para las 3 */
+.price-card{transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.price-card:hover{transform:translateY(-6px);border-color:rgba(35,215,255,.5);box-shadow:0 22px 60px rgba(0,174,232,.14)}
+.price-card.featured:hover{transform:translateY(-12px)}
+
+/* Tarjetas de servicio: sombra en hover */
+.service-card:hover{box-shadow:0 18px 44px rgba(0,0,0,.35)}
+
+/* Botones: estado activo + brillo sutil en el primario del hero */
+.button:active{transform:translateY(0) scale(.985)}
+.hero .button.primary{box-shadow:0 12px 32px rgba(35,215,255,.22),0 0 0 1px rgba(35,215,255,.25) inset}
+.hero .button.primary:hover{box-shadow:0 16px 44px rgba(35,215,255,.32),0 0 0 1px rgba(35,215,255,.35) inset}
+
+/* Diferenciador "por qué JEFQ" */
+.why-diff{max-width:760px;margin:30px auto 0;padding:20px 24px;color:#d1deea;text-align:center;background:rgba(35,215,255,.05);border:1px solid rgba(35,215,255,.2);border-radius:14px;font-size:1.02rem;line-height:1.6}
+.why-diff b{color:var(--cyan)}
+
+/* Ancla de precio */
+.price-anchor{max-width:700px;margin:0 auto 14px;color:#d1deea;text-align:center;font-size:1.02rem}
+.price-anchor b{color:var(--green)}
+
+/* Animación sutil del hero: flotación de orbes */
+@keyframes orbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+.orb-a{animation:orbFloat 11s ease-in-out infinite}
+.orb-b{animation:orbFloat 14s ease-in-out infinite reverse}
+
+/* Quiz: barra de progreso */
+.quiz-progress{height:6px;margin-bottom:22px;overflow:hidden;background:rgba(16,42,67,.12);border-radius:999px}
+.quiz-progress i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#12b9ae,#23d7ff);transition:width .35s ease}
+.quiz-step{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.quiz-step b{display:grid;place-items:center;width:30px;height:30px;flex:none;color:#fff;background:#0d2840;border-radius:50%;font-size:.8rem}
+.quiz-step.done b{background:#12b9ae}
+.smart-result.reveal{animation:resultIn .5s ease}
+@keyframes resultIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .orb-a,.orb-b{animation:none}
+  .quiz-progress i{transition:none}
+  .smart-result.reveal{animation:none}
+}
+
+/* CTA de sección reutilizable (antes solo en index) */
+.section-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;margin-top:46px;padding:28px 24px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(9,31,54,.5);text-align:center}
+.section-cta span{color:var(--muted);font-size:1.02rem}
+@media(max-width:680px){.section-cta{flex-direction:column}}

@@ -20,6 +20,8 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
 
     <div class="jefq-ia-msgs" id="jefq-ia-msgs" aria-live="polite"></div>
 
+    <div class="jefq-ia-chips" id="jefq-ia-chips" hidden></div>
+
     <div class="jefq-ia-email" id="jefq-ia-email" hidden>
       <p>¿Desea que Jaime le contacte? Déjenos su correo:</p>
       <form id="jefq-ia-email-form">
@@ -39,6 +41,11 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
   </section>
 </div>
 
+<div class="jefq-ia-teaser" id="jefq-ia-teaser" hidden>
+  <p>¿Tiene alguna pregunta sobre ciberseguridad? Estoy aquí para ayudarle.</p>
+  <button type="button" id="jefq-ia-teaser-close" aria-label="Descartar">✕</button>
+</div>
+
 <script>
 (function () {
   var root = document.getElementById('jefq-ia');
@@ -53,11 +60,60 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
   var emailForm = document.getElementById('jefq-ia-email-form');
   var emailInput = document.getElementById('jefq-ia-email-input');
   var emailDismiss = document.getElementById('jefq-ia-email-dismiss');
+  var chipsBox = document.getElementById('jefq-ia-chips');
+  var teaser = document.getElementById('jefq-ia-teaser');
+  var teaserClose = document.getElementById('jefq-ia-teaser-close');
   var WA = "https://wa.me/573174832132?text=" + encodeURIComponent("Hola Jaime, quiero información sobre los servicios de JEFQ Consultor.");
 
   var history = [];
   var greeted = false;
   var emailOffered = false;
+  var interacted = false;
+  var chipsHidden = false;
+
+  var SUGGESTIONS = [
+    "¿Cuánto cuesta un diagnóstico?",
+    "¿Qué incluye la evaluación?",
+    "¿Atienden en mi ciudad?",
+    "Quiero hablar con Jaime"
+  ];
+
+  function markInteracted() {
+    interacted = true;
+    hideTeaser();
+  }
+
+  function renderChips() {
+    if (chipsHidden || !chipsBox) return;
+    chipsBox.innerHTML = '';
+    SUGGESTIONS.forEach(function (q) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'jefq-ia-chip';
+      b.textContent = q;
+      b.addEventListener('click', function () {
+        chipsHidden = true;
+        chipsBox.hidden = true;
+        sendUser(q);
+      });
+      chipsBox.appendChild(b);
+    });
+    chipsBox.hidden = false;
+  }
+
+  function hideTeaser() {
+    if (teaser) teaser.hidden = true;
+    try { sessionStorage.setItem('jefq-ia-teased', '1'); } catch (e) {}
+  }
+
+  function maybeTease() {
+    if (interacted) return;
+    try { if (sessionStorage.getItem('jefq-ia-teased')) return; } catch (e) {}
+    if (teaser) {
+      teaser.hidden = false;
+      fab.classList.add('jefq-ia-attn');
+    }
+  }
 
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -95,12 +151,15 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
   }
 
   function open() {
+    markInteracted();
+    fab.classList.remove('jefq-ia-attn');
     panel.hidden = false;
     fab.setAttribute('aria-expanded', 'true');
     fab.setAttribute('aria-label', 'Cerrar asistente virtual');
     if (!greeted) {
       greeted = true;
-      bubble('assistant', 'Hola, soy el asistente virtual de JEFQ Consultor. ¿En qué puedo ayudarle? Puedo orientarle sobre nuestros servicios de ciberseguridad para pymes en Colombia.');
+      bubble('assistant', 'Hola, soy el asistente de JEFQ Consultor. Puedo orientarle sobre nuestros servicios, precios y cuál se ajusta mejor a su empresa. ¿En qué le ayudo?');
+      renderChips();
     }
     setTimeout(function () { input.focus(); }, 60);
   }
@@ -114,10 +173,8 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
   fab.addEventListener('click', function () { panel.hidden ? open() : close(); });
   closeBtn.addEventListener('click', close);
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var text = input.value.trim();
-    if (!text) return;
+  function sendUser(text) {
+    markInteracted();
     input.value = '';
     history.push({ role: 'user', content: text });
     bubble('user', text);
@@ -143,7 +200,28 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
         }
       })
       .catch(function () { typing(false); fallback(); });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var text = input.value.trim();
+    if (!text) return;
+    chipsHidden = true;
+    if (chipsBox) chipsBox.hidden = true;
+    sendUser(text);
   });
+
+  if (teaserClose) teaserClose.addEventListener('click', function (e) {
+    e.stopPropagation();
+    hideTeaser();
+    fab.classList.remove('jefq-ia-attn');
+  });
+  if (teaser) teaser.addEventListener('click', function () {
+    hideTeaser();
+    open();
+  });
+
+  setTimeout(maybeTease, 20000);
 
   emailDismiss.addEventListener('click', function () { emailBox.hidden = true; });
 
@@ -178,10 +256,21 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
   .jefq-ia-user { align-self: flex-end; color: #001018; background: linear-gradient(135deg, #23d7ff, #5ef0b4); border-bottom-right-radius: 4px; }
   .jefq-ia-assistant { align-self: flex-start; color: #dfe9f2; background: rgba(20,45,72,.85); border: 1px solid rgba(125,181,225,.18); border-bottom-left-radius: 4px; }
   .jefq-ia-assistant a { color: #23d7ff; font-weight: 700; }
-  .jefq-ia-typing span { display: inline-block; width: 7px; height: 7px; margin-right: 4px; background: #9eb3ca; border-radius: 50%; animation: jefq-ia-blink 1.1s infinite; }
+  .jefq-ia-typing span { display: inline-block; width: 7px; height: 7px; margin-right: 4px; background: #23d7ff; border-radius: 50%; animation: jefq-ia-blink 1.1s infinite; }
   .jefq-ia-typing span:nth-child(2) { animation-delay: .18s; }
   .jefq-ia-typing span:nth-child(3) { animation-delay: .36s; }
-  @keyframes jefq-ia-blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+  @keyframes jefq-ia-blink { 0%, 80%, 100% { opacity: .25; transform: scale(.85); } 40% { opacity: 1; transform: scale(1.15); } }
+  .jefq-ia-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 12px; }
+  .jefq-ia-chips[hidden] { display: none; }
+  .jefq-ia-chip { padding: 8px 13px; color: #bfe9ff; background: rgba(35,215,255,.09); border: 1px solid rgba(35,215,255,.32); border-radius: 999px; font-size: .76rem; font-weight: 700; cursor: pointer; transition: background .18s ease, transform .18s ease; }
+  .jefq-ia-chip:hover { background: rgba(35,215,255,.2); transform: translateY(-1px); }
+  .jefq-ia-teaser { position: fixed; z-index: 900; left: 20px; bottom: 88px; display: flex; align-items: center; gap: 10px; max-width: 300px; padding: 12px 14px; color: #eaf3fa; background: #0a1f38; border: 1px solid rgba(35,215,255,.35); border-radius: 14px; box-shadow: 0 16px 44px rgba(0,0,0,.45); font-size: .8rem; line-height: 1.45; cursor: pointer; animation: jefq-ia-tease-in .45s ease; }
+  .jefq-ia-teaser[hidden] { display: none; }
+  .jefq-ia-teaser p { margin: 0; }
+  .jefq-ia-teaser button { flex: none; background: transparent; border: 0; color: #9eb3ca; cursor: pointer; font-size: .8rem; padding: 2px 4px; }
+  @keyframes jefq-ia-tease-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .jefq-ia-fab.jefq-ia-attn { animation: jefq-ia-pulse 1.6s ease-in-out 3; }
+  @keyframes jefq-ia-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
   .jefq-ia-email { padding: 12px 16px; background: rgba(35,215,255,.06); border-top: 1px solid rgba(125,181,225,.18); font-size: .78rem; }
   .jefq-ia-email[hidden] { display: none; }
   .jefq-ia-email p { margin: 0 0 8px; color: #d1deea; }
@@ -196,12 +285,16 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
   .jefq-ia-input input:focus { border-color: #23d7ff; }
   .jefq-ia-input button { display: grid; place-items: center; width: 44px; height: 44px; color: #001018; background: linear-gradient(135deg, #23d7ff, #5ef0b4); border: 0; border-radius: 10px; cursor: pointer; }
   @media (prefers-reduced-motion: reduce) {
-    .jefq-ia-typing span { animation: none; opacity: 1; }
+    .jefq-ia-typing span { animation: none; opacity: 1; transform: none; }
     .jefq-ia-fab:hover { transform: none; }
+    .jefq-ia-fab.jefq-ia-attn { animation: none; }
+    .jefq-ia-teaser { animation: none; }
+    .jefq-ia-chip:hover { transform: none; }
   }
   @media (max-width: 680px) {
     .jefq-ia { left: 12px; bottom: 12px; }
     .jefq-ia-fab-label { display: none; }
     .jefq-ia-fab { padding: 13px 14px; }
+    .jefq-ia-teaser { left: 12px; bottom: 80px; max-width: calc(100vw - 110px); }
   }
 </style>
