@@ -121,6 +121,26 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
     });
   }
 
+  // Renderizado ligero y seguro de markdown: negritas, listas y enlaces.
+  function md(s) {
+    var t = esc(s);
+    t = t.replace(/(https?:\/\/[^\s<)]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+    t = t.replace(/\*\*([^*<>]+)\*\*/g, '<strong>$1</strong>');
+    var lines = t.split('\n'), out = '', inList = false, i, m;
+    for (i = 0; i < lines.length; i++) {
+      m = lines[i].match(/^\s*[-*]\s+(.*\S)\s*$/);
+      if (m) {
+        if (!inList) { out += '<ul>'; inList = true; }
+        out += '<li>' + m[1] + '</li>';
+      } else {
+        if (inList) { out += '</ul>'; inList = false; }
+        out += lines[i] + '<br>';
+      }
+    }
+    if (inList) out += '</ul>';
+    return out.replace(/(<br>\s*)+$/g, '');
+  }
+
   function bubble(role, text, isHtml) {
     var d = document.createElement('div');
     d.className = 'jefq-ia-msg jefq-ia-' + role;
@@ -190,7 +210,7 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
         typing(false);
         if (res.ok && res.d && res.d.reply) {
           history.push({ role: 'assistant', content: res.d.reply });
-          bubble('assistant', res.d.reply);
+          bubble('assistant', md(res.d.reply), true);
           if (!emailOffered) {
             emailOffered = true;
             setTimeout(function () { emailBox.hidden = false; }, 1200);
@@ -256,6 +276,9 @@ const WA_FALLBACK = "https://wa.me/573174832132?text=" + encodeURIComponent("Hol
   .jefq-ia-user { align-self: flex-end; color: #001018; background: linear-gradient(135deg, #23d7ff, #5ef0b4); border-bottom-right-radius: 4px; }
   .jefq-ia-assistant { align-self: flex-start; color: #dfe9f2; background: rgba(20,45,72,.85); border: 1px solid rgba(125,181,225,.18); border-bottom-left-radius: 4px; }
   .jefq-ia-assistant a { color: #23d7ff; font-weight: 700; }
+  .jefq-ia-assistant ul { margin: 6px 0 6px; padding-left: 18px; }
+  .jefq-ia-assistant li { margin: 4px 0; }
+  .jefq-ia-assistant strong { color: #ffffff; }
   .jefq-ia-typing span { display: inline-block; width: 7px; height: 7px; margin-right: 4px; background: #23d7ff; border-radius: 50%; animation: jefq-ia-blink 1.1s infinite; }
   .jefq-ia-typing span:nth-child(2) { animation-delay: .18s; }
   .jefq-ia-typing span:nth-child(3) { animation-delay: .36s; }
