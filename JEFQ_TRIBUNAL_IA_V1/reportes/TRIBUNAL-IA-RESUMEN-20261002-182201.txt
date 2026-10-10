@@ -1,0 +1,40 @@
+JEFQ CONSULTOR - TRIBUNAL IA V1
+============================================================
+Generado: 2026-10-02 18:22:01
+Perfiles sinteticos: 25
+Confianza media: 56.8/100
+Probabilidad media de contacto: 51.3%
+Probabilidad media de compra: 37.2%
+
+PANELES
+- Compradores con urgencia: confianza 53,6, claridad 66,2, contacto 70,4%, compra 53,8%
+- Compradores escepticos: confianza 44,6, claridad 72,2, contacto 36,2%, compra 21,4%
+- Duenos de pyme: confianza 60, claridad 70,2, contacto 55,6%, compra 42,2%
+- Gerencia administrativa: confianza 60,2, claridad 76,4, contacto 49,4%, compra 35,2%
+- Responsables TI: confianza 65,6, claridad 68,6, contacto 44,8%, compra 33,6%
+
+OBJECIONES PRINCIPALES
+- Necesito una prueba mas concreta de capacidad: 6
+- Me preocupa compartir informacion: 4
+- Quiero entender mejor la diferencia entre servicios: 4
+- Necesito aprobacion interna: 3
+- Necesito conocer el rango de precio: 3
+- No tengo urgencia en este momento: 3
+- Prefiero hablar primero por telefono: 2
+
+SERVICIOS ELEGIDOS
+- Pruebas autorizadas: 9
+- Hardening: 6
+- Informes tecnicos: 5
+- Diagnostico de seguridad: 4
+- Simulacros de seguridad: 1
+
+RECOMENDACIONES
+- Dar mayor visibilidad a la autoevaluacion publica y al informe demostrativo.
+- Repetir la advertencia de no compartir secretos junto a cada campo libre.
+- Mantener visible el orientador y comparar los servicios con lenguaje no tecnico.
+- Reforzar la guia para justificar la inversion ante direccion.
+- Explicar variables de precio y mostrar un punto de partida orientativo sin prometer cotizacion.
+
+AVISO
+Este tribunal es una simulacion determinista. No sustituye compradores, usuarios ni pruebas humanas reales.

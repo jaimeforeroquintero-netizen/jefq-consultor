@@ -1,0 +1,22 @@
+PLAN DE TRAZABILIDAD JEFQ
+
+Eventos recomendados:
+- click_whatsapp
+- click_telefono
+- inicio_valoracion
+- valoracion_completada
+- ver_informe_demostrativo
+- ver_servicio
+- ver_planes
+- descarga_recurso
+- faq_expandida
+- scroll_75
+
+Dimensiones sugeridas:
+- pagina
+- ubicacion_cta
+- servicio
+- origen
+- campana
+
+Este archivo es un plan de medicion. La activacion final debe verificarse en el panel de Vercel Analytics y respetar la politica de tratamiento de datos.

@@ -1,0 +1,81 @@
+JEFQ CONSULTOR - SEO AUTHORITY V1
+Generado: 2026-10-02 17:32:23
+Páginas compiladas: 46
+Archivos modificados: 10
+Enlaces internos no resueltos: 0
+Rutas huérfanas: 61
+Titles > 65 caracteres: 5
+
+RUTAS HUÉRFANAS
+- /auditoria-ciberseguridad-pyme/
+- /blog/
+- /blog/checklist-hardening-windows-11/
+- /blog/como-proteger-pyme-colombia/
+- /blog/como-saber-si-pyme-necesita-evaluacion-seguridad
+- /blog/como-saber-si-pyme-necesita-evaluacion-seguridad/
+- /blog/copias-seguridad-empresa/
+- /blog/errores-configuracion-microsoft-365-pyme
+- /blog/errores-configuracion-microsoft-365-pyme/
+- /blog/phishing-empresarial-senales/
+- /blog/que-debe-incluir-informe-seguridad-pyme
+- /blog/que-debe-incluir-informe-seguridad-pyme/
+- /blog/seguridad-microsoft-365-pyme/
+- /ciberseguridad-bogota
+- /ciberseguridad-bogota/
+- /ciberseguridad-colombia
+- /ciberseguridad-colombia/
+- /cobertura/barranquilla
+- /cobertura/barranquilla/
+- /cobertura/bogota
+- /cobertura/bogota/
+- /cobertura/bucaramanga
+- /cobertura/bucaramanga/
+- /cobertura/cali
+- /cobertura/cali/
+- /cobertura/cartagena
+- /cobertura/cartagena/
+- /cobertura/manizales
+- /cobertura/manizales/
+- /cobertura/medellin
+- /cobertura/medellin/
+- /cobertura/pereira
+- /cobertura/pereira/
+- /como-trabajamos/
+- /consultor-ciberseguridad-bogota
+- /consultor-ciberseguridad-bogota/
+- /consultoria-ciberseguridad-colombia/
+- /diagnostico-seguridad-bogota/
+- /googlea6ac94ce881db7ed
+- /googlea6ac94ce881db7ed/
+- /hardening-windows-colombia/
+- /informe-demostrativo/
+- /por-que-jefq
+- /por-que-jefq/
+- /preguntas-frecuentes/
+- /privacidad/
+- /pruebas-seguridad-autorizadas/
+- /quien-soy/
+- /recursos/
+- /recursos/checklist-seguridad-pyme/
+- /seguridad-autorizacion-alcance/
+- /servicios/
+- /servicios/acompanamiento-remediacion/
+- /servicios/diagnostico-seguridad/
+- /servicios/hardening/
+- /servicios/informes-tecnicos/
+- /servicios/pruebas-autorizadas/
+- /servicios/simulacros-seguridad/
+- /terminos/
+- /tratamiento-datos/
+- /valoracion/
+
+TITLES LARGOS
+- 67: Checklist de hardening para Windows 11 en empresas | JEFQ Consultor
+- 74: Cómo fortalecer la ciberseguridad de una pyme en Colombia | JEFQ Consultor
+- 74: Copias de seguridad empresariales: qué conviene verificar | JEFQ Consultor
+- 69: Señales de phishing empresarial que conviene revisar | JEFQ Consultor
+- 72: Consultoría de ciberseguridad para empresas en Colombia | JEFQ Consultor
+
+ENLACES NO RESUELTOS
+
+Backup: C:\Users\Andres Mauricio FQ\Documents\JEFQ-Ciberseguridad\.jefq-backups\seo-authority-v1-20261002-173207

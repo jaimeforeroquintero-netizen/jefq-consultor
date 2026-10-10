@@ -1,0 +1,307 @@
+/* JEFQ DISENO HIBRIDO V1
+   Capa visual aditiva y reversible. No cambia URLs, contenido ni logica. */
+:root {
+  --jefq-dark-primary: #0b1b2e;
+  --jefq-dark-secondary: #132a44;
+  --jefq-dark-card: #16304a;
+  --jefq-light-primary: #f4f7fa;
+  --jefq-light-secondary: #e8eff5;
+  --jefq-light-card: #ffffff;
+  --jefq-text-dark: #14202e;
+  --jefq-text-light: #f2f6fa;
+  --jefq-text-muted-dark: #4a5b6e;
+  --jefq-text-muted-light: #b8c7d9;
+  --jefq-tech: #0f9d8f;
+  --jefq-tech-light: #2dd4c4;
+  --jefq-trust: #1f5fbf;
+  --jefq-commercial: #f2a100;
+  --jefq-commercial-text: #1a1200;
+  --jefq-warning: #c9402f;
+  --jefq-radius: 1rem;
+  --jefq-shadow: 0 16px 40px rgba(11,27,46,.09), 0 2px 8px rgba(11,27,46,.05);
+}
+
+html { color-scheme: dark; }
+body {
+  background: var(--jefq-dark-primary);
+  color: var(--jefq-text-light);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+}
+
+p, li, label, input, select, textarea, button { font-size: max(1rem, 16px); }
+p, .section-intro, .readable-text, .article-content p { line-height: 1.65; }
+.section-intro, .article-content p, .landing-section > p { max-width: 68ch; }
+.section-label, .eyebrow, .helper-text, .form-help, small { font-size: max(.875rem, 14px); line-height: 1.45; }
+h1 { font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.08; }
+h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); line-height: 1.18; }
+h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); line-height: 1.3; }
+button, .button, input, select, textarea { min-height: 48px; }
+:focus-visible { outline: 3px solid var(--jefq-commercial); outline-offset: 3px; }
+
+/* Ritmo hibrido. Hero, contacto y footer permanecen oscuros. */
+main > section:not(.landing-hero):not(.dark-section):nth-of-type(even),
+main > .section:nth-of-type(even) {
+  background:
+    radial-gradient(circle at 92% 8%, rgba(15,157,143,.08), transparent 30rem),
+    var(--jefq-light-primary);
+  color: var(--jefq-text-dark);
+}
+main > section:not(.landing-hero):not(.dark-section):nth-of-type(odd),
+main > .section:nth-of-type(odd) {
+  background: var(--jefq-light-secondary);
+  color: var(--jefq-text-dark);
+}
+main > .landing-hero,
+main > .dark-section,
+main > section:has(form),
+footer {
+  background-color: var(--jefq-dark-primary);
+  color: var(--jefq-text-light);
+}
+
+/* Secciones claras: textos, etiquetas y enlaces */
+main > section:not(.landing-hero):not(.dark-section) p,
+main > section:not(.landing-hero):not(.dark-section) li { color: var(--jefq-text-muted-dark); }
+main > section:not(.landing-hero):not(.dark-section) h1,
+main > section:not(.landing-hero):not(.dark-section) h2,
+main > section:not(.landing-hero):not(.dark-section) h3,
+main > section:not(.landing-hero):not(.dark-section) strong { color: var(--jefq-text-dark); }
+main > section:not(.landing-hero):not(.dark-section) .section-label,
+main > section:not(.landing-hero):not(.dark-section) .eyebrow { color: var(--jefq-tech); }
+
+/* Tarjetas: menos contorno, mas aire y profundidad */
+.service-card, .plan-card, .deliverable-card, .step-card, .finding-card,
+.roadmap-card, .summary-card, .resource-card, .risk-card,
+.landing-two-columns > article, .landing-process > article, details {
+  border-color: rgba(31,95,191,.13) !important;
+  border-radius: var(--jefq-radius);
+  box-shadow: var(--jefq-shadow);
+}
+main > section:not(.landing-hero):not(.dark-section) :is(.service-card,.plan-card,.deliverable-card,.step-card,.finding-card,.roadmap-card,.summary-card,.resource-card,.risk-card,.landing-two-columns > article,.landing-process > article,details) {
+  background: var(--jefq-light-card) !important;
+  color: var(--jefq-text-dark) !important;
+}
+main > section:not(.landing-hero):not(.dark-section) :is(.service-card,.plan-card,.deliverable-card,.step-card,.finding-card,.roadmap-card,.summary-card,.resource-card,.risk-card,.landing-two-columns > article,.landing-process > article,details) p,
+main > section:not(.landing-hero):not(.dark-section) :is(.service-card,.plan-card,.deliverable-card,.step-card,.finding-card,.roadmap-card,.summary-card,.resource-card,.risk-card,.landing-two-columns > article,.landing-process > article,details) li {
+  color: var(--jefq-text-muted-dark) !important;
+}
+.service-card, .plan-card, .resource-card, .risk-card { padding: clamp(1.25rem, 2.5vw, 2rem); }
+.service-card p, .plan-card p, .resource-card p, .risk-card p { font-size: 1.0625rem; line-height: 1.58; }
+
+/* CTA principal */
+.button.primary, button[type='submit'], input[type='submit'] {
+  background: var(--jefq-commercial) !important;
+  color: var(--jefq-commercial-text) !important;
+  border-color: transparent !important;
+  box-shadow: 0 10px 28px rgba(242,161,0,.22);
+  font-weight: 700;
+}
+.button.primary:hover, button[type='submit']:hover, input[type='submit']:hover { filter: brightness(1.04); transform: translateY(-1px); }
+.button.secondary { border-color: rgba(31,95,191,.35); }
+
+/* Plan recomendado */
+.plan-card.featured, .plan-card.recommended, [data-featured='true'] {
+  border: 2px solid color-mix(in srgb, var(--jefq-commercial) 72%, transparent) !important;
+  transform: translateY(-4px);
+}
+
+/* Formularios legibles */
+input, select, textarea {
+  font-size: 1rem !important;
+  line-height: 1.5;
+  border-radius: .75rem;
+}
+.form-help, .sensitive-warning, .helper-text { font-size: .875rem !important; }
+
+/* Footer */
+footer p, footer li, footer a { color: var(--jefq-text-muted-light); }
+footer a:hover { color: var(--jefq-tech-light); }
+
+@media (min-width: 900px) {
+  body { font-size: 1.125rem; }
+}
+@media (max-width: 720px) {
+  body { font-size: 1.0625rem; }
+  .service-grid, .plans-grid, .cards-grid { grid-template-columns: 1fr !important; }
+  .service-card, .plan-card, .resource-card, .risk-card { padding: 1.25rem; }
+  .hero-chips, .micro-cards { display: none !important; }
+  h1 { font-size: clamp(2.25rem, 11vw, 3rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
+
+/* JEFQ AJUSTE VISUAL FINO V2 - INICIO
+   Ajuste quirurgico: titulos proporcionados, textos pequenos legibles
+   y superficies claras en gris azulado. */
+:root {
+  --jefq-light-primary: #e6eef4;
+  --jefq-light-secondary: #dce7f0;
+  --jefq-light-card: #f8fbfd;
+  --jefq-text-muted-dark: #3f5266;
+}
+
+/* El cuerpo conserva 17 px en movil y 18 px en escritorio. */
+body {
+  font-size: 1.0625rem !important;
+  line-height: 1.65;
+}
+
+/* El H1 sigue teniendo impacto, pero deja respirar el primer pantallazo. */
+h1,
+.hero h1,
+.landing-hero h1 {
+  font-size: clamp(2.5rem, 4.2vw, 3.35rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+/* Textos de lectura y descripciones: minimo practico de 17 px. */
+p,
+li,
+label,
+.section-intro,
+.readable-text,
+.article-content p,
+.service-card p,
+.plan-card p,
+.resource-card p,
+.risk-card p,
+.landing-summary span,
+.landing-list li,
+.landing-process p,
+details p {
+  font-size: max(1.0625rem, 17px) !important;
+  line-height: 1.62 !important;
+}
+
+/* Microtexto legible sin competir con los encabezados. */
+.section-label,
+.eyebrow,
+.helper-text,
+.form-help,
+.sensitive-warning,
+small,
+.meta,
+.card-meta {
+  font-size: max(0.9375rem, 15px) !important;
+  line-height: 1.5 !important;
+}
+
+/* Superficies claras menos blancas y tarjetas con contraste suave. */
+main > section:not(.landing-hero):not(.dark-section):nth-of-type(even),
+main > .section:nth-of-type(even) {
+  background:
+    radial-gradient(circle at 92% 8%, rgba(15,157,143,.07), transparent 30rem),
+    var(--jefq-light-primary) !important;
+}
+main > section:not(.landing-hero):not(.dark-section):nth-of-type(odd),
+main > .section:nth-of-type(odd) {
+  background: var(--jefq-light-secondary) !important;
+}
+main > section:not(.landing-hero):not(.dark-section) :is(
+  .service-card,.plan-card,.deliverable-card,.step-card,.finding-card,
+  .roadmap-card,.summary-card,.resource-card,.risk-card,
+  .landing-two-columns > article,.landing-process > article,details
+) {
+  background: var(--jefq-light-card) !important;
+}
+
+/* Un poco mas de aire sin agrandar en exceso la pagina. */
+.service-card,
+.plan-card,
+.resource-card,
+.risk-card {
+  padding: clamp(1.35rem, 2.35vw, 1.85rem) !important;
+}
+
+@media (min-width: 900px) {
+  body { font-size: 1.125rem !important; }
+}
+
+@media (max-width: 720px) {
+  h1,
+  .hero h1,
+  .landing-hero h1 {
+    font-size: clamp(2.1rem, 9vw, 2.75rem) !important;
+    letter-spacing: -0.025em;
+  }
+  p,
+  li,
+  label,
+  .section-intro,
+  .service-card p,
+  .plan-card p,
+  .resource-card p,
+  .risk-card p {
+    font-size: max(1rem, 16px) !important;
+  }
+  .section-label,
+  .eyebrow,
+  .helper-text,
+  .form-help,
+  .sensitive-warning,
+  small {
+    font-size: max(0.875rem, 14px) !important;
+  }
+}
+/* JEFQ AJUSTE VISUAL FINO V2 - FIN */
+/* JEFQ BLOQUE CLARO AJUSTE V1 - INICIO */
+:root {
+  --jefq-light-primary: #d7e5ee;
+  --jefq-light-secondary: #cfdfeb;
+  --jefq-light-card: #f3f7fa;
+  --jefq-text-muted-dark: #405466;
+}
+
+/* Mejora el contraste en cualquier bloque claro, incluso si usa span o div. */
+main > section:not(.landing-hero):not(.dark-section) :is(p, li, dd, dt, span, div) {
+  text-shadow: none;
+}
+
+main > section:not(.landing-hero):not(.dark-section) :is(p, li, dd) {
+  color: #405466 !important;
+}
+
+main > section:not(.landing-hero):not(.dark-section) span:not(.section-label):not(.eyebrow):not(.step-number):not(.badge) {
+  color: #405466;
+}
+
+/* Enlaces y botones claros con texto oscuro legible. */
+main > section:not(.landing-hero):not(.dark-section) a:not(.button):not([class*='cta']) {
+  color: #173a59;
+  text-decoration-color: rgba(23, 58, 89, .35);
+}
+
+main > section:not(.landing-hero):not(.dark-section) .button.secondary,
+main > section:not(.landing-hero):not(.dark-section) a[class*='service-link'],
+main > section:not(.landing-hero):not(.dark-section) a[class*='discover'] {
+  background: rgba(255,255,255,.72) !important;
+  color: #14202e !important;
+  border-color: rgba(242,161,0,.58) !important;
+  box-shadow: 0 8px 24px rgba(11,27,46,.07);
+  font-weight: 700;
+}
+
+main > section:not(.landing-hero):not(.dark-section) .button.secondary:hover,
+main > section:not(.landing-hero):not(.dark-section) a[class*='service-link']:hover,
+main > section:not(.landing-hero):not(.dark-section) a[class*='discover']:hover {
+  background: #ffffff !important;
+  color: #0f1b2d !important;
+  border-color: #f2a100 !important;
+}
+
+/* Separadores visibles, sin volver al contraste duro anterior. */
+main > section:not(.landing-hero):not(.dark-section) {
+  border-color: rgba(31,95,191,.16);
+}
+
+@media (max-width: 720px) {
+  main > section:not(.landing-hero):not(.dark-section) :is(p, li, dd) {
+    color: #364b5f !important;
+  }
+}
+/* JEFQ BLOQUE CLARO AJUSTE V1 - FIN */

@@ -1,0 +1,134 @@
+/* JEFQ CASCADA DEFINITIVA V1: tarjetas oscuras de servicio con tokens y roles de color */
+.service-premium-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.service-premium-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto -8rem -12rem auto;
+  width: 26rem;
+  height: 26rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 181, 71, 0.16), transparent 68%);
+  pointer-events: none;
+}
+
+.service-security-note {
+  max-width: 48rem;
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.service-fit-grid,
+.service-timing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.service-fit-card,
+.service-timing-grid > article,
+.service-review-card {
+  --fg-title: var(--card-dark-title);
+  --fg-body: var(--card-dark-text);
+  border: 1px solid var(--card-dark-border);
+  border-radius: var(--radius);
+  color: var(--card-dark-text);
+  background: linear-gradient(145deg, var(--card-dark-bg-start), var(--card-dark-bg-end));
+  box-shadow: var(--shadow);
+}
+
+.service-fit-card,
+.service-timing-grid > article {
+  padding: clamp(1.5rem, 3vw, 2.4rem);
+}
+
+.service-fit-card--accent {
+  border-color: rgba(255, 181, 71, 0.52);
+}
+
+.service-fit-card h2,
+.service-timing-grid h2,
+.service-proof-grid h2 {
+  margin: 0.65rem 0 0.8rem;
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+  line-height: 1.08;
+  color: var(--card-dark-title);
+}
+
+.service-fit-card p,
+.service-timing-grid p,
+.service-proof-grid p,
+.service-review-card p {
+  color: var(--card-dark-text);
+}
+
+.service-review-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.service-review-card {
+  min-height: 11rem;
+  padding: 1.25rem;
+}
+
+.service-review-card strong {
+  display: inline-flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  border-radius: 999px;
+  --fg-title: var(--amber, #ffb547);
+  background: rgba(255, 181, 71, 0.12);
+  color: var(--amber, #ffb547);
+}
+
+.service-proof-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  align-items: center;
+  gap: 2rem;
+}
+
+.service-proof-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.service-proof-actions .button {
+  width: 100%;
+}
+
+.landing-actions--center {
+  justify-content: center;
+}
+
+@media (max-width: 980px) {
+  .service-review-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .service-proof-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .service-fit-grid,
+  .service-timing-grid,
+  .service-review-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-review-card {
+    min-height: auto;
+  }
+}

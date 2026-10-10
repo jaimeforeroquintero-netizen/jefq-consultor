@@ -1,0 +1,38 @@
+JEFQ CONSULTOR - PANEL DE CLIENTES SINTETICOS V1
+Generado: 2/10/2026 5:51:24 p. m.
+Sitio analizado: https://jefq-consultor.vercel.app
+Perfiles simulados: 100
+
+AVISO METODOLOGICO
+Los perfiles y puntuaciones son sinteticos y se generan con reglas deterministas. No son usuarios reales, no sustituyen pruebas humanas y no predicen conversiones reales.
+
+Puntuacion media sintetica: 74/100
+Contactaria: 64
+Consideraria contactar: 36
+No contactaria aun: 0
+
+OBJECIONES MAS FRECUENTES
+- Necesito aprobacion interna: 21
+- No entiendo la diferencia entre servicios: 15
+- Me preocupa compartir informacion: 14
+- Necesito saber el precio: 13
+- Prefiero hablar por telefono: 11
+
+SERVICIOS RECOMENDADOS
+- Diagnostico de seguridad: 56
+- Hardening: 30
+- Pruebas autorizadas: 14
+
+RUTAS PUBLICAS
+- /: HTTP 200
+- /servicios: HTTP 200
+- /servicios/diagnostico-seguridad: HTTP 200
+- /servicios/hardening: HTTP 200
+- /servicios/pruebas-autorizadas: HTTP 200
+- /informe-demostrativo: HTTP 200
+- /valoracion: HTTP 200
+- /preguntas-frecuentes: HTTP 200
+- /recursos: HTTP 200
+- /autoevaluacion-jefq: HTTP 200
+- /quien-soy: HTTP 200
+- /seguridad-autorizacion-alcance: HTTP 200

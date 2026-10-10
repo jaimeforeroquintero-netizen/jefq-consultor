@@ -1,0 +1,29 @@
+JEFQ CONSULTOR - ALCANCE Y REGLAS DE EJECUCION (BORRADOR)
+
+Objetivo: [OBJETIVO]
+Activos incluidos: [LISTA]
+Activos excluidos: [LISTA]
+Tecnicas permitidas: [LISTA]
+Tecnicas prohibidas: [LISTA]
+Ventanas: [FECHAS Y HORAS]
+Contactos de emergencia: [CLIENTE Y JEFQ]
+Origenes de prueba: [IP/DISPOSITIVOS]
+
+Criterios de detencion:
+- Degradacion o indisponibilidad inesperada.
+- Aparicion de datos personales o secretos fuera de lo previsto.
+- Evidencia de incidente activo.
+- Peticion del contacto autorizado.
+- Desviacion del alcance.
+
+Protocolo de escalamiento:
+1. Detener la actividad relevante.
+2. Preservar evidencia minima sin ampliar el acceso.
+3. Notificar por el canal acordado.
+4. Registrar hora, activo, actividad y respuesta.
+5. Reanudar solo con autorizacion documentada.
+
+Retencion y eliminacion de evidencias: [PLAZOS Y METODO].
+Entrega segura: [CANAL CIFRADO Y CONTROL DE ACCESO].
+
+REQUIERE ADECUACION TECNICA Y JURIDICA POR SERVICIO.

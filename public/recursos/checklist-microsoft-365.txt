@@ -1,0 +1,14 @@
+JEFQ CONSULTOR - CHECKLIST MICROSOFT 365 PARA PYMES
+
+1. Activar MFA en cuentas administrativas y usuarios.
+2. Separar cuentas administrativas de las cuentas de uso diario.
+3. Revisar reglas de reenvío y bandeja de entrada.
+4. Retirar cuentas, aplicaciones y sesiones que ya no sean necesarias.
+5. Limitar el uso de autenticación heredada.
+6. Revisar permisos de aplicaciones conectadas.
+7. Aplicar controles contra suplantación y phishing.
+8. Documentar roles administrativos y sus responsables.
+9. Revisar compartición externa de archivos y sitios.
+10. Establecer un procedimiento de respuesta ante cuenta comprometida.
+
+Material informativo. Las opciones disponibles dependen de licencias y configuración.

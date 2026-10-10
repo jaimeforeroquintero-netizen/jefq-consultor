@@ -1,0 +1,7 @@
+---
+import ServiceLanding from "../components/ServiceLanding.astro";
+import { servicePages } from "../data/service-pages";
+const service = servicePages.find((item) => item.slug === "hardening-windows-colombia");
+if (!service) throw new Error("No se encontro el servicio hardening-windows-colombia");
+---
+<ServiceLanding service={service} />

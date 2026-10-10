@@ -1,0 +1,154 @@
+{
+  "Generated": "2026-10-02T17:51:24.3178534-05:00",
+  "ProductionUrl": "https://jefq-consultor.vercel.app",
+  "SyntheticProfiles": 100,
+  "MethodologyNotice": "Simulacion determinista basada en reglas; no sustituye pruebas reales.",
+  "AverageScore": 74.0,
+  "WouldContact": 64,
+  "WouldConsider": 36,
+  "NotYet": 0,
+  "TopObjections": [
+    {
+      "Name": "Necesito aprobacion interna",
+      "Count": 21
+    },
+    {
+      "Name": "No entiendo la diferencia entre servicios",
+      "Count": 15
+    },
+    {
+      "Name": "Me preocupa compartir informacion",
+      "Count": 14
+    },
+    {
+      "Name": "Necesito saber el precio",
+      "Count": 13
+    },
+    {
+      "Name": "Prefiero hablar por telefono",
+      "Count": 11
+    }
+  ],
+  "RecommendedServices": [
+    {
+      "Name": "Diagnostico de seguridad",
+      "Count": 56
+    },
+    {
+      "Name": "Hardening",
+      "Count": 30
+    },
+    {
+      "Name": "Pruebas autorizadas",
+      "Count": 14
+    }
+  ],
+  "Signals": {
+    "HasServices": true,
+    "HasReport": true,
+    "HasValuation": true,
+    "HasAuthorization": true,
+    "HasPrivacyWarning": true,
+    "HasResources": true,
+    "HasHumanIdentity": true,
+    "UsesVercelDomain": true
+  },
+  "PageAudit": [
+    {
+      "Path": "/",
+      "Uri": "https://jefq-consultor.vercel.app/",
+      "StatusCode": 200,
+      "Ok": true,
+      "TextLength": 10767,
+      "Error": ""
+    },
+    {
+      "Path": "/servicios",
+      "Uri": "https://jefq-consultor.vercel.app/servicios",
+      "StatusCode": 200,
+      "Ok": true,
+      "TextLength": 2574,
+      "Error": ""
+    },
+    {
+      "Path": "/servicios/diagnostico-seguridad",
+      "Uri": "https://jefq-consultor.vercel.app/servicios/diagnostico-seguridad",
+      "StatusCode": 200,
+      "Ok": true,
+      "TextLength": 2924,
+      "Error": ""
+    },
+    {
+      "Path": "/servicios/hardening",
+      "Uri": "https://jefq-consultor.vercel.app/servicios/hardening",
+      "StatusCode": 200,
+      "Ok": true,
+      "TextLength": 2897,
+      "Error": ""
+    },
+    {
+      "Path": "/servicios/pruebas-autorizadas",
+      "Uri": "https://jefq-consultor.vercel.app/servicios/pruebas-autorizadas",
+      "StatusCode": 200,
+      "Ok": true,
+      "TextLength": 2851,
+      "Error": ""
+    },
+    {
+      "Path": "/informe-demostrativo",
+      "Uri": "https://jefq-consultor.vercel.app/informe-demostrativo",
+      "StatusCode": 200,
+      "Ok": true,
+      "TextLength": 6222,
+      "Error": ""
+    },
+    {
+      "Path": "/valoracion",
+      "Uri": "https://jefq-consultor.vercel.app/valoracion",
+      "StatusCode": 200,
+      "Ok": true,
+      "TextLength": 2094,
+      "Error": ""
+    },
+    {
+      "Path": "/preguntas-frecuentes",
+      "Uri": "https://jefq-consultor.vercel.app/preguntas-frecuentes",
+      "StatusCode": 200,
+      "Ok": true,
+      "TextLength": 5788,
+      "Error": ""
+    },
+    {
+      "Path": "/recursos",
+      "Uri": "https://jefq-consultor.vercel.app/recursos",
+      "StatusCode": 200,
+      "Ok": true,
+      "TextLength": 2443,
+      "Error": ""
+    },
+    {
+      "Path": "/autoevaluacion-jefq",
+      "Uri": "https://jefq-consultor.vercel.app/autoevaluacion-jefq",
+      "StatusCode": 200,
+      "Ok": true,
+      "TextLength": 3591,
+      "Error": ""
+    },
+    {
+      "Path": "/quien-soy",
+      "Uri": "https://jefq-consultor.vercel.app/quien-soy",
+      "StatusCode": 200,
+      "Ok": true,
+      "TextLength": 2318,
+      "Error": ""
+    },
+    {
+      "Path": "/seguridad-autorizacion-alcance",
+      "Uri": "https://jefq-consultor.vercel.app/seguridad-autorizacion-alcance",
+      "StatusCode": 200,
+      "Ok": true,
+      "TextLength": 1985,
+      "Error": ""
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+---
+import ServiceLanding from "../components/ServiceLanding.astro";
+import { servicePages } from "../data/service-pages";
+const service = servicePages.find((item) => item.slug === "diagnostico-seguridad-bogota");
+if (!service) throw new Error("No se encontro el servicio diagnostico-seguridad-bogota");
+---
+<ServiceLanding service={service} />

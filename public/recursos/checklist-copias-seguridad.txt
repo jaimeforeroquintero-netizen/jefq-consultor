@@ -1,0 +1,14 @@
+JEFQ CONSULTOR - CHECKLIST DE COPIAS DE SEGURIDAD
+
+1. Identificar la información necesaria para continuar la operación.
+2. Mantener más de una copia y separar al menos una del entorno principal.
+3. Definir responsables y frecuencia de respaldo.
+4. Proteger las copias con cifrado y control de acceso.
+5. Registrar fallos y alertas del proceso.
+6. Probar restauraciones de forma programada.
+7. Documentar tiempos y resultados de recuperación.
+8. Evitar que una sola cuenta pueda eliminar todas las copias.
+9. Revisar retención y eliminación segura.
+10. Actualizar el plan cuando cambien aplicaciones o procesos.
+
+Material informativo. La existencia de una copia no garantiza una restauración correcta.

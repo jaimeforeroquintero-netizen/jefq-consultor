@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro";
+const steps = [
+["01","Valoración inicial","Comprendemos la organización, la necesidad y el resultado esperado."],
+["02","Alcance y autorización","Definimos activos, actividades permitidas, límites y entregables."],
+["03","Evaluación controlada","Trabajamos exclusivamente dentro de las condiciones acordadas."],
+["04","Documentación","Organizamos los resultados por relevancia, posible impacto y prioridad."],
+["05","Presentación y acompañamiento","Explicamos los hallazgos y orientamos los siguientes pasos."]];
+---
+<Layout title="Cómo trabajamos | JEFQ Consultor" description="Metodología clara, autorizada y documentada para servicios de ciberseguridad.">
+<section class="authority-hero"><div class="container authority-narrow"><span class="section-label">METODOLOGÍA</span><h1>Un proceso claro desde la valoración hasta los siguientes pasos</h1><p>Cada servicio comienza con un alcance definido, activos autorizados y entregables previstos.</p></div></section>
+<section class="authority-body"><div class="container authority-narrow"><div class="method-list">{steps.map(([n,t,d]) => <article><span>{n}</span><div><h2>{t}</h2><p>{d}</p></div></article>)}</div><p class="safe-note"><strong>Importante:</strong> no comparta contraseñas, códigos MFA, llaves privadas ni información sensible en la valoración inicial.</p><div class="authority-actions"><a class="button primary" href="/valoracion">Solicitar valoración inicial</a><a class="button secondary" href="/informe-demostrativo">Ver informe demostrativo</a></div></div></section></Layout>

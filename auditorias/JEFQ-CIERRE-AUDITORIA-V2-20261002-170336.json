@@ -1,0 +1,15 @@
+{
+  "project": "JEFQ Consultor",
+  "phase": "CIERRE AUDITORIA V2",
+  "updated": "2026-10-02T17:03:51.1152190-05:00",
+  "build": "OK",
+  "htmlPages": 42,
+  "internalLinks": 30,
+  "brokenInternalLinksDetected": 0,
+  "brokenInternalLinks": [],
+  "distBytes": 492956.0,
+  "securityTxt": true,
+  "socialMetadata": true,
+  "ctaNormalization": "Solicitar valoración hacia /valoracion; WhatsApp secundario",
+  "backup": "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\.jefq-backups\\cierre-auditoria-v2-20261002-170336"
+}

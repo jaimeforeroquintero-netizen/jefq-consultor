@@ -1,0 +1,24 @@
+{
+  "project": "JEFQ Consultor",
+  "phase": "EVIDENCIA REAL V1",
+  "timestamp": "2026-10-02T18:28:39.0060600-05:00",
+  "build": "OK",
+  "backup": "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\.jefq-backups\\evidencia-real-v1-20261002-182823",
+  "changed": [
+    "src\\pages\\autoevaluacion-jefq.astro",
+    "src\\pages\\laboratorio-jefq.astro",
+    "src\\pages\\mejoras-del-proyecto.astro",
+    "src\\components\\EvidenceRealStrip.astro",
+    "src\\styles\\evidencia-real-v1.css",
+    "public\\recursos\\jefq-autoevaluacion-publica-v2.txt",
+    "src\\layouts\\Layout.astro",
+    "src\\pages\\index.astro",
+    "JEFQ-ESTADO.json",
+    "JEFQ_CONTINUIDAD_TOTAL.md"
+  ],
+  "routes": [
+    "/autoevaluacion-jefq",
+    "/laboratorio-jefq",
+    "/mejoras-del-proyecto"
+  ]
+}

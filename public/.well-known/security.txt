@@ -1,0 +1,5 @@
+Contact: https://wa.me/573174832132
+Preferred-Languages: es
+Canonical: https://jefq-consultor.vercel.app/.well-known/security.txt
+Policy: https://jefq-consultor.vercel.app/seguridad-autorizacion-alcance
+Expires: 2027-10-02T23:59:59Z

@@ -1,0 +1,29 @@
+JEFQ CONSULTOR - ACTA DE CIERRE (BORRADOR)
+
+Cliente: [DATOS]
+Servicio: [SERVICIO]
+Periodo: [FECHAS]
+
+Entregables proporcionados:
+[LISTA]
+
+Hallazgos presentados:
+[RESUMEN]
+
+Pendientes y responsabilidades:
+[CLIENTE / JEFQ / TERCEROS]
+
+Evidencias:
+- Ubicacion segura: [REFERENCIA]
+- Fecha prevista de eliminacion: [FECHA]
+- Responsable: [PERSONA]
+
+Observaciones del cliente:
+[NOTAS]
+
+Cierre:
+Las partes dejan constancia de la entrega y de los pendientes indicados, sin que este documento implique garantia absoluta de seguridad.
+
+Firmas y fecha.
+
+REQUIERE REVISION JURIDICA ANTES DE USO.

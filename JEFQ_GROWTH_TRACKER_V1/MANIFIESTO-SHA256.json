@@ -1,0 +1,52 @@
+[
+  {
+    "path": "dashboard\\JEFQ-GROWTH-DASHBOARD.html",
+    "sha256": "49C088356EA2D391DF7E72023F0CA2D296E2F3518A1FB5CA812D030215595210",
+    "bytes": 5207
+  },
+  {
+    "path": "datos\\config.json",
+    "sha256": "15A7007B9610704C8657BFF3F60FBCC924A15585AADE8BDB2F5DA6C3D4167A1B",
+    "bytes": 732
+  },
+  {
+    "path": "datos\\eventos.csv",
+    "sha256": "561D1250D8D951CC827A9D6BD4D465CEB6825648F33FD2D3FD5F40002D05DED8",
+    "bytes": 56
+  },
+  {
+    "path": "datos\\leads.csv",
+    "sha256": "7F4E1024876B7AAAB54AD4C25692C4886CB6845D1378550F2455FB21CE62904B",
+    "bytes": 141
+  },
+  {
+    "path": "datos\\objeciones.csv",
+    "sha256": "F7948F9B6D7583F8168D083AF4C36BE57568FFE2799D5DB131DB7458B11B9286",
+    "bytes": 74
+  },
+  {
+    "path": "datos\\propuestas.csv",
+    "sha256": "41FA3F041F56385F7963BB2BC4D3F72D4A680B8E90BA6D1DD0777CF88C54F0ED",
+    "bytes": 82
+  },
+  {
+    "path": "datos\\seguimientos.csv",
+    "sha256": "1ABAD025E9B4AC98809F66665B9263E5D7B911695BC546FC79D40C08A1B4C053",
+    "bytes": 83
+  },
+  {
+    "path": "plantillas\\REGISTRO-RAPIDO-LEAD.txt",
+    "sha256": "5F3AEF918B651B9B7955646EA8B16368D2EAE148116D80EA25C2DDDBC2D8821E",
+    "bytes": 253
+  },
+  {
+    "path": "README-PRIMERO.txt",
+    "sha256": "158F06D4E6C3494E4425D35AEA88B2954F796A09978ABB9609336D94DA1C4A5F",
+    "bytes": 908
+  },
+  {
+    "path": "reportes\\estado-20261002-180336.json",
+    "sha256": "E31798442BB990248DBFE1AF68DB1D6568F85316C343C28DDF35A2109431DEA4",
+    "bytes": 1112
+  }
+]

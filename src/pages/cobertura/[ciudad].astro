@@ -1,0 +1,24 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { cities } from "../../data/conversion-data";
+export function getStaticPaths() {
+  return cities.map((city) => ({ params: { ciudad: city.slug }, props: { city } }));
+}
+const { city } = Astro.props;
+const whatsapp = `https://wa.me/573174832132?text=${encodeURIComponent(`Hola Jaime, quiero información sobre ciberseguridad para una organización en ${city.name}.`)}`;
+---
+<Layout title={`Ciberseguridad para empresas en ${city.name} | JEFQ Consultor`} description={`${city.intro} Atención remota con alcance controlado e informes accionables.`}>
+  <section class="local-hero"><div class="container conversion-narrow">
+    <span class="section-label">COBERTURA EN {city.region.toUpperCase()}</span>
+    <h1>Ciberseguridad para empresas en {city.name}</h1>
+    <p>{city.intro}</p>
+    <div class="hero-actions"><a class="button primary" href="/valoracion">Solicitar valoración</a><a class="button secondary" href={whatsapp} target="_blank" rel="noopener">Consultar por WhatsApp</a></div>
+  </div></section>
+  <section class="section"><div class="container local-grid">
+    <article><span>01</span><h2>Diagnóstico</h2><p>Revisión inicial de exposición, configuraciones y prioridades de mejora.</p></article>
+    <article><span>02</span><h2>Hardening</h2><p>Fortalecimiento de equipos, cuentas y configuraciones dentro del alcance autorizado.</p></article>
+    <article><span>03</span><h2>Informes</h2><p>Hallazgos organizados por prioridad, impacto, evidencia y acciones recomendadas.</p></article>
+    <article><span>04</span><h2>Acompañamiento</h2><p>Apoyo remoto para aplicar y verificar correcciones priorizadas.</p></article>
+  </div></section>
+  <section class="conversion-band"><div class="container"><span class="section-label">ATENCIÓN REMOTA EN COLOMBIA</span><h2>Definamos un alcance proporcional a su organización</h2><a class="button primary" href="/valoracion">Iniciar valoración</a></div></section>
+</Layout>

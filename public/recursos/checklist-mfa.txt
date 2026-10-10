@@ -1,0 +1,14 @@
+JEFQ CONSULTOR - CHECKLIST MFA PARA PYMES
+
+1. Activar MFA en correo, cuentas administrativas y banca empresarial.
+2. Preferir aplicaciones autenticadoras o llaves de seguridad cuando estén disponibles.
+3. Evitar depender exclusivamente de SMS para cuentas críticas.
+4. Conservar códigos de recuperación en un lugar seguro y separado.
+5. Revisar periódicamente dispositivos y sesiones activas.
+6. Retirar métodos de autenticación de personas que ya no pertenecen a la organización.
+7. No compartir códigos MFA por llamadas, chats o formularios.
+8. Documentar excepciones y establecer una fecha de corrección.
+9. Probar el proceso de recuperación antes de necesitarlo.
+10. Mantener un responsable para revisar altas, bajas y cambios.
+
+Material informativo. No sustituye una evaluación profesional.

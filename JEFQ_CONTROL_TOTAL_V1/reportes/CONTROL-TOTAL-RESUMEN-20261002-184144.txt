@@ -1,0 +1,9 @@
+JEFQ CONTROL TOTAL V1
+Generado: 2026-10-02 18:41:44
+Leads importados: 0
+Eventos importados: 0
+Propuestas importadas: 0
+Seguimientos importados: 0
+Dashboard: C:\Users\Andres Mauricio FQ\Documents\JEFQ-Ciberseguridad\JEFQ_CONTROL_TOTAL_V1\dashboard\JEFQ-CONTROL-TOTAL-DASHBOARD.html
+Snapshot: C:\Users\Andres Mauricio FQ\Documents\JEFQ-Ciberseguridad\JEFQ_CONTROL_TOTAL_V1\datos\CONTROL-TOTAL-SNAPSHOT-20261002-184144.json
+Backup: C:\Users\Andres Mauricio FQ\Documents\JEFQ-Ciberseguridad\.jefq-backups\control-total-v1-20261002-184144

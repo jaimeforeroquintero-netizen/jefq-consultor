@@ -1,0 +1,21 @@
+{
+  "package": "JEFQ_OPERACION_V1",
+  "generatedAt": "2026-10-02T17:14:19.5172594-05:00",
+  "project": "JEFQ Consultor",
+  "responsible": "Jaime Forero",
+  "publicSite": "https://jefq-consultor.vercel.app",
+  "status": "BORRADORES PARA REVISION PROFESIONAL",
+  "backup": "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\.jefq-backups\\operacion-v1-20261002-171419",
+  "files": [
+    "README-PRIMERO.md",
+    "01-PROPUESTA-COMERCIAL.md",
+    "02-NDA-BORRADOR.md",
+    "03-AUTORIZACION-PRUEBAS-BORRADOR.md",
+    "04-ALCANCE-Y-REGLAS-DE-EJECUCION.md",
+    "05-CHECKLIST-PREINTERVENCION.md",
+    "06-POLITICA-DE-EVIDENCIAS.md",
+    "07-ESTRUCTURA-INFORME-TECNICO.md",
+    "08-ACTA-DE-CIERRE.md",
+    "09-PROTOCOLO-DETENCION-ESCALAMIENTO.md"
+  ]
+}

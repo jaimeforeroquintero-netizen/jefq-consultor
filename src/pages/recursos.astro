@@ -1,0 +1,90 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const resources = [
+  {
+    href: "/recursos/checklist-seguridad-pyme",
+    eyebrow: "CHECKLIST",
+    title: "10 controles mínimos para una pyme",
+    text: "Una guía práctica para revisar cuentas, equipos, copias de seguridad y hábitos esenciales."
+  },
+  {
+    href: "/informe-demostrativo",
+    eyebrow: "EVIDENCIA",
+    title: "Informe demostrativo",
+    text: "Conozca la estructura de un entregable con hallazgos, prioridades y ruta de mejora."
+  },
+  {
+    href: "/blog",
+    eyebrow: "CONOCIMIENTO",
+    title: "Guías de ciberseguridad",
+    text: "Contenido práctico para comprender riesgos frecuentes y tomar mejores decisiones."
+  },
+  {
+    href: "/preguntas-frecuentes",
+    eyebrow: "RESPUESTAS",
+    title: "Preguntas frecuentes",
+    text: "Alcance, autorización, tiempos, entregables y condiciones generales de trabajo."
+  },
+  {
+    href: "/seguridad-autorizacion-alcance",
+    eyebrow: "CONTROL",
+    title: "Autorización y alcance",
+    text: "Revise cómo se establecen límites, permisos y condiciones antes de intervenir."
+  },
+  {
+    href: "/valoracion",
+    eyebrow: "SIGUIENTE PASO",
+    title: "Valoración orientativa",
+    text: "Defina un punto de partida sin compartir contraseñas ni información sensible."
+  }
+];
+---
+
+<Layout
+  title="Centro de recursos de ciberseguridad | JEFQ"
+  description="Recursos prácticos de JEFQ Consultor: checklist, informe demostrativo, blog, preguntas frecuentes y valoración orientativa."
+>
+  <section class="authority-hero">
+    <div class="container authority-hero-inner">
+      <span class="section-label">CENTRO DE RECURSOS</span>
+      <h1>Información útil para decidir con mayor claridad</h1>
+      <p>
+        Reúna en un solo lugar guías, ejemplos de entregables, respuestas frecuentes
+        y recursos para comprender el alcance de una intervención.
+      </p>
+    </div>
+  </section>
+
+  <section class="section authority-resources-section">
+    <div class="container">
+      <div class="authority-grid">
+        {resources.map((resource) => (
+          <article class="authority-card">
+            <span>{resource.eyebrow}</span>
+            <h2>{resource.title}</h2>
+            <p>{resource.text}</p>
+            <a href={resource.href}>Abrir recurso →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark-section authority-cta-section">
+    <div class="container authority-cta">
+      <div>
+        <span class="section-label">VALORACIÓN INICIAL</span>
+        <h2>Defina un punto de partida proporcional a su organización</h2>
+        <p>La valoración es orientativa y no requiere compartir secretos, contraseñas ni códigos MFA.</p>
+      </div>
+      <a class="button primary" href="/valoracion">Solicitar valoración</a>
+    </div>
+  </section>
+<section id="autoridad-real-recursos" class="section authority-resource-link">
+  <div class="container resource-next-step">
+    <div><p class="section-label">NUEVOS RECURSOS</p><h2>Checklists descargables para pymes</h2><p>Consulte guías prácticas sobre MFA, Microsoft 365, copias de seguridad, phishing y controles mínimos.</p></div>
+    <a class="button primary" href="/recursos/guias-practicas">Ver guías prácticas</a>
+  </div>
+</section>
+</Layout>

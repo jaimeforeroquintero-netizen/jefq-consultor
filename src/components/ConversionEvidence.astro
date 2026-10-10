@@ -1,0 +1,135 @@
+---
+const deliverables = [
+  {
+    title: "Alcance documentado",
+    text: "Para definir con precisión qué está incluido, qué queda fuera y bajo cuáles condiciones se desarrollará el servicio."
+  },
+  {
+    title: "Hallazgos priorizados",
+    text: "Para reconocer qué requiere atención inmediata y qué puede abordarse de forma progresiva."
+  },
+  {
+    title: "Resumen ejecutivo",
+    text: "Para facilitar decisiones de gestión sin perder el contexto de los riesgos observados."
+  },
+  {
+    title: "Informe técnico",
+    text: "Para conservar una referencia estructurada de observaciones, evidencias pertinentes y recomendaciones."
+  },
+  {
+    title: "Ruta de mejora",
+    text: "Para transformar los hallazgos en acciones inmediatas, prioritarias y de consolidación."
+  },
+  {
+    title: "Orientación posterior",
+    text: "Para comprender los siguientes pasos y valorar alternativas de fortalecimiento."
+  }
+];
+
+const steps = [
+  ["01", "Conversación inicial", "Comprendemos la necesidad, el contexto y el resultado que busca la organización."],
+  ["02", "Definición de alcance", "Acordamos activos, límites, condiciones y entregables previstos."],
+  ["03", "Propuesta orientativa", "Presentamos actividades, tiempos estimados y condiciones comerciales."],
+  ["04", "Evaluación autorizada", "Trabajamos únicamente dentro del alcance previamente aprobado."],
+  ["05", "Resultados", "Explicamos los hallazgos, la prioridad y las recomendaciones."],
+  ["06", "Opciones de mejora", "Definimos los siguientes pasos y, cuando aplica, el acompañamiento posterior."]
+];
+
+const limits = [
+  ["Autorización previa", "No realizamos actividades sobre activos no autorizados."],
+  ["Alcance definido", "Las intervenciones se limitan a las condiciones acordadas."],
+  ["Cambios controlados", "No aplicamos modificaciones fuera del alcance aprobado."],
+  ["Comunicación responsable", "No solicitamos contraseñas, códigos MFA ni llaves privadas por canales informales."],
+  ["Expectativas realistas", "No prometemos seguridad absoluta ni resultados imposibles de verificar."]
+];
+---
+
+<section class="ev-section" id="resultados-y-entregables" aria-labelledby="ev-deliverables-title">
+  <div class="container">
+    <header class="ev-heading" data-reveal>
+      <span class="ev-eyebrow">RESULTADOS Y ENTREGABLES</span>
+      <h2 id="ev-deliverables-title">Lo que recibirá con cada intervención</h2>
+      <p>
+        Cada organización tiene necesidades distintas. El propósito común es convertir
+        observaciones técnicas en decisiones comprensibles y acciones priorizadas.
+      </p>
+    </header>
+
+    <div class="ev-deliverables-grid">
+      {deliverables.map((item, index) => (
+        <article class="ev-card" data-reveal>
+          <span class="ev-card-index">{String(index + 1).padStart(2, "0")}</span>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="ev-report-cta" data-reveal>
+      <div>
+        <span class="ev-eyebrow">EVIDENCIA DEL ENTREGABLE</span>
+        <h3>Conozca la estructura de un informe representativo</h3>
+        <p>Una muestra ilustrativa para visualizar el nivel de detalle, la priorización y la ruta de mejora.</p>
+      </div>
+      <a class="button primary" href="/informe-demostrativo">Ver informe demostrativo</a>
+    </div>
+  </div>
+</section>
+
+<section class="ev-section ev-section-soft" id="despues-de-la-valoracion" aria-labelledby="ev-steps-title">
+  <div class="container">
+    <header class="ev-heading" data-reveal>
+      <span class="ev-eyebrow">PROCESO POSTERIOR</span>
+      <h2 id="ev-steps-title">Qué sucede después de solicitar una valoración</h2>
+      <p>
+        La valoración inicial permite comprender la necesidad y determinar si existe
+        un alcance apropiado para ambas partes.
+      </p>
+    </header>
+
+    <div class="ev-steps-grid">
+      {steps.map(([number, title, text]) => (
+        <article class="ev-step" data-reveal>
+          <span>{number}</span>
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="ev-section" id="limites-de-confianza" aria-labelledby="ev-limits-title">
+  <div class="container ev-limits-layout">
+    <header class="ev-heading ev-heading-left" data-reveal>
+      <span class="ev-eyebrow">LÍMITES QUE PROTEGEN AL CLIENTE</span>
+      <h2 id="ev-limits-title">Claridad antes de intervenir</h2>
+      <p>
+        La seguridad también consiste en establecer límites claros. Estas prácticas
+        protegen a la organización y mantienen cada servicio dentro de lo acordado.
+      </p>
+    </header>
+
+    <div class="ev-limits-list">
+      {limits.map(([title, text]) => (
+        <article data-reveal>
+          <span aria-hidden="true">✓</span>
+          <div>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="ev-trust-strip" aria-label="Señales de confianza">
+  <div class="container">
+    <span>Atención directa</span>
+    <span>Proceso definido</span>
+    <span>Resultados documentados</span>
+    <span>Intervenciones autorizadas</span>
+    <span>Cobertura nacional</span>
+  </div>
+</section>

@@ -1,0 +1,77 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { services, serviceBySlug } from "../../data/services";
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props;
+const related = service.related.map((slug: string) => serviceBySlug[slug]).filter(Boolean);
+const whatsapp = `https://wa.me/573174832132?text=${encodeURIComponent(`Hola Jaime, quiero solicitar información sobre ${service.title}.`)}`;
+---
+<Layout title={`${service.title} | JEFQ Consultor`} description={service.description}>
+  <section class="service-detail-hero">
+    <div class="service-detail-grid"></div>
+    <div class="service-detail-orb"></div>
+    <div class="container service-detail-layout">
+      <div class="service-detail-copy">
+        <span class="service-detail-label">{service.eyebrow}</span>
+        <h1>{service.title}</h1>
+        <p class="service-detail-lead">{service.description}</p>
+        <strong class="service-detail-promise">{service.promise}</strong>
+        <div class="hero-actions">
+          <a class="button primary" href="/valoracion">Solicitar valoración</a>
+          <a class="button secondary" href={whatsapp} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+        </div>
+      </div>
+      <div class="service-orbit" aria-hidden="true">
+        <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+        <div class="orbit-core">J</div><span class="orbit-node node-a"></span><span class="orbit-node node-b"></span><span class="orbit-node node-c"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section service-detail-section">
+    <div class="container service-detail-columns">
+      <article class="service-detail-card">
+        <span class="section-label">ALCANCE ORIENTATIVO</span><h2>Qué puede incluir</h2>
+        <ul>{service.includes.map((item: string) => <li><span>✓</span>{item}</li>)}</ul>
+      </article>
+      <article class="service-detail-card featured-detail-card">
+        <span class="section-label">ENTREGABLES</span><h2>Qué recibe</h2>
+        <ul>{service.deliverables.map((item: string) => <li><span>✓</span>{item}</li>)}</ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section dark-section">
+    <div class="container">
+      <header class="section-header"><span>PROCESO</span><h2>Una intervención clara y documentada</h2></header>
+      <div class="service-process-grid">
+        {service.process.map((step: {title:string;text:string}, index: number) => <article><strong>{String(index+1).padStart(2,"0")}</strong><h3>{step.title}</h3><p>{step.text}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="section-header"><span>CONTINUIDAD</span><h2>Servicios relacionados</h2></header>
+      <div class="related-service-grid">
+        {related.map((item: any) => <a href={`/servicios/${item.slug}`}><span>Explorar</span><h3>{item.title}</h3><p>{item.description}</p><strong>Conocer servicio →</strong></a>)}
+      </div>
+      <div class="service-final-cta"><div><span class="section-label">SIGUIENTE PASO</span><h2>Conozca su punto de partida</h2><p>Solicite una valoración inicial para definir alcance, tiempos y una cotización proporcional.</p></div><a class="button primary" href="/valoracion">Iniciar valoración</a></div>
+    </div>
+  </section>
+<section class="service-trust-links" aria-label="Recursos para decidir">
+  <div>
+    <p class="section-label">ANTES DE DECIDIR</p>
+    <h2>Conozca el entregable y las condiciones de trabajo</h2>
+    <p>Revise una muestra del informe y consulte cómo se define la autorización, el alcance y los límites de cada intervención.</p>
+    <div class="service-trust-actions">
+      <a class="button primary" href="/informe-demostrativo">Ver informe demostrativo</a>
+      <a class="button secondary" href="/seguridad-autorizacion-alcance">Autorización y alcance</a>
+    </div>
+  </div>
+</section>
+</Layout>

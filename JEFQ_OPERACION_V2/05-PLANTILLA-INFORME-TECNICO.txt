@@ -1,0 +1,26 @@
+JEFQ CONSULTOR - PLANTILLA DE INFORME TECNICO
+
+1. Portada y clasificacion de confidencialidad
+2. Control de versiones
+3. Alcance autorizado
+4. Exclusiones y limitaciones
+5. Periodo de evaluacion
+6. Metodologia
+7. Resumen ejecutivo
+8. Escala de severidad definida
+9. Resumen de hallazgos
+10. Hallazgos detallados
+    - Identificador
+    - Activo
+    - Situacion observada
+    - Evidencia redactada
+    - Impacto
+    - Prioridad
+    - Recomendacion
+    - Beneficio esperado
+    - Estado
+11. Ruta de mejora
+12. Riesgos aceptados o excepciones
+13. Conclusiones
+14. Anexos
+15. Condiciones de retencion y eliminacion

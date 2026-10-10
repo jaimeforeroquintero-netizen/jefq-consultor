@@ -1,0 +1,25 @@
+JEFQ CONSULTOR - AUTORIZACION DE ACTIVIDADES DE SEGURIDAD (BORRADOR)
+
+Cliente y representante autorizado: [DATOS]
+Proveedor: [DATOS VERIFICADOS DE JEFQ]
+Vigencia: [INICIO Y FIN]
+
+Activos expresamente autorizados:
+[DOMINIOS, IP, CUENTAS, EQUIPOS, APLICACIONES Y PROPIETARIOS]
+
+Actividades permitidas:
+[LISTA PRECISA]
+
+Actividades prohibidas:
+[DENEGACION DE SERVICIO, INGENIERIA SOCIAL NO AUTORIZADA, PERSISTENCIA, EXFILTRACION, CAMBIOS PRODUCTIVOS U OTRAS]
+
+Condiciones:
+- La persona firmante declara estar facultada para autorizar.
+- Se identifican permisos de terceros cuando apliquen.
+- Se definen ventanas, origen de pruebas y contactos de emergencia.
+- Se establecen criterios de detencion inmediata.
+- Todo hallazgo fuera de alcance se comunica sin explotacion adicional.
+
+Firmas, cargos, identificacion, fecha y hora.
+
+NO USAR SIN REVISION JURIDICA Y VALIDACION DE TITULARIDAD DE LOS ACTIVOS.

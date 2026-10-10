@@ -1,0 +1,14 @@
+{
+  "generated": "2026-10-02T18:03:36.7989857-05:00",
+  "projectRoot": "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad",
+  "files": [
+    "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_GROWTH_TRACKER_V1\\datos\\leads.csv",
+    "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_GROWTH_TRACKER_V1\\datos\\eventos.csv",
+    "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_GROWTH_TRACKER_V1\\datos\\seguimientos.csv",
+    "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_GROWTH_TRACKER_V1\\datos\\objeciones.csv",
+    "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_GROWTH_TRACKER_V1\\datos\\propuestas.csv",
+    "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_GROWTH_TRACKER_V1\\dashboard\\JEFQ-GROWTH-DASHBOARD.html"
+  ],
+  "backup": "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\.jefq-backups\\growth-tracker-20261002-180336",
+  "log": "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\logs\\growth-tracker-20261002-180336.log"
+}

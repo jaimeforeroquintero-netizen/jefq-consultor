@@ -1,0 +1,47 @@
+JEFQ CONSULTOR - AUDITORIA VISUAL Y LEGIBILIDAD V1
+Generada: 2/10/2026 6:55:15 p. m.
+URL: https://jefq-consultor.vercel.app
+
+Vistas auditadas: 28
+Capturas desktop: 14
+Capturas movil: 14
+Cargas fallidas: 0
+Nodos de texto visibles analizados: 3324
+Textos menores de 13 px: 1130
+Textos menores de 14 px: 1392
+Textos menores de 16 px: 1660
+
+RUTAS Y ESTADO
+desktop | / | HTTP 200 | 
+desktop | /servicios | HTTP 200 | 
+desktop | /servicios/diagnostico-seguridad | HTTP 200 | 
+desktop | /servicios/hardening | HTTP 200 | 
+desktop | /servicios/pruebas-autorizadas | HTTP 200 | 
+desktop | /informe-demostrativo | HTTP 200 | 
+desktop | /valoracion | HTTP 200 | 
+desktop | /quien-soy | HTTP 200 | 
+desktop | /como-trabajamos | HTTP 200 | 
+desktop | /preguntas-frecuentes | HTTP 200 | 
+desktop | /recursos | HTTP 200 | 
+desktop | /autoevaluacion-jefq | HTTP 200 | 
+desktop | /laboratorio-jefq | HTTP 200 | 
+desktop | /orientacion-de-servicios | HTTP 200 | 
+mobile | / | HTTP 200 | 
+mobile | /servicios | HTTP 200 | 
+mobile | /servicios/diagnostico-seguridad | HTTP 200 | 
+mobile | /servicios/hardening | HTTP 200 | 
+mobile | /servicios/pruebas-autorizadas | HTTP 200 | 
+mobile | /informe-demostrativo | HTTP 200 | 
+mobile | /valoracion | HTTP 200 | 
+mobile | /quien-soy | HTTP 200 | 
+mobile | /como-trabajamos | HTTP 200 | 
+mobile | /preguntas-frecuentes | HTTP 200 | 
+mobile | /recursos | HTTP 200 | 
+mobile | /autoevaluacion-jefq | HTTP 200 | 
+mobile | /laboratorio-jefq | HTTP 200 | 
+mobile | /orientacion-de-servicios | HTTP 200 | 
+
+INTERPRETACION
+- Esta auditoria genera evidencia visual actual, no deducciones desde HTML.
+- Revise la galeria antes de aplicar el parche opcional.
+- El parche seguro solo mejora legibilidad y aclara el azul base; no cambia arquitectura ni contenido.

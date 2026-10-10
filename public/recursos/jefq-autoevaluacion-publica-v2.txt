@@ -1,0 +1,25 @@
+JEFQ CONSULTOR - AUTOEVALUACION PUBLICA V2
+
+ALCANCE
+- Presencia publica del sitio.
+- Navegacion y rutas.
+- Formularios y advertencias.
+- Continuidad tecnica y despliegue.
+- Transparencia de escenarios ilustrativos.
+
+LIMITES
+- No incluye activos privados.
+- No incluye cuentas internas.
+- No incluye pruebas intrusivas.
+- No equivale a una certificacion.
+- No representa resultados de clientes.
+
+PRINCIPIOS
+1. Alcance definido.
+2. Evidencia redactada.
+3. Prioridad explicita.
+4. Accion de mejora.
+5. Revision continua.
+
+Sitio: https://jefq-consultor.vercel.app/autoevaluacion-jefq
+Laboratorio: https://jefq-consultor.vercel.app/laboratorio-jefq

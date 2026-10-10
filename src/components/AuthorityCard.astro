@@ -1,0 +1,13 @@
+---
+interface Props {
+  title: string;
+  text: string;
+  icon?: string;
+}
+const { title, text, icon = "◆" } = Astro.props;
+---
+<article class="f-authority-card">
+  <span class="f-authority-icon" aria-hidden="true">{icon}</span>
+  <h2>{title}</h2>
+  <p>{text}</p>
+</article>

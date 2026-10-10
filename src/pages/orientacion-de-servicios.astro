@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+<Layout title="Orientación de servicios | JEFQ Consultor" description="Identifique qué servicio de JEFQ puede ser un punto de partida adecuado para su organización.">
+  <section class="commercial-hero"><div class="container"><span class="section-label">ORIENTACIÓN COMERCIAL</span><h1>Encuentre un punto de partida claro</h1><p class="commercial-intro">Responda tres preguntas generales. La orientación no constituye una cotización ni requiere información sensible.</p></div></section>
+  <section class="section"><div class="container">
+    <form id="service-chooser" class="commercial-form">
+      <fieldset><legend>1. ¿Cuál describe mejor la necesidad?</legend><div class="commercial-options">
+        <label class="commercial-option"><input type="radio" name="need" value="vision" required> No tenemos una visión clara de los riesgos</label>
+        <label class="commercial-option"><input type="radio" name="need" value="strengthen"> Necesitamos fortalecer equipos y configuraciones</label>
+        <label class="commercial-option"><input type="radio" name="need" value="validate"> Necesitamos validar controles o exposición</label>
+        <label class="commercial-option"><input type="radio" name="need" value="report"> Necesitamos documentar y priorizar hallazgos</label>
+      </div></fieldset>
+      <fieldset><legend>2. ¿Cuántos activos podrían entrar en el alcance?</legend><div class="commercial-options">
+        <label class="commercial-option"><input type="radio" name="size" value="small" required> 1–5</label><label class="commercial-option"><input type="radio" name="size" value="medium"> 6–20</label><label class="commercial-option"><input type="radio" name="size" value="large"> 21–50</label><label class="commercial-option"><input type="radio" name="size" value="xlarge"> Más de 50</label>
+      </div></fieldset>
+      <fieldset><legend>3. ¿Existe una urgencia operativa?</legend><div class="commercial-options">
+        <label class="commercial-option"><input type="radio" name="urgency" value="normal" required> No, es preventivo</label><label class="commercial-option"><input type="radio" name="urgency" value="soon"> Debemos actuar pronto</label>
+      </div></fieldset>
+      <button class="button primary" type="submit">Ver orientación</button>
+      <p class="commercial-trust">No incluya contraseñas, códigos MFA, llaves privadas ni información explotable. Esta herramienta solo orienta el siguiente paso.</p>
+    </form>
+    <div id="chooser-result" class="commercial-result" hidden aria-live="polite"><span class="section-label">ORIENTACIÓN INICIAL</span><h2 id="result-title"></h2><p id="result-text"></p><div class="commercial-actions"><a id="result-link" class="button primary" href="/valoracion">Solicitar valoración</a><a class="button secondary" href="tel:+573174832132">Llamar al 317 483 2132</a></div></div>
+  </div></section>
+  <script>
+    const form=document.querySelector('#service-chooser'); const box=document.querySelector('#chooser-result');
+    const catalog={vision:['Diagnóstico de seguridad','Un punto de partida para comprender exposición, prioridades y próximos pasos.','/servicios/diagnostico-seguridad'],strengthen:['Hardening','Adecuado para fortalecer equipos, cuentas y configuraciones dentro de un alcance acordado.','/servicios/hardening'],validate:['Pruebas autorizadas','Permite validar controles o exposición con autorización expresa y reglas de ejecución.','/servicios/pruebas-autorizadas'],report:['Informes técnicos','Ayuda a documentar observaciones, priorizar decisiones y preparar una ruta de mejora.','/servicios/informes-tecnicos']};
+    form?.addEventListener('submit',(event)=>{event.preventDefault();const data=new FormData(form);const need=String(data.get('need'));const selected=catalog[need]||catalog.vision;document.querySelector('#result-title').textContent=selected[0];document.querySelector('#result-text').textContent=selected[1];document.querySelector('#result-link').setAttribute('href',selected[2]);box.hidden=false;box.scrollIntoView({behavior:'smooth',block:'center'});});
+  </script>
+</Layout>

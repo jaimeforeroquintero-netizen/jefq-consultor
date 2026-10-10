@@ -1,0 +1,40 @@
+JEFQ CONSULTOR - PROPUESTA COMERCIAL (BORRADOR)
+
+Cliente: [NOMBRE]
+Fecha: [FECHA]
+Vigencia de la propuesta: [DIAS]
+Servicio: [SERVICIO]
+
+1. Contexto y objetivo
+[DESCRIPCION GENERAL SIN SECRETOS]
+
+2. Alcance propuesto
+- Activos incluidos: [LISTA]
+- Actividades incluidas: [LISTA]
+- Entregables: [LISTA]
+- Ventanas de trabajo: [HORARIOS]
+
+3. Exclusiones
+[ACTIVOS, TECNICAS Y ACTIVIDADES NO INCLUIDAS]
+
+4. Condiciones previas
+- Autorizacion firmada por persona facultada.
+- Confirmacion de titularidad o permiso sobre activos.
+- Contactos de emergencia.
+- Copias y medidas de recuperacion cuando apliquen.
+
+5. Honorarios e impuestos
+Valor: [VALOR]
+Impuestos aplicables: [CONFIRMAR]
+Forma de pago: [CONDICIONES]
+
+6. Programacion orientativa
+[ETAPAS Y FECHAS]
+
+7. Confidencialidad y datos
+Se aplicaran las obligaciones acordadas en el NDA y en la documentacion contractual revisada.
+
+8. Aceptacion
+Nombre, cargo, firma y fecha de las partes.
+
+REQUIERE REVISION JURIDICA Y CONTABLE ANTES DE USO.

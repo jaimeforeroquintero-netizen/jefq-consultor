@@ -1,0 +1,14 @@
+JEFQ CONSULTOR - CHECKLIST BÁSICO CONTRA PHISHING
+
+1. Confirmar solicitudes urgentes por un segundo canal.
+2. Verificar cuidadosamente remitente, dominio y enlaces.
+3. No abrir adjuntos inesperados sin validación.
+4. Desconfiar de cambios de cuenta bancaria enviados solo por correo.
+5. No compartir contraseñas ni códigos MFA.
+6. Reportar mensajes sospechosos sin reenviar contenido sensible.
+7. Mantener navegadores, correo y equipos actualizados.
+8. Usar MFA y contraseñas únicas.
+9. Definir un contacto interno para validar solicitudes financieras.
+10. Documentar y revisar incidentes para mejorar controles.
+
+Material informativo. Ante un posible compromiso, preserve evidencias y solicite apoyo apropiado.

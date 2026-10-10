@@ -1,0 +1,68 @@
+{
+  "Generated": "2026-10-02T17:51:24.3871637-05:00",
+  "BusinessRoot": "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_NEGOCIO_V2",
+  "ProductionUrl": "https://jefq-consultor.vercel.app",
+  "Files": [
+    {
+      "RelativePath": "README-PRIMERO.txt",
+      "Length": 772,
+      "SHA256": "150485C2E43BFCB9F7CF056DD6A296A472E9E99354C8B6277D40E2A8FD675DD5"
+    },
+    {
+      "RelativePath": "dashboard\\JEFQ-DASHBOARD-COMERCIAL.html",
+      "Length": 3646,
+      "SHA256": "54FD78B76D877E004F7D0078E004F8297D7DFAEBDA7414F2317A9AAC86645225"
+    },
+    {
+      "RelativePath": "datos\\eventos.csv",
+      "Length": 66,
+      "SHA256": "4B6E87F9CD9BF034C32280108E3804DDCAB442FAD3ACACDC79DD2929C601EC65"
+    },
+    {
+      "RelativePath": "datos\\leads.csv",
+      "Length": 133,
+      "SHA256": "04D20C3FCB7CACAE6439EAD39BA919D101BB4F887416C01EF52E86DFBB7E21E5"
+    },
+    {
+      "RelativePath": "datos\\pipeline-config.json",
+      "Length": 529,
+      "SHA256": "F744872E6C5569D8F357E964658A3B6B11B770A8BFB8695DDF8BCBAE82247B7E"
+    },
+    {
+      "RelativePath": "datos\\seguimientos.csv",
+      "Length": 67,
+      "SHA256": "2E250E7590E3E619101211675E74EBED226C7234A39FF6610E48CF0D4F27E949"
+    },
+    {
+      "RelativePath": "plantillas\\PLAN-ANALITICA.txt",
+      "Length": 462,
+      "SHA256": "22D92206CDB84DB8C000CF4D0A70C5C9D2AD82A22D6DF4AC4FD97173CBA69958"
+    },
+    {
+      "RelativePath": "reportes\\clientes-sinteticos-20261002-175120.csv",
+      "Length": 13528,
+      "SHA256": "CB3FDA25576E90C17C7CBC093EDF74D809C3ABEB68F4C5E6ED4A68A08CC84632"
+    },
+    {
+      "RelativePath": "reportes\\estado-rutas-20261002-175120.csv",
+      "Length": 1242,
+      "SHA256": "733E2E23A10E200448C4CCCEC49CD9E989D149E6FCA96141ABEF81BD4740DA14"
+    },
+    {
+      "RelativePath": "reportes\\resultados-sinteticos-20261002-175120.csv",
+      "Length": 23509,
+      "SHA256": "8C106C7C1A23AAE7B277286BF036D8F51D00C07DCA066452EBF9C5D6A0DCD8AE"
+    },
+    {
+      "RelativePath": "reportes\\RESUMEN-CLIENTES-SINTETICOS-20261002-175120.json",
+      "Length": 3835,
+      "SHA256": "79E7FCB7ACA7A492F54A8088307E85318F3D10C4C97B95AA710A674BD9BD8C49"
+    },
+    {
+      "RelativePath": "reportes\\RESUMEN-CLIENTES-SINTETICOS-20261002-175120.txt",
+      "Length": 1187,
+      "SHA256": "0F665BD0AAA0DA407B8D35A1C9866452DED7FF269E3AAA4EA2DA1D2C1B6E58DE"
+    }
+  ],
+  "MasterSeedSHA256": "C3ABB2702D8E3BEB4B06092C40C8AED07423B55561C54305E54447CF2B6ED403"
+}

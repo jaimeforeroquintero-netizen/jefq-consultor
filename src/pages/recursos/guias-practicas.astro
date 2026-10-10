@@ -1,0 +1,40 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const resources = [
+  { title: "10 controles mínimos para una pyme", description: "Punto de partida para ordenar cuentas, equipos, copias, actualizaciones y respuesta.", download: "/recursos/checklist-seguridad-pyme-v2.txt" },
+  { title: "MFA para cuentas críticas", description: "Lista práctica para reducir el riesgo de acceso indebido y mejorar la recuperación.", download: "/recursos/checklist-mfa.txt" },
+  { title: "Copias de seguridad y restauración", description: "Controles para respaldar información y comprobar que realmente puede recuperarse.", download: "/recursos/checklist-copias-seguridad.txt" },
+  { title: "Microsoft 365 para pymes", description: "Medidas básicas para cuentas, permisos, aplicaciones, compartición y respuesta.", download: "/recursos/checklist-microsoft-365.txt" },
+  { title: "Prevención de phishing", description: "Señales y hábitos para reducir fraude, suplantación y robo de credenciales.", download: "/recursos/checklist-phishing.txt" }
+];
+---
+<Layout title="Recursos descargables de ciberseguridad | JEFQ Consultor" description="Checklists gratuitos y claros para fortalecer cuentas, equipos, Microsoft 365, copias de seguridad y prevención de phishing.">
+  <main class="authority-page">
+    <section class="authority-hero compact">
+      <div class="container">
+        <p class="section-label">RECURSOS JEFQ</p>
+        <h1>Material práctico para tomar mejores decisiones de seguridad</h1>
+        <p class="authority-lead">Checklists descargables, sin registro y sin solicitar información sensible. Úselos como punto de partida y adáptelos a la realidad de su organización.</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="authority-grid authority-grid-resources">
+          {resources.map((resource) => (
+            <article>
+              <span class="resource-format">TXT · DESCARGA DIRECTA</span>
+              <h2>{resource.title}</h2>
+              <p>{resource.description}</p>
+              <a class="button primary" href={resource.download} download data-jefq-event="descarga_recurso">Descargar checklist</a>
+            </article>
+          ))}
+        </div>
+        <div class="resource-next-step">
+          <div><p class="section-label">SIGUIENTE PASO</p><h2>Priorice los controles según su contexto</h2><p>Una lista general no reemplaza una valoración proporcional a los activos, riesgos y restricciones de la organización.</p></div>
+          <a class="button secondary" href="/valoracion" data-jefq-event="inicio_valoracion">Solicitar valoración</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

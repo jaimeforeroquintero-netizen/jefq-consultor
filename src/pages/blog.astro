@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { blogPosts } from "../data/growth-content";
+---
+<Layout title="Recursos de ciberseguridad para empresas | JEFQ Consultor" description="Guías prácticas sobre hardening, phishing, Microsoft 365, copias de seguridad y protección de pymes.">
+<section class="growth-hero"><div class="container"><span>RECURSOS JEFQ</span><h1>Guías prácticas de ciberseguridad</h1><p>Contenido educativo para tomar mejores decisiones sobre seguridad empresarial.</p></div></section>
+<section class="growth-section"><div class="container growth-grid">{blogPosts.map(post => <article class="growth-card"><span>{post.category} · {post.readingTime}</span><h2>{post.title}</h2><p>{post.description}</p><a href={`/blog/${post.slug}`}>Leer guía →</a></article>)}</div></section>
+
+  <!-- JEFQ-SEO-AUTHORITY-CONTEXT -->
+  <section class="section dark-section">
+    <div class="container authority-cta">
+      <div>
+        <span class="section-label">RECURSOS PARA DECIDIR</span>
+        <h2>Profundice antes de solicitar una valoración</h2>
+        <p>Consulte el informe demostrativo, la metodología, las preguntas frecuentes y el checklist de seguridad para pymes.</p>
+      </div>
+      <div class="authority-actions">
+        <a class="button primary" href="/recursos">Ver recursos</a>
+        <a class="button secondary" href="/valoracion">Solicitar valoración</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+<style>
+.growth-hero{padding:7rem 0 4rem;background:radial-gradient(circle at 80% 20%,rgba(37,215,255,.12),transparent 30rem)}.growth-hero span,.growth-card>span{color:#25d7ff;font-size:.75rem;font-weight:800;letter-spacing:.12em}.growth-hero h1{max-width:800px;margin:.8rem 0;font-size:clamp(2.7rem,7vw,5.5rem);line-height:1;letter-spacing:-.05em}.growth-hero p,.growth-card p{color:#9caec3}.growth-section{padding:4rem 0 7rem}.growth-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}.growth-card{padding:1.7rem;background:#0a1b30;border:1px solid rgba(117,170,216,.18);border-radius:20px}.growth-card h2{font-size:1.3rem}.growth-card a{color:#67f2ae;font-weight:800}@media(max-width:700px){.growth-grid{grid-template-columns:1fr}}
+</style>

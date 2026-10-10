@@ -1,0 +1,66 @@
+============================================================
+JEFQ CONSULTOR - AUDITORIA INTEGRAL DE PRODUCCION V1
+============================================================
+Generada: 2026-10-02 17:27:46
+Produccion: https://jefq-consultor.vercel.app
+Proyecto: C:\Users\Andres Mauricio FQ\Documents\JEFQ-Ciberseguridad
+
+RESUMEN
+- Build: OK
+- Paginas HTML: 42
+- Paginas con observaciones: 6
+- Enlaces internos no resueltos: 0
+- Rutas posiblemente huerfanas: 14
+- Comprobaciones publicas fallidas: 0
+- Robots: True
+- Sitemap: True
+- Security.txt: True
+- Tamano dist: 0.48 MB
+- CSS total: 51.46 KB
+- JS total: 0 KB
+
+ENLACES INTERNOS NO RESUELTOS
+- Ninguno
+
+RUTAS POSIBLEMENTE HUERFANAS
+- /ciberseguridad-bogota
+- /ciberseguridad-colombia
+- /cobertura/barranquilla
+- /cobertura/bogota
+- /cobertura/bucaramanga
+- /cobertura/cali
+- /cobertura/cartagena
+- /cobertura/manizales
+- /cobertura/medellin
+- /cobertura/pereira
+- /consultor-ciberseguridad-bogota
+- /googlea6ac94ce881db7ed.html
+- /por-que-jefq
+- /recursos/checklist-seguridad-pyme
+
+COMPROBACIONES PUBLICAS
+- 200 | https://jefq-consultor.vercel.app/ | OK
+- 200 | https://jefq-consultor.vercel.app/valoracion | OK
+- 200 | https://jefq-consultor.vercel.app/informe-demostrativo | OK
+- 200 | https://jefq-consultor.vercel.app/servicios | OK
+- 200 | https://jefq-consultor.vercel.app/servicios/diagnostico-seguridad | OK
+- 200 | https://jefq-consultor.vercel.app/servicios/hardening | OK
+- 200 | https://jefq-consultor.vercel.app/servicios/pruebas-autorizadas | OK
+- 200 | https://jefq-consultor.vercel.app/preguntas-frecuentes | OK
+- 200 | https://jefq-consultor.vercel.app/seguridad-autorizacion-alcance | OK
+- 200 | https://jefq-consultor.vercel.app/tratamiento-datos | OK
+- 200 | https://jefq-consultor.vercel.app/robots.txt | OK
+- 200 | https://jefq-consultor.vercel.app/sitemap-index.xml | OK
+- 200 | https://jefq-consultor.vercel.app/.well-known/security.txt | OK
+
+PAGINAS CON OBSERVACIONES
+- /blog/checklist-hardening-windows-11: Title superior a 65 caracteres
+- /blog/como-proteger-pyme-colombia: Title superior a 65 caracteres
+- /blog/copias-seguridad-empresa: Title superior a 65 caracteres
+- /blog/phishing-empresarial-senales: Title superior a 65 caracteres
+- /consultoria-ciberseguridad-colombia: Title superior a 65 caracteres
+- /googlea6ac94ce881db7ed.html: Sin title; Sin meta description; Sin canonical; Sin og:image; Cantidad H1: 0
+
+NOTA
+Esta auditoria es de solo lectura. No modifica codigo, no despliega y no restaura archivos.
+Revise los hallazgos antes de aplicar cambios.

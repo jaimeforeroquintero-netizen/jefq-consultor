@@ -1,0 +1,34 @@
+{
+  "project": "JEFQ Consultor",
+  "version": "Growth Tracker V1",
+  "generated": "2026-10-02T18:03:36.7771551-05:00",
+  "currency": "COP",
+  "leadStates": [
+    "Nuevo",
+    "Contactado",
+    "Reunion",
+    "Propuesta",
+    "Seguimiento",
+    "Ganado",
+    "Perdido"
+  ],
+  "objectionCategories": [
+    "Precio",
+    "Tiempo",
+    "Aprobacion interna",
+    "Confianza",
+    "No entiende el servicio",
+    "Competidor",
+    "Sin respuesta",
+    "Otro"
+  ],
+  "services": [
+    "Diagnostico de seguridad",
+    "Hardening",
+    "Pruebas autorizadas",
+    "Informes tecnicos",
+    "Simulacros de seguridad",
+    "Acompanamiento de remediacion"
+  ],
+  "publicSite": "https://jefq-consultor.vercel.app"
+}

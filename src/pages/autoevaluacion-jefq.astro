@@ -1,0 +1,59 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const observaciones = [
+  { area: "Identidad y navegación", prioridad: "Media", estado: "Mejorado", evidencia: "La navegación pública reúne servicios, metodología, recursos, autorización y valoración.", accion: "Revisar trimestralmente enlaces, jerarquía y coherencia del recorrido." },
+  { area: "Exposición pública", prioridad: "Alta", estado: "Controlado", evidencia: "El sitio publica únicamente información comercial y recursos preparados para divulgación.", accion: "Mantener separados los sistemas internos, credenciales y evidencias de clientes." },
+  { area: "Protección de solicitudes", prioridad: "Alta", estado: "Mejorado", evidencia: "Los formularios advierten que no deben enviarse contraseñas, códigos MFA, llaves privadas ni secretos.", accion: "Conservar esa advertencia junto a cada campo libre y definir canales seguros para fases posteriores." },
+  { area: "Continuidad técnica", prioridad: "Media", estado: "Operativo", evidencia: "El proyecto utiliza backups versionados, manifiestos SHA-256, build previo y final, rollback y despliegue controlado.", accion: "Probar periódicamente la restauración y conservar al menos un punto estable postdespliegue." },
+  { area: "Transparencia comercial", prioridad: "Baja", estado: "En evolución", evidencia: "Los escenarios, métricas e informes de muestra se identifican como ilustrativos.", accion: "Sustituir progresivamente hipótesis por aprendizajes y referencias auténticas cuando existan." }
+];
+---
+<Layout title="Autoevaluación pública V2 | JEFQ Consultor" description="Autoevaluación pública y no intrusiva de la presencia digital, el proceso y la continuidad técnica de JEFQ Consultor.">
+  <main class="evidence-page">
+    <section class="evidence-hero">
+      <div class="container">
+        <span class="evidence-stamp">AUTOEVALUACIÓN PÚBLICA V2 · MUESTRA DOCUMENTADA</span>
+        <p class="section-label">EVIDENCIA SOBRE LA PROPIA PRESENCIA DE JEFQ</p>
+        <h1>Aplicamos sobre nuestro proyecto el criterio que proponemos</h1>
+        <p class="evidence-lead">Esta revisión no certifica seguridad absoluta ni sustituye una evaluación independiente. Presenta un alcance público, observaciones verificables en el sitio y acciones de mejora que JEFQ mantiene abiertas.</p>
+        <div class="evidence-actions">
+          <a class="button primary" href="/laboratorio-jefq">Conocer el laboratorio</a>
+          <a class="button secondary" href="/mejoras-del-proyecto">Ver historial de mejoras</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container evidence-grid evidence-grid-3">
+        <article><span>01</span><h2>Alcance público</h2><p>Rutas, navegación, formularios, recursos, metadatos, continuidad y señales visibles de confianza.</p></article>
+        <article><span>02</span><h2>Límites</h2><p>No incluye sistemas privados, cuentas internas, pruebas intrusivas ni información de terceros.</p></article>
+        <article><span>03</span><h2>Criterio</h2><p>Cada observación se acompaña de prioridad, evidencia redactada y una acción de mejora.</p></article>
+      </div>
+    </section>
+
+    <section class="section dark-section">
+      <div class="container">
+        <header class="section-header"><span>RESULTADOS</span><h2>Observaciones públicas y acciones continuas</h2></header>
+        <div class="evidence-findings">
+          {observaciones.map((item, index) => (
+            <article>
+              <div class="evidence-finding-head"><span>{String(index + 1).padStart(2,"0")}</span><strong class:list={["priority", item.prioridad.toLowerCase()]}>{item.prioridad}</strong></div>
+              <h3>{item.area}</h3>
+              <p class="evidence-state">Estado: <strong>{item.estado}</strong></p>
+              <h4>Evidencia pública redactada</h4><p>{item.evidencia}</p>
+              <h4>Acción continua</h4><p>{item.accion}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container evidence-callout">
+        <div><p class="section-label">INTERPRETACIÓN RESPONSABLE</p><h2>La transparencia no reemplaza una auditoría independiente</h2><p>Esta página demuestra método, documentación y disposición a mejorar. No afirma que JEFQ esté libre de vulnerabilidades ni presenta resultados de clientes.</p></div>
+        <a class="button primary" href="/informe-demostrativo">Ver formato de entregable</a>
+      </div>
+    </section>
+  </main>
+</Layout>

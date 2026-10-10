@@ -1,0 +1,172 @@
+{
+  "generatedAt": "2026-10-02T18:41:44.5348963-05:00",
+  "project": "JEFQ Consultor",
+  "version": "Control Total V1",
+  "publicUrl": "https://jefq-consultor.vercel.app",
+  "leads": [],
+  "events": [],
+  "proposals": [],
+  "followups": [],
+  "tribunal": {
+    "Project": "JEFQ Consultor",
+    "GeneratedAt": "2026-10-02T18:22:01.9597213-05:00",
+    "Seed": 20261002,
+    "SyntheticProfiles": 25,
+    "Panels": [
+      {
+        "Panel": "Compradores con urgencia",
+        "Perfiles": 5,
+        "ConfianzaMedia": 53.6,
+        "ClaridadMedia": 66.2,
+        "ContactoMedio": 70.4,
+        "CompraMedia": 53.8
+      },
+      {
+        "Panel": "Compradores escepticos",
+        "Perfiles": 5,
+        "ConfianzaMedia": 44.6,
+        "ClaridadMedia": 72.2,
+        "ContactoMedio": 36.2,
+        "CompraMedia": 21.4
+      },
+      {
+        "Panel": "Duenos de pyme",
+        "Perfiles": 5,
+        "ConfianzaMedia": 60.0,
+        "ClaridadMedia": 70.2,
+        "ContactoMedio": 55.6,
+        "CompraMedia": 42.2
+      },
+      {
+        "Panel": "Gerencia administrativa",
+        "Perfiles": 5,
+        "ConfianzaMedia": 60.2,
+        "ClaridadMedia": 76.4,
+        "ContactoMedio": 49.4,
+        "CompraMedia": 35.2
+      },
+      {
+        "Panel": "Responsables TI",
+        "Perfiles": 5,
+        "ConfianzaMedia": 65.6,
+        "ClaridadMedia": 68.6,
+        "ContactoMedio": 44.8,
+        "CompraMedia": 33.6
+      }
+    ],
+    "AverageTrust": 56.8,
+    "AverageContactProbability": 51.3,
+    "AveragePurchaseProbability": 37.2,
+    "TopObjections": [
+      {
+        "Objecion": "Necesito una prueba mas concreta de capacidad",
+        "Perfiles": 6
+      },
+      {
+        "Objecion": "Me preocupa compartir informacion",
+        "Perfiles": 4
+      },
+      {
+        "Objecion": "Quiero entender mejor la diferencia entre servicios",
+        "Perfiles": 4
+      },
+      {
+        "Objecion": "Necesito aprobacion interna",
+        "Perfiles": 3
+      },
+      {
+        "Objecion": "Necesito conocer el rango de precio",
+        "Perfiles": 3
+      },
+      {
+        "Objecion": "No tengo urgencia en este momento",
+        "Perfiles": 3
+      },
+      {
+        "Objecion": "Prefiero hablar primero por telefono",
+        "Perfiles": 2
+      }
+    ],
+    "PreferredServices": [
+      {
+        "Servicio": "Pruebas autorizadas",
+        "Perfiles": 9
+      },
+      {
+        "Servicio": "Hardening",
+        "Perfiles": 6
+      },
+      {
+        "Servicio": "Informes tecnicos",
+        "Perfiles": 5
+      },
+      {
+        "Servicio": "Diagnostico de seguridad",
+        "Perfiles": 4
+      },
+      {
+        "Servicio": "Simulacros de seguridad",
+        "Perfiles": 1
+      }
+    ],
+    "Recommendations": [
+      "Dar mayor visibilidad a la autoevaluacion publica y al informe demostrativo.",
+      "Repetir la advertencia de no compartir secretos junto a cada campo libre.",
+      "Mantener visible el orientador y comparar los servicios con lenguaje no tecnico.",
+      "Reforzar la guia para justificar la inversion ante direccion.",
+      "Explicar variables de precio y mostrar un punto de partida orientativo sin prometer cotizacion."
+    ],
+    "Disclaimer": "Resultados sinteticos. No representan usuarios, trafico, demanda ni ventas reales."
+  },
+  "syntheticMarket": null,
+  "state": {
+    "project": "JEFQ Consultor",
+    "version": "1.4 Evidencia Real",
+    "updated": "2026-10-02T18:28:38.9661487-05:00",
+    "phase": "EVIDENCIA REAL V1 COMPLETADA",
+    "build": "OK",
+    "officialUrl": "https://jefq-consultor.vercel.app",
+    "created": [
+      "/autoevaluacion-jefq",
+      "/laboratorio-jefq",
+      "/mejoras-del-proyecto",
+      "/recursos/jefq-autoevaluacion-publica-v2.txt"
+    ],
+    "changedFiles": [
+      "src\\pages\\autoevaluacion-jefq.astro",
+      "src\\pages\\laboratorio-jefq.astro",
+      "src\\pages\\mejoras-del-proyecto.astro",
+      "src\\components\\EvidenceRealStrip.astro",
+      "src\\styles\\evidencia-real-v1.css",
+      "public\\recursos\\jefq-autoevaluacion-publica-v2.txt",
+      "src\\layouts\\Layout.astro",
+      "src\\pages\\index.astro"
+    ],
+    "backup": "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\.jefq-backups\\evidencia-real-v1-20261002-182823",
+    "next": [
+      "Contrastar hipotesis con analitica y contactos reales",
+      "Revisar documentos operativos con profesionales",
+      "Actualizar semilla maestra en el siguiente hito"
+    ]
+  },
+  "sources": {
+    "leads": [
+      "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_GROWTH_TRACKER_V1\\datos\\leads.csv",
+      "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_NEGOCIO_V2\\datos\\leads.csv",
+      "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_CONVERSION_LAB_V2\\datos\\leads.csv"
+    ],
+    "events": [
+      "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_GROWTH_TRACKER_V1\\datos\\eventos.csv",
+      "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_NEGOCIO_V2\\datos\\eventos.csv",
+      "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_CONVERSION_LAB_V2\\datos\\eventos.csv"
+    ],
+    "proposals": [
+      "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_GROWTH_TRACKER_V1\\datos\\propuestas.csv",
+      "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_NEGOCIO_V2\\datos\\propuestas.csv"
+    ],
+    "followups": [
+      "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_GROWTH_TRACKER_V1\\datos\\seguimientos.csv",
+      "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\JEFQ_NEGOCIO_V2\\datos\\seguimientos.csv"
+    ]
+  }
+}

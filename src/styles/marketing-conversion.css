@@ -1,0 +1,187 @@
+/* JEFQ Marketing Conversion Theme V2
+   Objetivo: más luz, energía y jerarquía sin perder autoridad ni rendimiento. */
+:root {
+  --bg: #07111f;
+  --bg-soft: #0d1b2e;
+  --panel: #10243b;
+  --panel-light: #173453;
+  --text: #f8fbff;
+  --muted: #c2d2e4;
+  --cyan: #2dd4ff;
+  --green: #5cf2b5;
+  --amber: #ffb84d;
+  --amber-strong: #ff9f1c;
+  --blue-electric: #4c8dff;
+  --border: rgba(128, 190, 235, 0.30);
+  --shadow: 0 24px 70px rgba(0, 17, 38, 0.34);
+  --shadow-warm: 0 18px 42px rgba(255, 159, 28, 0.18);
+}
+
+body {
+  color: var(--text);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(76,141,255,.18), transparent 34rem),
+    radial-gradient(circle at 92% 14%, rgba(255,184,77,.13), transparent 30rem),
+    linear-gradient(180deg, #07111f 0%, #0a1728 48%, #07111f 100%);
+}
+
+.header, .site-header {
+  background: rgba(8, 20, 36, .86);
+  border-bottom-color: rgba(114, 190, 239, .3);
+  box-shadow: 0 5px 24px rgba(0, 12, 30, .22);
+}
+
+.hero {
+  background:
+    linear-gradient(118deg, rgba(12,31,53,.42), rgba(12,31,53,.10)),
+    radial-gradient(circle at 76% 36%, rgba(45,212,255,.14), transparent 28rem),
+    radial-gradient(circle at 18% 82%, rgba(255,184,77,.10), transparent 25rem);
+}
+
+.grid-background, .hero-grid-decoration {
+  opacity: .34;
+}
+
+.hero h1 em, .hero h1 span,
+.section-header > span, .section-label, .eyebrow {
+  background: linear-gradient(105deg, #65ddff 5%, #55f0bd 55%, #ffc368 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-content > p, .hero-lead, .section-header p,
+.service-card p, .price-card > p, .case-card p,
+.contact-grid > div > p, .contact-layout > div > p {
+  color: #c8d7e7;
+}
+
+.button.primary, .button-primary, .nav-cta,
+.contact-form .button, .price-card.featured .price-button,
+.valoracion-form button, button[type='submit'] {
+  color: #171006;
+  background: linear-gradient(135deg, #ffd07a 0%, #ffb43f 48%, #ff9f1c 100%);
+  border-color: rgba(255,205,115,.75);
+  box-shadow: 0 14px 34px rgba(255,159,28,.24);
+  font-weight: 850;
+}
+
+.button.primary:hover, .button-primary:hover, .nav-cta:hover,
+.contact-form .button:hover, .price-card.featured .price-button:hover,
+.valoracion-form button:hover, button[type='submit']:hover {
+  transform: translateY(-3px) scale(1.015);
+  filter: saturate(1.08) brightness(1.04);
+  box-shadow: 0 18px 44px rgba(255,159,28,.32);
+}
+
+.button.secondary, .button-secondary, .price-button {
+  background: rgba(20, 54, 85, .82);
+  border-color: rgba(101, 221, 255, .38);
+}
+
+.service-card, .price-card, .case-card, .cyber-panel,
+.contact-form, .scenario-card, .authority-card, .faq-card,
+.resource-card, .local-card, .valuation-panel, .valoracion-form {
+  background:
+    linear-gradient(145deg, rgba(23,52,83,.94), rgba(11,29,49,.96));
+  border-color: rgba(121,195,239,.28);
+  box-shadow: 0 18px 48px rgba(0,13,31,.28);
+}
+
+.service-card:hover, .price-card:hover, .case-card:hover,
+.resource-card:hover, .local-card:hover {
+  border-color: rgba(255,184,77,.72);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-warm), 0 24px 58px rgba(0,17,38,.30);
+}
+
+.service-card::after, .resource-card::after, .local-card::after {
+  content: '';
+  position: absolute;
+  inset: auto 18px 0;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cyan), var(--green), var(--amber));
+  opacity: .72;
+}
+
+.service-icon, .brand-icon, .brand-shield {
+  background: linear-gradient(145deg, #34d9ff, #65efba 60%, #ffd06f);
+  box-shadow: 0 10px 28px rgba(45,212,255,.18);
+}
+
+.price, .service-card a, .contact-data strong,
+.contact-items strong, .process > article > strong {
+  color: #71e4ff;
+}
+
+.badge, .recommended {
+  color: #141006;
+  background: linear-gradient(135deg, #ffd27a, #ffab2f);
+}
+
+.value-strip, .metrics-section {
+  background: linear-gradient(90deg, rgba(17,48,78,.92), rgba(27,69,95,.82), rgba(38,60,74,.88));
+}
+
+.value-grid strong, .metrics-grid strong {
+  color: #ffd074;
+}
+
+.dark-section, .section-dark {
+  background:
+    radial-gradient(circle at 90% 20%, rgba(45,212,255,.08), transparent 25rem),
+    linear-gradient(180deg, rgba(13,31,51,.7), rgba(8,21,38,.92));
+}
+
+.contact-section {
+  background:
+    radial-gradient(circle at 85% 22%, rgba(255,184,77,.12), transparent 30rem),
+    radial-gradient(circle at 12% 72%, rgba(45,212,255,.10), transparent 28rem);
+}
+
+input, select, textarea,
+.contact-form input, .contact-form select, .contact-form textarea {
+  background: #0c2036;
+  border-color: rgba(132,199,240,.34);
+  color: #f8fbff;
+}
+
+input:focus, select:focus, textarea:focus,
+.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus {
+  border-color: #ffc263;
+  box-shadow: 0 0 0 4px rgba(255,184,77,.13);
+}
+
+.footer {
+  background:
+    linear-gradient(180deg, #07131f, #030912);
+  border-top-color: rgba(113,190,234,.28);
+}
+
+.whatsapp, .whatsapp-float, .conversion-float, .valuation-float {
+  color: #06150d;
+  background: linear-gradient(135deg, #63f2aa, #37db90);
+  box-shadow: 0 14px 36px rgba(55,219,144,.24);
+}
+
+/* Mejora de lectura: WCAG AA como objetivo visual */
+p, li, label, small, .muted { color: #c6d5e5; }
+
+/* Acción visual, sin animación agresiva */
+@media (prefers-reduced-motion: no-preference) {
+  .button.primary, .button-primary, .nav-cta, button[type='submit'] {
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  }
+  .service-card, .price-card, .resource-card, .local-card {
+    transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+  }
+}
+
+@media (max-width: 680px) {
+  body {
+    background:
+      radial-gradient(circle at 50% 0%, rgba(76,141,255,.16), transparent 25rem),
+      #07111f;
+  }
+}

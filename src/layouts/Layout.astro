@@ -1,0 +1,108 @@
+---
+import "../styles/global.css";
+import "../styles/seo-authority.css";
+import "../styles/final-consistency.css";
+import "../styles/service-premium-v2.css";
+import "../styles/conversion-evidence.css";
+import "../styles/authority-premium-v3.css";
+import "../styles/trust-commercial.css";
+
+import "../styles/service-links.css";
+import "../styles/services-premium.css";
+import "../styles/marketing-conversion.css";
+interface Props { title:string; description:string; canonicalPath?:string; noindex?:boolean; }
+const { title, description, canonicalPath = Astro.url.pathname, noindex = false } = Astro.props;
+const baseUrl = "https://jefq-consultor.vercel.app";
+const canonical = new URL(canonicalPath, baseUrl).toString();
+const wa = "https://wa.me/573174832132?text=" + encodeURIComponent("Hola Jaime, quiero información sobre los servicios de ciberseguridad de JEFQ Consultor.");
+const schema = {
+  "@context":"https://schema.org", "@type":"ProfessionalService",
+  name:"JEFQ Consultor", url:baseUrl, telephone:"+573174832132",
+  founder:{"@type":"Person",name:"Jaime Forero"},
+  areaServed:{"@type":"Country",name:"Colombia"},
+  address:{"@type":"PostalAddress",addressLocality:"Bogotá",addressCountry:"CO"},
+  description, openingHours:"Mo-Sa 08:00-18:00", priceRange:"$$"
+};
+import "../styles/evidencia-premium.css";
+import "../styles/critical-corrections.css";
+import "../styles/audit-v2-fixes.css";
+import "../styles/authority-real-v1.css";
+import "../styles/commercial-v1.css";
+import "../styles/evidencia-real-v1.css";
+import "../styles/jefq-diseno-hibrido-v1.css";
+---
+<!doctype html>
+<html lang="es-CO">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#050b16" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow,max-image-preview:large"} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" href="/favicon.svg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_CO" />
+  <meta property="og:site_name" content="JEFQ Consultor" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL('/og-jefq.svg', baseUrl).toString()} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <div class="topbar"><div class="container topbar-inner"><span>Bogotá y toda Colombia</span><span>Atención remota, lunes a sábado</span><a href="tel:+573174832132">317 483 2132</a></div></div>
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="JEFQ Consultor, inicio"><span class="brand-mark">J</span><span><b>JEFQ</b><small>CONSULTOR</small></span></a>
+      <button class="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false"><i></i><i></i><i></i></button>
+      <nav class="menu" aria-label="Navegación principal"><a href="/#servicios">Servicios</a><a href="/#metodologia">Metodología</a><a href="/#planes">Planes</a><a href="/#casos">Ejemplos de intervención</a><a class="nav-cta" href={wa} target="_blank" rel="noopener">Solicitar valoración</a>          <a href="/quien-soy">Quién soy</a>
+          <a href="/blog">Blog</a>
+          <a href="/preguntas-frecuentes">FAQ</a>
+          <a href="/seguridad-autorizacion-alcance">Autorización y alcance</a>
+        <a href="/recursos">Recursos</a>
+        <a href="/orientacion-de-servicios">Elegir servicio</a>
+</nav>
+    </div>
+  </header>
+  <main id="contenido"><slot /></main>
+  <footer class="footer"><div class="container footer-grid"><div class="footer-main"><a class="brand" href="/"><span class="brand-mark">J</span><span><b>JEFQ</b><small>CONSULTOR</small></span></a><p>Ciberseguridad práctica, controlada y comprensible para organizaciones colombianas.</p><a class="footer-cta" href={wa} target="_blank" rel="noopener">Solicitar valoración</a></div><div><h2>Servicios</h2><a href="/servicios/diagnostico-seguridad">Diagnóstico</a><a href="/servicios/hardening">Hardening</a><a href="/servicios/pruebas-autorizadas">Pruebas autorizadas</a><a href="/servicios/informes-tecnicos">Informes</a></div><div><h2>Legal</h2><a href="/privacidad">Privacidad</a><a href="/terminos">Términos</a><a href="/tratamiento-datos">Datos personales</a></div><div><h2>Contacto</h2><a href="tel:+573174832132">317 483 2132</a><a href={wa} target="_blank" rel="noopener">WhatsApp</a><p>Bogotá y toda Colombia</p></div></div>      <div class="container footer-trust-access">
+        <div><strong>Atención directa</strong><span>Comunicación con el responsable del servicio.</span></div>
+        <div><strong>Intervenciones autorizadas</strong><span>Alcance y límites definidos previamente.</span></div>
+        <div><strong>Resultados documentados</strong><span>Prioridades, recomendaciones y próximos pasos.</span></div>
+        <nav aria-label="Accesos de confianza"><a href="/quien-soy">Quién soy</a><a href="/como-trabajamos">Cómo trabajamos</a><a href="/informe-demostrativo">Informe demostrativo</a><a href="/blog">Blog</a><a href="/preguntas-frecuentes">FAQ</a>
+          <a href="/seguridad-autorizacion-alcance">Autorización y alcance</a></nav>
+      </div>
+<div class="container footer-bottom"><span>© {new Date().getFullYear()} JEFQ Consultor</span><span>Pruebas únicamente con autorización escrita.</span></div>  <!-- JEFQ-SEO-AUTHORITY-LINKS -->
+  <div class="authority-links">
+    <div class="container">
+      <nav aria-label="Recursos y confianza">
+        <a href="/recursos">Centro de recursos</a>
+        <a href="/informe-demostrativo">Informe demostrativo</a>
+        <a href="/recursos/checklist-seguridad-pyme">Checklist para pymes</a>
+        <a href="/seguridad-autorizacion-alcance">Autorización y alcance</a>
+        <a href="/preguntas-frecuentes">Preguntas frecuentes</a>
+        <a href="/valoracion">Solicitar valoración</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+  <a class="whatsapp" href={wa} target="_blank" rel="noopener" aria-label="Contactar por WhatsApp"><span>WA</span><b>Solicitar valoración</b></a>
+  <script>
+    const b=document.querySelector('.menu-button'); const m=document.querySelector('.menu');
+    b?.addEventListener('click',()=>{const o=m?.classList.toggle('menu-open');b.setAttribute('aria-expanded',String(Boolean(o)));});
+    m?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{m.classList.remove('menu-open');b?.setAttribute('aria-expanded','false');}));
+    const nodes=document.querySelectorAll('[data-reveal]');
+    if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.09});nodes.forEach(n=>io.observe(n));}else{nodes.forEach(n=>n.classList.add('visible'));}
+  </script>
+  <a class="jefq-conversion-dock" href="/valoracion" aria-label="Solicitar valoración inicial">Solicitar valoración</a>
+<!-- JEFQ-AUTORIDAD-REAL-V1 -->
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/jefq-events.js"></script>
+</body>
+</html>

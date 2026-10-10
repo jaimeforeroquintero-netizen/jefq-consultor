@@ -1,0 +1,39 @@
+{
+  "project": "JEFQ Consultor",
+  "timestamp": "2026-10-02T13:53:43.0461769-05:00",
+  "build": "OK",
+  "backup": "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\.jefq-backups\\enlaces-servicios-v2-20261002-135332",
+  "checks": [
+    {
+      "Route": "/servicios/diagnostico-seguridad",
+      "PageExists": true,
+      "LinkedFromHome": true
+    },
+    {
+      "Route": "/servicios/hardening",
+      "PageExists": true,
+      "LinkedFromHome": true
+    },
+    {
+      "Route": "/servicios/pruebas-autorizadas",
+      "PageExists": true,
+      "LinkedFromHome": true
+    },
+    {
+      "Route": "/servicios/informes-tecnicos",
+      "PageExists": true,
+      "LinkedFromHome": true
+    },
+    {
+      "Route": "/servicios/simulacros-seguridad",
+      "PageExists": true,
+      "LinkedFromHome": true
+    },
+    {
+      "Route": "/servicios/acompanamiento-remediacion",
+      "PageExists": true,
+      "LinkedFromHome": true
+    }
+  ],
+  "approved": true
+}

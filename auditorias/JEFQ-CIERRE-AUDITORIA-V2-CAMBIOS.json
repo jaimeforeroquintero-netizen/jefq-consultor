@@ -1,0 +1,16 @@
+{
+  "changed": [
+    "src\\data\\service-pages.ts",
+    "src\\pages\\index.astro",
+    "src\\pages\\por-que-jefq.astro",
+    "public\\.well-known\\security.txt",
+    "public\\og-jefq.svg",
+    "src\\layouts\\Layout.astro",
+    "src\\styles\\final-consistency.css",
+    "src\\layouts\\Layout.astro"
+  ],
+  "warnings": [
+    "No se encontro el marcador twitter:description en Layout.astro"
+  ],
+  "generatedAt": "2026-10-02T22:03:41.373Z"
+}

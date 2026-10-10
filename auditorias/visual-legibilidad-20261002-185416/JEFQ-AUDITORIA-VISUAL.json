@@ -1,0 +1,21 @@
+{
+  "generated": "2026-10-02T18:55:15.8271841-05:00",
+  "baseUrl": "https://jefq-consultor.vercel.app",
+  "projectRoot": "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad",
+  "pagesAudited": 28,
+  "desktopCaptures": 14,
+  "mobileCaptures": 14,
+  "failedLoads": 0,
+  "visibleTextNodes": 3324,
+  "under13px": 1130,
+  "under14px": 1392,
+  "under16px": 1660,
+  "safePatchApplied": false,
+  "deployed": false,
+  "auditFolder": "C:\\Users\\Andres Mauricio FQ\\Documents\\JEFQ-Ciberseguridad\\auditorias\\visual-legibilidad-20261002-185416",
+  "notes": [
+    "Las capturas son evidencia visual reproducible en Chromium.",
+    "Los conteos tipograficos usan estilos computados del navegador.",
+    "El script no sustituye pruebas humanas ni una auditoria WCAG completa."
+  ]
+}

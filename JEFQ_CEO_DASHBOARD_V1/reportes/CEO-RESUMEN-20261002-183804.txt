@@ -1,0 +1,31 @@
+JEFQ CONSULTOR - CEO DASHBOARD V1
+Generado: 02/10/2026 18:38:04
+
+COMERCIAL
+Leads: 0
+Propuestas: 0
+Ganados: 0
+Perdidos: 0
+Abiertos: 0
+Conversion: 0 %
+Valor potencial: $0
+Valor cerrado: $0
+
+TRIBUNAL IA
+Perfiles: 0
+Confianza: 56.8
+Contacto orientativo: 0
+Compra orientativa: 0
+
+MERCADO SINTETICO
+Perfiles: 0
+Contacto orientativo: 0
+
+TECNICO
+Build: OK
+Paginas HTML:                                          
+Enlaces rotos: Sin dato
+HTTP fallidos: Sin dato
+
+NOTA
+Los resultados sinteticos son hipotesis. No representan usuarios ni ventas reales.

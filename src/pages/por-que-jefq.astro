@@ -1,0 +1,100 @@
+---
+import '../styles/fase-f.css';
+import Layout from "../layouts/Layout.astro";
+import AuthorityCard from "../components/AuthorityCard.astro";
+
+const whatsapp = "https://wa.me/573174832132?text=" + encodeURIComponent(
+  "Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad."
+);
+
+const strengths = [
+  { icon: "01", title: "Atención directa", text: "La comunicación y el seguimiento se realizan directamente con Jaime Forero, responsable de JEFQ Consultor." },
+  { icon: "02", title: "Lenguaje comprensible", text: "Los hallazgos se explican de forma clara para facilitar decisiones técnicas, administrativas y comerciales." },
+  { icon: "03", title: "Priorización práctica", text: "Las recomendaciones se organizan según riesgo, impacto, urgencia y esfuerzo de implementación." },
+  { icon: "04", title: "Alcance controlado", text: "Las pruebas se ejecutan únicamente con autorización previa, límites definidos y condiciones acordadas." },
+  { icon: "05", title: "Informes accionables", text: "La entrega busca convertir los hallazgos en tareas concretas, responsables y próximos pasos." },
+  { icon: "06", title: "Cobertura nacional", text: "Atención remota para organizaciones en Bogotá y toda Colombia, de lunes a sábado en horario de oficina." }
+];
+---
+<Layout
+  title="Por qué elegir JEFQ Consultor | Ciberseguridad en Colombia"
+  description="Conozca el enfoque de JEFQ Consultor: atención directa, alcance autorizado, informes claros y acompañamiento para empresas en Colombia."
+>
+  <section class="f-hero">
+    <div class="container f-hero-grid">
+      <div>
+        <span class="f-kicker">NUESTRO ENFOQUE</span>
+        <h1>Seguridad clara, proporcional y orientada a decisiones</h1>
+        <p>JEFQ Consultor ayuda a convertir riesgos técnicos en acciones comprensibles y ejecutables para organizaciones colombianas.</p>
+        <div class="f-actions">
+          <a class="button primary" href="/valoracion" target="_blank" rel="noopener noreferrer">Solicitar valoración</a>
+          <a class="button secondary" href="/servicios">Ver servicios</a>
+        </div>
+      </div>
+      <aside class="f-trust-panel">
+        <span>COMPROMISOS DE TRABAJO</span>
+        <ul>
+          <li>Autorización y alcance antes de evaluar</li>
+          <li>Comunicación directa y trazable</li>
+          <li>Resultados técnicos y ejecutivos</li>
+          <li>Recomendaciones priorizadas</li>
+          <li>Sin capacidades ni resultados inventados</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="f-section">
+    <div class="container">
+      <header class="f-heading">
+        <span class="f-kicker">POR QUÉ JEFQ</span>
+        <h2>Un servicio técnico con enfoque empresarial</h2>
+        <p>El objetivo no es entregar una lista aislada de problemas, sino facilitar una ruta de mejora que pueda administrarse.</p>
+      </header>
+      <div class="f-authority-grid">
+        {strengths.map((item) => <AuthorityCard {...item} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="f-section f-section-alt">
+    <div class="container f-delivery-grid">
+      <div>
+        <span class="f-kicker">ENTREGA</span>
+        <h2>¿Qué puede recibir el cliente?</h2>
+        <p>La composición exacta depende del servicio y del alcance aprobado.</p>
+      </div>
+      <ol class="f-delivery-list">
+        <li><strong>Resumen ejecutivo</strong><span>Panorama general para facilitar decisiones.</span></li>
+        <li><strong>Hallazgos técnicos</strong><span>Descripción, evidencia pertinente e impacto.</span></li>
+        <li><strong>Priorización</strong><span>Orden sugerido para abordar los riesgos.</span></li>
+        <li><strong>Plan de mejora</strong><span>Acciones recomendadas y próximos pasos.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="f-final-cta">
+    <div class="container">
+      <span class="f-kicker">SIGUIENTE PASO</span>
+      <h2>Definamos una valoración proporcional a su organización</h2>
+      <p>Cuéntenos qué necesita proteger, revisar o fortalecer.</p>
+      <a class="button primary" href={whatsapp} target="_blank" rel="noopener noreferrer">Hablar con Jaime por WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- JEFQ-SEO-AUTHORITY-CONTEXT -->
+  <section class="section dark-section">
+    <div class="container authority-cta">
+      <div>
+        <span class="section-label">RECURSOS PARA DECIDIR</span>
+        <h2>Profundice antes de solicitar una valoración</h2>
+        <p>Consulte el informe demostrativo, la metodología, las preguntas frecuentes y el checklist de seguridad para pymes.</p>
+      </div>
+      <div class="authority-actions">
+        <a class="button primary" href="/recursos">Ver recursos</a>
+        <a class="button secondary" href="/valoracion">Solicitar valoración</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+

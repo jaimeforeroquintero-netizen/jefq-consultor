@@ -1,0 +1,280 @@
+---
+import Layout from "../layouts/Layout.astro";
+import type { ServicePage } from "../data/service-pages";
+
+interface Props {
+  service: ServicePage;
+}
+
+const { service } = Astro.props;
+const whatsapp = `https://wa.me/573174832132?text=${encodeURIComponent(service.whatsappMessage)}`;
+const titleKey = service.title.toLocaleLowerCase("es");
+
+type PremiumProfile = {
+  idealFor: string;
+  usefulWhen: string;
+  reviewItems: string[];
+  duration: string;
+  orientation: string;
+  specificFaq: { question: string; answer: string }[];
+};
+
+const defaultProfile: PremiumProfile = {
+  idealFor: "Organizaciones que necesitan una intervención clara, proporcionada y documentada.",
+  usefulWhen: "Cuando existe una necesidad concreta, pero todavía debe definirse el alcance apropiado.",
+  reviewItems: [
+    "Activos y condiciones incluidas expresamente en el alcance.",
+    "Controles y configuraciones relacionados con el objetivo del servicio.",
+    "Riesgos, dependencias y restricciones relevantes para la operación.",
+    "Evidencias pertinentes y recomendaciones aplicables."
+  ],
+  duration: "La duración depende del alcance, la cantidad de activos y las restricciones operativas. La propuesta confirma tiempos y entregables antes de comenzar.",
+  orientation: "Valoración inicial, definición de alcance, ejecución controlada y presentación de resultados.",
+  specificFaq: []
+};
+
+let premium: PremiumProfile = defaultProfile;
+
+if (titleKey.includes("diagnóstico") || titleKey.includes("diagnostico")) {
+  premium = {
+    idealFor: "Pymes que necesitan una visión inicial y ordenada de sus riesgos antes de invertir, crecer o aplicar cambios de seguridad.",
+    usefulWhen: "Cuando no existe una línea base, hay dudas sobre configuraciones actuales o se necesita decidir qué corregir primero.",
+    reviewItems: [
+      "Equipos, cuentas, aplicaciones y servicios incluidos en el alcance.",
+      "Configuraciones de acceso, actualización y protección básica.",
+      "Dependencias críticas y prácticas que pueden aumentar la exposición.",
+      "Controles existentes, brechas observadas y prioridades de mejora.",
+      "Oportunidades de corrección inmediata y acciones progresivas."
+    ],
+    duration: "Como referencia, una revisión acotada puede organizarse en pocos días hábiles. El tiempo final se confirma después de conocer activos, accesos y restricciones.",
+    orientation: "Adecuado como punto de partida antes de contratar hardening, pruebas autorizadas o un plan de fortalecimiento más amplio.",
+    specificFaq: [
+      {
+        question: "¿El diagnóstico incluye pruebas intrusivas?",
+        answer: "No necesariamente. El diagnóstico puede centrarse en revisión de configuraciones, controles y exposición. Cualquier prueba adicional debe autorizarse y quedar incluida expresamente en el alcance."
+      },
+      {
+        question: "¿Qué información necesito preparar?",
+        answer: "Una descripción general de la organización, los activos que desea revisar, las principales preocupaciones y las restricciones operativas. No envíe contraseñas ni secretos por formularios o WhatsApp."
+      },
+      {
+        question: "¿Qué resultado práctico obtengo?",
+        answer: "Una lectura priorizada del estado observado, recomendaciones contextualizadas y una ruta inicial para decidir qué corregir primero."
+      }
+    ]
+  };
+} else if (titleKey.includes("hardening") || titleKey.includes("fortalecimiento")) {
+  premium = {
+    idealFor: "Organizaciones que desean reducir configuraciones innecesarias, mejorar controles y establecer una base más consistente en sus equipos o cuentas.",
+    usefulWhen: "Cuando existen diferencias entre equipos, privilegios excesivos, controles débiles o ausencia de una configuración mínima común.",
+    reviewItems: [
+      "Privilegios, cuentas administrativas y principio de mínimo acceso.",
+      "Actualizaciones, protección local y configuraciones de seguridad.",
+      "Servicios, funciones y opciones que pueden ampliar la superficie de exposición.",
+      "Configuraciones de navegador, sesión y uso cotidiano incluidas en el alcance.",
+      "Línea base, excepciones justificadas y verificaciones posteriores."
+    ],
+    duration: "El tiempo depende de la cantidad y diversidad de activos. Los cambios se planifican por etapas para reducir interrupciones y permitir validación.",
+    orientation: "Puede contratarse después de un diagnóstico o como intervención específica cuando el alcance y las configuraciones objetivo ya están definidos.",
+    specificFaq: [
+      {
+        question: "¿El hardening puede afectar programas o funciones?",
+        answer: "Algunas medidas pueden cambiar comportamientos o compatibilidad. Por eso los ajustes se acuerdan, se aplican de forma controlada y se validan antes de ampliar su alcance."
+      },
+      {
+        question: "¿Se aplican los mismos cambios a todos los equipos?",
+        answer: "No de forma automática. Se define una base común y se documentan excepciones según funciones, aplicaciones y necesidades operativas."
+      },
+      {
+        question: "¿Incluye verificación posterior?",
+        answer: "Puede incluirse una revisión de los cambios y de las excepciones acordadas. La propuesta especifica el nivel de seguimiento contemplado."
+      }
+    ]
+  };
+} else if (titleKey.includes("pruebas") || titleKey.includes("autorizada")) {
+  premium = {
+    idealFor: "Organizaciones que necesitan validar controles sobre activos propios o expresamente autorizados, dentro de condiciones y límites previamente definidos.",
+    usefulWhen: "Cuando existe una pregunta concreta de seguridad, se requiere comprobar exposición o se desea validar un control sin convertir la actividad en una intervención abierta.",
+    reviewItems: [
+      "Activos autorizados, titularidad y dependencias de terceros.",
+      "Técnicas permitidas, exclusiones y criterios para detener la actividad.",
+      "Ventanas de ejecución, contactos de emergencia y continuidad operativa.",
+      "Exposición externa o interna contemplada expresamente en el alcance.",
+      "Evidencias redactadas, severidad, impacto y recomendaciones."
+    ],
+    duration: "La duración se define después de validar la titularidad, el alcance, las técnicas permitidas y las ventanas de trabajo. No se inicia ninguna prueba sin autorización documentada.",
+    orientation: "Requiere una definición contractual y operativa más estricta que una revisión de configuraciones. Los activos de terceros necesitan autorización adicional.",
+    specificFaq: [
+      {
+        question: "¿Qué autorización se necesita?",
+        answer: "Una autorización expresa del responsable legitimado sobre los activos, con alcance, fechas, técnicas permitidas, exclusiones y contactos operativos."
+      },
+      {
+        question: "¿Puede afectar la operación?",
+        answer: "Toda prueba implica algún nivel de riesgo. La actividad se diseña para reducirlo mediante límites, ventanas, criterios de parada y coordinación previa."
+      },
+      {
+        question: "¿Qué ocurre si aparece un hallazgo sensible?",
+        answer: "Se registra de forma controlada, se limita la exposición de detalles y se comunica por el canal acordado. No deben enviarse secretos ni evidencia sensible por WhatsApp."
+      }
+    ]
+  };
+}
+
+const combinedFaq = [...service.faq, ...premium.specificFaq];
+---
+
+<Layout title={`${service.title} | JEFQ Consultor`} description={service.description}>
+  <section class="landing-hero service-premium-hero">
+    <div class="container landing-hero-grid">
+      <div>
+        <span class="section-label">{service.eyebrow}</span>
+        <h1>{service.title}</h1>
+        <p>{service.intro}</p>
+        <div class="landing-actions">
+          <a class="button primary" href="/valoracion">Solicitar valoración</a>
+          <a class="button secondary" href={whatsapp} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+        </div>
+        <p class="service-security-note">
+          No envíe contraseñas, códigos MFA, llaves privadas, vulnerabilidades explotables ni datos personales sensibles.
+        </p>
+      </div>
+      <aside class="landing-summary" aria-label="Datos del servicio">
+        <strong>JEFQ Consultor</strong>
+        <span>Responsable: Jaime Forero</span>
+        <span>Bogotá y toda Colombia</span>
+        <span>Atención remota, lunes a sábado</span>
+        <a href="tel:+573174832132">317 483 2132</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section service-fit-section">
+    <div class="container service-fit-grid">
+      <article class="service-fit-card service-fit-card--accent">
+        <span class="section-label">PARA QUIÉN ES</span>
+        <h2>Un punto de partida claro</h2>
+        <p>{premium.idealFor}</p>
+      </article>
+      <article class="service-fit-card">
+        <span class="section-label">CUÁNDO TIENE SENTIDO</span>
+        <h2>Señales para considerarlo</h2>
+        <p>{premium.usefulWhen}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section dark-section landing-section">
+    <div class="container landing-two-columns">
+      <article>
+        <span class="section-label">SITUACIONES HABITUALES</span>
+        <h2>Puede ser adecuado si...</h2>
+        <ul class="landing-list">
+          {service.audience.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+      <article>
+        <span class="section-label">ALCANCE ORIENTATIVO</span>
+        <h2>Qué puede incluir</h2>
+        <ul class="landing-list">
+          {service.includes.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section service-review-section">
+    <div class="container">
+      <header class="section-header">
+        <span>REVISIÓN POSIBLE</span>
+        <h2>Aspectos que pueden formar parte del alcance</h2>
+        <p>La selección definitiva depende de los activos, objetivos, permisos y restricciones acordados.</p>
+      </header>
+      <div class="service-review-grid">
+        {premium.reviewItems.map((item, index) => (
+          <article class="service-review-card">
+            <strong>{String(index + 1).padStart(2, "0")}</strong>
+            <p>{item}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark-section">
+    <div class="container">
+      <header class="section-header">
+        <span>PROCESO</span>
+        <h2>Trabajo controlado y documentado</h2>
+      </header>
+      <div class="landing-process">
+        {service.process.map((step, index) => (
+          <article>
+            <strong>{String(index + 1).padStart(2, "0")}</strong>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section service-timing-section">
+    <div class="container service-timing-grid">
+      <article>
+        <span class="section-label">DURACIÓN ORIENTATIVA</span>
+        <h2>El tiempo se confirma con el alcance</h2>
+        <p>{premium.duration}</p>
+      </article>
+      <article>
+        <span class="section-label">ORGANIZACIÓN DEL SERVICIO</span>
+        <h2>Una secuencia predecible</h2>
+        <p>{premium.orientation}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section dark-section service-proof-section">
+    <div class="container service-proof-grid">
+      <div>
+        <span class="section-label">ANTES DE DECIDIR</span>
+        <h2>Conozca el entregable y las condiciones de trabajo</h2>
+        <p>
+          Revise una muestra del informe y consulte cómo se definen la autorización,
+          el alcance, los límites y los canales apropiados para cada intervención.
+        </p>
+      </div>
+      <div class="service-proof-actions">
+        <a class="button primary" href="/informe-demostrativo">Ver informe demostrativo</a>
+        <a class="button secondary" href="/seguridad-autorizacion-alcance">Autorización y alcance</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container landing-faq-wrap">
+      <header class="section-header">
+        <span>PREGUNTAS FRECUENTES</span>
+        <h2>Antes de solicitar el servicio</h2>
+      </header>
+      <div class="landing-faq">
+        {combinedFaq.map((item) => (
+          <details>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+      <div class="landing-final-cta">
+        <h2>Definamos un alcance proporcional a su organización</h2>
+        <p>
+          La valoración inicial permite revisar necesidades, activos y restricciones antes de preparar una propuesta.
+        </p>
+        <div class="landing-actions landing-actions--center">
+          <a class="button primary" href="/valoracion">Solicitar valoración</a>
+          <a class="button secondary" href={whatsapp} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,134 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const findings = [
+  {
+    id: "H-01", priority: "Alta", area: "Control de acceso", actions: 3,
+    observation: "Cuentas de uso cotidiano mantienen privilegios administrativos superiores a los necesarios.",
+    impact: "Aumenta la superficie de exposición y la posibilidad de cambios críticos no autorizados.",
+    evidence: "Muestra redactada: pertenencia a grupos administrativos detectada en cuentas de operación habitual.",
+    recommendation: "Separar las cuentas administrativas, aplicar privilegio mínimo y revisar periódicamente los grupos con permisos elevados.",
+    benefit: "Mayor control sobre cambios críticos y menor exposición ante el compromiso de una cuenta de uso diario."
+  },
+  {
+    id: "H-02", priority: "Alta", area: "Exposición externa", actions: 3,
+    observation: "Un servicio publicado en Internet presenta una configuración que requiere validación de necesidad, restricción de origen y actualización.",
+    impact: "Amplía la superficie visible desde el exterior y puede facilitar intentos de acceso no autorizado.",
+    evidence: "Muestra redactada: servicio accesible desde redes externas durante una revisión autorizada del alcance público.",
+    recommendation: "Confirmar la necesidad del servicio, limitar orígenes permitidos, revisar versiones y aplicar controles de autenticación adecuados.",
+    benefit: "Reducción de exposición innecesaria y mejor control de los servicios accesibles desde Internet."
+  },
+  {
+    id: "H-03", priority: "Media", area: "Configuración", actions: 2,
+    observation: "Los equipos revisados no comparten una línea base homogénea de configuración.",
+    impact: "Dificulta mantener controles consistentes y aumenta el riesgo de configuraciones débiles o divergentes.",
+    evidence: "Muestra redactada: diferencias observadas en ajustes de seguridad, actualizaciones y políticas locales.",
+    recommendation: "Definir una línea base mínima, documentarla y verificar su aplicación periódicamente.",
+    benefit: "Mayor consistencia operativa y reducción de errores de configuración."
+  },
+  {
+    id: "H-04", priority: "Media", area: "Identidad y autenticación", actions: 2,
+    observation: "La autenticación reforzada no está aplicada de forma uniforme en las cuentas relevantes.",
+    impact: "Una credencial comprometida puede ofrecer acceso directo cuando no existe un segundo factor adecuado.",
+    evidence: "Muestra redactada: cobertura parcial de autenticación multifactor en cuentas incluidas en el alcance.",
+    recommendation: "Priorizar MFA en cuentas administrativas, correo y servicios críticos; documentar excepciones temporales.",
+    benefit: "Mayor resistencia frente al robo y reutilización de credenciales."
+  },
+  {
+    id: "H-05", priority: "Baja", area: "Continuidad", actions: 2,
+    observation: "Las copias de seguridad existen, pero no hay evidencia reciente de una prueba documentada de restauración.",
+    impact: "La disponibilidad de archivos de copia no garantiza que la recuperación sea completa ni oportuna.",
+    evidence: "Muestra redactada: copias identificadas sin registro reciente de restauración controlada.",
+    recommendation: "Programar una prueba de restauración, registrar resultados y definir responsables y frecuencia.",
+    benefit: "Mayor confianza en la capacidad de recuperación ante pérdida, error o incidente."
+  }
+];
+
+const totalActions = findings.reduce((sum, item) => sum + item.actions, 0);
+const counts = {
+  high: findings.filter((item) => item.priority === "Alta").length,
+  medium: findings.filter((item) => item.priority === "Media").length,
+  low: findings.filter((item) => item.priority === "Baja").length
+};
+---
+
+<Layout title="Informe demostrativo de ciberseguridad | JEFQ Consultor" description="Muestra ilustrativa de un informe JEFQ con cinco hallazgos coherentes, prioridades, evidencias redactadas y ruta de mejora.">
+  <main class="report-v4">
+    <section class="report-hero-v4">
+      <div class="container">
+        <span class="sample-seal">MUESTRA ILUSTRATIVA · NO CORRESPONDE A UN CLIENTE REAL</span>
+        <p class="section-label">INFORME DEMOSTRATIVO V4</p>
+        <h1>Conozca el nivel de claridad que puede recibir</h1>
+        <p class="report-lead">Esta muestra explica cómo pueden organizarse los hallazgos, las prioridades y una ruta de mejora. Las cifras, evidencias y situaciones fueron creadas únicamente para demostrar la estructura del entregable.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="report-metrics-v4">
+          <article><span>Nivel general</span><strong>MEDIO</strong></article>
+          <article><span>Hallazgos</span><strong>{findings.length}</strong></article>
+          <article><span>Prioridad alta</span><strong>{counts.high}</strong></article>
+          <article><span>Acciones</span><strong>{totalActions}</strong></article>
+        </div>
+
+        <article class="executive-conclusion-v4">
+          <p class="section-label">CONCLUSIÓN EJECUTIVA ILUSTRATIVA</p>
+          <h2>La prioridad inicial se concentra en accesos y exposición externa</h2>
+          <p>La muestra presenta oportunidades de mejora en control de privilegios, servicios publicados, consistencia de configuración, autenticación y recuperación. La secuencia recomendada comienza por reducir accesos y exposición innecesaria, continúa con la estandarización y finaliza con la validación periódica de controles.</p>
+        </article>
+
+        <div class="severity-scale-v4" aria-label="Escala ilustrativa de prioridad">
+          <article class="high"><strong>Alta</strong><span>Impacto relevante o exposición que requiere atención prioritaria.</span></article>
+          <article class="medium"><strong>Media</strong><span>Debilidad que conviene planificar y corregir en el corto plazo.</span></article>
+          <article class="low"><strong>Baja</strong><span>Oportunidad de mejora o control que debe formalizarse.</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark-section">
+      <div class="container">
+        <header class="section-header">
+          <span>HALLAZGOS ILUSTRATIVOS</span>
+          <h2>Cinco ejemplos coherentes con el resumen ejecutivo</h2>
+          <p>Cada tarjeta está marcada como muestra y no representa evidencia de un cliente real.</p>
+        </header>
+        <div class="findings-grid-v4">
+          {findings.map((finding) => (
+            <article class="finding-v4">
+              <div class="finding-top-v4"><span>{finding.id} · MUESTRA</span><strong class:list={[finding.priority.toLowerCase(), "priority-chip-v4"]}>{finding.priority}</strong></div>
+              <p class="finding-area-v4">{finding.area}</p>
+              <h3>Situación observada</h3><p>{finding.observation}</p>
+              <h3>Impacto potencial</h3><p>{finding.impact}</p>
+              <h3>Evidencia redactada</h3><p>{finding.evidence}</p>
+              <h3>Acción recomendada</h3><p>{finding.recommendation}</p>
+              <h3>Beneficio esperado</h3><p>{finding.benefit}</p>
+              <small>{finding.actions} acciones asociadas en esta muestra.</small>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header"><span>RUTA DE MEJORA</span><h2>Una secuencia clara para avanzar</h2></header>
+        <div class="roadmap-v4">
+          <article><span>Fase 1 · Días 0 a 7</span><h3>Contención y correcciones inmediatas</h3><p>Revisar privilegios, exposición pública y controles de acceso prioritarios.</p></article>
+          <article><span>Fase 2 · Días 8 a 30</span><h3>Fortalecimiento prioritario</h3><p>Homogeneizar configuraciones, completar MFA y documentar líneas base.</p></article>
+          <article><span>Fase 3 · Días 31 a 90</span><h3>Consolidación y validación</h3><p>Probar recuperación, revisar excepciones y establecer seguimiento periódico.</p></article>
+        </div>
+
+        <div class="report-cta-v4">
+          <div><p class="section-label">SIGUIENTE PASO</p><h2>Defina un alcance adecuado para su organización</h2><p>La valoración inicial permite comprender la necesidad sin solicitar contraseñas ni información sensible.</p></div>
+          <div class="report-actions-v4"><a class="button primary" href="/valoracion">Solicitar valoración</a><a class="button secondary" href="/seguridad-autorizacion-alcance">Ver autorización y alcance</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+.report-hero-v4{padding:100px 0 70px;background:radial-gradient(circle at 80% 20%,rgba(41,206,186,.2),transparent 35%),linear-gradient(145deg,#081828,#102d43);border-bottom:1px solid rgba(130,190,215,.22)}
+.report-hero-v4 h1{max-width:850px;margin:14px 0 18px;font-size:clamp(2.7rem,7vw,5.7rem);line-height:1;letter-spacing:-.055em}.report-lead{max-width:850px;color:#cbe0ed;font-size:1.08rem}.sample-seal{display:inline-flex;padding:8px 12px;border:1px solid rgba(255,190,70,.55);border-radius:999px;color:#ffd17a;background:rgba(255,181,55,.09);font-size:.72rem;font-weight:900;letter-spacing:.08em}.report-metrics-v4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.report-metrics-v4 article{padding:24px;background:linear-gradient(145deg,rgba(17,54,81,.9),rgba(8,24,40,.95));border:1px solid rgba(93,190,215,.3);border-radius:18px}.report-metrics-v4 span,.report-metrics-v4 strong{display:block}.report-metrics-v4 span{color:#aec7d8;font-size:.78rem;text-transform:uppercase;letter-spacing:.07em}.report-metrics-v4 strong{margin-top:8px;color:#65e7cc;font-size:2rem}.executive-conclusion-v4{margin-top:22px;padding:30px;background:#f8fbfd;color:#0c2235;border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,.15)}.executive-conclusion-v4 h2{margin:8px 0 12px;font-size:clamp(1.7rem,4vw,2.6rem)}.executive-conclusion-v4 p:last-child{color:#405b6d}.severity-scale-v4{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}.severity-scale-v4 article{padding:20px;border-radius:16px;background:rgba(16,43,65,.72);border:1px solid rgba(130,190,215,.22)}.severity-scale-v4 strong,.severity-scale-v4 span{display:block}.severity-scale-v4 strong{font-size:1.15rem}.severity-scale-v4 span{margin-top:6px;color:#acc4d4}.severity-scale-v4 .high strong{color:#ffbd69}.severity-scale-v4 .medium strong{color:#65e7cc}.severity-scale-v4 .low strong{color:#a8c9de}.findings-grid-v4{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.finding-v4{padding:27px;background:linear-gradient(155deg,rgba(15,46,70,.92),rgba(7,22,37,.98));border:1px solid rgba(111,185,213,.25);border-radius:20px}.finding-top-v4{display:flex;justify-content:space-between;gap:14px;align-items:center}.finding-top-v4>span{color:#8faabd;font-size:.72rem;font-weight:800;letter-spacing:.08em}.priority-chip-v4{padding:5px 9px;border-radius:999px;font-size:.72rem}.priority-chip-v4.alta{color:#2b1a00;background:#ffc166}.priority-chip-v4.media{color:#00271f;background:#65e7cc}.priority-chip-v4.baja{color:#08283a;background:#a8d8ef}.finding-area-v4{color:#65e7cc;font-weight:800}.finding-v4 h3{margin:18px 0 5px;font-size:.82rem;text-transform:uppercase;letter-spacing:.07em}.finding-v4 p{margin:0;color:#bfd1dd}.finding-v4 small{display:block;margin-top:20px;padding-top:14px;color:#8faabd;border-top:1px solid rgba(130,190,215,.18)}.roadmap-v4{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.roadmap-v4 article{padding:24px;border-radius:18px;background:rgba(15,46,70,.78);border:1px solid rgba(111,185,213,.25)}.roadmap-v4 span{color:#65e7cc;font-weight:900;font-size:.75rem;letter-spacing:.05em}.roadmap-v4 h3{margin:12px 0 8px}.roadmap-v4 p{color:#acc4d4}.report-cta-v4{display:grid;grid-template-columns:1.4fr .6fr;gap:28px;align-items:center;margin-top:28px;padding:30px;border:1px solid rgba(255,190,70,.4);background:linear-gradient(135deg,rgba(255,177,51,.11),rgba(40,205,186,.08));border-radius:20px}.report-cta-v4 h2{margin:8px 0}.report-cta-v4 p{color:#b9cfdb}.report-actions-v4{display:grid;gap:10px}@media(max-width:800px){.report-metrics-v4,.severity-scale-v4,.findings-grid-v4,.roadmap-v4,.report-cta-v4{grid-template-columns:1fr}.report-hero-v4{padding:75px 0 55px}}
+</style>

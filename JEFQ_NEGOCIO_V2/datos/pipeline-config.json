@@ -1,0 +1,23 @@
+{
+  "Version": "2.0",
+  "Updated": "2026-10-02T17:51:20.5563384-05:00",
+  "Stages": [
+    "Nuevo",
+    "Valoracion solicitada",
+    "Contactado",
+    "Calificado",
+    "Propuesta enviada",
+    "Negociacion",
+    "Ganado",
+    "Perdido",
+    "No apto"
+  ],
+  "RequiredFields": [
+    "Fecha",
+    "Origen",
+    "ServicioInteres",
+    "Estado",
+    "ProximoPaso"
+  ],
+  "SensitiveDataRule": "No registrar contrasenas, codigos MFA, llaves privadas, vulnerabilidades explotables ni datos personales sensibles."
+}

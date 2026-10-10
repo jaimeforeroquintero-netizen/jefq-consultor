@@ -1,0 +1,23 @@
+# CHECKLIST PREVIO A LA INTERVENCION
+
+- [ ] Contrato aprobado.
+- [ ] NDA aprobado, si aplica.
+- [ ] Autorizacion firmada por persona facultada.
+- [ ] Titularidad de activos verificada.
+- [ ] Autorizaciones de terceros verificadas.
+- [ ] Alcance exacto aprobado.
+- [ ] Exclusiones aprobadas.
+- [ ] Ventana de trabajo confirmada.
+- [ ] Contacto tecnico disponible.
+- [ ] Contacto de emergencia disponible.
+- [ ] Copias de seguridad verificadas por el cliente.
+- [ ] Procedimiento de restauracion disponible.
+- [ ] Criterios de detencion acordados.
+- [ ] Herramientas y versiones registradas.
+- [ ] Equipo de trabajo cifrado.
+- [ ] MFA activo en cuentas de trabajo.
+- [ ] Almacenamiento de evidencias cifrado.
+- [ ] Reloj y zona horaria sincronizados.
+- [ ] Registro de actividades habilitado.
+- [ ] Canal seguro de entrega acordado.
+- [ ] Plazo de retencion y borrado acordado.

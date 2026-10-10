@@ -1,0 +1,18 @@
+REGISTRO RAPIDO DE LEAD
+
+LeadId:
+Fecha:
+Nombre:
+Empresa:
+Telefono:
+Correo:
+Origen:
+Servicio de interes:
+Estado:
+Valor potencial COP:
+Proximo paso:
+Fecha del proximo paso:
+Objecion principal:
+Notas:
+
+No registrar secretos ni informacion tecnica sensible.

@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+const mejoras = [
+  { etapa: "Publicación", cambio: "Despliegue estático en producción, sitemap, robots y alias estable.", motivo: "Establecer una base pública verificable.", resultado: "Sitio accesible y rastreable." },
+  { etapa: "Confianza", cambio: "Páginas Quién soy, Cómo trabajamos, autorización, alcance y límites.", motivo: "Reducir incertidumbre antes del contacto.", resultado: "Proceso y responsabilidades más claros." },
+  { etapa: "Evidencia", cambio: "Informe demostrativo, autoevaluación pública y recursos prácticos.", motivo: "Mostrar estructura de trabajo sin inventar clientes.", resultado: "Entregables y método visibles." },
+  { etapa: "Conversión", cambio: "Valorador orientativo, CTA unificado, orientador de servicios y contacto contextual.", motivo: "Guiar al visitante hacia un siguiente paso coherente.", resultado: "Embudo más comprensible." },
+  { etapa: "Operación", cambio: "Backups, manifiestos SHA-256, rollback, pipeline y documentación operativa en borrador.", motivo: "Reducir riesgo técnico y preparar atención comercial.", resultado: "Continuidad y trazabilidad mejoradas." },
+  { etapa: "Validación", cambio: "Mercado sintético, Tribunal IA y paneles locales claramente rotulados.", motivo: "Explorar objeciones antes de disponer de suficientes datos reales.", resultado: "Hipótesis comerciales documentadas, no predicciones." }
+];
+---
+<Layout title="Historial de mejoras | JEFQ Consultor" description="Historial público de mejoras técnicas, comerciales y metodológicas aplicadas al proyecto JEFQ Consultor.">
+  <main class="evidence-page">
+    <section class="evidence-hero compact"><div class="container"><span class="evidence-stamp">HISTORIAL PÚBLICO · SIN MÉTRICAS INFLADAS</span><p class="section-label">MEJORA CONTINUA</p><h1>Qué hemos cambiado y por qué</h1><p class="evidence-lead">Este historial resume decisiones relevantes del proyecto. Describe cambios y resultados esperados, sin presentarlos como ventas, clientes o reducciones de riesgo comprobadas.</p></div></section>
+    <section class="section"><div class="container evidence-history">{mejoras.map((item,index) => (<article><div class="evidence-history-number">{String(index + 1).padStart(2,"0")}</div><div><p class="section-label">{item.etapa}</p><h2>{item.cambio}</h2><dl><div><dt>Motivo</dt><dd>{item.motivo}</dd></div><div><dt>Resultado esperado</dt><dd>{item.resultado}</dd></div></dl></div></article>))}</div></section>
+    <section class="section dark-section"><div class="container evidence-callout"><div><p class="section-label">SIGUIENTE PASO</p><h2>Contrastar hipótesis con comportamiento y contactos reales</h2><p>Las simulaciones dejan de ser útiles cuando existen datos suficientes de navegación, valoraciones y conversaciones reales. JEFQ separa ambas fuentes para no confundirlas.</p></div><a class="button primary" href="/valoracion">Solicitar valoración</a></div></section>
+  </main>
+</Layout>

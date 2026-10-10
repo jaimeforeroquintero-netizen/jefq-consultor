@@ -1,0 +1,151 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Valoracion inicial de ciberseguridad | JEFQ Consultor" description="Obtenga una recomendacion inicial sobre el servicio que puede ajustarse mejor a su organizacion.">
+  <main class="smart-page">
+    <section class="smart-hero">
+      <div class="smart-shell">
+        <p class="smart-kicker">VALORACION ORIENTATIVA</p>
+        <h1>Defina un punto de partida para fortalecer su seguridad</h1>
+        <p>Seleccione el contexto general de su organizacion. La herramienta mostrara una recomendacion inicial antes de preparar el contacto por WhatsApp.</p>
+      </div>
+    </section>
+
+    <section class="smart-shell smart-grid">
+      <form id="smart-form" class="smart-form">
+        <label>
+          Tipo de organizacion
+          <select id="org" required>
+            <option value="">Seleccione</option>
+            <option>Profesional independiente</option>
+            <option>Microempresa</option>
+            <option>Pyme</option>
+            <option>Organizacion en crecimiento</option>
+          </select>
+        </label>
+
+        <label>
+          Activos aproximados
+          <select id="assets" required>
+            <option value="">Seleccione</option>
+            <option value="1-5">1-5</option>
+            <option value="6-20">6-20</option>
+            <option value="21-50">21-50</option>
+            <option value="50+">Mas de 50</option>
+          </select>
+          <small>Un activo puede ser un equipo, cuenta, aplicacion, servicio o dominio incluido expresamente en el alcance.</small>
+        </label>
+
+        <label>
+          Necesidad principal
+          <select id="need" required>
+            <option value="">Seleccione</option>
+            <option value="diagnostico">Conocer riesgos y prioridades</option>
+            <option value="hardening">Fortalecer equipos o configuraciones</option>
+            <option value="pruebas">Realizar una evaluacion autorizada</option>
+            <option value="informe">Organizar hallazgos e informes</option>
+            <option value="simulacro">Preparar un simulacro controlado</option>
+            <option value="acompanamiento">Acompanar la remediacion</option>
+          </select>
+        </label>
+
+        <label>
+          Contexto adicional, opcional
+          <textarea id="context" rows="5" placeholder="Describa la necesidad de forma general"></textarea>
+          <small class="security-note">No incluya contrasenas, codigos MFA, llaves privadas, vulnerabilidades explotables ni datos personales sensibles.</small>
+        </label>
+
+        <button class="smart-button" type="submit">Ver recomendacion inicial</button>
+      </form>
+
+      <aside id="smart-result" class="smart-result" aria-live="polite">
+        <p class="smart-kicker">RESULTADO</p>
+        <h2>Complete la valoracion</h2>
+        <p>La recomendacion aparecera aqui. No sustituye una propuesta ni implica la ejecucion de pruebas.</p>
+      </aside>
+    </section>
+  </main>
+
+  <script is:inline>
+    const form = document.getElementById('smart-form');
+    const result = document.getElementById('smart-result');
+    const details = {
+      diagnostico: {
+        plan: 'Diagnostico Esencial',
+        service: 'Diagnostico de seguridad',
+        reason: 'Un punto de partida para identificar riesgos, priorizar hallazgos y definir una ruta de mejora.',
+        path: '/servicios/diagnostico-seguridad'
+      },
+      hardening: {
+        plan: 'Evaluacion Pyme',
+        service: 'Hardening y fortalecimiento',
+        reason: 'Adecuado cuando la prioridad es reducir configuraciones innecesarias y establecer una linea base mas consistente.',
+        path: '/servicios/hardening'
+      },
+      pruebas: {
+        plan: 'Evaluacion Pyme',
+        service: 'Pruebas autorizadas',
+        reason: 'Requiere alcance, autorizacion expresa, condiciones tecnicas y criterios de detencion definidos por escrito.',
+        path: '/servicios/pruebas-autorizadas'
+      },
+      informe: {
+        plan: 'Diagnostico Esencial',
+        service: 'Informes tecnicos y ejecutivos',
+        reason: 'Permite transformar observaciones en hallazgos priorizados, recomendaciones y proximos pasos.',
+        path: '/servicios/informes-tecnicos'
+      },
+      simulacro: {
+        plan: 'Seguridad Integral',
+        service: 'Simulacros controlados',
+        reason: 'Conviene cuando la organizacion desea preparar respuestas, responsabilidades y aprendizaje sin recurrir a urgencias artificiales.',
+        path: '/servicios/simulacros-seguridad'
+      },
+      acompanamiento: {
+        plan: 'Seguridad Integral',
+        service: 'Acompanamiento de remediacion',
+        reason: 'Recomendado cuando ya existen hallazgos y se necesita organizar, aplicar y verificar mejoras progresivas.',
+        path: '/servicios/acompanamiento-remediacion'
+      }
+    };
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const org = document.getElementById('org').value;
+      const assets = document.getElementById('assets').value;
+      const need = document.getElementById('need').value;
+      const context = document.getElementById('context').value.trim();
+      const recommendation = details[need];
+      if (!org || !assets || !recommendation) return;
+
+      const message = [
+        'Hola, Jaime. Solicito una valoracion inicial.',
+        `Organizacion: ${org}`,
+        `Activos aproximados: ${assets}`,
+        `Necesidad: ${recommendation.service}`,
+        context ? `Contexto general: ${context}` : '',
+        `Recomendacion mostrada: ${recommendation.plan}`
+      ].filter(Boolean).join('\n');
+      const wa = `https://wa.me/573174832132?text=${encodeURIComponent(message)}`;
+
+      result.innerHTML = `
+        <p class="smart-kicker">PUNTO DE PARTIDA RECOMENDADO</p>
+        <h2>${recommendation.plan}</h2>
+        <p><strong>${recommendation.service}</strong></p>
+        <p>${recommendation.reason}</p>
+        <div class="result-facts">
+          <span>Alcance: se confirma antes de intervenir</span>
+          <span>Precio: se confirma en la propuesta</span>
+          <span>Impuestos: se informan cuando resulten aplicables</span>
+        </div>
+        <div class="result-actions">
+          <a class="smart-button" href="${recommendation.path}">Conocer el servicio</a>
+          <a class="smart-link" href="${wa}" target="_blank" rel="noopener noreferrer">Continuar por WhatsApp</a>
+        </div>`;
+    });
+  </script>
+
+  <style>
+    .smart-page{background:linear-gradient(180deg,#071526,#0b2036 55%,#eef6fb 55%);min-height:100vh}.smart-shell{width:min(1120px,calc(100% - 2rem));margin:auto}.smart-hero{padding:5.5rem 0 3.5rem;color:#fff}.smart-hero h1{max-width:850px;font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.03;margin:.7rem 0 1rem}.smart-hero p{max-width:760px;color:#cfe1ee;font-size:1.08rem}.smart-kicker{font-weight:800;letter-spacing:.14em;color:#49d6c7;font-size:.77rem}.smart-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:1.5rem;padding:0 0 5rem}.smart-form,.smart-result{background:#fff;border:1px solid #cfe0ea;border-radius:24px;padding:clamp(1.25rem,3vw,2.2rem);box-shadow:0 22px 65px rgba(3,20,37,.16)}.smart-form{display:grid;gap:1.15rem}.smart-form label{display:grid;gap:.45rem;font-weight:750;color:#102a43}.smart-form select,.smart-form textarea{width:100%;border:1px solid #b7ccd8;border-radius:12px;padding:.9rem 1rem;background:#f8fcfe;color:#102a43;font:inherit}.smart-form select:focus,.smart-form textarea:focus{outline:3px solid rgba(18,185,174,.2);border-color:#12b9ae}.smart-form small{font-weight:500;color:#526b7c}.security-note{border-left:3px solid #e4a72c;padding-left:.75rem}.smart-result h2{font-size:clamp(1.7rem,3vw,2.6rem);color:#0d2840;margin:.4rem 0}.smart-result p{color:#455f70}.result-facts{display:grid;gap:.65rem;margin:1.4rem 0}.result-facts span{padding:.8rem;border-radius:10px;background:#eff8f8;color:#23485b}.result-actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.5rem}.smart-button{appearance:none;border:0;border-radius:999px;background:linear-gradient(135deg,#f4ba45,#ffce69);color:#17212b;font-weight:850;text-decoration:none;padding:.9rem 1.25rem;cursor:pointer}.smart-link{border:1px solid #8da7b6;border-radius:999px;padding:.85rem 1.15rem;text-decoration:none;color:#164862;font-weight:750}@media(max-width:780px){.smart-grid{grid-template-columns:1fr}.smart-hero{padding-top:3.5rem}.smart-page{background:linear-gradient(180deg,#071526,#0b2036 38%,#eef6fb 38%)}}
+  </style>
+</Layout>

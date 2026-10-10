@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const faqs = [
+  ["¿Qué diferencia una valoración de una evaluación?","La valoración inicial es una conversación orientativa para comprender la necesidad y preparar un alcance. La evaluación es un servicio acordado, autorizado y documentado sobre activos definidos."],
+  ["¿Cómo se define el alcance?","Se identifican los activos, actividades permitidas, restricciones, horarios, exclusiones, responsables y entregables. Nada se amplía sin aprobación."],
+  ["¿Qué ocurre si aparece un riesgo importante?","Se documenta el hallazgo, se comunica por el canal acordado y se aplican los criterios de escalamiento definidos. No se modifica el entorno sin autorización."],
+  ["¿Cómo se protege la información compartida?","Se limita el acceso a la información necesaria para el servicio y se acuerdan conservación, entrega y eliminación. No deben enviarse secretos por formularios o WhatsApp."],
+  ["¿Es necesario compartir contraseñas?","No por formularios ni WhatsApp. Si una actividad requiere acceso autorizado, se define un procedimiento controlado, temporal y apropiado para el alcance."],
+  ["¿Qué experiencia aporta JEFQ Consultor?","La propuesta se apoya en un proceso verificable: alcance documentado, autorización previa, hallazgos priorizados, entregables claros y límites profesionales. La web no atribuye certificaciones o clientes que no pueda demostrar."],
+  ["¿Cuánto cuesta?","Los valores dependen del alcance, la cantidad y tipo de activos y las condiciones técnicas. Los importes publicados son orientativos; la propuesta confirma el precio y los impuestos aplicables."],
+  ["¿Cuánto tarda?","La duración depende del alcance y de la disponibilidad definida con el cliente. La propuesta establece etapas, condiciones y una programación orientativa antes de iniciar."],
+  ["¿El servicio puede afectar la operación?","El alcance se diseña para reducir riesgos innecesarios. Las actividades con posible impacto requieren autorización expresa, ventanas acordadas y criterios de detención."],
+  ["¿Atienden fuera de Bogotá?","Sí. La atención puede desarrollarse de forma remota para organizaciones ubicadas en Colombia, según el alcance y las condiciones técnicas."],
+  ["¿Qué recibe el cliente?","Según el servicio: alcance documentado, observaciones, hallazgos priorizados, resumen ejecutivo, informe técnico, recomendaciones, ruta de mejora y presentación de resultados."],
+  ["¿La valoración obliga a contratar?","No. Permite comprender la necesidad y determinar si existe un alcance adecuado para ambas partes."],
+  ["¿Se puede contratar solo hardening?","Sí, siempre que exista un alcance claro y condiciones adecuadas para aplicar y validar los cambios acordados."],
+  ["¿Realizan pruebas sin autorización?","No. Las actividades se limitan a activos y técnicas expresamente autorizados por quien tenga capacidad para conceder el permiso."],
+  ["¿Cómo se entregan los resultados?","La forma de entrega se acuerda previamente. Para información sensible se debe utilizar un canal apropiado y controlar acceso, conservación y eliminación."]
+];
+
+const faqSchema = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":faqs.map(([question,answer])=>({"@type":"Question","name":question,"acceptedAnswer":{"@type":"Answer","text":answer}}))};
+import AuthorityRealFaq from "../components/AuthorityRealFaq.astro";
+---
+<Layout title="Preguntas frecuentes de ciberseguridad | JEFQ Consultor" description="Respuestas sobre alcance, autorización, entregables, seguridad de la información, precios y proceso de JEFQ Consultor.">
+  <section class="legal-hero"><div class="container"><span class="section-label">PREGUNTAS FRECUENTES</span><h1>Respuestas claras antes de comenzar</h1><p>Información general sobre valoración, alcance, autorización, entregables y límites del servicio.</p></div></section>
+  <section class="section"><div class="container faq-premium-v2">
+    {faqs.map(([question,answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}
+    <div class="faq-final-v2"><h2>¿Su situación requiere una revisión específica?</h2><p>La valoración inicial permite comprender la necesidad sin solicitar contraseñas ni información sensible.</p><a class="button primary" href="/valoracion">Solicitar valoración</a></div>
+  </div></section>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+<AuthorityRealFaq />
+</Layout>
+<style>
+.faq-premium-v2{max-width:900px}.faq-premium-v2 details{margin-bottom:12px;background:linear-gradient(145deg,rgba(18,50,75,.88),rgba(7,22,37,.96));border:1px solid rgba(110,185,213,.25);border-radius:15px;overflow:hidden}.faq-premium-v2 summary{padding:18px 20px;cursor:pointer;font-weight:850}.faq-premium-v2 details p{margin:0;padding:0 20px 20px;color:#bdd0dc}.faq-final-v2{margin-top:30px;padding:28px;text-align:center;border:1px solid rgba(255,190,70,.4);background:linear-gradient(135deg,rgba(255,177,51,.1),rgba(40,205,186,.08));border-radius:18px}.faq-final-v2 h2{margin-top:0}.faq-final-v2 p{color:#bdd0dc}
+</style>

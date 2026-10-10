@@ -1,0 +1,26 @@
+node_modules/
+.next/
+.env
+.env.*
+*.log
+dist/
+build/
+.vercel
+# JEFQ: exclusiones de publicacion segura
+.vercel/
+_JEFQ_GitHub_Logs/
+.astro/
+coverage/
+!.env.example
+*.zip
+.backups/
+.jefq-backups/
+.jefq-control/
+.jefq-quarantine/
+.jefq-reparaciones/
+.jefq-local-logs/
+logs/
+backups_css/
+*.bak
+*.backup-*
+Nuevo Documento de texto*.txt
