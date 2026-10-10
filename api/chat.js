@@ -88,7 +88,13 @@ export default async function handler(req, res) {
     clearTimeout(timeout);
 
     if (!r.ok) {
-      return res.status(502).json({ error: "provider-error" });
+      let detail = "";
+      try {
+        const errBody = await r.text();
+        detail = errBody.slice(0, 300);
+      } catch {}
+      console.error("Gemini provider error:", r.status, detail);
+      return res.status(502).json({ error: "provider-error", status: r.status });
     }
 
     const data = await r.json();
