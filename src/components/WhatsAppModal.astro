@@ -1,112 +1,28 @@
 ---
-// Modal de contacto por WhatsApp mediante el usuario @JaimeByte (sin número telefónico).
+// Contacto directo por WhatsApp (@JaimeByte).
+// El número vive SOLO en la variable privada WHATSAPP_NUMBER de Vercel;
+// /api/whatsapp redirige a wa.me sin exponerlo en el sitio ni en el repo.
 // Uso declarativo: <a href="#" data-wa-modal data-wa-message="Mensaje opcional">…</a>
 // Uso imperativo: window.JEFQ_wa.open("Mensaje opcional")
+const DEFAULT_MSG = "Hola Jaime, quiero información sobre los servicios de JEFQ Consultor.";
 ---
 
-<div class="wa-modal" id="wa-modal" hidden role="dialog" aria-modal="true" aria-labelledby="wa-modal-title">
-  <div class="wa-modal-card">
-    <button class="wa-modal-close" id="wa-modal-close" type="button" aria-label="Cerrar">✕</button>
-    <h3 id="wa-modal-title">Contáctame por WhatsApp</h3>
-    <p class="wa-modal-sub">Búscame por mi usuario en WhatsApp:</p>
-    <div class="wa-user-row">
-      <b>@JaimeByte</b>
-      <button type="button" class="wa-copy" id="wa-copy-user">Copiar usuario</button>
-    </div>
-    <div class="wa-msg-block" id="wa-msg-block" hidden>
-      <p class="wa-modal-sub">Mensaje sugerido (puede copiarlo y pegarlo en el chat):</p>
-      <textarea id="wa-msg-text" readonly rows="5" aria-label="Mensaje sugerido"></textarea>
-      <button type="button" class="wa-copy" id="wa-copy-msg">Copiar mensaje</button>
-    </div>
-    <p class="wa-hint">En WhatsApp, toque el buscador, escriba <b>@JaimeByte</b> y abra el chat. Atención 24/7.</p>
-  </div>
-</div>
-
-<script>
+<script define:vars={{ DEFAULT_MSG }}>
 (function () {
-  var modal = document.getElementById('wa-modal');
-  if (!modal || window.JEFQ_wa) return;
-  var closeBtn = document.getElementById('wa-modal-close');
-  var msgBlock = document.getElementById('wa-msg-block');
-  var msgText = document.getElementById('wa-msg-text');
-  var copyUser = document.getElementById('wa-copy-user');
-  var copyMsg = document.getElementById('wa-copy-msg');
-  var lastFocus = null;
+  if (window.JEFQ_wa) return;
 
-  function flash(btn) {
-    var old = btn.textContent;
-    btn.textContent = '¡Copiado!';
-    setTimeout(function () { btn.textContent = old; }, 1600);
+  function go(message) {
+    var text = (message || DEFAULT_MSG).slice(0, 600);
+    window.location.href = '/api/whatsapp?text=' + encodeURIComponent(text);
   }
-
-  function copyText(text, btn) {
-    function fallback() {
-      var ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      try { document.execCommand('copy'); flash(btn); } catch (e) {}
-      document.body.removeChild(ta);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { flash(btn); }).catch(fallback);
-    } else { fallback(); }
-  }
-
-  function open(message) {
-    lastFocus = document.activeElement;
-    if (message) {
-      msgText.value = message;
-      msgBlock.hidden = false;
-    } else {
-      msgBlock.hidden = true;
-    }
-    modal.hidden = false;
-    document.body.style.overflow = 'hidden';
-    closeBtn.focus();
-  }
-
-  function close() {
-    modal.hidden = true;
-    document.body.style.overflow = '';
-    if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} }
-  }
-
-  copyUser.addEventListener('click', function () { copyText('@JaimeByte', copyUser); });
-  copyMsg.addEventListener('click', function () { copyText(msgText.value, copyMsg); });
-  closeBtn.addEventListener('click', close);
-  modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) close(); });
 
   document.addEventListener('click', function (e) {
     var t = e.target && e.target.closest ? e.target.closest('[data-wa-modal]') : null;
     if (!t) return;
     e.preventDefault();
-    open(t.getAttribute('data-wa-message') || '');
+    go(t.getAttribute('data-wa-message') || '');
   });
 
-  window.JEFQ_wa = { open: open, close: close };
+  window.JEFQ_wa = { open: go, close: function () {} };
 })();
 </script>
-
-<style>
-  .wa-modal { position: fixed; inset: 0; z-index: 1200; display: grid; place-items: center; padding: 20px; background: rgba(3, 10, 20, 0.72); backdrop-filter: blur(4px); }
-  .wa-modal[hidden] { display: none; }
-  .wa-modal-card { position: relative; width: min(420px, 100%); padding: 26px 24px 22px; color: #eaf3fa; background: #0a1f38; border: 1px solid rgba(35, 215, 255, 0.32); border-radius: 18px; box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55); animation: wa-in 0.25s ease; }
-  @keyframes wa-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
-  .wa-modal-card h3 { margin: 0 0 6px; font-size: 1.15rem; }
-  .wa-modal-sub { margin: 10px 0 8px; color: #9eb3ca; font-size: 0.85rem; }
-  .wa-modal-close { position: absolute; top: 10px; right: 12px; background: transparent; border: 0; color: #9eb3ca; font-size: 1rem; cursor: pointer; padding: 6px 8px; }
-  .wa-modal-close:hover { color: #fff; }
-  .wa-user-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; background: rgba(35, 215, 255, 0.08); border: 1px solid rgba(35, 215, 255, 0.3); border-radius: 12px; }
-  .wa-user-row b { font-size: 1.2rem; color: #5ef0b4; letter-spacing: 0.02em; }
-  .wa-copy { flex: none; padding: 9px 14px; color: #001018; background: linear-gradient(135deg, #23d7ff, #5ef0b4); border: 0; border-radius: 9px; font-weight: 800; font-size: 0.8rem; cursor: pointer; }
-  .wa-msg-block { margin-top: 14px; }
-  .wa-msg-block textarea { width: 100%; box-sizing: border-box; padding: 10px 12px; color: #dfe9f2; background: #061421; border: 1px solid rgba(125, 181, 225, 0.24); border-radius: 10px; font-size: 0.82rem; line-height: 1.5; resize: vertical; }
-  .wa-msg-block .wa-copy { margin-top: 8px; width: 100%; }
-  .wa-hint { margin: 14px 0 0; color: #7890a8; font-size: 0.76rem; line-height: 1.5; }
-  .wa-hint b { color: #bfe9ff; }
-  @media (prefers-reduced-motion: reduce) { .wa-modal-card { animation: none; } }
-</style>
