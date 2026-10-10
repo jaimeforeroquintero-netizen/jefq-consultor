@@ -121,12 +121,16 @@ export default async function handler(req, res) {
   const mode = body?.mode === "jaime" ? "jaime" : "normal";
   const prompt = mode === "jaime" ? JAIME_PROMPT : SYSTEM_PROMPT;
 
+  // Llamada a Gemini con un reintento ante 429 (límite de la capa gratuita).
   try {
+  let r, attempt = 0;
+  while (true) {
+    attempt++;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 25000);
     const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
 
-    const r = await fetch(
+    r = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
       {
         method: "POST",
@@ -140,6 +144,9 @@ export default async function handler(req, res) {
       }
     );
     clearTimeout(timeout);
+    if (r.status !== 429 || attempt >= 2) break;
+    await new Promise((res) => setTimeout(res, 4000));
+  }
 
     if (!r.ok) {
       let detail = "";
