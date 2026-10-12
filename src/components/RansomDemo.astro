@@ -1,0 +1,257 @@
+---
+// Demo interactiva CASO 02: ransomware dentro de una pantalla de PC.
+// Gmail (correo con adjunto) -> explorador cifrando -> nota de rescate -> JEFQ.
+// Reutiliza los estilos globales de demos. Controles 100% manuales.
+// Simulación con fines educativos; nombres ficticios; sin detalles explotables.
+const STEPS = [
+  { side: "ataque", phase: "01 · SEÑUELO", name: "SEÑUELO", title: "Llega la \u201cfactura\u201d",
+    desc: "En Gmail aparece un correo del \u201cproveedor\u201d con un archivo adjunto: Factura_Marzo.pdf.exe. Parece un PDF\u2026 pero no lo es.",
+    risk: 30 },
+  { side: "ataque", phase: "02 · ENGAÑO", name: "ENGAÑO", title: "El empleado abre el adjunto",
+    desc: "Doble clic al archivo. Lo que parec\u00eda una factura es en realidad un programa malicioso que se ejecuta en silencio.",
+    risk: 60 },
+  { side: "ataque", phase: "03 · CIFRADO", name: "CIFRADO", title: "Los archivos se bloquean",
+    desc: "El programa recorre documentos, fotos y hojas de c\u00e1lculo y los cifra uno por uno. En minutos, a\u00f1os de trabajo quedan inaccesibles.",
+    risk: 90 },
+  { side: "ataque", phase: "04 · RESCATE", name: "RESCATE", title: "Aparece la nota de rescate",
+    desc: "\u201cSus archivos han sido cifrados\u201d. Piden un pago en 72 horas o todo se pierde. El reloj empieza a correr.",
+    risk: 95 },
+  { side: "defensa", phase: "05 · DETECCI\u00d3N", name: "DETECCI\u00d3N", title: "JEFQ detecta el cifrado masivo",
+    desc: "El patr\u00f3n es inconfundible: cientos de archivos modificados en minutos. La alerta se dispara de inmediato.",
+    risk: 70 },
+  { side: "defensa", phase: "06 · CONTENCI\u00d3N", name: "CONTENCI\u00d3N", title: "Aislado, detenido y restaurado",
+    desc: "Equipo fuera de la red, programa malicioso detenido y archivos recuperados desde la copia de seguridad. Sin pagar rescate.",
+    risk: 5 },
+];
+---
+
+<section class="section" id="demo-ransomware">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <span>CASO 02 · DEMO INTERACTIVA</span>
+      <h2>Ransomware: el secuestro de sus archivos</h2>
+      <p>El ataque que m&aacute;s temen las gerencias: dele <b>play</b> y vea c&oacute;mo se cifran los archivos&hellip; y c&oacute;mo se recuperan <b>sin pagar rescate</b>.</p>
+    </header>
+
+    <div class="demo-player" id="rdemo-player" data-reveal data-steps={JSON.stringify(STEPS)}>
+      <div class="monitor">
+        <div class="monitor-screen" id="rdemo-screen" role="img" aria-label="Simulación de un ataque de ransomware dentro de una pantalla de computador">
+
+          <!-- PASO 1: bandeja de Gmail -->
+          <div class="view" data-view="0">
+            <div class="gmail">
+              <div class="g-top"><span class="g-burger"><i></i><i></i><i></i></span><span class="g-logo">Gmail</span><span class="g-search">Buscar en correo</span><span class="g-avatar">C</span></div>
+              <div class="g-body">
+                <div class="g-side">
+                  <span class="g-compose">Redactar</span>
+                  <span class="g-nav on"><i></i>Bandeja de entrada<b>2</b></span>
+                  <span class="g-nav"><i></i>Destacados</span>
+                  <span class="g-nav"><i></i>Enviados</span>
+                </div>
+                <div class="g-list">
+                  <div class="g-row phish"><span class="g-av" style="background:#c0392b">P</span><span class="g-from">Proveedor Andina</span><span class="g-subj">Factura Marzo — pago pendiente · adjunto</span><span class="g-time">8:15 a.m.</span><span class="g-tag">¡falso!</span></div>
+                  <div class="g-row"><span class="g-av" style="background:#2e6da4">R</span><span class="g-from">Recursos Humanos</span><span class="g-subj">Bienvenida al nuevo auxiliar</span><span class="g-time">ayer</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 2: correo abierto con adjunto -->
+          <div class="view" data-view="1" hidden>
+            <div class="gmail">
+              <div class="g-top"><span class="g-burger"><i></i><i></i><i></i></span><span class="g-logo">Gmail</span><span class="g-search">Buscar en correo</span><span class="g-avatar">C</span></div>
+              <div class="g-open">
+                <p class="g-meta"><b>Proveedor Andina</b> &lt;facturacion@proveedor-andina-pagos.com&gt;<br /><span>para m&iacute; · 8:15 a.m.</span></p>
+                <h4>Factura Marzo — pago pendiente</h4>
+                <p>Estimado cliente:<br />Adjuntamos su factura. Abra el archivo para ver el detalle del pago y las instrucciones de transferencia.</p>
+                <span class="g-cta-fake">Factura_Marzo.pdf.exe &#8681;</span>
+                <p class="g-hint">Doble extensi&oacute;n: parece PDF, pero es un programa ejecutable</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 3: explorador cifrando -->
+          <div class="view" data-view="2" hidden>
+            <div class="explorer">
+              <div class="xp-bar"><span class="xp-path">Este equipo &gt; Documentos &gt; Empresa</span></div>
+              <div class="xp-list">
+                <div class="xp-row enc"><span class="xp-ic">X</span><span class="xp-fname">Informe_anual.docx.BLOQUEADO</span><span class="xp-lock">cifrado</span></div>
+                <div class="xp-row enc"><span class="xp-ic">X</span><span class="xp-fname">Clientes_2026.xlsx.BLOQUEADO</span><span class="xp-lock">cifrado</span></div>
+                <div class="xp-row enc"><span class="xp-ic">X</span><span class="xp-fname">Fotos_evento.zip.BLOQUEADO</span><span class="xp-lock">cifrado</span></div>
+                <div class="xp-row"><span class="xp-ic">W</span><span class="xp-fname">Propuesta_comercial.docx</span><span class="xp-lock" style="color:#b3261e">cifrando…</span></div>
+              </div>
+              <div class="xp-prog"><span>Cifrando archivos…</span><div class="xp-track"><i></i></div></div>
+            </div>
+          </div>
+
+          <!-- PASO 4: nota de rescate -->
+          <div class="view" data-view="3" hidden>
+            <div class="ransom">
+              <h4>SUS ARCHIVOS HAN SIDO CIFRADOS</h4>
+              <div class="r-timer">71:59:12</div>
+              <p>Todos sus documentos, fotos y bases de datos est&aacute;n bloqueados. Tiene <b>72 horas</b> para pagar el rescate o perder&aacute; el acceso para siempre.</p>
+              <p class="r-fine">Demostraci&oacute;n con fines educativos · sin instrucciones reales de pago</p>
+            </div>
+          </div>
+
+          <!-- PASO 5: alerta JEFQ -->
+          <div class="view" data-view="4" hidden>
+            <div class="jefq-alert">
+              <div class="ja-card">
+                <span class="ja-badge">JEFQ · ALERTA DE SEGURIDAD</span>
+                <h4>Ransomware detectado</h4>
+                <div class="ja-rows">
+                  <div><small>EQUIPO</small><b>contabilidad-03</b></div>
+                  <div><small>ACTIVIDAD</small><b>Cifrado masivo</b></div>
+                  <div><small>HORA</small><b>8:47 a.m.</b></div>
+                </div>
+                <p>Cientos de archivos modificados en minutos: patr&oacute;n t&iacute;pico de ransomware en curso. Contenci&oacute;n inmediata.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 6: contención y recuperación -->
+          <div class="view" data-view="5" hidden>
+            <div class="jefq-alert">
+              <div class="ja-card">
+                <span class="ja-badge ok">JEFQ · INCIDENTE CONTENIDO</span>
+                <div class="ja-big">100<small>%</small></div>
+                <p>Archivos recuperados. Rescate pagado: <b>$0</b>.</p>
+                <ul class="ja-check">
+                  <li>Equipo aislado de la red</li>
+                  <li>Programa malicioso detenido</li>
+                  <li>Archivos restaurados desde la copia de seguridad</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="monitor-tag">pantalla simulada · caso ficticio con fines educativos</div>
+      </div>
+      <div class="monitor-stand"><i></i></div>
+
+      <div class="demo-caption" aria-live="polite">
+        <span class="demo-side is-atk" id="rdemo-side">ATACANTE</span>
+        <div class="demo-cap-text"><b id="rdemo-phase">01 · SEÑUELO</b><h3 id="rdemo-title">Llega la “factura”</h3><p id="rdemo-desc"></p></div>
+      </div>
+
+      <div class="demo-risk">
+        <div class="demo-risk-head"><span>Nivel de riesgo</span><b id="rdemo-risk-val">30 / 100</b></div>
+        <div class="demo-risk-bar"><i id="rdemo-risk-fill" class="mid" style="width:30%"></i></div>
+      </div>
+
+      <div class="demo-timeline" id="rdemo-timeline" role="tablist" aria-label="Pasos de la simulación de ransomware">
+        {STEPS.map((s, i) => (
+          <button type="button" role="tab" data-step={i} aria-label={s.phase + ": " + s.title} aria-selected={i === 0 ? "true" : "false"} class={i === 0 ? "active" : ""}>
+            <b>{String(i + 1).padStart(2, "0")}</b><span>{s.name}</span>
+          </button>
+        ))}
+      </div>
+
+      <div class="demo-controls">
+        <button type="button" id="rdemo-prev" aria-label="Paso anterior">&#9664;</button>
+        <button type="button" id="rdemo-play" aria-label="Reproducir">&#9654;</button>
+        <button type="button" id="rdemo-next" aria-label="Paso siguiente">&#9654;&#9654;</button>
+        <button type="button" id="rdemo-restart" aria-label="Reiniciar">&#8635;</button>
+      </div>
+
+      <noscript>
+        <ol class="demo-static">
+          {STEPS.map((s) => (
+            <li><b>{s.phase}: {s.title}.</b> {s.desc}</li>
+          ))}
+        </ol>
+      </noscript>
+
+      <p class="demo-note">Simulaci&oacute;n con fines educativos. Nombres y empresas ficticios: no representa un incidente real ni ense&ntilde;a a ejecutar ataques.</p>
+      <div class="demo-cta">
+        <span>Sin copias de seguridad, un ransomware es una sentencia. Con JEFQ, es un incidente controlado.</span>
+        <a class="button primary" href="/valoracion">Descubra su exposici&oacute;n real</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var player = document.getElementById('rdemo-player');
+  if (!player) return;
+  var steps = null;
+  try { steps = JSON.parse(player.getAttribute('data-steps') || 'null'); } catch (e) { steps = null; }
+  if (!steps || !steps.length) return;
+
+  var views = Array.prototype.slice.call(document.querySelectorAll('#rdemo-screen .view'));
+  var sideEl = document.getElementById('rdemo-side');
+  var phaseEl = document.getElementById('rdemo-phase');
+  var titleEl = document.getElementById('rdemo-title');
+  var descEl = document.getElementById('rdemo-desc');
+  var riskVal = document.getElementById('rdemo-risk-val');
+  var riskFill = document.getElementById('rdemo-risk-fill');
+  var dots = Array.prototype.slice.call(document.querySelectorAll('#rdemo-timeline button'));
+  var btnPlay = document.getElementById('rdemo-play');
+  var btnPrev = document.getElementById('rdemo-prev');
+  var btnNext = document.getElementById('rdemo-next');
+  var btnRestart = document.getElementById('rdemo-restart');
+
+  var idx = 0, timer = null, playing = false;
+  var STEP_MS = 5200;
+  var ICON_PLAY = '▶', ICON_PAUSE = '❚❚';
+
+  function render() {
+    var s = steps[idx];
+    views.forEach(function (v, i) { v.hidden = (i !== idx); });
+    var atk = s.side === 'ataque';
+    sideEl.textContent = atk ? 'ATACANTE' : 'DEFENSA JEFQ';
+    sideEl.className = 'demo-side ' + (atk ? 'is-atk' : 'is-def');
+    phaseEl.textContent = s.phase;
+    titleEl.textContent = s.title;
+    descEl.textContent = s.desc;
+    riskVal.textContent = s.risk + ' / 100';
+    riskFill.style.width = s.risk + '%';
+    riskFill.className = s.risk >= 60 ? 'hi' : (s.risk >= 30 ? 'mid' : 'lo');
+    dots.forEach(function (d, i) {
+      d.classList.toggle('active', i === idx);
+      d.classList.toggle('done', i < idx);
+      d.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+    });
+  }
+
+  function tick() {
+    idx = (idx + 1) % steps.length;
+    render();
+    timer = setTimeout(tick, STEP_MS);
+  }
+  function play() {
+    if (playing) return;
+    playing = true;
+    btnPlay.textContent = ICON_PAUSE;
+    btnPlay.setAttribute('aria-label', 'Pausar');
+    timer = setTimeout(tick, STEP_MS);
+  }
+  function pause() {
+    playing = false;
+    if (timer) { clearTimeout(timer); timer = null; }
+    btnPlay.textContent = ICON_PLAY;
+    btnPlay.setAttribute('aria-label', 'Reproducir');
+  }
+  function go(i) {
+    pause();
+    idx = ((i % steps.length) + steps.length) % steps.length;
+    render();
+  }
+
+  render();
+  pause();
+
+  btnPlay.addEventListener('click', function () { playing ? pause() : play(); });
+  btnPrev.addEventListener('click', function () { go(idx - 1); });
+  btnNext.addEventListener('click', function () { go(idx + 1); });
+  btnRestart.addEventListener('click', function () { go(0); play(); });
+  dots.forEach(function (d) {
+    d.addEventListener('click', function () {
+      go(parseInt(d.getAttribute('data-step'), 10));
+    });
+  });
+})();
+</script>
