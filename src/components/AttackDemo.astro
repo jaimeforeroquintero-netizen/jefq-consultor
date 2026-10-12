@@ -1,39 +1,28 @@
 ---
-// Demo interactiva: caso simulado de phishing, ejecución y contención.
-// Player paso a paso (ataque en rojo, defensa JEFQ en verde) con medidor de riesgo.
-// Simulación con fines educativos; sin detalles técnicos explotables.
+// Demo interactiva: caso simulado de phishing dentro de una pantalla de PC con Gmail.
+// 6 pasos: el ataque avanza (rojo) y la defensa JEFQ responde (verde).
+// Controles manuales: play/pausa, anterior, siguiente, reinicio y línea de tiempo.
+// Simulación con fines educativos; nombres ficticios; sin detalles técnicos explotables.
 // Sin JS se muestra la secuencia estática (también sirve al SEO).
 const STEPS = [
-  {
-    side: "ataque", phase: "01 · SEÑUELO", title: "Llega el correo falso",
-    desc: "Un correo que suplanta al banco invita a \u201cverificar la cuenta\u201d. Parece leg\u00edtimo: logo, tono urgente, enlace convincente.",
-    term: "\u26a0 correo sospechoso en la bandeja de entrada", risk: 25,
-  },
-  {
-    side: "ataque", phase: "02 · ENGA\u00d1O", title: "Un empleado hace clic",
-    desc: "Abre el enlace e ingresa su usuario y contrase\u00f1a en una p\u00e1gina id\u00e9ntica a la del banco. El error humano es la puerta m\u00e1s com\u00fan.",
-    term: "\u26a0 credenciales capturadas por el atacante", risk: 55,
-  },
-  {
-    side: "ataque", phase: "03 · INTRUSI\u00d3N", title: "El atacante entra al correo",
-    desc: "Con la clave robada accede al correo corporativo y empieza a buscar informaci\u00f3n sensible: facturas, contactos, datos de clientes.",
-    term: "\u26a0 acceso no autorizado en curso\u2026", risk: 85,
-  },
-  {
-    side: "defensa", phase: "04 · DETECCI\u00d3N", title: "JEFQ detecta lo an\u00f3malo",
-    desc: "Inicio de sesi\u00f3n desde un lugar y un horario inusuales. La alerta se genera en minutos, no en d\u00edas ni semanas.",
-    term: "\u2713 alerta: sesi\u00f3n an\u00f3mala \u00b7 equipo JEFQ notificado", risk: 70,
-  },
-  {
-    side: "defensa", phase: "05 · CONTENCI\u00d3N", title: "Se corta el acceso",
+  { side: "ataque", phase: "01 · SEÑUELO", name: "SEÑUELO", title: "Llega el correo falso",
+    desc: "En la bandeja de Gmail aparece un correo que suplanta al \u201cBanco Meridiano\u201d: logo, tono urgente y un enlace para \u201cverificar la cuenta\u201d.",
+    risk: 25 },
+  { side: "ataque", phase: "02 · ENGAÑO", name: "ENGAÑO", title: "El empleado muerde el anzuelo",
+    desc: "Lo abre: \u201csu cuenta ser\u00e1 suspendida en 12 horas\u201d. El bot\u00f3n \u201cVerificar mi cuenta\u201d no lleva al banco, lleva a una p\u00e1gina falsa.",
+    risk: 55 },
+  { side: "ataque", phase: "03 · INTRUSI\u00d3N", name: "INTRUSI\u00d3N", title: "La clave cae en manos del atacante",
+    desc: "En la p\u00e1gina falsa el empleado ingresa su usuario y contrase\u00f1a. En ese instante, el atacante toma el control del correo corporativo.",
+    risk: 85 },
+  { side: "defensa", phase: "04 · DETECCI\u00d3N", name: "DETECCI\u00d3N", title: "JEFQ detecta lo an\u00f3malo",
+    desc: "Inicio de sesi\u00f3n a las 3:12 a.m. desde una ubicaci\u00f3n desconocida y un dispositivo no reconocido. La alerta se genera en minutos.",
+    risk: 70 },
+  { side: "defensa", phase: "05 · CONTENCI\u00d3N", name: "CONTENCI\u00d3N", title: "Se corta el acceso al atacante",
     desc: "Sesiones revocadas, cuenta bloqueada y equipo aislado de la red. El atacante pierde el control antes de extraer informaci\u00f3n.",
-    term: "\u2713 sesiones revocadas \u00b7 cuenta protegida \u00b7 equipo aislado", risk: 25,
-  },
-  {
-    side: "defensa", phase: "06 · RECUPERACI\u00d3N", title: "A operar, m\u00e1s fuertes",
+    risk: 25 },
+  { side: "defensa", phase: "06 · RECUPERACI\u00d3N", name: "RECUPERACI\u00d3N", title: "A operar, m\u00e1s fuertes",
     desc: "Claves restablecidas, doble verificaci\u00f3n activada e informe ejecutivo con lecciones claras para la gerencia.",
-    term: "\u2713 operaci\u00f3n restaurada \u00b7 informe entregado", risk: 5,
-  },
+    risk: 5 },
 ];
 ---
 
@@ -42,36 +31,136 @@ const STEPS = [
     <header class="section-head" data-reveal>
       <span>DEMO INTERACTIVA</span>
       <h2>Vea un ataque&hellip; y c&oacute;mo se contiene</h2>
-      <p>Caso simulado de <b>phishing</b>, el ataque m&aacute;s com&uacute;n contra las pymes. Dele play y observe c&oacute;mo avanza el atacante&hellip; y c&oacute;mo responde la defensa.</p>
+      <p>Caso simulado de <b>phishing</b> dentro de una pantalla real: dele <b>play</b> y observe el ataque paso a paso, con su explicaci&oacute;n abajito.</p>
     </header>
 
     <div class="demo-player" id="demo-player" data-reveal data-steps={JSON.stringify(STEPS)}>
-      <div class="demo-screen">
-        <div class="demo-stage" id="demo-stage">
-          <span class="demo-side" id="demo-side"></span>
-          <span class="demo-phase" id="demo-phase"></span>
-          <h3 id="demo-title"></h3>
-          <p id="demo-desc"></p>
-          <div class="demo-term" id="demo-term"></div>
+      <div class="monitor">
+        <div class="monitor-screen" id="demo-screen" role="img" aria-label="Simulación de un ataque de phishing dentro de una pantalla de computador con Gmail">
+
+          <!-- PASO 1: bandeja de Gmail -->
+          <div class="view" data-view="0">
+            <div class="gmail">
+              <div class="g-top"><span class="g-burger"><i></i><i></i><i></i></span><span class="g-logo">Gmail</span><span class="g-search">Buscar en correo</span><span class="g-avatar">G</span></div>
+              <div class="g-body">
+                <div class="g-side">
+                  <span class="g-compose">Redactar</span>
+                  <span class="g-nav on"><i></i>Bandeja de entrada<b>3</b></span>
+                  <span class="g-nav"><i></i>Destacados</span>
+                  <span class="g-nav"><i></i>Enviados</span>
+                </div>
+                <div class="g-list">
+                  <div class="g-row phish"><span class="g-av" style="background:#c0392b">B</span><span class="g-from">Banco Meridiano</span><span class="g-subj">Acci&oacute;n requerida: verifique su cuenta hoy</span><span class="g-time">3:04 a.m.</span><span class="g-tag">¡falso!</span></div>
+                  <div class="g-row"><span class="g-av" style="background:#2e6da4">C</span><span class="g-from">Contabilidad</span><span class="g-subj">Factura marzo — pago a proveedores</span><span class="g-time">ayer</span></div>
+                  <div class="g-row"><span class="g-av" style="background:#6a7f3f">L</span><span class="g-from">Laura G&oacute;mez</span><span class="g-subj">Re: cotizaci&oacute;n impresoras</span><span class="g-time">ayer</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 2: correo abierto -->
+          <div class="view" data-view="1" hidden>
+            <div class="gmail">
+              <div class="g-top"><span class="g-burger"><i></i><i></i><i></i></span><span class="g-logo">Gmail</span><span class="g-search">Buscar en correo</span><span class="g-avatar">G</span></div>
+              <div class="g-open">
+                <p class="g-meta"><b>Banco Meridiano</b> &lt;notificaciones@banco-meridiano-seguro.com&gt;<br /><span>para m&iacute; · 3:04 a.m.</span></p>
+                <h4>Acci&oacute;n requerida: su cuenta ser&aacute; suspendida</h4>
+                <p>Estimado cliente:<br />Detectamos actividad inusual en su cuenta. Verifique su identidad en las pr&oacute;ximas <b>12 horas</b> o su acceso ser&aacute; bloqueado.</p>
+                <span class="g-cta-fake">Verificar mi cuenta</span>
+                <p class="g-hint">El remitente real no es el banco · el bot&oacute;n lleva a una p&aacute;gina falsa</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 3: página falsa del banco -->
+          <div class="view" data-view="2" hidden>
+            <div class="fakebank">
+              <div class="fb-url">banco-meridiano-seguro.com — <b>sitio falso</b></div>
+              <div class="fb-card">
+                <b class="fb-logo">Banco Meridiano</b><span class="fb-sub">Banca en l&iacute;nea</span>
+                <label>Usuario<span class="fb-field">gerencia@empresa.com</span></label>
+                <label>Clave<span class="fb-field">••••••••••</span></label>
+                <span class="fb-btn">Ingresar</span>
+                <p class="fb-warn">Aqu&iacute; el atacante captura la clave y entra al correo</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 4: alerta JEFQ -->
+          <div class="view" data-view="3" hidden>
+            <div class="jefq-alert">
+              <div class="ja-card">
+                <span class="ja-badge">JEFQ · ALERTA DE SEGURIDAD</span>
+                <h4>Sesi&oacute;n an&oacute;mala detectada</h4>
+                <div class="ja-rows">
+                  <div><small>ORIGEN</small><b>Bogot&aacute; → ubicaci&oacute;n desconocida</b></div>
+                  <div><small>HORA</small><b>3:12 a.m.</b></div>
+                  <div><small>DISPOSITIVO</small><b>No reconocido</b></div>
+                </div>
+                <p>Comportamiento fuera del patr&oacute;n habitual de la cuenta. Se recomienda contenci&oacute;n inmediata.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 5: contención -->
+          <div class="view" data-view="4" hidden>
+            <div class="jefq-alert">
+              <div class="ja-card">
+                <span class="ja-badge ok">JEFQ · CONTENCI&Oacute;N EN CURSO</span>
+                <h4>Cortando el acceso al atacante</h4>
+                <ul class="ja-check">
+                  <li>Sesiones activas revocadas</li>
+                  <li>Cuenta bloqueada y protegida</li>
+                  <li>Equipo aislado de la red</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASO 6: recuperación -->
+          <div class="view" data-view="5" hidden>
+            <div class="jefq-alert">
+              <div class="ja-card">
+                <span class="ja-badge ok">JEFQ · INCIDENTE CONTENIDO</span>
+                <div class="ja-big">11<small>minutos</small></div>
+                <p>De la alerta a la contenci&oacute;n total.</p>
+                <ul class="ja-check">
+                  <li>Claves restablecidas</li>
+                  <li>Doble verificaci&oacute;n activada</li>
+                  <li>Informe ejecutivo para la gerencia</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div class="demo-risk">
-          <div class="demo-risk-head"><span>Nivel de riesgo</span><b id="demo-risk-val"></b></div>
-          <div class="demo-risk-bar"><i id="demo-risk-fill"></i></div>
-        </div>
+        <div class="monitor-tag">pantalla simulada · caso ficticio con fines educativos</div>
+      </div>
+      <div class="monitor-stand"><i></i></div>
+
+      <!-- Referencia del paso actual -->
+      <div class="demo-caption" aria-live="polite">
+        <span class="demo-side" id="demo-side">ATACANTE</span>
+        <div class="demo-cap-text"><b id="demo-phase">01 · SEÑUELO</b><h3 id="demo-title">Llega el correo falso</h3><p id="demo-desc"></p></div>
+      </div>
+
+      <div class="demo-risk">
+        <div class="demo-risk-head"><span>Nivel de riesgo</span><b id="demo-risk-val">25 / 100</b></div>
+        <div class="demo-risk-bar"><i id="demo-risk-fill" class="lo" style="width:25%"></i></div>
       </div>
 
       <div class="demo-timeline" id="demo-timeline" role="tablist" aria-label="Pasos de la simulación">
         {STEPS.map((s, i) => (
-          <button type="button" role="tab" data-step={i} aria-label={s.phase + ": " + s.title}>
-            <b>{String(i + 1).padStart(2, "0")}</b><span>{s.phase.split("·")[1].trim()}</span>
+          <button type="button" role="tab" data-step={i} aria-label={s.phase + ": " + s.title} aria-selected={i === 0 ? "true" : "false"} class={i === 0 ? "active" : ""}>
+            <b>{String(i + 1).padStart(2, "0")}</b><span>{s.name}</span>
           </button>
         ))}
       </div>
 
       <div class="demo-controls">
         <button type="button" id="demo-prev" aria-label="Paso anterior">&#9664;</button>
-        <button type="button" id="demo-play" aria-label="Reproducir o pausar">&#9654;</button>
-        <button type="button" id="demo-next" aria-label="Paso siguiente">&#9654;</button>
+        <button type="button" id="demo-play" aria-label="Reproducir">&#9654;</button>
+        <button type="button" id="demo-next" aria-label="Paso siguiente">&#9654;&#9654;</button>
         <button type="button" id="demo-restart" aria-label="Reiniciar">&#8635;</button>
       </div>
 
@@ -83,7 +172,7 @@ const STEPS = [
         </ol>
       </noscript>
 
-      <p class="demo-note">Simulaci&oacute;n con fines educativos. Caso ficticio: no representa un incidente real ni ense&ntilde;a a ejecutar ataques.</p>
+      <p class="demo-note">Simulaci&oacute;n con fines educativos. Nombres y empresas ficticios: no representa un incidente real ni ense&ntilde;a a ejecutar ataques.</p>
       <div class="demo-cta">
         <span>Sin detecci&oacute;n, un atacante act&uacute;a durante d&iacute;as. Con JEFQ, la respuesta llega en minutos.</span>
         <a class="button primary" href="/valoracion">Descubra su exposici&oacute;n real</a>
@@ -96,22 +185,15 @@ const STEPS = [
 (function () {
   var player = document.getElementById('demo-player');
   if (!player) return;
-  var steps;
-  try {
-    steps = JSON.parse(player.getAttribute('data-steps') || 'null');
-  } catch (e) { steps = null; }
-  if (!steps) {
-    // Datos de respaldo si el JSON no estuviera disponible
-    steps = [];
-  }
-  if (!steps.length) return;
+  var steps = null;
+  try { steps = JSON.parse(player.getAttribute('data-steps') || 'null'); } catch (e) { steps = null; }
+  if (!steps || !steps.length) return;
 
-  var stage = document.getElementById('demo-stage');
+  var views = Array.prototype.slice.call(document.querySelectorAll('#demo-screen .view'));
   var sideEl = document.getElementById('demo-side');
   var phaseEl = document.getElementById('demo-phase');
   var titleEl = document.getElementById('demo-title');
   var descEl = document.getElementById('demo-desc');
-  var termEl = document.getElementById('demo-term');
   var riskVal = document.getElementById('demo-risk-val');
   var riskFill = document.getElementById('demo-risk-fill');
   var dots = Array.prototype.slice.call(document.querySelectorAll('#demo-timeline button'));
@@ -120,21 +202,19 @@ const STEPS = [
   var btnNext = document.getElementById('demo-next');
   var btnRestart = document.getElementById('demo-restart');
 
-  var reduce = false;
-  try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
-
   var idx = 0, timer = null, playing = false;
-  var AUTOPLAY_MS = 4600;
+  var STEP_MS = 5200;
+  var ICON_PLAY = '▶', ICON_PAUSE = '❚❚';
 
   function render() {
     var s = steps[idx];
-    stage.classList.toggle('is-atk', s.side === 'ataque');
-    stage.classList.toggle('is-def', s.side === 'defensa');
-    sideEl.textContent = s.side === 'ataque' ? 'ATACANTE' : 'DEFENSA JEFQ';
+    views.forEach(function (v, i) { v.hidden = (i !== idx); });
+    var atk = s.side === 'ataque';
+    sideEl.textContent = atk ? 'ATACANTE' : 'DEFENSA JEFQ';
+    sideEl.className = 'demo-side ' + (atk ? 'is-atk' : 'is-def');
     phaseEl.textContent = s.phase;
     titleEl.textContent = s.title;
     descEl.textContent = s.desc;
-    termEl.textContent = s.term;
     riskVal.textContent = s.risk + ' / 100';
     riskFill.style.width = s.risk + '%';
     riskFill.className = s.risk >= 60 ? 'hi' : (s.risk >= 30 ? 'mid' : 'lo');
@@ -145,71 +225,129 @@ const STEPS = [
     });
   }
 
-  function stop() {
-    playing = false;
-    if (timer) { clearTimeout(timer); timer = null; }
-    btnPlay.innerHTML = '&#9654;';
-    btnPlay.setAttribute('aria-label', 'Reproducir');
-  }
   function tick() {
     idx = (idx + 1) % steps.length;
     render();
-    timer = setTimeout(tick, AUTOPLAY_MS);
+    timer = setTimeout(tick, STEP_MS);
   }
   function play() {
-    if (playing || reduce) return;
+    if (playing) return;
     playing = true;
-    btnPlay.innerHTML = '&#10074;&#10074;';
+    btnPlay.textContent = ICON_PAUSE;
     btnPlay.setAttribute('aria-label', 'Pausar');
-    timer = setTimeout(tick, AUTOPLAY_MS);
+    timer = setTimeout(tick, STEP_MS);
+  }
+  function pause() {
+    playing = false;
+    if (timer) { clearTimeout(timer); timer = null; }
+    btnPlay.textContent = ICON_PLAY;
+    btnPlay.setAttribute('aria-label', 'Reproducir');
   }
   function go(i) {
-    stop();
-    idx = (i + steps.length) % steps.length;
+    pause();
+    idx = ((i % steps.length) + steps.length) % steps.length;
     render();
   }
 
-  btnPlay.addEventListener('click', function () { playing ? stop() : (render(), play()); });
+  // Estado inicial: paso 1 visible, botón en ▶, sin autoplay.
+  render();
+  pause();
+
+  btnPlay.addEventListener('click', function () { playing ? pause() : play(); });
   btnPrev.addEventListener('click', function () { go(idx - 1); });
   btnNext.addEventListener('click', function () { go(idx + 1); });
   btnRestart.addEventListener('click', function () { go(0); play(); });
   dots.forEach(function (d) {
-    d.addEventListener('click', function () { go(parseInt(d.getAttribute('data-step'), 10)); });
+    d.addEventListener('click', function () {
+      go(parseInt(d.getAttribute('data-step'), 10));
+    });
   });
-
-  render();
-  if (reduce) { stop(); return; }
-  // Autoplay solo cuando la demo es visible
-  var started = false;
-  function maybeStart() { if (!started) { started = true; play(); } }
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { maybeStart(); io.disconnect(); } });
-    }, { threshold: 0.2 });
-    io.observe(player);
-    setTimeout(maybeStart, 6000);
-  } else {
-    maybeStart();
-  }
 })();
 </script>
 
 <style>
-  .demo-player{max-width:860px;margin:0 auto;padding:30px;background:linear-gradient(145deg,rgba(14,38,65,.8),rgba(5,17,31,.96));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-  .demo-screen{background:#040d1a;border:1px solid rgba(125,181,225,.16);border-radius:16px;overflow:hidden}
-  .demo-stage{position:relative;min-height:250px;padding:30px 30px 24px;transition:background .5s ease}
-  .demo-stage.is-atk{background:radial-gradient(circle at 85% 20%,rgba(255,110,110,.13),transparent 60%)}
-  .demo-stage.is-def{background:radial-gradient(circle at 85% 20%,rgba(94,240,180,.12),transparent 60%)}
-  .demo-side{display:inline-block;padding:6px 12px;border-radius:999px;font-size:.68rem;font-weight:950;letter-spacing:.1em}
-  .is-atk .demo-side{color:#ff8f8f;background:rgba(255,110,110,.12);border:1px solid rgba(255,110,110,.4)}
-  .is-def .demo-side{color:#5ef0b4;background:rgba(94,240,180,.1);border:1px solid rgba(94,240,180,.4)}
-  .demo-phase{display:block;margin-top:14px;color:var(--muted);font-size:.74rem;font-weight:800;letter-spacing:.14em}
-  .demo-stage h3{margin:8px 0 10px;font-size:clamp(1.5rem,3.4vw,2.1rem);letter-spacing:-.02em}
-  .demo-stage p{margin:0;color:#b7c7d8;max-width:60ch}
-  .demo-term{margin-top:18px;padding:12px 15px;background:rgba(3,8,20,.8);border:1px solid rgba(125,181,225,.18);border-radius:10px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem}
-  .is-atk .demo-term{color:#ffb3b3}
-  .is-def .demo-term{color:#5ef0b4}
-  .demo-risk{padding:18px 30px 22px;border-top:1px solid rgba(125,181,225,.14)}
+  .demo-player{max-width:880px;margin:0 auto;padding:30px;background:linear-gradient(145deg,rgba(14,38,65,.8),rgba(5,17,31,.96));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  /* --- Monitor --- */
+  .monitor{background:#0b1220;border:1px solid rgba(125,181,225,.28);border-radius:18px;padding:14px 14px 8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  .monitor-screen{position:relative;aspect-ratio:16/10;background:#fff;border-radius:8px;overflow:hidden;color:#202124;font-size:14px}
+  .monitor-tag{padding:9px 4px 3px;color:#5f6f84;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;text-align:center}
+  .monitor-stand{width:130px;margin:0 auto}
+  .monitor-stand i{display:block;height:16px;background:linear-gradient(180deg,#1a2436,#0b1220);clip-path:polygon(18% 0,82% 0,100% 100%,0 100%)}
+  .view{position:absolute;inset:0;overflow:auto;background:#fff}
+  .view[hidden]{display:none}
+  /* --- Gmail simulado --- */
+  .gmail{display:flex;flex-direction:column;height:100%}
+  .g-top{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid #e2e5ea}
+  .g-burger{display:flex;flex-direction:column;gap:3px}
+  .g-burger i{width:16px;height:2px;background:#5f6368;border-radius:2px}
+  .g-logo{font-size:1.15rem;color:#5f6368}
+  .g-logo::first-letter{color:#4285f4;font-weight:700}
+  .g-search{flex:1;max-width:340px;padding:7px 14px;background:#f1f3f4;border-radius:999px;color:#9aa0a6;font-size:.8rem}
+  .g-avatar{width:30px;height:30px;display:grid;place-items:center;margin-left:auto;background:#7b1fa2;color:#fff;border-radius:50%;font-weight:700;font-size:.8rem}
+  .g-body{flex:1;display:flex;min-height:0}
+  .g-side{width:172px;flex-shrink:0;padding:12px 8px;border-right:1px solid #eef0f3}
+  .g-compose{display:block;margin:2px 4px 14px;padding:9px 14px;background:#fff;border:1px solid #e2e5ea;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.12);font-size:.8rem;font-weight:600;color:#3c4043}
+  .g-nav{display:flex;align-items:center;gap:10px;padding:7px 12px;border-radius:0 999px 999px 0;color:#5f6368;font-size:.8rem}
+  .g-nav i{width:8px;height:8px;border-radius:50%;background:#c9cfd6}
+  .g-nav.on{background:#fce8e6;color:#c5221f;font-weight:700}
+  .g-nav.on i{background:#c5221f}
+  .g-nav b{margin-left:auto;background:#c5221f;color:#fff;border-radius:999px;font-size:.66rem;padding:1px 7px}
+  .g-list{flex:1;min-width:0}
+  .g-row{position:relative;display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f1f3f4;font-size:.8rem}
+  .g-av{width:28px;height:28px;flex-shrink:0;display:grid;place-items:center;color:#fff;border-radius:50%;font-size:.72rem;font-weight:700}
+  .g-from{font-weight:700;white-space:nowrap}
+  .g-subj{color:#5f6368;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .g-time{margin-left:auto;color:#9aa0a6;font-size:.72rem;white-space:nowrap}
+  .g-row.phish{background:#fef3f2;box-shadow:inset 0 0 0 2px #e57373;animation:phishPulse 1.8s ease-in-out infinite}
+  .g-tag{position:absolute;right:76px;top:50%;transform:translateY(-50%) rotate(-4deg);padding:2px 8px;background:#c5221f;color:#fff;border-radius:6px;font-size:.62rem;font-weight:800}
+  @keyframes phishPulse{50%{box-shadow:inset 0 0 0 2px #c5221f}}
+  .g-open{padding:22px 26px;max-width:560px}
+  .g-meta{color:#5f6368;font-size:.78rem}
+  .g-meta b{color:#202124}
+  .g-open h4{margin:12px 0 10px;font-size:1.05rem;color:#b3261e}
+  .g-open p{color:#3c4043;font-size:.86rem;line-height:1.55}
+  .g-cta-fake{display:inline-block;margin:12px 0;padding:10px 22px;background:#1a73e8;color:#fff;border-radius:6px;font-weight:700;font-size:.85rem;animation:phishPulse 1.8s ease-in-out infinite}
+  .g-hint{color:#b3261e;font-size:.74rem;font-style:italic}
+  /* --- Banco falso --- */
+  .fakebank{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#eef2f7;padding:20px}
+  .fb-url{padding:6px 16px;background:#fff;border:1px solid #e2e5ea;border-radius:999px;font-size:.72rem;color:#5f6368}
+  .fb-url b{color:#b3261e}
+  .fb-card{width:min(320px,86%);background:#fff;border-radius:12px;box-shadow:0 12px 34px rgba(0,0,0,.14);padding:24px;text-align:center}
+  .fb-logo{display:block;color:#0d47a1;font-size:1.25rem;font-weight:800}
+  .fb-sub{display:block;margin:2px 0 16px;color:#5f6368;font-size:.76rem}
+  .fb-card label{display:block;margin:10px 0;text-align:left;font-size:.74rem;color:#5f6368}
+  .fb-field{display:block;margin-top:4px;padding:9px 12px;background:#f8f9fa;border:1px solid #e2e5ea;border-radius:6px;color:#202124;font-size:.85rem}
+  .fb-btn{display:block;margin:14px 0 6px;padding:10px;background:#0d47a1;color:#fff;border-radius:6px;font-weight:700;animation:phishPulse 1.8s ease-in-out infinite}
+  .fb-warn{color:#b3261e;font-size:.72rem;font-style:italic}
+  /* --- Alertas JEFQ --- */
+  .jefq-alert{min-height:100%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 30%,#0d2540,#040d1a);padding:22px}
+  .ja-card{width:min(430px,92%);background:#0a1828;border:1px solid rgba(35,215,255,.35);border-radius:16px;padding:26px;color:#eaf3fa;box-shadow:0 24px 70px rgba(0,0,0,.5)}
+  .ja-badge{display:inline-block;padding:5px 12px;border-radius:999px;font-size:.64rem;font-weight:900;letter-spacing:.1em;color:#ffb3b3;background:rgba(255,110,110,.12);border:1px solid rgba(255,110,110,.5)}
+  .ja-badge.ok{color:#5ef0b4;background:rgba(94,240,180,.1);border-color:rgba(94,240,180,.5)}
+  .ja-card h4{margin:14px 0 10px;font-size:1.3rem}
+  .ja-card p{color:#9eb3ca;font-size:.86rem}
+  .ja-rows{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}
+  .ja-rows div{background:rgba(125,181,225,.08);border:1px solid rgba(125,181,225,.18);border-radius:10px;padding:9px 10px}
+  .ja-rows small{display:block;color:#7890a8;font-size:.62rem;letter-spacing:.08em}
+  .ja-rows b{font-size:.78rem}
+  .ja-check{list-style:none;margin:16px 0 0;padding:0}
+  .ja-check li{position:relative;margin:9px 0;padding:10px 12px 10px 38px;background:rgba(94,240,180,.07);border:1px solid rgba(94,240,180,.3);border-radius:10px;font-size:.85rem;opacity:0;animation:chkIn .45s ease forwards}
+  .ja-check li:nth-child(2){animation-delay:.5s}
+  .ja-check li:nth-child(3){animation-delay:1s}
+  .ja-check li::before{content:"✓";position:absolute;left:12px;color:#5ef0b4;font-weight:900}
+  @keyframes chkIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+  .ja-big{margin:10px 0 2px;font-size:3rem;font-weight:900;color:#5ef0b4;line-height:1}
+  .ja-big small{font-size:1rem;color:#9eb3ca;font-weight:600}
+  /* --- Referencia del paso --- */
+  .demo-caption{display:flex;gap:16px;align-items:flex-start;margin-top:22px;padding:20px 22px;background:rgba(4,11,23,.7);border:1px solid var(--line);border-radius:16px}
+  .demo-side{flex-shrink:0;margin-top:4px;padding:6px 12px;border-radius:999px;font-size:.68rem;font-weight:950;letter-spacing:.1em}
+  .demo-side.is-atk{color:#ff8f8f;background:rgba(255,110,110,.12);border:1px solid rgba(255,110,110,.4)}
+  .demo-side.is-def{color:#5ef0b4;background:rgba(94,240,180,.1);border:1px solid rgba(94,240,180,.4)}
+  .demo-cap-text b{color:var(--cyan);font-size:.74rem;letter-spacing:.14em}
+  .demo-cap-text h3{margin:6px 0 8px;font-size:1.35rem}
+  .demo-cap-text p{margin:0;color:#b7c7d8;font-size:.95rem}
+  /* --- Riesgo / timeline / controles --- */
+  .demo-risk{margin-top:18px;padding:16px 22px;background:rgba(4,11,23,.7);border:1px solid var(--line);border-radius:16px}
   .demo-risk-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;color:var(--muted);font-size:.78rem;font-weight:700}
   .demo-risk-head b{color:var(--text)}
   .demo-risk-bar{height:10px;background:rgba(125,181,225,.12);border-radius:999px;overflow:hidden}
@@ -218,7 +356,7 @@ const STEPS = [
   .demo-risk-bar i.mid{background:linear-gradient(90deg,#ffc46b,#ff9d6b)}
   .demo-risk-bar i.lo{background:linear-gradient(90deg,#23d7ff,#5ef0b4)}
   .demo-timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:18px}
-  .demo-timeline button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;background:rgba(9,28,50,.7);border:1px solid var(--line);border-radius:12px;color:var(--muted);cursor:pointer;font-size:.62rem;font-weight:800;letter-spacing:.04em;transition:border-color .2s,transform .2s}
+  .demo-timeline button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;background:rgba(9,28,50,.7);border:1px solid var(--line);border-radius:12px;color:var(--muted);cursor:pointer;font-size:.6rem;font-weight:800;letter-spacing:.04em;transition:border-color .2s,transform .2s}
   .demo-timeline button b{font-size:.95rem;color:#dbe7f2}
   .demo-timeline button:hover{transform:translateY(-2px)}
   .demo-timeline button.active{border-color:var(--cyan);color:var(--text)}
@@ -227,7 +365,7 @@ const STEPS = [
   .demo-controls{display:flex;justify-content:center;gap:10px;margin-top:18px}
   .demo-controls button{width:52px;height:52px;display:grid;place-items:center;background:rgba(10,31,54,.8);border:1px solid var(--line);border-radius:50%;color:var(--text);font-size:1rem;cursor:pointer;transition:transform .18s,border-color .18s}
   .demo-controls button:hover{transform:translateY(-2px);border-color:var(--cyan)}
-  #demo-play{width:62px;height:62px;color:#001018;background:linear-gradient(135deg,var(--cyan),var(--green));border:0;font-size:1.15rem}
+  #demo-play{width:64px;height:64px;color:#001018;background:linear-gradient(135deg,var(--cyan),var(--green));border:0;font-size:1.25rem;font-weight:900}
   .demo-static{margin:18px 0 0;padding-left:20px;color:var(--muted)}
   .demo-static li{margin:10px 0}
   .demo-static b{color:var(--text)}
@@ -236,13 +374,18 @@ const STEPS = [
   .demo-cta span{color:var(--muted)}
   @media(max-width:680px){
     .demo-player{padding:20px}
-    .demo-stage{padding:22px 18px;min-height:290px}
-    .demo-risk{padding:14px 18px 18px}
+    .monitor-screen{font-size:12px}
+    .g-side{display:none}
+    .g-subj{display:none}
+    .g-tag{right:64px}
+    .ja-rows{grid-template-columns:1fr}
     .demo-timeline{grid-template-columns:repeat(3,1fr)}
+    .demo-caption{flex-direction:column}
     .demo-cta{flex-direction:column}
   }
   @media(prefers-reduced-motion:reduce){
+    .g-row.phish,.g-cta-fake,.fb-btn{animation:none}
+    .ja-check li{opacity:1;animation:none}
     .demo-risk-bar i{transition:none}
-    .demo-stage{transition:none}
   }
 </style>
