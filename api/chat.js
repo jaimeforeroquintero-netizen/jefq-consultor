@@ -31,7 +31,7 @@ MODELO ESCALABLE: los planes están diseñados para crecer con la empresa. Lo ha
 
 CANALES:
 - WhatsApp: @JaimeByte — el botón de WhatsApp del sitio abre el chat directamente; NUNCA des un número telefónico
-- Correo corporativo: contacto@jefq-consultor.com
+- Correo: jaimeforeroquintero@gmail.com
 - Valoración orientativa en línea: https://jefq-consultor.vercel.app/valoracion (recomiéndala cuando el visitante no sepa qué servicio necesita)
 - Página de seguridad para IA: https://jefq-consultor.vercel.app/seguridad-inteligencia-artificial
 
