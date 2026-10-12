@@ -1,0 +1,248 @@
+---
+// Demo interactiva: caso simulado de phishing, ejecución y contención.
+// Player paso a paso (ataque en rojo, defensa JEFQ en verde) con medidor de riesgo.
+// Simulación con fines educativos; sin detalles técnicos explotables.
+// Sin JS se muestra la secuencia estática (también sirve al SEO).
+const STEPS = [
+  {
+    side: "ataque", phase: "01 · SEÑUELO", title: "Llega el correo falso",
+    desc: "Un correo que suplanta al banco invita a \u201cverificar la cuenta\u201d. Parece leg\u00edtimo: logo, tono urgente, enlace convincente.",
+    term: "\u26a0 correo sospechoso en la bandeja de entrada", risk: 25,
+  },
+  {
+    side: "ataque", phase: "02 · ENGA\u00d1O", title: "Un empleado hace clic",
+    desc: "Abre el enlace e ingresa su usuario y contrase\u00f1a en una p\u00e1gina id\u00e9ntica a la del banco. El error humano es la puerta m\u00e1s com\u00fan.",
+    term: "\u26a0 credenciales capturadas por el atacante", risk: 55,
+  },
+  {
+    side: "ataque", phase: "03 · INTRUSI\u00d3N", title: "El atacante entra al correo",
+    desc: "Con la clave robada accede al correo corporativo y empieza a buscar informaci\u00f3n sensible: facturas, contactos, datos de clientes.",
+    term: "\u26a0 acceso no autorizado en curso\u2026", risk: 85,
+  },
+  {
+    side: "defensa", phase: "04 · DETECCI\u00d3N", title: "JEFQ detecta lo an\u00f3malo",
+    desc: "Inicio de sesi\u00f3n desde un lugar y un horario inusuales. La alerta se genera en minutos, no en d\u00edas ni semanas.",
+    term: "\u2713 alerta: sesi\u00f3n an\u00f3mala \u00b7 equipo JEFQ notificado", risk: 70,
+  },
+  {
+    side: "defensa", phase: "05 · CONTENCI\u00d3N", title: "Se corta el acceso",
+    desc: "Sesiones revocadas, cuenta bloqueada y equipo aislado de la red. El atacante pierde el control antes de extraer informaci\u00f3n.",
+    term: "\u2713 sesiones revocadas \u00b7 cuenta protegida \u00b7 equipo aislado", risk: 25,
+  },
+  {
+    side: "defensa", phase: "06 · RECUPERACI\u00d3N", title: "A operar, m\u00e1s fuertes",
+    desc: "Claves restablecidas, doble verificaci\u00f3n activada e informe ejecutivo con lecciones claras para la gerencia.",
+    term: "\u2713 operaci\u00f3n restaurada \u00b7 informe entregado", risk: 5,
+  },
+];
+---
+
+<section class="section" id="demo">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <span>DEMO INTERACTIVA</span>
+      <h2>Vea un ataque&hellip; y c&oacute;mo se contiene</h2>
+      <p>Caso simulado de <b>phishing</b>, el ataque m&aacute;s com&uacute;n contra las pymes. Dele play y observe c&oacute;mo avanza el atacante&hellip; y c&oacute;mo responde la defensa.</p>
+    </header>
+
+    <div class="demo-player" id="demo-player" data-reveal data-steps={JSON.stringify(STEPS)}>
+      <div class="demo-screen">
+        <div class="demo-stage" id="demo-stage">
+          <span class="demo-side" id="demo-side"></span>
+          <span class="demo-phase" id="demo-phase"></span>
+          <h3 id="demo-title"></h3>
+          <p id="demo-desc"></p>
+          <div class="demo-term" id="demo-term"></div>
+        </div>
+        <div class="demo-risk">
+          <div class="demo-risk-head"><span>Nivel de riesgo</span><b id="demo-risk-val"></b></div>
+          <div class="demo-risk-bar"><i id="demo-risk-fill"></i></div>
+        </div>
+      </div>
+
+      <div class="demo-timeline" id="demo-timeline" role="tablist" aria-label="Pasos de la simulación">
+        {STEPS.map((s, i) => (
+          <button type="button" role="tab" data-step={i} aria-label={s.phase + ": " + s.title}>
+            <b>{String(i + 1).padStart(2, "0")}</b><span>{s.phase.split("·")[1].trim()}</span>
+          </button>
+        ))}
+      </div>
+
+      <div class="demo-controls">
+        <button type="button" id="demo-prev" aria-label="Paso anterior">&#9664;</button>
+        <button type="button" id="demo-play" aria-label="Reproducir o pausar">&#10074;&#10074;</button>
+        <button type="button" id="demo-next" aria-label="Paso siguiente">&#9654;</button>
+        <button type="button" id="demo-restart" aria-label="Reiniciar">&#8635;</button>
+      </div>
+
+      <noscript>
+        <ol class="demo-static">
+          {STEPS.map((s) => (
+            <li><b>{s.phase}: {s.title}.</b> {s.desc}</li>
+          ))}
+        </ol>
+      </noscript>
+
+      <p class="demo-note">Simulaci&oacute;n con fines educativos. Caso ficticio: no representa un incidente real ni ense&ntilde;a a ejecutar ataques.</p>
+      <div class="demo-cta">
+        <span>Sin detecci&oacute;n, un atacante act&uacute;a durante d&iacute;as. Con JEFQ, la respuesta llega en minutos.</span>
+        <a class="button primary" href="/valoracion">Descubra su exposici&oacute;n real</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var player = document.getElementById('demo-player');
+  if (!player) return;
+  var steps;
+  try {
+    steps = JSON.parse(player.getAttribute('data-steps') || 'null');
+  } catch (e) { steps = null; }
+  if (!steps) {
+    // Datos de respaldo si el JSON no estuviera disponible
+    steps = [];
+  }
+  if (!steps.length) return;
+
+  var stage = document.getElementById('demo-stage');
+  var sideEl = document.getElementById('demo-side');
+  var phaseEl = document.getElementById('demo-phase');
+  var titleEl = document.getElementById('demo-title');
+  var descEl = document.getElementById('demo-desc');
+  var termEl = document.getElementById('demo-term');
+  var riskVal = document.getElementById('demo-risk-val');
+  var riskFill = document.getElementById('demo-risk-fill');
+  var dots = Array.prototype.slice.call(document.querySelectorAll('#demo-timeline button'));
+  var btnPlay = document.getElementById('demo-play');
+  var btnPrev = document.getElementById('demo-prev');
+  var btnNext = document.getElementById('demo-next');
+  var btnRestart = document.getElementById('demo-restart');
+
+  var reduce = false;
+  try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  var idx = 0, timer = null, playing = false;
+  var AUTOPLAY_MS = 4600;
+
+  function render() {
+    var s = steps[idx];
+    stage.classList.toggle('is-atk', s.side === 'ataque');
+    stage.classList.toggle('is-def', s.side === 'defensa');
+    sideEl.textContent = s.side === 'ataque' ? 'ATACANTE' : 'DEFENSA JEFQ';
+    phaseEl.textContent = s.phase;
+    titleEl.textContent = s.title;
+    descEl.textContent = s.desc;
+    termEl.textContent = s.term;
+    riskVal.textContent = s.risk + ' / 100';
+    riskFill.style.width = s.risk + '%';
+    riskFill.className = s.risk >= 60 ? 'hi' : (s.risk >= 30 ? 'mid' : 'lo');
+    dots.forEach(function (d, i) {
+      d.classList.toggle('active', i === idx);
+      d.classList.toggle('done', i < idx);
+      d.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+    });
+  }
+
+  function stop() {
+    playing = false;
+    if (timer) { clearTimeout(timer); timer = null; }
+    btnPlay.innerHTML = '&#9654;';
+    btnPlay.setAttribute('aria-label', 'Reproducir');
+  }
+  function tick() {
+    idx = (idx + 1) % steps.length;
+    render();
+    timer = setTimeout(tick, AUTOPLAY_MS);
+  }
+  function play() {
+    if (playing || reduce) return;
+    playing = true;
+    btnPlay.innerHTML = '&#10074;&#10074;';
+    btnPlay.setAttribute('aria-label', 'Pausar');
+    timer = setTimeout(tick, AUTOPLAY_MS);
+  }
+  function go(i) {
+    stop();
+    idx = (i + steps.length) % steps.length;
+    render();
+  }
+
+  btnPlay.addEventListener('click', function () { playing ? stop() : (render(), play()); });
+  btnPrev.addEventListener('click', function () { go(idx - 1); });
+  btnNext.addEventListener('click', function () { go(idx + 1); });
+  btnRestart.addEventListener('click', function () { go(0); play(); });
+  dots.forEach(function (d) {
+    d.addEventListener('click', function () { go(parseInt(d.getAttribute('data-step'), 10)); });
+  });
+
+  render();
+  if (reduce) { stop(); return; }
+  // Autoplay solo cuando la demo es visible
+  var started = false;
+  function maybeStart() { if (!started) { started = true; play(); } }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { maybeStart(); io.disconnect(); } });
+    }, { threshold: 0.2 });
+    io.observe(player);
+    setTimeout(maybeStart, 6000);
+  } else {
+    maybeStart();
+  }
+})();
+</script>
+
+<style>
+  .demo-player{max-width:860px;margin:0 auto;padding:30px;background:linear-gradient(145deg,rgba(14,38,65,.8),rgba(5,17,31,.96));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .demo-screen{background:#040d1a;border:1px solid rgba(125,181,225,.16);border-radius:16px;overflow:hidden}
+  .demo-stage{position:relative;min-height:250px;padding:30px 30px 24px;transition:background .5s ease}
+  .demo-stage.is-atk{background:radial-gradient(circle at 85% 20%,rgba(255,110,110,.13),transparent 60%)}
+  .demo-stage.is-def{background:radial-gradient(circle at 85% 20%,rgba(94,240,180,.12),transparent 60%)}
+  .demo-side{display:inline-block;padding:6px 12px;border-radius:999px;font-size:.68rem;font-weight:950;letter-spacing:.1em}
+  .is-atk .demo-side{color:#ff8f8f;background:rgba(255,110,110,.12);border:1px solid rgba(255,110,110,.4)}
+  .is-def .demo-side{color:#5ef0b4;background:rgba(94,240,180,.1);border:1px solid rgba(94,240,180,.4)}
+  .demo-phase{display:block;margin-top:14px;color:var(--muted);font-size:.74rem;font-weight:800;letter-spacing:.14em}
+  .demo-stage h3{margin:8px 0 10px;font-size:clamp(1.5rem,3.4vw,2.1rem);letter-spacing:-.02em}
+  .demo-stage p{margin:0;color:#b7c7d8;max-width:60ch}
+  .demo-term{margin-top:18px;padding:12px 15px;background:rgba(3,8,20,.8);border:1px solid rgba(125,181,225,.18);border-radius:10px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem}
+  .is-atk .demo-term{color:#ffb3b3}
+  .is-def .demo-term{color:#5ef0b4}
+  .demo-risk{padding:18px 30px 22px;border-top:1px solid rgba(125,181,225,.14)}
+  .demo-risk-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;color:var(--muted);font-size:.78rem;font-weight:700}
+  .demo-risk-head b{color:var(--text)}
+  .demo-risk-bar{height:10px;background:rgba(125,181,225,.12);border-radius:999px;overflow:hidden}
+  .demo-risk-bar i{display:block;height:100%;width:0;border-radius:999px;transition:width .8s ease,background .5s ease}
+  .demo-risk-bar i.hi{background:linear-gradient(90deg,#ff9d6b,#ff6e6e)}
+  .demo-risk-bar i.mid{background:linear-gradient(90deg,#ffc46b,#ff9d6b)}
+  .demo-risk-bar i.lo{background:linear-gradient(90deg,#23d7ff,#5ef0b4)}
+  .demo-timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:18px}
+  .demo-timeline button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;background:rgba(9,28,50,.7);border:1px solid var(--line);border-radius:12px;color:var(--muted);cursor:pointer;font-size:.62rem;font-weight:800;letter-spacing:.04em;transition:border-color .2s,transform .2s}
+  .demo-timeline button b{font-size:.95rem;color:#dbe7f2}
+  .demo-timeline button:hover{transform:translateY(-2px)}
+  .demo-timeline button.active{border-color:var(--cyan);color:var(--text)}
+  .demo-timeline button.done{border-color:rgba(94,240,180,.4)}
+  .demo-timeline button.done b{color:#5ef0b4}
+  .demo-controls{display:flex;justify-content:center;gap:10px;margin-top:18px}
+  .demo-controls button{width:52px;height:52px;display:grid;place-items:center;background:rgba(10,31,54,.8);border:1px solid var(--line);border-radius:50%;color:var(--text);font-size:1rem;cursor:pointer;transition:transform .18s,border-color .18s}
+  .demo-controls button:hover{transform:translateY(-2px);border-color:var(--cyan)}
+  #demo-play{width:62px;height:62px;color:#001018;background:linear-gradient(135deg,var(--cyan),var(--green));border:0;font-size:1.15rem}
+  .demo-static{margin:18px 0 0;padding-left:20px;color:var(--muted)}
+  .demo-static li{margin:10px 0}
+  .demo-static b{color:var(--text)}
+  .demo-note{margin:20px 0 0;color:#7890a8;font-size:.76rem;text-align:center}
+  .demo-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;margin-top:22px;padding:24px;border:1px solid var(--line);border-radius:16px;background:rgba(9,31,54,.5);text-align:center}
+  .demo-cta span{color:var(--muted)}
+  @media(max-width:680px){
+    .demo-player{padding:20px}
+    .demo-stage{padding:22px 18px;min-height:290px}
+    .demo-risk{padding:14px 18px 18px}
+    .demo-timeline{grid-template-columns:repeat(3,1fr)}
+    .demo-cta{flex-direction:column}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .demo-risk-bar i{transition:none}
+    .demo-stage{transition:none}
+  }
+</style>
