@@ -10,9 +10,9 @@ const services=[
  {n:"07",icon:"✦",t:"Seguridad para IA",d:"Evaluamos el uso de herramientas de inteligencia artificial en su empresa: datos en prompts, apps sin gobierno y riesgos de suplantación.",url:"/seguridad-inteligencia-artificial"}
 ];
 const plans=[
- {name:"Diagnóstico Esencial",price:"Desde $390.000",text:"Punto de partida para profesionales y microempresas.",items:["Reunión remota","Hasta 3 equipos","Riesgos prioritarios","Informe ejecutivo","Sesión de resultados"]},
- {name:"Evaluación Pyme",price:"Desde $890.000",text:"Evaluación ampliada con ruta de mejora.",featured:true,items:["Alcance autorizado","Hasta 10 activos","Revisión de configuraciones","Informe técnico y ejecutivo","Plan de remediación","Acompañamiento"]},
- {name:"Seguridad Integral",price:"Desde $1.790.000",text:"Fortalecimiento por capas y seguimiento.",items:["Alcance personalizado","Evaluación autorizada","Hardening priorizado","Evidencias","Plan por etapas","Dos seguimientos"]}
+ {name:"Diagnóstico Esencial",price:"Desde $390.000",producto:"esencial",precioNum:390000,text:"Punto de partida para profesionales y microempresas.",items:["Reunión remota","Hasta 3 equipos","Riesgos prioritarios","Informe ejecutivo","Sesión de resultados"]},
+ {name:"Evaluación Pyme",price:"Desde $890.000",producto:"pyme",precioNum:890000,text:"Evaluación ampliada con ruta de mejora.",featured:true,items:["Alcance autorizado","Hasta 10 activos","Revisión de configuraciones","Informe técnico y ejecutivo","Plan de remediación","Acompañamiento"]},
+ {name:"Seguridad Integral",price:"Desde $1.790.000",producto:"integral",precioNum:1790000,text:"Fortalecimiento por capas y seguimiento.",items:["Alcance personalizado","Evaluación autorizada","Hardening priorizado","Evidencias","Plan por etapas","Dos seguimientos"]}
 ];
 
 import TrustPremium from "../components/TrustPremium.astro";
@@ -36,7 +36,63 @@ import RansomDemo from "../components/RansomDemo.astro";
 <section class="section" id="servicios"><div class="container"><header class="section-head" data-reveal><span>SERVICIOS</span><h2>Seguridad adaptada a su realidad</h2><p>Una propuesta proporcional al tamaño, exposición y necesidades de cada organización.</p></header><div class="service-grid">{services.map(s=><article class="service-card" data-reveal><div class="service-top"><span class="service-icon">{s.icon}</span><small>{s.n}</small></div><h3>{s.t}</h3><p>{s.d}</p><a class="service-card-link" href={s.url} aria-label={`Conocer ${s.t}`}>Descubrir el servicio <b>→</b></a></article>)}</div><div class="section-cta" data-reveal><span>¿No sabe por dónde empezar?</span><a class="button ghost" href="/valoracion">Hacer la valoración en línea</a></div></div></section>
 <section class="section contrast" id="metodologia"><div class="container method-grid"><header class="section-head left" data-reveal><span>METODOLOGÍA</span><h2>Control, claridad y evidencia</h2><p>Cada intervención protege el alcance, documenta lo realizado y prioriza lo importante.</p><div class="promise"><b>Compromiso operativo</b><p>No realizamos pruebas sobre activos sin autorización verificable.</p></div></header><div class="process">{[["01","Conocer el contexto","Objetivos, activos, restricciones y riesgos."],["02","Definir el alcance","Autorización, límites y condiciones de ejecución."],["03","Evaluar con control","Pruebas proporcionales y evidencia organizada."],["04","Entregar y acompañar","Prioridades, remediación y seguimiento."]].map(x=><article data-reveal><b>{x[0]}</b><div><h3>{x[1]}</h3><p>{x[2]}</p></div></article>)}</div></div></section>
 <section class="section why"><div class="container why-grid"><div class="why-visual" data-reveal><div class="shield">J<span></span></div><div class="orbit o1"></div><div class="orbit o2"></div></div><div data-reveal><span class="label">POR QUÉ JEFQ</span><h2>Seguridad entendible y orientada a decisiones</h2><div class="benefits"><article><b>Lenguaje claro</b><p>Explicaciones útiles para responsables técnicos y administrativos.</p></article><article><b>Priorización real</b><p>Primero lo que representa mayor exposición o impacto.</p></article><article><b>Atención directa</b><p>Contacto con <a class="inline-link" href="/quien-soy">Jaime Forero</a> durante el proceso.</p></article><article><b>Diseño proporcional</b><p>Sin implantar complejidad o productos que no aporten valor.</p></article></div><p class="why-diff" data-reveal>Ni el sobrino que "sabe de computadores", ni la multinacional que cobra en dólares: <b>un consultor dedicado que habla el idioma de su negocio</b> y responde por cada hallazgo.</p><div class="section-cta" data-reveal><span>¿Y si no entiendo de tecnología? El informe ejecutivo está escrito para gerencia, no para ingenieros.</span><a class="button ghost" href="/valoracion">Hacer la valoración en línea</a></div></div></div></section>
-<section class="section contrast" id="planes"><div class="container"><header class="section-head" data-reveal><span>INVERSIÓN ORIENTATIVA</span><h2>Planes de entrada transparentes</h2><p>El valor final depende del alcance, los activos y la complejidad.</p></header><div class="pricing-grid">{plans.map(p=><article class:list={["price-card",{featured:p.featured}]} data-reveal>{p.featured&&<span class="badge">RECOMENDADO PARA PYMES</span>}<h3>{p.name}</h3><strong class="price">{p.price}</strong><p>{p.text}</p><ul>{p.items.map(i=><li><i>✓</i>{i}</li>)}</ul><a class="button price-button" href="#" data-wa-modal data-wa-message={`Hola Jaime, me interesa el plan ${p.name}. Quiero solicitar una valoración.`}>Solicitar valoración</a></article>)}</div><p class="price-anchor" data-reveal>Un solo incidente de seguridad puede detener su operación por días. La prevención profesional empieza en <b>$390.000</b>.</p><p class="price-note">Consultoría remota desde $120.000 COP por hora. Hardening Windows desde $290.000 COP. Valores sujetos al alcance acordado.</p>
+<section class="section contrast" id="planes"><div class="container"><header class="section-head" data-reveal><span>INVERSIÓN ORIENTATIVA</span><h2>Planes de entrada transparentes</h2><p>El valor final depende del alcance, los activos y la complejidad.</p></header><div class="pricing-grid">{plans.map(p=><article class:list={["price-card",{featured:p.featured}]} data-reveal>{p.featured&&<span class="badge">RECOMENDADO PARA PYMES</span>}<h3>{p.name}</h3><strong class="price">{p.price}</strong><p>{p.text}</p><ul>{p.items.map(i=><li><i>✓</i>{i}</li>)}</ul><a class="button price-button" href="#" data-wa-modal data-wa-message={`Hola Jaime, me interesa el plan ${p.name}. Quiero solicitar una valoración.`}>Solicitar valoración</a><button class="button price-button pay-plan" data-producto={p.producto} type="button">{`Contratar · $${p.precioNum.toLocaleString("es-CO")}`}</button></article>)}</div><p class="price-anchor" data-reveal>Un solo incidente de seguridad puede detener su operación por días. La prevención profesional empieza en <b>$390.000</b>.</p><p class="price-note">Consultoría remota desde $120.000 COP por hora. Hardening Windows desde $290.000 COP. Valores sujetos al alcance acordado.</p>
+<script>
+(function(){
+  function aviso(btn, texto){
+    var card = btn.closest('.price-card');
+    var n = card.querySelector('.pay-note');
+    if(!n){ n = document.createElement('p'); n.className = 'pay-note'; card.appendChild(n); }
+    n.textContent = texto;
+  }
+  document.querySelectorAll('.pay-plan').forEach(function(btn){
+    btn.addEventListener('click', async function(){
+      var producto = btn.getAttribute('data-producto');
+      btn.disabled = true;
+      aviso(btn, 'Abriendo el pago seguro…');
+      var cr, cd;
+      try{
+        cr = await fetch('/api/pagos/crear',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({producto:producto})});
+        cd = await cr.json().catch(function(){return {};});
+      }catch(e){ cr = null; }
+      if(!cr || !cr.ok){
+        btn.disabled = false;
+        aviso(btn, cd && cd.error === 'Pagos no configurados'
+          ? 'Los pagos en línea aún no están activos. Escríbanos por WhatsApp.'
+          : 'No se pudo iniciar el pago. Inténtelo de nuevo.');
+        return;
+      }
+      var checkout = new WidgetCheckout({
+        currency: cd.currency, amountInCents: cd.amountInCents,
+        reference: cd.reference, publicKey: cd.publicKey,
+        signature: { integrity: cd.signature }
+      });
+      checkout.open(function(){
+        aviso(btn, 'Verificando su pago…');
+        var intentos = 0;
+        var iv = setInterval(function(){
+          intentos++;
+          fetch('/api/pagos/estado?reference='+encodeURIComponent(cd.reference))
+            .then(function(r){return r.json().catch(function(){return {};});})
+            .then(function(d){
+              if(d.status === 'APPROVED'){
+                clearInterval(iv);
+                btn.textContent = 'Pago aprobado ✓';
+                aviso(btn, 'Pago recibido. Lo contactaremos a la brevedad para coordinar el servicio. Ref: '+cd.reference);
+              }else if(d.status === 'DECLINED' || d.status === 'ERROR' || d.status === 'VOIDED' || intentos >= 20){
+                clearInterval(iv); btn.disabled = false;
+                aviso(btn, 'El pago no se completó. Inténtelo de nuevo o escríbanos por WhatsApp.');
+              }
+            })
+            .catch(function(){
+              if(intentos >= 20){ clearInterval(iv); btn.disabled = false; aviso(btn, 'No pudimos verificar el pago. Escríbanos por WhatsApp.'); }
+            });
+        }, 3000);
+      });
+    });
+  });
+})();
+</script>
 <div class="downtime-calc" data-reveal>
   <h3>¿Cuánto pierde su empresa por un día sin operar?</h3>
   <p>Escriba su facturación mensual aproximada y compare:</p>
