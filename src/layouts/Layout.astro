@@ -17,13 +17,71 @@ const { title, description, canonicalPath = Astro.url.pathname, noindex = false 
 const baseUrl = "https://jefq-consultor.vercel.app";
 const canonical = new URL(canonicalPath, baseUrl).toString();
 const waMessage = "Hola Jaime, quiero información sobre los servicios de ciberseguridad de JEFQ Consultor.";
+// GEO/LLM: grafo schema.org para descubrimiento por buscadores e IAs.
+// Organization (identidad), WebSite y ProfessionalService (oferta con planes).
 const schema = {
-  "@context":"https://schema.org", "@type":"ProfessionalService",
-  name:"JEFQ Consultor", url:baseUrl,
-  founder:{"@type":"Person",name:"Jaime Forero"},
-  areaServed:{"@type":"Country",name:"Colombia"},
-  address:{"@type":"PostalAddress",addressLocality:"Bogotá",addressCountry:"CO"},
-  description, openingHours:"Mo-Su 00:00-23:59", priceRange:"$$"
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": baseUrl + "/#organizacion",
+      "name": "JEFQ Consultor",
+      "url": baseUrl,
+      "logo": baseUrl + "/og-image.png",
+      "sameAs": ["https://x.com/JaimeByte"],
+      "founder": { "@type": "Person", "name": "Jaime Forero" },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "jaimeforeroquintero@gmail.com",
+        "contactType": "sales",
+        "areaServed": "CO",
+        "availableLanguage": "es"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": baseUrl + "/#sitio",
+      "url": baseUrl,
+      "name": "JEFQ Consultor",
+      "inLanguage": "es-CO",
+      "publisher": { "@id": baseUrl + "/#organizacion" }
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": baseUrl + "/#servicio",
+      "name": "JEFQ Consultor",
+      "url": baseUrl,
+      "description": description,
+      "founder": { "@type": "Person", "name": "Jaime Forero" },
+      "areaServed": { "@type": "Country", "name": "Colombia" },
+      "address": { "@type": "PostalAddress", "addressLocality": "Bogotá", "addressCountry": "CO" },
+      "openingHours": "Mo-Su 00:00-23:59",
+      "priceRange": "$$",
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "name": "Plan Esencial",
+          "price": "390000",
+          "priceCurrency": "COP",
+          "description": "Diagnóstico de ciberseguridad para pymes en Colombia."
+        },
+        {
+          "@type": "Offer",
+          "name": "Plan Pyme",
+          "price": "890000",
+          "priceCurrency": "COP",
+          "description": "Diagnóstico ampliado con priorización y acompañamiento."
+        },
+        {
+          "@type": "Offer",
+          "name": "Plan Integral",
+          "price": "1790000",
+          "priceCurrency": "COP",
+          "description": "Cobertura integral: diagnóstico, pruebas autorizadas, hardening e informes."
+        }
+      ]
+    }
+  ]
 };
 import "../styles/evidencia-premium.css";
 import "../styles/audit-v2-fixes.css";
