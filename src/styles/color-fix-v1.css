@@ -86,3 +86,22 @@
 /* Etiquetas pequeñas */
 .service-top small,
 .case-head span{letter-spacing:.06em;}
+
+/* Tarjeta de precio: título y precio siempre claros sobre fondo oscuro */
+.price-card h3{color:#f4f8ff !important;}
+.price-card .price{color:var(--cyan) !important;}
+
+/* Panel why-diff: fondo más sólido para que el texto se lea */
+.why-diff{
+  background:rgba(35,215,255,.09) !important;
+  border-color:rgba(35,215,255,.35) !important;
+  color:#dce8f5 !important;
+}
+.why-diff b{color:var(--cyan) !important;}
+
+/* Panel section-cta: fondo sólido */
+.section-cta{
+  background:#0d2440 !important;
+  border-color:rgba(125,181,225,.32) !important;
+}
+.section-cta span{color:#b9cde4 !important;}
