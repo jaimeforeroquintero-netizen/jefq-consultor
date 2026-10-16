@@ -4,9 +4,42 @@
    quedaba sin contraste. Este archivo los vuelve sólidos y definidos. */
 
 :root{
-  --muted:#b9cde4;            /* antes #9eb3ca — más claro, mejor lectura */
   --line:rgba(125,181,225,.32); /* borde un poco más visible */
+  /* NOTA: --muted NO se cambia globalmente; se ajusta por contexto abajo */
 }
+
+/* En paneles OSCUROS: texto secundario más claro */
+.service-card p,
+.price-card>p,
+.price-note,
+.case-flow p,
+.benefits p,
+.process p,
+.section-head p,
+.why p,
+.contact p,
+.landing-card p,
+.local-grid p,
+.landing-process p,
+.landing-faq p,
+.landing-summary span,
+.contact-form>small,
+.compare-note{color:#b9cde4 !important;}
+
+/* En paneles CLAROS (fondo blanco/gris claro): texto secundario más oscuro */
+.authority-grid p,
+.authority-faq-list p,
+.resource-next-step p,
+.method-list p{color:#4a6276 !important;}
+
+/* Sección metodología y servicios en fondo claro: descripciones legibles */
+.section .process p,
+.section .section-head p{color:#4a6276 !important;}
+.promise p{color:#4a6276 !important;}
+
+/* Títulos de proceso en fondo oscuro deben ser claros */
+.process h3{color:#f4f8ff !important;}
+.process>article>b{color:var(--cyan) !important;}
 
 /* Tarjetas de servicios (home) */
 .service-card{
