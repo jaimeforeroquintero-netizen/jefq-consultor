@@ -48,8 +48,22 @@
 .ev-card-index{color:#ffbd59 !important;opacity:1 !important;}
 
 /* Panel why-diff en fondo claro: texto oscuro legible */
-.why-diff{color:#0a1f33 !important;}
+.why-diff{color:#0a1f33 !important;background:#d9e8f2 !important;}
 .why-diff b{color:#087b9c !important;}
+
+/* Pasos de evidencia: fondo sólido y texto claro */
+.ev-step{background:#0e2a4a !important;border-color:rgba(125,181,225,.32) !important;}
+.ev-step>span{color:#ffbd59 !important;opacity:1 !important;}
+.ev-step h3{color:#f4f8ff !important;}
+.ev-step p{color:#b9cde4 !important;}
+
+/* Tarjetas de casos: título claro */
+.case{background:linear-gradient(145deg,#102a4c,#081a30) !important;}
+.case h3{color:#f4f8ff !important;}
+.case-head span{color:#8fd6a0 !important;opacity:1 !important;}
+
+/* Botón en section-cta: texto claro */
+.section-cta .button.ghost{color:#f4f8ff !important;border-color:rgba(125,181,225,.4) !important;}
 
 /* Tarjetas de servicios (home) */
 .service-card{
