@@ -65,6 +65,10 @@
 /* Botón en section-cta: texto claro */
 .section-cta .button.ghost{color:#f4f8ff !important;border-color:rgba(125,181,225,.4) !important;}
 
+/* Sección contacto: subtítulo legible */
+.contact p{color:#4a6276 !important;}
+.contact h2{color:#0a1f33 !important;}
+
 /* Tarjetas de servicios (home) */
 .service-card{
   background:linear-gradient(145deg,#10294a,#081a30) !important;
