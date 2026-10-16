@@ -41,6 +41,16 @@
 .process h3{color:#f4f8ff !important;}
 .process>article>b{color:var(--cyan) !important;}
 
+/* Tarjetas de evidencia (resultados y entregables) */
+.ev-card{background:linear-gradient(145deg,#122c4c,#081a30) !important;}
+.ev-card h3{color:#f4f8ff !important;}
+.ev-card p{color:#b9cde4 !important;}
+.ev-card-index{color:#ffbd59 !important;opacity:1 !important;}
+
+/* Panel why-diff en fondo claro: texto oscuro legible */
+.why-diff{color:#0a1f33 !important;}
+.why-diff b{color:#087b9c !important;}
+
 /* Tarjetas de servicios (home) */
 .service-card{
   background:linear-gradient(145deg,#10294a,#081a30) !important;
