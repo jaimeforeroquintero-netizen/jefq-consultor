@@ -68,5 +68,21 @@
 /* Encabezados de sección */
 .section-head p,.why p,.contact p{color:var(--muted) !important;}
 
-/* Texto pequeño del top de tarjetas */
-.service-top small{color:rgba(185,205,228,.55) !important;}
+/* Texto pequeño del top de tarjetas (era rgba .4 = casi invisible) */
+.service-top small{color:rgba(185,205,228,.85) !important;}
+
+/* Textos apagados con colores duros */
+.case em{color:#a9bcd4 !important;}
+.footer-bottom{color:#9db2c9 !important;}
+.calc-result small,
+.ja-rows small,
+.demo-note{color:#a9bcd4 !important;}
+.compare-note,
+.price-note,
+.contact-form>small,
+.footer-grid a:not(.brand),
+.footer-grid p{color:#a9bcd4 !important;}
+
+/* Etiquetas pequeñas */
+.service-top small,
+.case-head span{letter-spacing:.06em;}
