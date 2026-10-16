@@ -1,0 +1,72 @@
+/* JEFQ Color Fix v1 — paneles más vivos, texto con mejor contraste.
+   Problema: los paneles usaban fondos semi-transparentes oscuros (rgba .64-.78)
+   sobre el fondo casi negro, viéndose apagados/fangosos y el texto gris
+   quedaba sin contraste. Este archivo los vuelve sólidos y definidos. */
+
+:root{
+  --muted:#b9cde4;            /* antes #9eb3ca — más claro, mejor lectura */
+  --line:rgba(125,181,225,.32); /* borde un poco más visible */
+}
+
+/* Tarjetas de servicios (home) */
+.service-card{
+  background:linear-gradient(145deg,#10294a,#081a30) !important;
+  border-color:rgba(125,181,225,.32) !important;
+}
+.service-card p{color:var(--muted) !important;}
+
+/* Tarjetas de precios */
+.price-card{
+  background:linear-gradient(155deg,#102a4c,#081a30) !important;
+  border-color:rgba(125,181,225,.32) !important;
+}
+.price-card>p{color:var(--muted) !important;}
+
+/* Casos ilustrativos */
+.case{
+  background:linear-gradient(145deg,#0f2745,#081a30) !important;
+  border-color:rgba(125,181,225,.32) !important;
+}
+.case-flow p{color:var(--muted) !important;}
+
+/* Beneficios */
+.benefits article{
+  background:#0d2440 !important;
+  border-color:rgba(125,181,225,.32) !important;
+}
+.benefits p{color:var(--muted) !important;}
+
+/* Paneles de landings */
+.landing-card,
+.local-grid article,
+.landing-process article,
+.landing-faq details{
+  background:#0d2440 !important;
+  border-color:rgba(125,181,225,.32) !important;
+}
+.landing-card p,
+.local-grid p,
+.landing-process p,
+.landing-faq p{color:var(--muted) !important;}
+
+/* Dos columnas landing */
+.landing-two-columns article{
+  background:linear-gradient(145deg,#10294a,#081a30) !important;
+  border-color:rgba(125,181,225,.32) !important;
+}
+
+/* Resumen landing */
+.landing-summary{
+  background:#0d2440 !important;
+  border-color:rgba(125,181,225,.32) !important;
+}
+.landing-summary span{color:var(--muted) !important;}
+
+/* Proceso home */
+.process p{color:var(--muted) !important;}
+
+/* Encabezados de sección */
+.section-head p,.why p,.contact p{color:var(--muted) !important;}
+
+/* Texto pequeño del top de tarjetas */
+.service-top small{color:rgba(185,205,228,.55) !important;}
