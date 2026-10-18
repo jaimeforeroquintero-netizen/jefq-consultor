@@ -1,0 +1,57 @@
+<section class="section video-promo" aria-labelledby="video-title">
+  <div class="container video-grid">
+    <div class="video-frame" data-reveal>
+      <video controls preload="metadata" playsinline aria-label="Video promocional de JEFQ Consultor">
+        <source src="/videos/jefq-promo-vertical.mp4" type="video/mp4" />
+        Tu navegador no puede reproducir este video.
+      </video>
+    </div>
+    <div class="video-copy" data-reveal>
+      <header class="section-head left">
+        <span>VIDEO</span>
+        <h2 id="video-title">JEFQ en 23 segundos</h2>
+        <p>Servicios, planes con precios claros y la forma directa de pedir una valoración. Mírelo y, si le hace sentido, conversemos.</p>
+      </header>
+      <div class="video-actions">
+        <a class="button primary" href="#" data-wa-modal data-wa-message="Hola Jaime, vi el video y quiero una valoración de ciberseguridad.">Escríbenos por WhatsApp</a>
+        <a class="button ghost" href="/valoracion">Hacer la valoración en línea</a>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .video-grid {
+    display: grid;
+    grid-template-columns: minmax(240px, 340px) 1fr;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: center;
+  }
+  .video-frame {
+    display: flex;
+    justify-content: center;
+  }
+  .video-frame video {
+    width: 100%;
+    max-width: 340px;
+    max-height: 70vh;
+    aspect-ratio: 9 / 16;
+    border-radius: 18px;
+    border: 1px solid rgba(120, 160, 220, 0.25);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    background: #0b1220;
+  }
+  .video-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+  @media (max-width: 760px) {
+    .video-grid {
+      grid-template-columns: 1fr;
+    }
+    .video-frame video {
+      max-width: 300px;
+    }
+  }
+</style>
