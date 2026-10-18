@@ -2,7 +2,7 @@
 import ServiceLanding from "../components/ServiceLanding.astro";
 import { servicePages } from "../data/service-pages";
 const service = servicePages.find((item) => item.slug === "seguridad-inteligencia-artificial");
-if (!service) throw new Error("No se encontro el servicio seguridad-inteligencia-artificial");
+if (!service) throw new Error("No se encontró el servicio seguridad-inteligencia-artificial");
 
 const faqSchema = {
   "@context": "https://schema.org",

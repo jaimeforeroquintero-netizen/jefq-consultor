@@ -5,12 +5,6 @@ import { servicePages } from "../data/service-pages";
 <Layout title="Servicios de ciberseguridad | JEFQ Consultor" description="Servicios de diagnóstico, hardening, consultoría, pruebas autorizadas y auditoría para empresas en Colombia.">
   <section class="landing-hero"><div class="container"><span class="section-label">PORTAFOLIO</span><h1>Servicios de ciberseguridad para empresas</h1><p>Alternativas escalables para diagnosticar, priorizar y fortalecer la seguridad de organizaciones en Colombia.</p></div></section>
   <section class="section"><div class="container landing-card-grid">
-    {servicePages.map((service) => <article class="landing-card"><span>{service.eyebrow}</span><h2>{service.title}</h2><p>{service.intro}</p><a class="button secondary" href={`/${service.slug}`}>Ver servicio</a><a class="service-discover-link" href="/servicios/hardening" aria-label="Descubrir el hardening">
-  <span>Descubrir el hardening</span>
-  <span aria-hidden="true">→</span>
-</a><a class="service-discover-link" href="/servicios/pruebas-autorizadas" aria-label="Descubrir las pruebas autorizadas">
-  <span>Descubrir las pruebas autorizadas</span>
-  <span aria-hidden="true">→</span>
-</a></article>)}
+    {servicePages.map((service) => <article class="landing-card"><span>{service.eyebrow}</span><h2>{service.title}</h2><p>{service.intro}</p><a class="button secondary" href={`/${service.slug}`}>Ver servicio</a></article>)}
   </div></section>
 </Layout>

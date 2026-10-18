@@ -6,9 +6,9 @@ import Layout from "../layouts/Layout.astro";
   <main class="smart-page">
     <section class="smart-hero">
       <div class="smart-shell">
-        <p class="smart-kicker">VALORACION ORIENTATIVA</p>
+        <p class="smart-kicker">VALORACIÓN ORIENTATIVA</p>
         <h1>Defina un punto de partida para fortalecer su seguridad</h1>
-        <p>Seleccione el contexto general de su organizacion. La herramienta mostrara una recomendacion inicial antes de preparar el contacto por WhatsApp.</p>
+        <p>Seleccione el contexto general de su organización. La herramienta mostrará una recomendación inicial antes de preparar el contacto por WhatsApp.</p>
       </div>
     </section>
 
@@ -22,7 +22,7 @@ import Layout from "../layouts/Layout.astro";
             <option>Profesional independiente</option>
             <option>Microempresa</option>
             <option>Pyme</option>
-            <option>Organizacion en crecimiento</option>
+            <option>Organización en crecimiento</option>
           </select>
         </label>
 
@@ -33,9 +33,9 @@ import Layout from "../layouts/Layout.astro";
             <option value="1-5">1-5</option>
             <option value="6-20">6-20</option>
             <option value="21-50">21-50</option>
-            <option value="50+">Mas de 50</option>
+            <option value="50+">Más de 50</option>
           </select>
-          <small>Un activo puede ser un equipo, cuenta, aplicacion, servicio o dominio incluido expresamente en el alcance.</small>
+          <small>Un activo puede ser un equipo, cuenta, aplicación, servicio o dominio incluido expresamente en el alcance.</small>
         </label>
 
         <label>
@@ -44,26 +44,26 @@ import Layout from "../layouts/Layout.astro";
             <option value="">Seleccione</option>
             <option value="diagnostico">Conocer riesgos y prioridades</option>
             <option value="hardening">Fortalecer equipos o configuraciones</option>
-            <option value="pruebas">Realizar una evaluacion autorizada</option>
+            <option value="pruebas">Realizar una evaluación autorizada</option>
             <option value="informe">Organizar hallazgos e informes</option>
             <option value="simulacro">Preparar un simulacro controlado</option>
-            <option value="acompanamiento">Acompanar la remediacion</option>
+            <option value="acompanamiento">Acompañar la remediación</option>
           </select>
         </label>
 
         <label>
           <span class="quiz-step"><b>4</b> Contexto adicional, opcional</span>
           <textarea id="context" rows="5" placeholder="Describa la necesidad de forma general"></textarea>
-          <small class="security-note">No incluya contrasenas, codigos MFA, llaves privadas, vulnerabilidades explotables ni datos personales sensibles.</small>
+          <small class="security-note">No incluya contraseñas, códigos MFA, llaves privadas, vulnerabilidades explotables ni datos personales sensibles.</small>
         </label>
 
-        <button class="smart-button" type="submit">Ver recomendacion inicial</button>
+        <button class="smart-button" type="submit">Ver recomendación inicial</button>
       </form>
 
       <aside id="smart-result" class="smart-result" aria-live="polite">
         <p class="smart-kicker">RESULTADO</p>
-        <h2>Complete la valoracion</h2>
-        <p>La recomendacion aparecera aqui. No sustituye una propuesta ni implica la ejecucion de pruebas.</p>
+        <h2>Complete la valoración</h2>
+        <p>La recomendación aparecerá aquí. No sustituye una propuesta ni implica la ejecución de pruebas.</p>
       </aside>
     </section>
   </main>
@@ -91,38 +91,38 @@ import Layout from "../layouts/Layout.astro";
     updateProgress();
     const details = {
       diagnostico: {
-        plan: 'Diagnostico Esencial',
-        service: 'Diagnostico de seguridad',
+        plan: 'Diagnóstico Esencial',
+        service: 'Diagnóstico de seguridad',
         reason: 'Un punto de partida para identificar riesgos, priorizar hallazgos y definir una ruta de mejora.',
         path: '/servicios/diagnostico-seguridad'
       },
       hardening: {
-        plan: 'Evaluacion Pyme',
+        plan: 'Evaluación Pyme',
         service: 'Hardening y fortalecimiento',
-        reason: 'Adecuado cuando la prioridad es reducir configuraciones innecesarias y establecer una linea base mas consistente.',
+        reason: 'Adecuado cuando la prioridad es reducir configuraciones innecesarias y establecer una línea base más consistente.',
         path: '/servicios/hardening'
       },
       pruebas: {
-        plan: 'Evaluacion Pyme',
+        plan: 'Evaluación Pyme',
         service: 'Pruebas autorizadas',
-        reason: 'Requiere alcance, autorizacion expresa, condiciones tecnicas y criterios de detencion definidos por escrito.',
+        reason: 'Requiere alcance, autorización expresa, condiciones técnicas y criterios de detención definidos por escrito.',
         path: '/servicios/pruebas-autorizadas'
       },
       informe: {
-        plan: 'Diagnostico Esencial',
-        service: 'Informes tecnicos y ejecutivos',
-        reason: 'Permite transformar observaciones en hallazgos priorizados, recomendaciones y proximos pasos.',
+        plan: 'Diagnóstico Esencial',
+        service: 'Informes técnicos y ejecutivos',
+        reason: 'Permite transformar observaciones en hallazgos priorizados, recomendaciones y próximos pasos.',
         path: '/servicios/informes-tecnicos'
       },
       simulacro: {
         plan: 'Seguridad Integral',
         service: 'Simulacros controlados',
-        reason: 'Conviene cuando la organizacion desea preparar respuestas, responsabilidades y aprendizaje sin recurrir a urgencias artificiales.',
+        reason: 'Conviene cuando la organización desea preparar respuestas, responsabilidades y aprendizaje sin recurrir a urgencias artificiales.',
         path: '/servicios/simulacros-seguridad'
       },
       acompanamiento: {
         plan: 'Seguridad Integral',
-        service: 'Acompanamiento de remediacion',
+        service: 'Acompañamiento de remediación',
         reason: 'Recomendado cuando ya existen hallazgos y se necesita organizar, aplicar y verificar mejoras progresivas.',
         path: '/servicios/acompanamiento-remediacion'
       }
@@ -138,12 +138,12 @@ import Layout from "../layouts/Layout.astro";
       if (!org || !assets || !recommendation) return;
 
       const message = [
-        'Hola, Jaime. Solicito una valoracion inicial.',
-        `Organizacion: ${org}`,
+        'Hola, Jaime. Solicito una valoración inicial.',
+        `Organización: ${org}`,
         `Activos aproximados: ${assets}`,
         `Necesidad: ${recommendation.service}`,
         context ? `Contexto general: ${context}` : '',
-        `Recomendacion mostrada: ${recommendation.plan}`
+        `Recomendación mostrada: ${recommendation.plan}`
       ].filter(Boolean).join('\n');
 
       result.innerHTML = `
