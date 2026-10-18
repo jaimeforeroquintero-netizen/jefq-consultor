@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { herramientasProbadas } from "../data/herramientas-probadas";
+---
+<Layout title="Herramientas probadas en el laboratorio | JEFQ Consultor" description="JEFQ Consultor prueba herramientas de ciberseguridad e inteligencia artificial y publica su veredicto en lenguaje claro para dueños de empresa. Dos herramientas al mes.">
+  <main class="evidence-page">
+    <section class="evidence-hero compact">
+      <div class="container">
+        <span class="evidence-stamp">LABORATORIO JEFQ · 2 HERRAMIENTAS AL MES</span>
+        <p class="section-label">PROBADO EN EL LABORATORIO</p>
+        <h1>Herramientas que probamos por usted</h1>
+        <p class="evidence-lead">Las tecnologías de IA salen tan rápido que nadie las alcanza a evaluar. Nosotros probamos las herramientas de seguridad e inteligencia artificial que importan y le entregamos el veredicto en lenguaje claro: qué es, para quién sirve, dónde falla y si vale la pena. Sin jerga, sin miedo, sin inventos.</p>
+      </div>
+    </section>
+
+    {herramientasProbadas.map((h) => (
+      <section class="section" id={h.slug}>
+        <div class="container">
+          <article class="landing-card">
+            <span>{h.categoria} · {h.fecha}</span>
+            <h2>{h.nombre}</h2>
+            <p><strong>¿Qué es?</strong> {h.queEs}</p>
+            <h3>¿Para quién es?</h3>
+            <ul>{h.paraQuien.map((p) => <li>{p}</li>)}</ul>
+            <h3>Lo bueno</h3>
+            <ul>{h.loBueno.map((p) => <li>{p}</li>)}</ul>
+            <h3>Limitaciones</h3>
+            <ul>{h.limitaciones.map((p) => <li>{p}</li>)}</ul>
+            <h3>Veredicto JEFQ</h3>
+            <p>{h.veredicto}</p>
+            <p><a href={h.fuente.url} target="_blank" rel="noopener noreferrer">{h.fuente.texto}</a></p>
+          </article>
+        </div>
+      </section>
+    ))}
+
+    <section class="section dark-section">
+      <div class="container">
+        <div class="evidence-callout">
+          <div>
+            <p class="section-label">CÓMO TRABAJAMOS</p>
+            <h2>Probamos con método, publicamos con honestidad</h2>
+            <p>Cada herramienta se evalúa en entorno controlado, sin datos de clientes. Si una herramienta no pasa la prueba, también lo publicamos: un veredicto negativo le ahorra dinero.</p>
+          </div>
+          <div class="evidence-actions">
+            <a class="button primary" href="/laboratorio-jefq">Ver el método del laboratorio</a>
+            <a class="button secondary" href="/valoracion">Solicitar valoración</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
