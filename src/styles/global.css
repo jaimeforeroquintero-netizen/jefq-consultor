@@ -286,3 +286,10 @@
 .ransom .r-fine{font-size:.66rem;color:#8a5a5a;font-style:italic}
 @media(max-width:680px){.xp-fname{font-size:.72rem}}
 @media(prefers-reduced-motion:reduce){.xp-track i{animation:none;width:86%}.xp-row.enc{animation:none}}
+/* ===== Banda de precio + nota legal (página IA) ===== */
+.price-band{padding:56px 0 8px;text-align:center}
+.pb-card{max-width:620px;margin:0 auto;padding:32px 28px;background:linear-gradient(145deg,rgba(14,38,65,.82),rgba(5,17,31,.96));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.pb-card>span{color:var(--cyan);font-size:.74rem;font-weight:900;letter-spacing:.18em}
+.pb-card strong{display:block;margin:12px 0 10px;font-size:clamp(2rem,4.6vw,2.9rem);letter-spacing:-.02em}
+.pb-card p{margin:0;color:var(--muted);font-size:.9rem}
+.laws-note{max-width:780px;margin:28px auto 0;color:#7890a8;font-size:.84rem;text-align:center;font-style:italic}
