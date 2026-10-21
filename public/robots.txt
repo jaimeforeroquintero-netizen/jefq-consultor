@@ -35,4 +35,4 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://jefq-consultor.vercel.app/sitemap-index.xml
+Sitemap: https://jefq-consultor.pages.dev/sitemap-index.xml

@@ -6,14 +6,14 @@
 
 ## Páginas clave
 
-- [Inicio](https://jefq-consultor.vercel.app/): qué es JEFQ Consultor, servicios, metodología y planes con precios en COP.
-- [Valoración en línea](https://jefq-consultor.vercel.app/valoracion): valoración inicial orientativa para saber qué servicio se ajusta a su organización, sin compromiso.
-- [Diagnóstico de seguridad en Bogotá](https://jefq-consultor.vercel.app/diagnostico-seguridad-bogota): diagnóstico de ciberseguridad para pymes en Bogotá, con revisión priorizada, informe ejecutivo y plan de mejora.
-- [Consultoría de ciberseguridad en Colombia](https://jefq-consultor.vercel.app/consultoria-ciberseguridad-colombia): consultoría para pymes colombianas: diagnóstico, priorización, informes y acompañamiento remoto.
-- [Quién soy](https://jefq-consultor.vercel.app/quien-soy): Jaime Forero, consultor en ciberseguridad para pymes en Colombia: trayectoria y principios de trabajo.
-- [Preguntas frecuentes](https://jefq-consultor.vercel.app/preguntas-frecuentes): respuestas sobre alcance, autorización, entregables, precios y proceso.
-- [Servicios](https://jefq-consultor.vercel.app/servicios): catálogo de servicios: diagnóstico, hardening, pruebas autorizadas e informes técnicos.
-- [Blog](https://jefq-consultor.vercel.app/blog): artículos sobre ciberseguridad práctica para organizaciones colombianas.
+- [Inicio](https://jefq-consultor.pages.dev/): qué es JEFQ Consultor, servicios, metodología y planes con precios en COP.
+- [Valoración en línea](https://jefq-consultor.pages.dev/valoracion): valoración inicial orientativa para saber qué servicio se ajusta a su organización, sin compromiso.
+- [Diagnóstico de seguridad en Bogotá](https://jefq-consultor.pages.dev/diagnostico-seguridad-bogota): diagnóstico de ciberseguridad para pymes en Bogotá, con revisión priorizada, informe ejecutivo y plan de mejora.
+- [Consultoría de ciberseguridad en Colombia](https://jefq-consultor.pages.dev/consultoria-ciberseguridad-colombia): consultoría para pymes colombianas: diagnóstico, priorización, informes y acompañamiento remoto.
+- [Quién soy](https://jefq-consultor.pages.dev/quien-soy): Jaime Forero, consultor en ciberseguridad para pymes en Colombia: trayectoria y principios de trabajo.
+- [Preguntas frecuentes](https://jefq-consultor.pages.dev/preguntas-frecuentes): respuestas sobre alcance, autorización, entregables, precios y proceso.
+- [Servicios](https://jefq-consultor.pages.dev/servicios): catálogo de servicios: diagnóstico, hardening, pruebas autorizadas e informes técnicos.
+- [Blog](https://jefq-consultor.pages.dev/blog): artículos sobre ciberseguridad práctica para organizaciones colombianas.
 
 ## Planes y precios (COP)
 
@@ -51,6 +51,6 @@ No. Es orientativa y sirve para determinar si existe un alcance adecuado para am
 ## Contacto
 
 - Correo: jaimeforeroquintero@gmail.com
-- WhatsApp: a través del botón de contacto en https://jefq-consultor.vercel.app/ (canal /api/whatsapp)
+- WhatsApp: a través del botón de contacto en https://jefq-consultor.pages.dev/ (canal /api/whatsapp)
 - X/Twitter: @JaimeByte
 - Cobertura: Bogotá y toda Colombia · Atención remota 24/7

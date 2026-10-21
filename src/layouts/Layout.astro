@@ -15,7 +15,7 @@ import "../styles/marketing-conversion.css";
 import "../styles/color-fix-v1.css";
 interface Props { title:string; description:string; canonicalPath?:string; noindex?:boolean; }
 const { title, description, canonicalPath = Astro.url.pathname, noindex = false } = Astro.props;
-const baseUrl = "https://jefq-consultor.vercel.app";
+const baseUrl = "https://jefq-consultor.pages.dev";
 const canonical = new URL(canonicalPath, baseUrl).toString();
 const waMessage = "Hola Jaime, quiero información sobre los servicios de ciberseguridad de JEFQ Consultor.";
 // PostHog (mapa de visitantes): la clave vive en la variable de entorno
