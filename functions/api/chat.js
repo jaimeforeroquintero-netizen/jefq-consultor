@@ -11,6 +11,7 @@
  */
 
 import { withSentry } from '../_sentry.js';
+import { contar, ipCliente } from '../lib/redis.js';
 const SYSTEM_PROMPT = `Eres el asistente virtual de JEFQ Consultor, una consultoría de ciberseguridad para pymes y empresas en Colombia, dirigida personalmente por Jaime Forero. Respondes siempre en español, con tono formal (trata al visitante de "usted"), claro y conciso. La empresa atiende 24 horas, 7 días a la semana.
 
 LO QUE OFRECE JEFQ (no inventes nada fuera de esto):
@@ -96,7 +97,6 @@ function toGeminiContents(messages) {
     }));
 }
 
-import { contar, ipCliente } from '../lib/redis.js';
 
 // Límite anti-abuso: 30 peticiones por minuto por IP (ventana fija de 60s).
 // Sin Redis configurado o si Redis falla, el límite se desactiva (fail-open)
@@ -116,22 +116,25 @@ async function handler(context) {
   const { request, env } = context;
   if (request.method !== "POST") {
     return new Response(JSON.stringify({ error: "method-not-allowed" }), {
-    status: 405,
-    headers: { "Content-Type": "application/json" },
-  });
+      status: 405,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 
   if (await limiteExcedido(request, env, 'chat')) {
     return new Response(JSON.stringify({ error: "rate-limited", reply: "Estás enviando mensajes muy rápido. Espera un minuto e inténtalo de nuevo, o escríbenos por WhatsApp con el botón del sitio." }), {
-    status: 429,
-    headers: { "Content-Type": "application/json" },
-  });
+      status: 429,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 
   const apiKey = env.GEMINI_API_KEY;
   if (!apiKey) {
     return new Response(JSON.stringify({ error: "no-key" }), {
-    status: 503,
-    headers: { "Content-Type": "application/json" },
-  });
+      status: 503,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 
   let body;
   try { body = await request.json(); } catch { body = null; }
@@ -139,39 +142,40 @@ async function handler(context) {
   const contents = toGeminiContents(Array.isArray(body?.messages) ? body.messages : []);
   if (contents.length === 0 || contents[contents.length - 1].role !== "user") {
     return new Response(JSON.stringify({ error: "bad-request" }), {
-    status: 400,
-    headers: { "Content-Type": "application/json" },
-  });
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 
   const mode = body?.mode === "jaime" ? "jaime" : "normal";
   const prompt = mode === "jaime" ? JAIME_PROMPT : SYSTEM_PROMPT;
 
   // Llamada a Gemini con un reintento ante 429 (límite de la capa gratuita).
   try {
-  let r, attempt = 0;
-  while (true) {
-    attempt++;
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 25000);
-    const model = env.GEMINI_MODEL || "gemini-3.8-flash";
+    let r, attempt = 0;
+    while (true) {
+      attempt++;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 25000);
+      const model = env.GEMINI_MODEL || "gemini-3.8-flash";
 
-    r = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        signal: controller.signal,
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: prompt }] },
-          contents,
-          generationConfig: { temperature: 0.7, maxOutputTokens: 3000 },
-        }),
-      }
-    );
-    clearTimeout(timeout);
-    if (r.status !== 429 || attempt >= 2) break;
-    await new Promise((res) => setTimeout(res, 4000));
-  }
+      r = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          signal: controller.signal,
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: prompt }] },
+            contents,
+            generationConfig: { temperature: 0.7, maxOutputTokens: 3000 },
+          }),
+        }
+      );
+      clearTimeout(timeout);
+      if (r.status !== 429 || attempt >= 2) break;
+      await new Promise((res) => setTimeout(res, 4000));
+    }
 
     if (!r.ok) {
       let detail = "";
@@ -181,29 +185,30 @@ async function handler(context) {
       } catch {}
       console.error("Gemini provider error:", r.status, detail);
       return new Response(JSON.stringify({ error: "provider-error", status: r.status }), {
-    status: 502,
-    headers: { "Content-Type": "application/json" },
-  });
+        status: 502,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     const data = await r.json();
     const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
     if (!reply) {
       return new Response(JSON.stringify({ error: "empty-reply" }), {
-    status: 502,
-    headers: { "Content-Type": "application/json" },
-  });
+        status: 502,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     return new Response(JSON.stringify({ reply }), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch {
     return new Response(JSON.stringify({ error: "provider-error" }), {
-    status: 502,
-    headers: { "Content-Type": "application/json" },
-  });
+      status: 502,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 }
 
 export const onRequest = withSentry(handler, 'api-chat');
