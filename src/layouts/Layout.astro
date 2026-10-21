@@ -18,6 +18,9 @@ const { title, description, canonicalPath = Astro.url.pathname, noindex = false 
 const baseUrl = "https://jefq-consultor.vercel.app";
 const canonical = new URL(canonicalPath, baseUrl).toString();
 const waMessage = "Hola Jaime, quiero información sobre los servicios de ciberseguridad de JEFQ Consultor.";
+// PostHog (mapa de visitantes): la clave vive en la variable de entorno
+// PUBLIC_POSTHOG_KEY de Vercel, NUNCA en el código. Sin clave = no se inicializa.
+const posthogKey = (import.meta.env.PUBLIC_POSTHOG_KEY || "").trim();
 // GEO/LLM: grafo schema.org para descubrimiento por buscadores e IAs.
 // Organization (identidad), WebSite y ProfessionalService (oferta con planes).
 const schema = {
@@ -171,6 +174,46 @@ import "../styles/jefq-diseno-hibrido-v1.css";
 <!-- JEFQ-AUTORIDAD-REAL-V1 -->
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/jefq-events.js"></script>
+<script>
+  // Sentry cliente (solo errores). El init real está en src/sentry-client.ts;
+  // si no hay DSN o falla, no hace nada: la página abre igual.
+  import "../sentry-client.ts";
+</script>
+<!-- PostHog: mapa de visitantes (solo JEFQ). Sin clave en Vercel = no hace nada. -->
+<script define:vars={{ posthogKey }}>
+(function () {
+  try {
+    var key = String(posthogKey || "").trim();
+    if (!key || key.indexOf("phc_") !== 0) return;
+    var hn = location.hostname;
+    if (hn === "localhost" || hn === "127.0.0.1") return;
+    /* Snippet oficial de PostHog (stub con cola: si array.js no carga, las
+       llamadas se encolan y la página sigue funcionando igual). */
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],Object.defineProperty(u,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e}}),Object.defineProperty(u.people,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(){return u.toString(1)+".people (stub)"}}),o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    window.posthog.init(key, {
+      api_host: "https://us.i.posthog.com",
+      defaults: "2026-05-30",
+      autocapture: false,            /* solo los 3 eventos explícitos de abajo */
+      capture_pageview: true,        /* $pageview automático */
+      disable_session_recording: true /* sin grabaciones de sesión */
+    });
+    function cap(name, props) {
+      try { if (window.posthog && window.posthog.capture) window.posthog.capture(name, props || {}); } catch (e) {}
+    }
+    /* Delegado único: no se toca el marcado de CTAs ni de planes. */
+    document.addEventListener("click", function (ev) {
+      var t = ev.target && ev.target.closest ? ev.target.closest("a,button") : null;
+      if (!t) return;
+      if (t.closest("[data-wa-modal]")) {
+        /* Intención de escribir por WhatsApp (el número nunca sale del servidor). */
+        cap("cta_whatsapp_click", { path: location.pathname });
+      } else if (t.classList && t.classList.contains("pay-plan")) {
+        cap("plan_button_click", { path: location.pathname, plan: t.getAttribute("data-producto") || "desconocido" });
+      }
+    });
+  } catch (e) { /* PostHog jamás debe romper la página */ }
+})();
+</script>
 <Analytics />
 </body>
 </html>
