@@ -10,6 +10,7 @@
  * Sin ella responde 503 para que el widget muestre el fallback a WhatsApp.
  */
 
+import { withSentry } from './_sentry.js';
 const SYSTEM_PROMPT = `Eres el asistente virtual de JEFQ Consultor, una consultoría de ciberseguridad para pymes y empresas en Colombia, dirigida personalmente por Jaime Forero. Respondes siempre en español, con tono formal (trata al visitante de "usted"), claro y conciso. La empresa atiende 24 horas, 7 días a la semana.
 
 LO QUE OFRECE JEFQ (no inventes nada fuera de esto):
@@ -95,9 +96,29 @@ function toGeminiContents(messages) {
     }));
 }
 
-export default async function handler(req, res) {
+import { contar, ipCliente } from './lib/redis.js';
+
+// Límite anti-abuso: 30 peticiones por minuto por IP (ventana fija de 60s).
+// Sin Redis configurado o si Redis falla, el límite se desactiva (fail-open)
+// y la petición sigue su curso normal.
+async function limiteExcedido(req, nombre) {
+  const ip = ipCliente(req).replace(/[^0-9a-fA-F.:]/g, '').slice(0, 40) || 'desconocida';
+  const ventana = Math.floor(Date.now() / 60000);
+  const c = await contar(`jefq:rl:${nombre}:${ip}:${ventana}`, 120);
+  if (!c.ok) {
+    console.error(`[jefq] Redis no disponible (${nombre}), limite desactivado:`, c.motivo);
+    return false;
+  }
+  return c.count > 30;
+}
+
+async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "method-not-allowed" });
+  }
+
+  if (await limiteExcedido(req, 'chat')) {
+    return res.status(429).json({ error: "rate-limited", reply: "Estás enviando mensajes muy rápido. Espera un minuto e inténtalo de nuevo, o escríbenos por WhatsApp con el botón del sitio." });
   }
 
   const apiKey = process.env.GEMINI_API_KEY;
@@ -170,3 +191,5 @@ export default async function handler(req, res) {
     return res.status(502).json({ error: "provider-error" });
   }
 }
+
+export default withSentry(handler, 'api-chat');

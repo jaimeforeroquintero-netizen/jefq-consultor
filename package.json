@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
+    "@sentry/node": "^11.8.0",
     "@vercel/analytics": "^2.0.1",
     "astro": "^7.3.5"
   },

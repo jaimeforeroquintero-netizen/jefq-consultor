@@ -1,6 +1,7 @@
 // api/pagos/estado.js — Fuente de verdad del pago.
 // Consulta DIRECTAMENTE a Wompi con la llave privada (solo servidor).
-export default async function handler(req, res) {
+import { withSentry } from '../_sentry.js';
+async function handler(req, res) {
   const reference = String((req.query || {}).reference || '').slice(0, 80);
   if (!reference) {
     return res.status(400).json({ error: 'Falta reference' });
@@ -35,3 +36,5 @@ export default async function handler(req, res) {
     reference: tx.reference,
   });
 }
+
+export default withSentry(handler, 'api-pagos-estado');

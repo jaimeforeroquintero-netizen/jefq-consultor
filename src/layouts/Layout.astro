@@ -174,10 +174,28 @@ import "../styles/jefq-diseno-hibrido-v1.css";
 <!-- JEFQ-AUTORIDAD-REAL-V1 -->
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/jefq-events.js"></script>
-<script>
-  // Sentry cliente (solo errores). El init real está en src/sentry-client.ts;
-  // si no hay DSN o falla, no hace nada: la página abre igual.
-  import "../sentry-client.ts";
+<!-- Sentry cliente (solo errores). DSN desde variable de entorno de Vercel
+     (PUBLIC_SENTRY_DSN); sin ella o si falla, no hace nada: la página abre igual. -->
+<script src="https://browser.sentry-cdn.com/11.8.0/bundle.min.js" crossorigin="anonymous"></script>
+<script define:vars={{ sentryDsn: import.meta.env.PUBLIC_SENTRY_DSN }}>
+  try {
+    if (sentryDsn && window.Sentry) {
+      window.Sentry.init({
+        dsn: sentryDsn,
+        sendDefaultPii: false,
+        tracesSampleRate: 0,
+        beforeSend: function (event) {
+          if (event.request) {
+            delete event.request.data;
+            delete event.request.cookies;
+          }
+          return event;
+        },
+      });
+    }
+  } catch (e) {
+    /* Sentry es opcional: un fallo aquí jamás tumba la página. */
+  }
 </script>
 <!-- PostHog: mapa de visitantes (solo JEFQ). Sin clave en Vercel = no hace nada. -->
 <script define:vars={{ posthogKey }}>

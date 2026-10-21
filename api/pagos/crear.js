@@ -1,5 +1,6 @@
 // api/pagos/crear.js — Crea la intención de pago para el widget de Wompi.
 // El monto SIEMPRE sale del catálogo del servidor, nunca del navegador.
+import { withSentry } from '../_sentry.js';
 import { createHash, randomBytes } from 'crypto';
 
 const CATALOGO = {
@@ -8,7 +9,7 @@ const CATALOGO = {
   integral: { nombre: 'Seguridad Integral · JEFQ Consultor', centavos: 179000000 },
 };
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });
   }
@@ -38,3 +39,5 @@ export default async function handler(req, res) {
     nombre: item.nombre,
   });
 }
+
+export default withSentry(handler, 'api-pagos-crear');

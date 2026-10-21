@@ -2,6 +2,7 @@
 // Verifica la firma del evento (checksum SHA-256 con el secreto de eventos)
 // antes de creerle nada. v1 sin base de datos: el evento válido se registra
 // en los logs; la confirmación al cliente la autoriza /api/pagos/estado.
+import { withSentry } from '../_sentry.js';
 import { createHash, timingSafeEqual } from 'crypto';
 
 function valorEn(obj, ruta) {
@@ -10,7 +11,7 @@ function valorEn(obj, ruta) {
     .reduce((o, k) => (o == null ? undefined : o[k]), obj);
 }
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });
   }
@@ -35,3 +36,5 @@ export default async function handler(req, res) {
   console.log(`[wompi] evento ${evt.event} ref=${ref} estado=${estado}`);
   return res.status(200).json({ ok: true });
 }
+
+export default withSentry(handler, 'api-pagos-webhook');
