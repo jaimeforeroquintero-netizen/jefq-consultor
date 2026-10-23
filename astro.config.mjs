@@ -5,6 +5,6 @@ export default defineConfig({
   site: 'https://jefq-consultor.pages.dev',
   output: "static",
   compressHTML: true,
-  trailingSlash: "never",
+  trailingSlash: "always",
   integrations: [sitemap()]
 });
