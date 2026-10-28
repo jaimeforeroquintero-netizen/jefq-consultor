@@ -6,7 +6,6 @@ import "../styles/seo-authority.css";
 import "../styles/service-premium-v2.css";
 import "../styles/conversion-evidence.css";
 import "../styles/authority-premium-v3.css";
-import Analytics from "@vercel/analytics/astro";
 import "../styles/trust-commercial.css";
 
 import "../styles/service-links.css";
@@ -145,7 +144,7 @@ import "../styles/jefq-diseno-hibrido-v1.css";
         <div><strong>Atención directa</strong><span>Comunicación con el responsable del servicio.</span></div>
         <div><strong>Intervenciones autorizadas</strong><span>Alcance y límites definidos previamente.</span></div>
         <div><strong>Resultados documentados</strong><span>Prioridades, recomendaciones y próximos pasos.</span></div>
-        <nav aria-label="Accesos de confianza"><a href="/quien-soy">Quién soy</a><a href="/diagnostico-seguridad-bogota">Diagnóstico en Bogotá</a><a href="/consultoria-ciberseguridad-colombia">Consultoría en Colombia</a><a href="/como-trabajamos">Cómo trabajamos</a><a href="/informe-demostrativo">Informe demostrativo</a><a href="/blog">Blog</a><a href="/preguntas-frecuentes">FAQ</a>
+        <nav aria-label="Accesos de confianza"><a href="/quien-soy">Quién soy</a><a href="/diagnostico-seguridad-bogota">Diagnóstico en Bogotá</a><a href="/consultoria-ciberseguridad-colombia">Consultoría en Colombia</a><a href="/ciberseguridad-colombia">Ciberseguridad en Colombia</a><a href="/como-trabajamos">Cómo trabajamos</a><a href="/informe-demostrativo">Informe demostrativo</a><a href="/blog">Blog</a><a href="/preguntas-frecuentes">FAQ</a>
           <a href="/seguridad-autorizacion-alcance">Autorización y alcance</a></nav>
       </div>
 <div class="container footer-bottom"><span>© {new Date().getFullYear()} JEFQ Consultor</span><span>Pruebas únicamente con autorización escrita.</span></div>  <!-- JEFQ-SEO-AUTHORITY-LINKS -->
@@ -173,7 +172,6 @@ import "../styles/jefq-diseno-hibrido-v1.css";
     if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.09});nodes.forEach(n=>io.observe(n));}else{nodes.forEach(n=>n.classList.add('visible'));}
   </script>
 <!-- JEFQ-AUTORIDAD-REAL-V1 -->
-<script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/jefq-events.js"></script>
 <!-- Sentry cliente (solo errores). DSN desde variable de entorno de Vercel
      (PUBLIC_SENTRY_DSN); sin ella o si falla, no hace nada: la página abre igual. -->
@@ -233,7 +231,6 @@ import "../styles/jefq-diseno-hibrido-v1.css";
   } catch (e) { /* PostHog jamás debe romper la página */ }
 })();
 </script>
-<Analytics />
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "387bbd7642f3491582f483094d2535c1"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

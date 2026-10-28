@@ -115,7 +115,7 @@ export const servicePages: ServicePage[] = [
   {
     slug: "seguridad-inteligencia-artificial",
     eyebrow: "IA BAJO CONTROL",
-    title: "Seguridad para sistemas de inteligencia artificial",
+    title: "Seguridad en inteligencia artificial",
     description: "Evaluación del uso de herramientas de IA en su pyme: datos en prompts, aplicaciones sin gobierno, riesgos de suplantación y controles proporcionales.",
     intro: "Las herramientas de IA ya están en su empresa, las haya aprobado o no. Revisamos cómo se usan, qué datos circulan por ellas y qué controles necesita para usarlas sin exponerse.",
     audience: ["Pymes cuyo equipo ya usa ChatGPT, Copilot, Gemini, Claude, Meta AI u otras herramientas de IA", "Empresas que manejan datos de clientes o información sensible", "Negocios que quieren reglas claras antes de ampliar el uso de IA"],

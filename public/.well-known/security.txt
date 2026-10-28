@@ -1,4 +1,4 @@
-Contact: mailto:contacto@jefq-consultor.com
+Contact: mailto:jaimeforeroquintero@gmail.com
 Preferred-Languages: es
 Canonical: https://jefq-consultor.pages.dev/.well-known/security.txt
 Policy: https://jefq-consultor.pages.dev/seguridad-autorizacion-alcance
