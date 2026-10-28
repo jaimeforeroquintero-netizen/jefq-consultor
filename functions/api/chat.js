@@ -157,7 +157,7 @@ async function handler(context) {
       attempt++;
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 25000);
-      const model = env.GEMINI_MODEL || "gemini-3.8-flash";
+      const model = env.GEMINI_MODEL || "gemini-3.6-flash";
 
       r = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
@@ -168,7 +168,7 @@ async function handler(context) {
           body: JSON.stringify({
             system_instruction: { parts: [{ text: prompt }] },
             contents,
-            generationConfig: { temperature: 0.7, maxOutputTokens: 3000 },
+            generationConfig: { temperature: 0.7, maxOutputTokens: 3000, thinkingConfig: { thinkingLevel: "LOW" } },
           }),
         }
       );
