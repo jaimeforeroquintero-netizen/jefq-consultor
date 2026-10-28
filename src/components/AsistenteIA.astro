@@ -175,7 +175,8 @@
   }
 
   function fallback() {
-    openWaModal(WA_MSG);
+    bubble('assistant', 'No logré responder en este momento. Le llevo a WhatsApp para que Jaime le atienda directamente.', true);
+    setTimeout(function () { openWaModal(WA_MSG); }, 1500);
   }
 
   // Activa el modo "Asistente de Jaime": cambia el encabezado y las

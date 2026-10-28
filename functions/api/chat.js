@@ -203,7 +203,8 @@ async function handler(context) {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
-  } catch {
+  } catch (e) {
+    console.error("Gemini fetch failed:", e?.name, e?.message);
     return new Response(JSON.stringify({ error: "provider-error" }), {
       status: 502,
       headers: { "Content-Type": "application/json" },
