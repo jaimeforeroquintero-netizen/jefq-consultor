@@ -327,3 +327,44 @@ main section[id]{scroll-margin-top:200px !important;}
 @media (prefers-reduced-motion:reduce){
   [data-reveal]{transform:none !important;transition:none !important;}
 }
+
+/* ==========================================================================
+   PASADA 3 (2026-11-01) — dos correcciones que no tuvieron efecto + 2 nuevos.
+   Cada regla lleva la evidencia de la regla que ganaba antes.
+   ========================================================================== */
+
+/* 1) CITA DE PLANES (.why-diff) — la regla anterior perdía por ESPECIFICIDAD:
+      color-fix-v1.css:130 `.section-head p,.why p,.contact p{color:var(--muted) !important}`
+      (.why p = 0,1,1) ganaba a `.why-diff` (0,1,0); --muted = #9eb3ca (pálido).
+      La nueva regla (0,2,2) gana a (0,1,1). No se tocan el rótulo
+      "INVERSIÓN ORIENTATIVA" ni el título "Planes de entrada transparentes". */
+main .why p.why-diff{color:#0d2840 !important;background:#d9e8f2 !important;}
+main .why p.why-diff b{color:#0b6e66 !important;}
+
+/* 2) LÍNEAS DE LA TERMINAL DEL HERO — causa: los estilos con ámbito de
+      ScanTerminal.astro (.st-cmd[data-astro-cid-xrnhnxya] etc.) NO llegan a las
+      líneas que crea el JS de escritura (createElement sin el atributo de ámbito,
+      tras clearAll()); esas líneas heredan body{color:#0d2840} (esta hoja, §2)
+      sobre el fondo casi negro #040d1a → invisibles. Reglas globales (0,3,0)
+      que valen para las líneas del servidor Y para las creadas por JS. */
+.scan-term .scan-term-body .st-cmd{color:#eaf3fa !important;}
+.scan-term .scan-term-body .st-ok{color:#5ef0b4 !important;}
+.scan-term .scan-term-body .st-warn{color:#ffc46b !important;}
+.scan-term .scan-term-body .st-info{color:#23d7ff !important;}
+.scan-term .scan-term-body .st-cursor::after{content:"▌" !important;margin-left:2px !important;color:#23d7ff !important;animation:st-blink 1s steps(1) infinite !important;}
+
+/* 3) BOTÓN "Solicitar valoración" DEL PIE — la regla anterior perdía por
+      ESPECIFICIDAD: esta misma hoja, §5, `.footer-grid a:not(.brand)` (0,2,1,
+      color #d7e5ee !important) ganaba a `.footer-cta` (0,1,0). Nueva regla
+      (0,3,1): texto oscuro sobre cian, como el botón de navegación. */
+.footer .footer-grid a.footer-cta{color:#001018 !important;background:#23d7ff !important;}
+
+/* 4) ICONO SOBRE "Conocer nuestra metodología" — en el código del botón NO hay
+      ningún icono (marcado limpio, sin ::before/::after ni fondo): el que se
+      superpone es el cromo fijo — la burbuja del asistente (icono de chat SVG,
+      .jefq-ia fixed, z-901), su globo (.jefq-ia-teaser, z-900) y la barra fija
+      superior (.scroll-cta, z-990), cuya pastilla "Valoración" cae
+      sistemáticamente sobre las primeras letras de este botón centrado cuando
+      la fila pasa bajo la barra. Los botones de esta fila suben a z-995:
+      quedan por encima del cromo fijo y por debajo de la cabecera (z-1000). */
+.trust-premium__actions .button{position:relative;z-index:995 !important;}
