@@ -222,3 +222,48 @@ details summary{color:#0d2840 !important;}
 .ransom h4{color:#ff6e6e !important;}
 .ransom .r-timer{color:#ffb3b3 !important;}
 .ransom .r-fine{color:#8a5a5a !important;}
+
+/* ===== CORRECCIÓN TRANSPARENCIAS 2026-11-01 — 2ª pasada (12 puntos visibles) ===== */
+/* Causa: color-fix-v1.css y otras hojas originales ponen texto casi blanco con
+   !important; la hoja clara perdía por especificidad. Estas reglas usan selectores
+   más específicos + !important para ganar. Solo muestra; producción intacta. */
+/* 1. Metodología — títulos y cuerpo de los pasos 01–04 */
+main .process h3{color:#0d2840 !important;}
+main .process p{color:#40566b !important;}
+/* 2. Por qué JEFQ — títulos y cuerpo */
+main .benefits b{color:#0d2840 !important;}
+main .benefits p{color:#40566b !important;}
+/* 3. Planes — nombres, subtítulos y precios (turquesa claro → teal oscuro) */
+main .price-card h3{color:#0d2840 !important;}
+main .price-card>p{color:#40566b !important;}
+main .price-card .price{color:#0b6e66 !important;}
+/* 4. Evidencia — títulos y cuerpo de los casos */
+main .case h3{color:#0d2840 !important;}
+main .case-flow p{color:#40566b !important;}
+/* 5. Botones fantasma con texto blanco sobre fondo claro (dentro de .section-cta) */
+main .section-cta .button.ghost{color:#0d2840 !important;background:#eef6fb !important;border-color:rgba(13,40,64,.28) !important;}
+/* 6. Contacto — intro y aviso de seguridad (su clase real es .data-safety-note) */
+main .section-head p{color:#40566b !important;}
+main .contact p{color:#40566b !important;}
+.data-safety-note{color:#40566b !important;}
+.data-safety-note strong{color:#0d2840 !important;}
+/* 7. Logo JEFQ en blanco en cabecera (y pie: por código también quedaba oscuro) */
+.header .brand b{color:#ffffff !important;}
+.footer .brand b{color:#ffffff !important;}
+/* 8. Diagnóstico — bloque de cierre a fondo claro con texto oscuro */
+.service-final-cta{background:#ffffff !important;border-color:rgba(13,40,64,.14) !important;}
+.service-final-cta h2{color:#0d2840 !important;}
+.service-final-cta p{color:#40566b !important;}
+/* 9. Diagnóstico — «Recursos para decidir»: mismo contenedor que el resto (1180px, 18px laterales) */
+.service-trust-links{padding:4.5rem 0 !important;}
+.service-trust-links>div{width:min(calc(100% - 36px),1180px) !important;margin-inline:auto !important;}
+.service-trust-links h2{color:#0d2840 !important;}
+.service-trust-links p{color:#40566b !important;}
+/* 10. La barra fija no tapa los títulos al saltar a una sección */
+main section[id]{scroll-margin-top:150px !important;}
+/* 11. Burbuja del asistente en móvil: se sube para no tapar los botones del final */
+@media(max-width:640px){.jefq-ia{bottom:76px !important;}}
+/* Barrido rápido extra: textos de la demo que quedaron claros sobre blanco */
+.demo-cap-text p{color:#40566b !important;}
+.demo-side.is-atk{color:#b3261e !important;background:rgba(179,38,30,.08) !important;border-color:rgba(179,38,30,.3) !important;}
+.demo-side.is-def{color:#0b6e66 !important;background:rgba(11,110,102,.08) !important;border-color:rgba(11,110,102,.3) !important;}
