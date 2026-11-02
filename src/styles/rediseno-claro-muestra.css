@@ -1,0 +1,224 @@
+/* ============ REDISEÑO CLARO — MUESTRA ============
+   Rama: rediseno-claro-muestra. Hoja de anulación cargada LA ÚLTIMA
+   en Layout.astro (después de jefq-diseno-hibrido-v1.css).
+   Solo diseño: no cambia textos, precios, enlaces, estructura ni lógica.
+   Usa !important porque (a) los estilos con ámbito de página llegan
+   después en el paquete CSS y (b) el archivo híbrido vigente ya usa
+   !important en sus propias anulaciones. Reversible: borrar esta hoja
+   y su import devuelve el diseño anterior.
+   Pre-mortem y tokens:
+   goals/jefq-consultor-website-upgrade/hidden_files/REDISENO_CLARO_PREMORTEM_2026-11-01.md
+   ================================================================ */
+
+/* ---------- 1. Tokens: las tarjetas oscuras pasan a claras ----------
+   --card-dark-* lo usan .pain-grid (6 tarjetas Problemas) y
+   TrustPremium: ambos son tarjetas de contenido y deben aclararse. */
+:root{
+  --card-dark-bg-start:#ffffff !important;
+  --card-dark-bg-end:#f3f7fa !important;
+  --card-dark-title:#0d2840 !important;
+  --card-dark-text:#40566b !important;
+  --card-dark-border:rgba(13,40,64,.13) !important;
+  --card-dark-border-hover:rgba(11,110,102,.45) !important;
+}
+html{color-scheme:light !important;}
+
+/* ---------- 2. Base: página luminosa ---------- */
+body{background:#eef6fb !important;color:#0d2840 !important;}
+main{color:#0d2840 !important;}
+main h1,main h2,main h3,main h4{color:#0d2840 !important;}
+main p,main li{color:#40566b !important;}
+main small{color:#526b7c !important;}
+main a:not(.button){color:#0b6e66 !important;}
+
+/* ---------- 3. Bandas: todas claras ---------- */
+main > .dark-section,main > section.dark-section{background:#eef6fb !important;color:#0d2840 !important;}
+main > section:has(form){background:#eef6fb !important;color:#0d2840 !important;}
+.contrast{background:linear-gradient(180deg,#eef6fb,#e3eef7) !important;border-block:1px solid rgba(13,40,64,.13) !important;}
+.proof{background:#ffffff !important;border-block:1px solid rgba(13,40,64,.13) !important;}
+.proof article{border-right:1px solid rgba(13,40,64,.13) !important;}
+.proof b{color:#0b6e66 !important;}
+.proof span{color:#526b7c !important;}
+.conversion-band{background:linear-gradient(180deg,#eef6fb,#e3eef7) !important;border-block:1px solid rgba(13,40,64,.13) !important;}
+.contact{background:radial-gradient(circle at 85% 25%,rgba(15,157,143,.08),transparent 430px),#eef6fb !important;}
+
+/* ---------- 4. Héroe claro ---------- */
+.hero{background:radial-gradient(circle at 85% 20%,rgba(15,157,143,.08),transparent 30rem),#eef6fb !important;}
+.hero h1{color:#0d2840 !important;}
+.hero-copy > p{color:#40566b !important;}
+.eyebrow{background:#ffffff !important;color:#0d2840 !important;border-color:rgba(13,40,64,.16) !important;}
+.eyebrow i{background:#0b6e66 !important;box-shadow:0 0 14px rgba(11,110,102,.5) !important;}
+.hero-trust{color:#526b7c !important;}
+.hero-trust span:before{color:#0b6e66 !important;}
+.hero-alt,.hero-alt b{color:#0b6e66 !important;}
+.inline-link{color:#0b6e66 !important;}
+.landing-hero{background:radial-gradient(circle at 80% 20%,rgba(15,157,143,.08),transparent 26rem),#eef6fb !important;color:#0d2840 !important;}
+.landing-hero h1{color:#0d2840 !important;}
+.landing-hero p{color:#40566b !important;}
+.service-detail-hero{background:#eef6fb !important;}
+.service-detail-lead{color:#40566b !important;}
+.service-detail-promise{color:#0d2840 !important;}
+.service-detail-label{color:#0b6e66 !important;}
+.valuation-hero,.local-hero{background:radial-gradient(circle at 80% 20%,rgba(15,157,143,.08),transparent 28rem),#eef6fb !important;}
+.valuation-hero h1,.local-hero h1{color:#0d2840 !important;}
+.valuation-hero p,.local-hero p{color:#40566b !important;}
+.growth-hero{background:radial-gradient(circle at 80% 20%,rgba(15,157,143,.08),transparent 30rem),#eef6fb !important;}
+.growth-hero h1{color:#0d2840 !important;}
+.growth-hero p{color:#40566b !important;}
+.article header{background:linear-gradient(180deg,#eef6fb,transparent) !important;}
+.article header span{color:#0b6e66 !important;}
+
+/* ---------- 5. Cabecera y pie: azul marino, texto blanco puro ---------- */
+.header{background:#0b1b2e !important;border-bottom:1px solid rgba(255,255,255,.12) !important;}
+.topbar{background:#071426 !important;color:#d7e5ee !important;}
+.menu > a:not(.nav-cta){color:#ffffff !important;}
+.menu > a:not(.nav-cta):hover{color:#2dd4c4 !important;}
+.brand small{color:#d7e5ee !important;}
+.menu-button i{background:#ffffff !important;}
+.footer{background:#0b1b2e !important;border-top:1px solid rgba(255,255,255,.12) !important;}
+.footer-grid h2{color:#ffffff !important;}
+.footer-grid a:not(.brand),.footer-grid p{color:#d7e5ee !important;}
+.footer-grid a:not(.brand):hover{color:#ffffff !important;}
+.footer-cta{color:#001018 !important;background:#23d7ff !important;}
+.footer-bottom{color:#b8c7d9 !important;border-top:1px solid rgba(255,255,255,.12) !important;}
+.footer-trust-access strong{color:#ffffff !important;}
+.footer-trust-access span,.footer-trust-access a{color:#d7e5ee !important;}
+.authority-links a{color:#d7e5ee !important;}
+
+/* ---------- 6. Tarjetas blancas ---------- */
+.service-card,.price-card,.case,.benefits article,
+.landing-two-columns > article,.landing-process > article,
+.landing-summary,.landing-card,.plan-card,.deliverable-card,.step-card,
+.finding-card,.roadmap-card,.summary-card,.resource-card,.risk-card,
+.demo-player,.compare-wrap,.guarantee,.downtime-calc,
+.contact-form,.valuation-card,.valuation-summary,
+.service-detail-card,.service-process-grid article,
+.related-service-grid a,.section-cta,.faq-premium-v2 details,
+.landing-faq details,.local-grid article,.local-hero aside,
+.body aside,.contact-data > *,.promise,.scope-note,.pain-cta,
+.landing-final-cta,.pb-card,.demo-caption,.demo-risk,.demo-cta,
+.faq-final-v2,.report-cta-v4,.finding-v4,.roadmap-v4 article,
+.severity-scale-v4 article,.report-metrics-v4 article,
+.growth-card,.pain-grid > article,.trust-premium .trust-premium__steps > article{
+  background:#ffffff !important;
+  border:1px solid rgba(13,40,64,.13) !important;
+  border-radius:22px !important;
+  box-shadow:0 16px 40px rgba(13,40,64,.09),0 2px 8px rgba(13,40,64,.05) !important;
+  color:#0d2840 !important;
+}
+.price-card.featured{border:2px solid #f2a100 !important;transform:translateY(-8px) !important;}
+.price{color:#0b6e66 !important;}
+.price-card li{color:#40566b !important;}
+.price-card li i{color:#0b6e66 !important;}
+.price-note{color:#526b7c !important;}
+.price-button:not(.primary){color:#0d2840 !important;background:#eef6fb !important;border-color:rgba(13,40,64,.25) !important;}
+
+/* ---------- 7. Más aire entre bloques ---------- */
+.service-grid,.pricing-grid,.pain-grid,.related-service-grid,.cases,.benefits,
+.landing-process,.landing-two-columns,.landing-card-grid,.service-process-grid,
+.local-grid,.growth-grid,.findings-grid-v4,.roadmap-v4,.severity-scale-v4,
+.report-metrics-v4{gap:24px !important;}
+
+/* ---------- 8. Etiquetas, iconos y acentos sobre claro ---------- */
+.section-head > span,.label,.section-label,.eyebrow,
+.section-header > span,.landing-card > span{color:#0b6e66 !important;}
+.service-icon{color:#0b6e66 !important;background:rgba(11,110,102,.1) !important;border-color:rgba(11,110,102,.25) !important;}
+.service-top small{color:#526b7c !important;}
+.case-head span{color:#0b6e66 !important;}
+.case-head b{color:#0b6e66 !important;background:rgba(11,110,102,.12) !important;}
+.case-flow small{color:#0b6e66 !important;}
+.case em{color:#526b7c !important;}
+.process > article > b{color:#0b6e66 !important;}
+.landing-summary strong{color:#0b6e66 !important;}
+.landing-summary span{color:#40566b !important;}
+.landing-list li:before{color:#0b6e66 !important;}
+.landing-process strong{color:#0b6e66 !important;}
+.why-diff{color:#0d2840 !important;}
+.why-diff b{color:#0b6e66 !important;}
+.price-anchor{color:#0d2840 !important;}
+.price-anchor b{color:#0b6e66 !important;}
+.service-detail-card li span{color:#0b6e66 !important;}
+.service-process-grid strong{color:#0b6e66 !important;}
+.related-service-grid span,.related-service-grid strong{color:#0b6e66 !important;}
+.guarantee p{color:#0d2840 !important;}
+.guarantee small{color:#526b7c !important;}
+.testi-quote{color:#0d2840 !important;}
+.testi-who span{color:#526b7c !important;}
+.testi-who b{color:#0d2840 !important;}
+.testi-note{color:#526b7c !important;}
+.more-links{color:#526b7c !important;}
+.demo-risk-head{color:#526b7c !important;}
+.demo-risk-head b{color:#0d2840 !important;}
+.demo-timeline button{background:#ffffff !important;border-color:rgba(13,40,64,.16) !important;color:#526b7c !important;}
+.demo-timeline button b{color:#0d2840 !important;}
+.demo-timeline button.active{border-color:#0b6e66 !important;}
+.demo-timeline button.done b{color:#0b6e66 !important;}
+.demo-controls button{background:#ffffff !important;border-color:rgba(13,40,64,.16) !important;color:#0d2840 !important;}
+.demo-static b{color:#0d2840 !important;}
+.demo-note{color:#526b7c !important;}
+.demo-cap-text b{color:#0b6e66 !important;}
+.finding-v4 small,.finding-top-v4 > span{color:#526b7c !important;}
+.finding-area-v4{color:#0b6e66 !important;}
+.severity-scale-v4 .high strong{color:#9a6a00 !important;}
+.severity-scale-v4 .medium strong{color:#0b6e66 !important;}
+.severity-scale-v4 .low strong{color:#40566b !important;}
+.report-metrics-v4 span{color:#526b7c !important;}
+.report-metrics-v4 strong{color:#0b6e66 !important;}
+.roadmap-v4 span{color:#0b6e66 !important;}
+.pb-card > span{color:#0b6e66 !important;}
+.laws-note{color:#526b7c !important;}
+.section-cta span{color:#40566b !important;}
+details summary{color:#0d2840 !important;}
+.contact-data small{color:#526b7c !important;}
+.contact-data b{color:#0d2840 !important;}
+.form-help,.helper-text,.sensitive-warning{color:#526b7c !important;}
+
+/* ---------- 9. Botones, tablas y formularios ---------- */
+.button.ghost{background:#ffffff !important;border-color:rgba(13,40,64,.25) !important;color:#0d2840 !important;}
+.scroll-cta{background:#ffffff !important;border-bottom:1px solid rgba(13,40,64,.13) !important;box-shadow:0 10px 30px rgba(13,40,64,.12) !important;}
+.scroll-cta > span{color:#0d2840 !important;}
+.scroll-cta .button.ghost{background:#eef6fb !important;}
+.compare-table thead th{color:#526b7c !important;background:#eef6fb !important;}
+.compare-table tbody th{color:#0d2840 !important;}
+.compare-table td{color:#40566b !important;}
+.compare-table td b{color:#0b6e66 !important;}
+.col-jefq{background:rgba(11,110,102,.08) !important;}
+.compare-table thead .col-jefq{color:#0b6e66 !important;}
+.compare-note{color:#526b7c !important;}
+.contact-form label,.valuation-card label,.calc-row label{color:#0d2840 !important;}
+.contact-form input,.contact-form select,.contact-form textarea,
+.valuation-card select,.valuation-card textarea,
+.calc-row input{background:#f8fcfe !important;color:#102a43 !important;border-color:#b7ccd8 !important;}
+.contact-form option,.valuation-card option{background:#ffffff !important;color:#102a43 !important;}
+.contact-form small,.valuation-card small{color:#526b7c !important;}
+.consent a,.valuation-consent a{color:#0b6e66 !important;}
+.calc-loss{color:#0d2840 !important;}
+.calc-loss b{color:#9a6a00 !important;}
+.calc-bar-row > span{color:#526b7c !important;}
+.calc-bar-row > b{color:#0d2840 !important;}
+.calc-result small{color:#526b7c !important;}
+
+/* ---------- 10. /valoracion/: banda clara, etiqueta legible ---------- */
+.smart-page{background:#eef6fb !important;}
+.smart-hero{color:#0d2840 !important;}
+.smart-hero h1{color:#0d2840 !important;}
+.smart-hero p{color:#40566b !important;}
+.smart-kicker{color:#0b6e66 !important;}
+.smart-form small{color:#526b7c !important;}
+
+/* ---------- 11. Pantallas intencionales: se quedan oscuras ----------
+   Terminal del héroe (.visual), terminal de escaneo (.scan-term) y las
+   tarjetas oscuras dentro de la demo (alerta JEFQ, ransomware) son
+   contenido, no cromo: conservan su fondo oscuro y su texto claro. */
+.visual,.scan-term{background:linear-gradient(145deg,rgba(18,52,85,.65),rgba(5,16,31,.96)) !important;}
+.ja-card,.ja-card p{color:#9eb3ca !important;}
+.ja-card h4{color:#eaf3fa !important;}
+.ja-rows small{color:#7890a8 !important;}
+.ja-rows b{color:#eaf3fa !important;}
+.ja-check li{background:rgba(94,240,180,.07) !important;color:#eaf3fa !important;}
+.ja-big{color:#5ef0b4 !important;}
+.ja-big small{color:#9eb3ca !important;}
+.ransom,.ransom p{color:#f5d5d5 !important;}
+.ransom h4{color:#ff6e6e !important;}
+.ransom .r-timer{color:#ffb3b3 !important;}
+.ransom .r-fine{color:#8a5a5a !important;}
