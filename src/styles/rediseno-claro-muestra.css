@@ -267,3 +267,63 @@ main section[id]{scroll-margin-top:150px !important;}
 .demo-cap-text p{color:#40566b !important;}
 .demo-side.is-atk{color:#b3261e !important;background:rgba(179,38,30,.08) !important;border-color:rgba(179,38,30,.3) !important;}
 .demo-side.is-def{color:#0b6e66 !important;background:rgba(11,110,102,.08) !important;border-color:rgba(11,110,102,.3) !important;}
+
+/* ==========================================================================
+   PASADA 2 (2026-11-01) — corrección de lo que quedó tras la verificación
+   ========================================================================== */
+
+/* 1) BARRA FIJA QUE TAPA TÍTULOS — cálculo del cromo fijo (medido en código):
+      Cabecera fija (.header sticky): .nav min-height 76px + borde 1px ≈ 77px.
+      Barra blanca .scroll-cta (SOLO home, aparece al bajar): top:110px.
+      Alto escritorio ≈ 61px (padding 10+10 + botón 40px + borde) → borde inferior ≈ 171px.
+      Alto móvil ≤680px ≈ 108-120px (columna: rótulo + botones) → borde inferior ≈ 218-230px.
+      El scroll-margin anterior (150px) quedaba POR DEBAJO del borde inferior de la
+      barra, así que el título aterrizaba tapado. Nuevos valores: 200px escritorio
+      (29px de margen sobre 171px) y 260px móvil (30-42px sobre 218-230px).
+      La barra se mantiene fija (diseño aprobado); solo se sube el despeje. */
+html{scroll-padding-top:200px !important;}
+main section[id]{scroll-margin-top:200px !important;}
+@media (max-width:680px){
+  html{scroll-padding-top:260px !important;}
+  main section[id]{scroll-margin-top:260px !important;}
+}
+
+/* 2) PANEL OSCURO DEL HERO — el panel se queda oscuro por diseño, pero el texto
+      sube a blanco legible (antes gris apagado #c8d7e6 / #9eb3ca / #7890a8). */
+.visual-head{color:#ffffff !important;}
+.visual-head span{color:#ffffff !important;}
+.visual-steps span{color:#eaf3fa !important;}
+.scan-term-bar em{color:#c8d7e6 !important;}
+
+/* 3) CITA DE PLANES — fondo sólido en vez del tinte casi transparente
+      (color-fix-v1 línea 156) y texto oscuro reafirmado; el rótulo
+      "INVERSIÓN ORIENTATIVA" ya era teal oscuro: su palidez venía del
+      fundido de aparición (punto 8), que se corrige abajo. */
+.why-diff{background:#d9e8f2 !important;color:#0d2840 !important;}
+.why-diff b{color:#0b6e66 !important;}
+
+/* 4) "COMPROMISO OPERATIVO" — celeste claro sobre blanco → teal oscuro. */
+.promise b{color:#0b6e66 !important;}
+
+/* 5) GLOBO DEL ASISTENTE — sin animación de fundido: legible desde el
+      primer momento (antes opacity:0 → 1 en .45s, se veía desvanecido al cargar). */
+.jefq-ia-teaser{animation:none !important;opacity:1 !important;transform:none !important;}
+.jefq-ia-teaser button{color:#d7e5ee !important;}
+
+/* 7) BARRIDO SISTEMÁTICO — enlaces "Explorar"/"Descubrir el servicio" (cian
+      #71e4ff en marketing-conversion.css y var(--cyan) en global.css) → teal
+      oscuro explícito; .case em gris #7890a8 → #40566b. */
+.service-card a,.service-card-link{color:#0b6e66 !important;}
+.related-service-grid a{color:#0b6e66 !important;}
+.related-service-grid a span,.related-service-grid a strong{color:#0b6e66 !important;}
+.case em{color:#40566b !important;}
+
+/* 8) ANIMACIONES DE APARICIÓN — se quita el fundido de opacidad: las secciones
+      ya no empiezan en gris pálido (antes opacity:0 → 1 en .62s). Queda solo el
+      deslizamiento de 14px. El bloque reduced-motion posterior preserva la
+      accesibilidad (sin movimiento si el usuario lo prefiere). */
+[data-reveal]{opacity:1 !important;transform:translateY(14px);transition:transform .55s ease !important;}
+[data-reveal].visible{opacity:1 !important;transform:none !important;}
+@media (prefers-reduced-motion:reduce){
+  [data-reveal]{transform:none !important;transition:none !important;}
+}
