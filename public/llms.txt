@@ -17,9 +17,9 @@
 
 ## Planes y precios (COP)
 
-- Plan Esencial: desde $390.000 COP. Diagnóstico de ciberseguridad para pymes.
-- Plan Pyme: desde $890.000 COP. Diagnóstico ampliado con priorización y acompañamiento.
-- Plan Integral: desde $1.790.000 COP. Cobertura integral: diagnóstico, pruebas autorizadas, hardening e informes.
+- Plan Esencial: desde $421.500 COP. Diagnóstico de ciberseguridad para pymes.
+- Plan Pyme: desde $960.500 COP. Diagnóstico ampliado con priorización y acompañamiento.
+- Plan Integral: desde $1.930.500 COP. Cobertura integral: diagnóstico, pruebas autorizadas, hardening e informes.
 - Los importes publicados son orientativos; la propuesta confirma el precio final y los impuestos aplicables.
 
 ## Preguntas frecuentes
@@ -31,7 +31,7 @@ Una consultoría de ciberseguridad para pymes en Colombia. Diagnóstico, pruebas
 Para pymes y organizaciones colombianas que necesitan saber dónde están expuestas y cómo corregirlo con prioridades claras.
 
 ### ¿Cuánto cuesta?
-Plan Esencial desde $390.000 COP, Plan Pyme desde $890.000 COP y Plan Integral desde $1.790.000 COP. La propuesta confirma el precio final.
+Plan Esencial desde $421.500 COP, Plan Pyme desde $960.500 COP y Plan Integral desde $1.930.500 COP. La propuesta confirma el precio final.
 
 ### ¿Cómo se contrata?
 Primero una valoración inicial (en línea o por WhatsApp), luego una propuesta con alcance documentado. Nada inicia sin autorización.

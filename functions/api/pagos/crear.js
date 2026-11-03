@@ -4,9 +4,9 @@
 import { withSentry } from '../../_sentry.js';
 
 const CATALOGO = {
-  esencial: { nombre: 'Diagnóstico Esencial · JEFQ Consultor', centavos: 39000000 },
-  pyme: { nombre: 'Evaluación Pyme · JEFQ Consultor', centavos: 89000000 },
-  integral: { nombre: 'Seguridad Integral · JEFQ Consultor', centavos: 179000000 },
+  esencial: { nombre: 'Diagnóstico Esencial · JEFQ Consultor', centavos: 42150000 },
+  pyme: { nombre: 'Evaluación Pyme · JEFQ Consultor', centavos: 96050000 },
+  integral: { nombre: 'Seguridad Integral · JEFQ Consultor', centavos: 193050000 },
 };
 
 async function sha256Hex(texto) {
