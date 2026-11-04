@@ -358,3 +358,29 @@ main .why p.why-diff b{color:#0b6e66 !important}
       sistemáticamente sobre las primeras letras de este botón centrado cuando
       la fila pasa bajo la barra. Los botones de esta fila suben a z-995:
       quedan por encima del cromo fijo y por debajo de la cabecera (z-1000). */
+/* ==========================================================================
+   PASADA 4 (2026-11-04) — H1: contraste y jerarquía.
+   Ronda 2 de diseño, mejora principal (#1). Dos defectos medidos en el
+   elemento más visto del sitio; ambas causas viven en la cascada, no en el
+   contenido: se corrigen sin tocar un solo texto, precio, enlace ni ruta.
+   ========================================================================== */
+/* 1) SEGUNDA LÍNEA DEL H1 — el gradiente claro (#65ddff→#55f0bd→#ffc368,
+      marketing-conversion.css:11) medía 1,44–1,58:1 sobre #eef6fb y fallaba
+      WCAG AA incluso para texto grande. Se sustituye por gradiente oscuro
+      teal→navy, ambas paradas ≥4,5:1 sobre claro. Se anula el background-clip
+      heredado solo si hace falta (color sólido cubre el fondo). */
+.hero h1 span{
+  background:linear-gradient(105deg,#0b6e66,#0d2840) !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  color:transparent !important;
+}
+/* Alternativa si el gradiente oscuro no convence en revisión visual:
+   color sólido teal — .hero h1 span{background:none !important;color:#0b6e66 !important}
+   (5,59:1 sobre #eef6fb). No usar cian #23d7ff ni verde claro: 1,72:1 y 1,32:1. */
+/* 2) TAMAÑO DEL H1 — el híbrido lo capa a 3,35rem con !important y los H2 de
+      sección (3,8rem) lo superan a ≥1280 px. Tamaño intencional solo en
+      escritorio; el móvil conserva la regla del híbrido (≤720 px). */
+@media (min-width:721px){
+  .hero h1{font-size:clamp(2.9rem,5.2vw,4.5rem) !important;line-height:1.02 !important}
+}
