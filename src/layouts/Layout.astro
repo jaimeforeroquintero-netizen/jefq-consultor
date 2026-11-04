@@ -11,7 +11,6 @@ import "../styles/trust-commercial.css";
 import "../styles/service-links.css";
 import "../styles/services-premium.css";
 import "../styles/marketing-conversion.css";
-import "../styles/color-fix-v1.css";
 interface Props { title:string; description:string; canonicalPath?:string; noindex?:boolean; }
 const { title, description, canonicalPath = Astro.url.pathname, noindex = false } = Astro.props;
 const baseUrl = "https://jefq-consultor.pages.dev";
@@ -92,8 +91,8 @@ import "../styles/authority-real-v1.css";
 
 import "../styles/commercial-v1.css";
 import "../styles/jefq-diseno-hibrido-v1.css";
-/* MUESTRA rediseño claro (rama rediseno-claro-muestra): hoja de anulación, cargada la última. Solo diseño. */
-import "../styles/rediseno-claro-muestra.css";
+/* Parches consolidados (fusión de color-fix-v1.css + rediseno-claro-muestra.css): hoja de anulación, cargada la última. Solo diseño. */
+import "../styles/parches-consolidados.css";
 ---
 <!doctype html>
 <html lang="es-CO">
@@ -131,22 +130,15 @@ import "../styles/rediseno-claro-muestra.css";
     <div class="container nav">
       <a class="brand" href="/" aria-label="JEFQ Consultor, inicio"><span class="brand-mark">J</span><span><b>JEFQ</b><small>CONSULTOR</small></span></a>
       <button class="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false"><i></i><i></i><i></i></button>
-      <nav class="menu" aria-label="Navegación principal"><a href="/#servicios">Servicios</a><a href="/#metodologia">Metodología</a><a href="/#planes">Planes</a><a href="/#evidencia">Evidencia</a><a class="nav-cta" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.">Solicitar valoración</a>          <a href="/quien-soy">Quién soy</a>
-          <a href="/blog">Blog</a>
-          <a href="/preguntas-frecuentes">FAQ</a>
-          <a href="/seguridad-autorizacion-alcance">Autorización y alcance</a>
-        <a href="/recursos">Recursos</a>
-        <a href="/orientacion-de-servicios">Elegir servicio</a>
-        <a href="/valoracion">Valoración en línea</a>
-</nav>
+      <nav class="menu" aria-label="Navegación principal"><a href="/#servicios">Servicios</a><a href="/#metodologia">Metodología</a><a href="/#planes">Planes</a><a href="/#evidencia">Evidencia</a><a href="/quien-soy">Quién soy</a><a href="/blog">Blog</a><a class="nav-cta" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.">Solicitar valoración</a></nav>
     </div>
   </header>
   <main id="contenido"><slot /></main>
-  <footer class="footer"><div class="container footer-grid"><div class="footer-main"><a class="brand" href="/"><span class="brand-mark">J</span><span><b>JEFQ</b><small>CONSULTOR</small></span></a><p>Ciberseguridad práctica, controlada y comprensible para organizaciones colombianas.</p><a class="footer-cta" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.">Solicitar valoración</a></div><div><h2>Servicios</h2><a href="/servicios/diagnostico-seguridad">Diagnóstico</a><a href="/servicios/hardening">Hardening</a><a href="/servicios/pruebas-autorizadas">Pruebas autorizadas</a><a href="/servicios/informes-tecnicos">Informes</a><a href="/seguridad-inteligencia-artificial">Seguridad para IA</a></div><div><h2>Legal</h2><a href="/privacidad">Privacidad</a><a href="/terminos">Términos</a><a href="/tratamiento-datos">Datos personales</a></div><div><h2>Contacto</h2><a href="#" data-wa-modal>WhatsApp: @JaimeByte</a><a href="mailto:jaimeforeroquintero@gmail.com">jaimeforeroquintero@gmail.com</a><p>Bogotá y toda Colombia · Atención 24/7</p></div></div>      <div class="container footer-trust-access">
+  <footer class="footer"><div class="container footer-grid"><div class="footer-main"><a class="brand" href="/"><span class="brand-mark">J</span><span><b>JEFQ</b><small>CONSULTOR</small></span></a><p>Ciberseguridad práctica, controlada y comprensible para organizaciones colombianas.</p><a class="footer-cta" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.">Solicitar valoración</a></div><div><h2>Servicios</h2><a href="/servicios/diagnostico-seguridad">Diagnóstico de seguridad</a><a href="/servicios/hardening">Hardening de sistemas</a><a href="/servicios/pruebas-autorizadas">Pruebas autorizadas</a><a href="/servicios/informes-tecnicos">Informes técnicos y ejecutivos</a><a href="/seguridad-inteligencia-artificial">Seguridad para IA</a></div><div><h2>Legal</h2><a href="/privacidad">Privacidad</a><a href="/terminos">Términos</a><a href="/tratamiento-datos">Datos personales</a></div><div><h2>Contacto</h2><a href="#" data-wa-modal>WhatsApp: @JaimeByte</a><a href="mailto:jaimeforeroquintero@gmail.com">jaimeforeroquintero@gmail.com</a><p>Bogotá y toda Colombia · Atención 24/7</p></div></div>      <div class="container footer-trust-access">
         <div><strong>Atención directa</strong><span>Comunicación con el responsable del servicio.</span></div>
         <div><strong>Intervenciones autorizadas</strong><span>Alcance y límites definidos previamente.</span></div>
         <div><strong>Resultados documentados</strong><span>Prioridades, recomendaciones y próximos pasos.</span></div>
-        <nav aria-label="Accesos de confianza"><a href="/quien-soy">Quién soy</a><a href="/diagnostico-seguridad-bogota">Diagnóstico en Bogotá</a><a href="/consultoria-ciberseguridad-colombia">Consultoría en Colombia</a><a href="/ciberseguridad-colombia">Ciberseguridad en Colombia</a><a href="/como-trabajamos">Cómo trabajamos</a><a href="/informe-demostrativo">Informe demostrativo</a><a href="/blog">Blog</a><a href="/preguntas-frecuentes">FAQ</a>
+        <nav aria-label="Accesos de confianza"><a href="/quien-soy">Quién soy</a><a href="/diagnostico-seguridad-bogota">Diagnóstico en Bogotá</a><a href="/consultoria-ciberseguridad-colombia">Consultoría en Colombia</a><a href="/ciberseguridad-bogota">Ciberseguridad en Bogotá</a><a href="/auditoria-ciberseguridad-pyme">Auditoría para pymes</a><a href="/hardening-windows-colombia">Hardening de sistemas en Colombia</a><a href="/pruebas-seguridad-autorizadas">Pruebas autorizadas</a><a href="/como-trabajamos">Cómo trabajamos</a><a href="/informe-demostrativo">Informe demostrativo</a><a href="/blog">Blog</a><a href="/preguntas-frecuentes">FAQ</a><a href="/orientacion-de-servicios">Elegir servicio</a>
           <a href="/seguridad-autorizacion-alcance">Autorización y alcance</a></nav>
       </div>
 <div class="container footer-bottom"><span>© {new Date().getFullYear()} JEFQ Consultor</span><span>Pruebas únicamente con autorización escrita.</span></div>  <!-- JEFQ-SEO-AUTHORITY-LINKS -->

@@ -11,7 +11,7 @@ export const cities = [
 
 export const valuation = {
   whatsappUser: "@JaimeByte",
-  services: ["Diagnóstico de seguridad", "Hardening", "Auditoría de ciberseguridad", "Consultoría", "Pruebas autorizadas"],
+  services: ["Diagnóstico de seguridad", "Hardening de sistemas", "Pruebas autorizadas", "Informes técnicos y ejecutivos", "Simulacros de seguridad", "Acompañamiento de remediación", "Seguridad para IA"],
   sizes: ["1 a 5 activos", "6 a 20 activos", "21 a 50 activos", "Más de 50 activos"],
   organizationTypes: ["Profesional independiente", "Microempresa", "Pyme", "Empresa", "Entidad u organización"]
 };

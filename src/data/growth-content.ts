@@ -76,38 +76,9 @@ export const blogPosts: BlogPost[] = [
   }
 ];
 
-export type LocalPage = {
-  slug: string;
-  title: string;
-  description: string;
-  heading: string;
-  intro: string;
-  points: string[];
-};
-
-export const localPages: LocalPage[] = [
-  {
-    slug: "ciberseguridad-bogota",
-    title: "Ciberseguridad para empresas en Bogotá | JEFQ Consultor",
-    description: "Ciberseguridad para empresas en Bogotá: consultoría, diagnóstico, hardening y pruebas autorizadas con informes que su gerencia sí entiende.",
-    heading: "Ciberseguridad para empresas en Bogotá",
-    intro: "Acompañamiento remoto para identificar riesgos, priorizar mejoras y fortalecer equipos, cuentas y procesos.",
-    points: ["Valoración inicial", "Alcance autorizado", "Informes técnicos y ejecutivos", "Plan de remediación", "Atención directa"]
-  },
-  {
-    slug: "ciberseguridad-colombia",
-    title: "Servicios de ciberseguridad en Colombia | JEFQ Consultor",
-    description: "Servicios remotos de ciberseguridad para pymes en Colombia: diagnóstico, priorización de riesgos e informes accionables para su empresa.",
-    heading: "Ciberseguridad remota para organizaciones en Colombia",
-    intro: "Evaluaciones proporcionales y documentadas para organizaciones que necesitan una ruta clara de mejora.",
-    points: ["Cobertura nacional remota", "Diagnóstico de seguridad", "Hardening", "Pruebas controladas", "Acompañamiento"]
-  },
-  {
-    slug: "consultor-ciberseguridad-bogota",
-    title: "Consultor de ciberseguridad en Bogotá | Jaime Forero",
-    description: "Jaime Forero, consultor de ciberseguridad en Bogotá: atención directa para convertir hallazgos técnicos en decisiones claras para su empresa.",
-    heading: "Consultoría directa de ciberseguridad en Bogotá",
-    intro: "Atención con Jaime Forero para convertir hallazgos técnicos en decisiones comprensibles y priorizadas.",
-    points: ["Atención directa", "Lenguaje claro", "Evidencia y prioridad", "Alcance proporcional", "Seguimiento"]
-  }
-];
+/* Las páginas locales (ciberseguridad-bogota, ciberseguridad-colombia,
+   consultor-ciberseguridad-bogota) eran tres variantes casi idénticas del
+   mismo texto (Jaccard 0,87-0,89) generadas por [local].astro. Se fusionaron
+   en una sola página real: src/pages/ciberseguridad-bogota.astro, con las
+   otras dos redirigidas (301) en public/_redirects. No recrear variantes
+   locales sin contenido propio y diferenciado. */

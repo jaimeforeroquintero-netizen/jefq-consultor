@@ -35,7 +35,7 @@ export const servicePages: ServicePage[] = [
   {
     slug: "hardening-windows-colombia",
     eyebrow: "FORTALECIMIENTO DE EQUIPOS",
-    title: "Hardening de Windows en Colombia",
+    title: "Hardening de sistemas en Colombia",
     description: "Servicio de hardening de Windows para reducir exposición, fortalecer configuraciones y documentar cambios en equipos empresariales.",
     intro: "Fortalecemos equipos Windows con cambios controlados, trazables y proporcionales al uso real de cada organización.",
     audience: ["Empresas con equipos sin una línea base común", "Organizaciones que manejan información sensible", "Pymes que quieren reducir configuraciones innecesarias"],
@@ -96,8 +96,8 @@ export const servicePages: ServicePage[] = [
     slug: "auditoria-ciberseguridad-pyme",
     eyebrow: "SEGURIDAD PARA PYMES",
     title: "Auditoría de ciberseguridad para pymes",
-    description: "Auditoría de ciberseguridad para pymes con revisión de equipos, cuentas, configuraciones, hallazgos y plan de mejora.",
-    intro: "Revisamos las capas de seguridad más relevantes para una pyme y entregamos prioridades claras, sin complejidad innecesaria.",
+    description: "Auditoría de ciberseguridad para pymes: el Diagnóstico de seguridad de JEFQ adaptado a pymes, con revisión de equipos, cuentas, configuraciones, hallazgos y plan de mejora.",
+    intro: "La auditoría de ciberseguridad para pymes es el Diagnóstico de seguridad de JEFQ, adaptado a pymes: revisamos las capas de seguridad más relevantes para una pyme y entregamos prioridades claras, sin complejidad innecesaria.",
     audience: ["Pymes en crecimiento", "Negocios que dependen de información y servicios digitales", "Empresas que necesitan ordenar sus controles"],
     includes: ["Definición de activos", "Revisión de controles acordados", "Hallazgos con severidad", "Informe para dirección", "Hoja de ruta de mejora"],
     process: [
@@ -115,7 +115,7 @@ export const servicePages: ServicePage[] = [
   {
     slug: "seguridad-inteligencia-artificial",
     eyebrow: "IA BAJO CONTROL",
-    title: "Seguridad en inteligencia artificial",
+    title: "Seguridad para IA",
     description: "Evaluación del uso de herramientas de IA en su pyme: datos en prompts, aplicaciones sin gobierno, riesgos de suplantación y controles proporcionales.",
     intro: "Las herramientas de IA ya están en su empresa, las haya aprobado o no. Revisamos cómo se usan, qué datos circulan por ellas y qué controles necesita para usarlas sin exponerse.",
     audience: ["Pymes cuyo equipo ya usa ChatGPT, Copilot, Gemini, Claude, Meta AI u otras herramientas de IA", "Empresas que manejan datos de clientes o información sensible", "Negocios que quieren reglas claras antes de ampliar el uso de IA"],

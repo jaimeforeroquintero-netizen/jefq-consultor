@@ -1,0 +1,7 @@
+# Redirecciones 301 (Cloudflare Pages): fusión de las 3 páginas locales casi
+# duplicadas (Jaccard 0,87-0,89) en una sola página real.
+# Las dos variantes retiradas apuntan a la página canónica.
+/ciberseguridad-colombia/ /ciberseguridad-bogota/ 301
+/ciberseguridad-colombia /ciberseguridad-bogota/ 301
+/consultor-ciberseguridad-bogota/ /ciberseguridad-bogota/ 301
+/consultor-ciberseguridad-bogota /ciberseguridad-bogota/ 301

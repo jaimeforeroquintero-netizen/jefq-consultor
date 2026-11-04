@@ -1,0 +1,360 @@
+/* parches-consolidados.css — FUSIÓN de las dos capas de parche:
+   color-fix-v1.css (contraste/colores) + rediseno-claro-muestra.css
+   (rediseño claro). Se carga EL ÚLTIMO, como rediseno. Orden interno
+   preservado: primero color-fix, después rediseno (misma precedencia
+   relativa que antes). Reglas y declaraciones muertas eliminadas.
+   NO editar a mano en dos capas: cualquier cambio futuro va aquí. */
+/* JEFQ Color Fix v1 — paneles más vivos, texto con mejor contraste.
+   Problema: los paneles usaban fondos semi-transparentes oscuros (rgba .64-.78)
+   sobre el fondo casi negro, viéndose apagados/fangosos y el texto gris
+   quedaba sin contraste. Este archivo los vuelve sólidos y definidos. */
+:root{--line:rgba(125,181,225,.32)}
+/* En paneles OSCUROS: texto secundario más claro */
+.service-card p, .price-card>p, .price-note, .case-flow p, .benefits p, .process p, .section-head p, .why p, .contact p, .landing-card p, .local-grid p, .landing-process p, .landing-faq p, .landing-summary span, .contact-form>small, .compare-note{color:#b9cde4 !important}
+/* En paneles CLAROS (fondo blanco/gris claro): texto secundario más oscuro */
+.authority-grid p, .authority-faq-list p, .resource-next-step p, .method-list p{color:#4a6276 !important}
+/* Sección metodología y servicios en fondo claro: descripciones legibles */
+.section .process p, .section .section-head p{color:#4a6276 !important}
+.promise p{color:#4a6276 !important}
+/* Títulos de proceso en fondo oscuro deben ser claros */
+.process h3{color:#f4f8ff !important}
+.process>article>b{}
+/* Tarjetas de evidencia (resultados y entregables) */
+/* Panel why-diff en fondo claro: texto oscuro legible */
+.why-diff{}
+.why-diff b{}
+/* Pasos de evidencia: fondo sólido y texto claro */
+/* Tarjetas de casos: título claro */
+.case{}
+.case h3{color:#f4f8ff !important}
+.case-head span{opacity:1}
+/* Botón en section-cta: texto claro */
+.section-cta .button.ghost{color:#f4f8ff !important;border-color:rgba(125,181,225,.4) !important}
+/* Sección contacto: subtítulo legible */
+.contact p{color:#4a6276 !important}
+.contact h2{color:#0a1f33 !important}
+/* Tarjetas de servicios (home) */
+.service-card{background:linear-gradient(145deg,#10294a,#081a30) !important;border-color:rgba(125,181,225,.32) !important}
+.service-card p{color:var(--muted) !important}
+/* Tarjetas de precios */
+.price-card{background:linear-gradient(155deg,#102a4c,#081a30) !important;border-color:rgba(125,181,225,.32) !important}
+.price-card>p{color:var(--muted) !important}
+/* Casos ilustrativos */
+.case{background:linear-gradient(145deg,#0f2745,#081a30) !important;border-color:rgba(125,181,225,.32)}
+.case-flow p{color:var(--muted) !important}
+/* Beneficios */
+.benefits article{background:#0d2440 !important;border-color:rgba(125,181,225,.32)}
+.benefits p{color:var(--muted) !important}
+/* Paneles de landings */
+.landing-card, .local-grid article, .landing-process article, .landing-faq details{background:#0d2440 !important;border-color:rgba(125,181,225,.32) !important}
+.landing-card p, .local-grid p, .landing-process p, .landing-faq p{color:var(--muted) !important}
+/* Dos columnas landing */
+.landing-two-columns article{background:linear-gradient(145deg,#10294a,#081a30) !important;border-color:rgba(125,181,225,.32) !important}
+/* Resumen landing */
+.landing-summary{background:#0d2440 !important;border-color:rgba(125,181,225,.32)}
+.landing-summary span{}
+/* Proceso home */
+.process p{color:var(--muted) !important}
+/* Encabezados de sección */
+.section-head p, .why p, .contact p{color:var(--muted) !important}
+/* Texto pequeño del top de tarjetas (era rgba .4 = casi invisible) */
+.service-top small{}
+/* Textos apagados con colores duros */
+.case em{}
+.footer-bottom{}
+.calc-result small{}
+.compare-note, .price-note, .contact-form>small, .footer-grid a:not(.brand), .footer-grid p{color:#a9bcd4 !important}
+/* Etiquetas pequeñas */
+.service-top small, .case-head span{letter-spacing:.06em}
+/* Tarjeta de precio: título y precio siempre claros sobre fondo oscuro */
+.price-card h3{color:#f4f8ff !important}
+.price-card .price{color:var(--cyan) !important}
+/* Panel why-diff: fondo más sólido para que el texto se lea */
+.why-diff{border-color:rgba(35,215,255,.35)}
+.why-diff b{}
+/* Panel section-cta: fondo sólido */
+.section-cta{background:#0d2440 !important;border-color:rgba(125,181,225,.32)}
+.section-cta span{}
+/* ============ REDISEÑO CLARO — MUESTRA ============
+   Rama: rediseno-claro-muestra. Hoja de anulación cargada LA ÚLTIMA
+   en Layout.astro (después de jefq-diseno-hibrido-v1.css).
+   Solo diseño: no cambia textos, precios, enlaces, estructura ni lógica.
+   Usa !important porque (a) los estilos con ámbito de página llegan
+   después en el paquete CSS y (b) el archivo híbrido vigente ya usa
+   !important en sus propias anulaciones. Reversible: borrar esta hoja
+   y su import devuelve el diseño anterior.
+   Pre-mortem y tokens:
+   goals/jefq-consultor-website-upgrade/hidden_files/REDISENO_CLARO_PREMORTEM_2026-11-01.md
+   ================================================================ */
+/* ---------- 1. Tokens: las tarjetas oscuras pasan a claras ----------
+   --card-dark-* lo usan .pain-grid (6 tarjetas Problemas) y
+   TrustPremium: ambos son tarjetas de contenido y deben aclararse. */
+:root{--card-dark-bg-start:#ffffff !important;--card-dark-bg-end:#f3f7fa !important;--card-dark-title:#0d2840 !important;--card-dark-text:#40566b !important;--card-dark-border:rgba(13,40,64,.13) !important;--card-dark-border-hover:rgba(11,110,102,.45) !important}
+html{color-scheme:light !important}
+/* ---------- 2. Base: página luminosa ---------- */
+body{background:#eef6fb !important;color:#0d2840 !important}
+main{color:#0d2840}
+main h1, main h2, main h3, main h4{color:#0d2840 !important}
+main p, main li{color:#40566b !important}
+main small{color:#526b7c !important}
+main a:not(.button){color:#0b6e66 !important}
+/* ---------- 3. Bandas: todas claras ---------- */
+main>.dark-section, main>section.dark-section{background:#eef6fb !important;color:#0d2840 !important}
+main>section:has(form){background:#eef6fb !important;color:#0d2840 !important}
+.contrast{background:linear-gradient(180deg,#eef6fb,#e3eef7) !important;border-block:1px solid rgba(13,40,64,.13) !important}
+.proof{background:#ffffff !important;border-block:1px solid rgba(13,40,64,.13) !important}
+.proof article{border-right:1px solid rgba(13,40,64,.13) !important}
+.proof b{color:#0b6e66 !important}
+.proof span{color:#526b7c !important}
+.conversion-band{background:linear-gradient(180deg,#eef6fb,#e3eef7) !important;border-block:1px solid rgba(13,40,64,.13) !important}
+.contact{background:radial-gradient(circle at 85% 25%,rgba(15,157,143,.08),transparent 430px),#eef6fb !important}
+/* ---------- 4. Héroe claro ---------- */
+.hero{background:radial-gradient(circle at 85% 20%,rgba(15,157,143,.08),transparent 30rem),#eef6fb !important}
+.hero h1{color:#0d2840 !important}
+.hero-copy>p{color:#40566b !important}
+.eyebrow{background:#ffffff !important;color:#0d2840 !important;border-color:rgba(13,40,64,.16)}
+.eyebrow i{background:#0b6e66 !important;box-shadow:0 0 14px rgba(11,110,102,.5) !important}
+.hero-trust{color:#526b7c !important}
+.hero-trust span:before{color:#0b6e66 !important}
+.hero-alt, .hero-alt b{color:#0b6e66 !important}
+.inline-link{color:#0b6e66 !important}
+.landing-hero{background:radial-gradient(circle at 80% 20%,rgba(15,157,143,.08),transparent 26rem),#eef6fb !important;color:#0d2840 !important}
+.landing-hero h1{color:#0d2840 !important}
+.landing-hero p{color:#40566b !important}
+.service-detail-hero{background:#eef6fb !important}
+.service-detail-lead{color:#40566b !important}
+.service-detail-promise{color:#0d2840 !important}
+.service-detail-label{color:#0b6e66 !important}
+.local-hero{background:radial-gradient(circle at 80% 20%,rgba(15,157,143,.08),transparent 28rem),#eef6fb !important}
+.local-hero h1{color:#0d2840 !important}
+.local-hero p{color:#40566b !important}
+.growth-hero{background:radial-gradient(circle at 80% 20%,rgba(15,157,143,.08),transparent 30rem),#eef6fb !important}
+.growth-hero h1{color:#0d2840 !important}
+.growth-hero p{color:#40566b !important}
+.article header{background:linear-gradient(180deg,#eef6fb,transparent)}
+.article header span{color:#0b6e66}
+/* ---------- 5. Cabecera y pie: azul marino, texto blanco puro ---------- */
+.header{background:#0b1b2e !important;border-bottom:1px solid rgba(255,255,255,.12) !important}
+.topbar{background:#071426 !important;color:#d7e5ee !important}
+.menu>a:not(.nav-cta){color:#ffffff !important}
+.menu>a:not(.nav-cta):hover{color:#2dd4c4}
+.brand small{color:#d7e5ee !important}
+.menu-button i{background:#ffffff !important}
+.footer{background:#0b1b2e !important;border-top:1px solid rgba(255,255,255,.12) !important}
+.footer-grid h2{color:#ffffff}
+.footer-grid a:not(.brand), .footer-grid p{color:#d7e5ee !important}
+.footer-grid a:not(.brand):hover{color:#ffffff}
+.footer-cta{color:#001018 !important;background:#23d7ff !important}
+.footer-bottom{color:#b8c7d9 !important;border-top:1px solid rgba(255,255,255,.12) !important}
+.footer-trust-access strong{color:#ffffff !important}
+.footer-trust-access span, .footer-trust-access a{color:#d7e5ee !important}
+.authority-links a{color:#d7e5ee !important}
+/* ---------- 6. Tarjetas blancas ---------- */
+.service-card, .price-card, .case, .benefits article, .landing-two-columns>article, .landing-process>article, .landing-summary, .landing-card, .compare-wrap, .guarantee, .downtime-calc, .contact-form, .service-detail-card, .service-process-grid article, .related-service-grid a, .section-cta, .faq-premium-v2 details, .landing-faq details, .local-grid article, .body aside, .contact-data>*, .promise, .landing-final-cta, .faq-final-v2, .report-cta-v4, .finding-v4, .roadmap-v4 article, .severity-scale-v4 article, .report-metrics-v4 article, .growth-card{background:#ffffff !important;border:1px solid rgba(13,40,64,.13) !important;border-radius:22px !important;box-shadow:0 16px 40px rgba(13,40,64,.09),0 2px 8px rgba(13,40,64,.05) !important;color:#0d2840 !important}
+.price-card.featured{border:2px solid #f2a100 !important;transform:translateY(-8px) !important}
+.price{color:#0b6e66 !important}
+.price-card li{color:#40566b !important}
+.price-card li i{color:#0b6e66 !important}
+.price-note{color:#526b7c !important}
+.price-button:not(.primary){color:#0d2840 !important;background:#eef6fb !important;border-color:rgba(13,40,64,.25) !important}
+/* ---------- 7. Más aire entre bloques ---------- */
+.service-grid, .pricing-grid, .related-service-grid, .cases, .benefits, .landing-process, .landing-two-columns, .landing-card-grid, .service-process-grid, .local-grid, .growth-grid, .findings-grid-v4, .roadmap-v4, .severity-scale-v4, .report-metrics-v4{gap:24px !important}
+/* ---------- 8. Etiquetas, iconos y acentos sobre claro ---------- */
+.section-head>span, .label, .section-label, .eyebrow, .section-header>span, .landing-card>span{color:#0b6e66 !important}
+.service-icon{color:#0b6e66 !important;background:rgba(11,110,102,.1) !important;border-color:rgba(11,110,102,.25)}
+.service-top small{color:#526b7c !important}
+.case-head span{color:#0b6e66 !important}
+.case-head b{color:#0b6e66 !important;background:rgba(11,110,102,.12) !important}
+.case-flow small{color:#0b6e66 !important}
+.case em{}
+.process>article>b{color:#0b6e66 !important}
+.landing-summary strong{color:#0b6e66 !important}
+.landing-summary span{color:#40566b !important}
+.landing-list li:before{color:#0b6e66 !important}
+.landing-process strong{color:#0b6e66 !important}
+.why-diff{}
+.why-diff b{}
+.price-anchor{color:#0d2840 !important}
+.price-anchor b{color:#0b6e66 !important}
+.service-detail-card li span{color:#0b6e66 !important}
+.service-process-grid strong{color:#0b6e66 !important}
+.related-service-grid span, .related-service-grid strong{color:#0b6e66 !important}
+.guarantee p{color:#0d2840 !important}
+.guarantee small{color:#526b7c !important}
+.testi-quote{color:#0d2840 !important}
+.testi-who span{color:#526b7c !important}
+.testi-who b{color:#0d2840}
+.testi-note{color:#526b7c}
+.more-links{color:#526b7c !important}
+.finding-v4 small, .finding-top-v4>span{color:#526b7c !important}
+.finding-area-v4{color:#0b6e66 !important}
+.severity-scale-v4 .high strong{color:#9a6a00 !important}
+.severity-scale-v4 .medium strong{color:#0b6e66 !important}
+.severity-scale-v4 .low strong{color:#40566b !important}
+.report-metrics-v4 span{color:#526b7c !important}
+.report-metrics-v4 strong{color:#0b6e66 !important}
+.roadmap-v4 span{color:#0b6e66 !important}
+.section-cta span{color:#40566b !important}
+details summary{color:#0d2840 !important}
+.contact-data small{color:#526b7c !important}
+.contact-data b{color:#0d2840}
+/* ---------- 9. Botones, tablas y formularios ---------- */
+.button.ghost{background:#ffffff !important;border-color:rgba(13,40,64,.25) !important;color:#0d2840 !important}
+.scroll-cta{background:#ffffff !important;border-bottom:1px solid rgba(13,40,64,.13) !important;box-shadow:0 10px 30px rgba(13,40,64,.12) !important}
+.scroll-cta>span{color:#0d2840 !important}
+.scroll-cta .button.ghost{background:#eef6fb !important}
+.compare-table thead th{color:#526b7c !important;background:#eef6fb !important}
+.compare-table tbody th{color:#0d2840 !important}
+.compare-table td{color:#40566b}
+.compare-table td b{color:#0b6e66 !important}
+.col-jefq{background:rgba(11,110,102,.08) !important}
+.compare-table thead .col-jefq{color:#0b6e66 !important}
+.compare-note{color:#526b7c !important}
+.contact-form label, .calc-row label{color:#0d2840 !important}
+.contact-form input, .contact-form select, .contact-form textarea, .calc-row input{background:#f8fcfe !important;color:#102a43 !important;border-color:#b7ccd8 !important}
+.contact-form option{background:#ffffff !important;color:#102a43}
+.contact-form small{color:#526b7c !important}
+.consent a{color:#0b6e66 !important}
+.calc-loss{color:#0d2840 !important}
+.calc-loss b{color:#9a6a00 !important}
+.calc-bar-row>span{color:#526b7c !important}
+.calc-bar-row>b{color:#0d2840 !important}
+.calc-result small{color:#526b7c !important}
+/* ---------- 10. /valoracion/: banda clara, etiqueta legible ---------- */
+.smart-page{background:#eef6fb}
+.smart-hero{color:#0d2840 !important}
+.smart-hero h1{color:#0d2840 !important}
+.smart-hero p{color:#40566b !important}
+.smart-kicker{color:#0b6e66 !important}
+.smart-form small{color:#526b7c !important}
+/* ---------- 11. Pantallas intencionales: se quedan oscuras ----------
+   Terminal del héroe (.visual), terminal de escaneo (.scan-term) y las
+   tarjetas oscuras dentro de la demo (alerta JEFQ, ransomware) son
+   contenido, no cromo: conservan su fondo oscuro y su texto claro. */
+.visual, .scan-term{background:linear-gradient(145deg,rgba(18,52,85,.65),rgba(5,16,31,.96)) !important}
+/* ===== CORRECCIÓN TRANSPARENCIAS 2026-11-01 — 2ª pasada (12 puntos visibles) ===== */
+/* Causa: color-fix-v1.css y otras hojas originales ponen texto casi blanco con
+   !important; la hoja clara perdía por especificidad. Estas reglas usan selectores
+   más específicos + !important para ganar. Solo muestra; producción intacta. */
+/* 1. Metodología — títulos y cuerpo de los pasos 01–04 */
+main .process h3{color:#0d2840 !important}
+main .process p{color:#40566b !important}
+/* 2. Por qué JEFQ — títulos y cuerpo */
+main .benefits b{color:#0d2840 !important}
+main .benefits p{color:#40566b !important}
+/* 3. Planes — nombres, subtítulos y precios (turquesa claro → teal oscuro) */
+main .price-card h3{color:#0d2840 !important}
+main .price-card>p{color:#40566b !important}
+main .price-card .price{color:#0b6e66 !important}
+/* 4. Evidencia — títulos y cuerpo de los casos */
+main .case h3{color:#0d2840 !important}
+main .case-flow p{color:#40566b !important}
+/* 5. Botones fantasma con texto blanco sobre fondo claro (dentro de .section-cta) */
+main .section-cta .button.ghost{color:#0d2840 !important;background:#eef6fb !important;border-color:rgba(13,40,64,.28) !important}
+/* 6. Contacto — intro y aviso de seguridad (su clase real es .data-safety-note) */
+main .section-head p{color:#40566b !important}
+main .contact p{color:#40566b !important}
+.data-safety-note{color:#40566b !important}
+.data-safety-note strong{color:#0d2840 !important}
+/* 7. Logo JEFQ en blanco en cabecera (y pie: por código también quedaba oscuro) */
+.header .brand b{color:#ffffff}
+.footer .brand b{color:#ffffff}
+/* 8. Diagnóstico — bloque de cierre a fondo claro con texto oscuro */
+.service-final-cta{background:#ffffff !important;border-color:rgba(13,40,64,.14)}
+.service-final-cta h2{color:#0d2840 !important}
+.service-final-cta p{color:#40566b !important}
+/* 9. Diagnóstico — «Recursos para decidir»: mismo contenedor que el resto (1180px, 18px laterales) */
+.service-trust-links{padding:4.5rem 0 !important}
+.service-trust-links>div{width:min(calc(100% - 36px),1180px);margin-inline:auto}
+.service-trust-links h2{color:#0d2840 !important}
+.service-trust-links p{color:#40566b !important}
+/* 10. La barra fija no tapa los títulos al saltar a una sección */
+main section[id]{}
+/* 11. Burbuja del asistente en móvil: se sube para no tapar los botones del final */
+@media (max-width:640px){.jefq-ia{bottom:76px}}
+/* Barrido rápido extra: textos de la demo que quedaron claros sobre blanco */
+/* ==========================================================================
+   PASADA 2 (2026-11-01) — corrección de lo que quedó tras la verificación
+   ========================================================================== */
+/* 1) BARRA FIJA QUE TAPA TÍTULOS — cálculo del cromo fijo (medido en código):
+      Cabecera fija (.header sticky): .nav min-height 76px + borde 1px ≈ 77px.
+      Barra blanca .scroll-cta (SOLO home, aparece al bajar): top:110px.
+      Alto escritorio ≈ 61px (padding 10+10 + botón 40px + borde) → borde inferior ≈ 171px.
+      Alto móvil ≤680px ≈ 108-120px (columna: rótulo + botones) → borde inferior ≈ 218-230px.
+      El scroll-margin anterior (150px) quedaba POR DEBAJO del borde inferior de la
+      barra, así que el título aterrizaba tapado. Nuevos valores: 200px escritorio
+      (29px de margen sobre 171px) y 260px móvil (30-42px sobre 218-230px).
+      La barra se mantiene fija (diseño aprobado); solo se sube el despeje. */
+html{scroll-padding-top:200px !important}
+main section[id]{scroll-margin-top:200px !important}
+@media (max-width:680px){html{scroll-padding-top:260px !important}
+
+
+main section[id]{scroll-margin-top:260px !important}}
+/* 2) PANEL OSCURO DEL HERO — el panel se queda oscuro por diseño, pero el texto
+      sube a blanco legible (antes gris apagado #c8d7e6 / #9eb3ca / #7890a8). */
+.visual-head{color:#ffffff !important}
+.visual-head span{color:#ffffff !important}
+.visual-steps span{color:#eaf3fa !important}
+.scan-term-bar em{color:#c8d7e6}
+/* 3) CITA DE PLANES — fondo sólido en vez del tinte casi transparente
+      (color-fix-v1 línea 156) y texto oscuro reafirmado; el rótulo
+      "INVERSIÓN ORIENTATIVA" ya era teal oscuro: su palidez venía del
+      fundido de aparición (punto 8), que se corrige abajo. */
+.why-diff{background:#d9e8f2 !important;color:#0d2840 !important}
+.why-diff b{color:#0b6e66 !important}
+/* 4) "COMPROMISO OPERATIVO" — celeste claro sobre blanco → teal oscuro. */
+.promise b{color:#0b6e66 !important}
+/* 5) GLOBO DEL ASISTENTE — sin animación de fundido: legible desde el
+      primer momento (antes opacity:0 → 1 en .45s, se veía desvanecido al cargar). */
+.jefq-ia-teaser{animation:none;opacity:1;transform:none}
+.jefq-ia-teaser button{color:#d7e5ee}
+/* 7) BARRIDO SISTEMÁTICO — enlaces "Explorar"/"Descubrir el servicio" (cian
+      #71e4ff en marketing-conversion.css y var(--cyan) en global.css) → teal
+      oscuro explícito; .case em gris #7890a8 → #40566b. */
+.service-card a, .service-card-link{color:#0b6e66 !important}
+.related-service-grid a{color:#0b6e66 !important}
+.related-service-grid a span, .related-service-grid a strong{color:#0b6e66 !important}
+.case em{color:#40566b !important}
+/* 8) ANIMACIONES DE APARICIÓN — se quita el fundido de opacidad: las secciones
+      ya no empiezan en gris pálido (antes opacity:0 → 1 en .62s). Queda solo el
+      deslizamiento de 14px. El bloque reduced-motion posterior preserva la
+      accesibilidad (sin movimiento si el usuario lo prefiere). */
+[data-reveal]{opacity:1 !important;transform:translateY(14px);transition:transform .55s ease !important}
+[data-reveal].visible{opacity:1 !important;transform:none !important}
+@media (prefers-reduced-motion:reduce){[data-reveal]{transform:none !important;transition:none !important}}
+/* ==========================================================================
+   PASADA 3 (2026-11-01) — dos correcciones que no tuvieron efecto + 2 nuevos.
+   Cada regla lleva la evidencia de la regla que ganaba antes.
+   ========================================================================== */
+/* 1) CITA DE PLANES (.why-diff) — la regla anterior perdía por ESPECIFICIDAD:
+      color-fix-v1.css:130 `.section-head p,.why p,.contact p{color:var(--muted) !important}`
+      (.why p = 0,1,1) ganaba a `.why-diff` (0,1,0); --muted = #9eb3ca (pálido).
+      La nueva regla (0,2,2) gana a (0,1,1). No se tocan el rótulo
+      "INVERSIÓN ORIENTATIVA" ni el título "Planes de entrada transparentes". */
+main .why p.why-diff{color:#0d2840 !important;background:#d9e8f2 !important}
+main .why p.why-diff b{color:#0b6e66 !important}
+/* 2) LÍNEAS DE LA TERMINAL DEL HERO — causa: los estilos con ámbito de
+      ScanTerminal.astro (.st-cmd[data-astro-cid-xrnhnxya] etc.) NO llegan a las
+      líneas que crea el JS de escritura (createElement sin el atributo de ámbito,
+      tras clearAll()); esas líneas heredan body{color:#0d2840} (esta hoja, §2)
+      sobre el fondo casi negro #040d1a → invisibles. Reglas globales (0,3,0)
+      que valen para las líneas del servidor Y para las creadas por JS. */
+.scan-term .scan-term-body .st-cmd{color:#eaf3fa}
+.scan-term .scan-term-body .st-ok{color:#5ef0b4}
+.scan-term .scan-term-body .st-warn{color:#ffc46b}
+.scan-term .scan-term-body .st-info{color:#23d7ff}
+.scan-term .scan-term-body .st-cursor::after{content:"▌";margin-left:2px;color:#23d7ff;animation:st-blink 1s steps(1) infinite}
+/* 3) BOTÓN "Solicitar valoración" DEL PIE — la regla anterior perdía por
+      ESPECIFICIDAD: esta misma hoja, §5, `.footer-grid a:not(.brand)` (0,2,1,
+      color #d7e5ee !important) ganaba a `.footer-cta` (0,1,0). Nueva regla
+      (0,3,1): texto oscuro sobre cian, como el botón de navegación. */
+.footer .footer-grid a.footer-cta{color:#001018 !important;background:#23d7ff !important}
+/* 4) ICONO SOBRE "Conocer nuestra metodología" — en el código del botón NO hay
+      ningún icono (marcado limpio, sin ::before/::after ni fondo): el que se
+      superpone es el cromo fijo — la burbuja del asistente (icono de chat SVG,
+      .jefq-ia fixed, z-901), su globo (.jefq-ia-teaser, z-900) y la barra fija
+      superior (.scroll-cta, z-990), cuya pastilla "Valoración" cae
+      sistemáticamente sobre las primeras letras de este botón centrado cuando
+      la fila pasa bajo la barra. Los botones de esta fila suben a z-995:
+      quedan por encima del cromo fijo y por debajo de la cabecera (z-1000). */

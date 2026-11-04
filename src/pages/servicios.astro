@@ -1,10 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { servicePages } from "../data/service-pages";
+import { services } from "../data/services";
 ---
-<Layout title="Servicios de ciberseguridad | JEFQ Consultor" description="Servicios de diagnóstico, hardening, consultoría, pruebas autorizadas y auditoría para empresas en Colombia.">
+<Layout title="Servicios de ciberseguridad | JEFQ Consultor" description="Servicios de diagnóstico de seguridad, hardening de sistemas, pruebas autorizadas, informes técnicos y ejecutivos, simulacros de seguridad y acompañamiento de remediación para empresas en Colombia.">
   <section class="landing-hero"><div class="container"><span class="section-label">PORTAFOLIO</span><h1>Servicios de ciberseguridad para empresas</h1><p>Alternativas escalables para diagnosticar, priorizar y fortalecer la seguridad de organizaciones en Colombia.</p></div></section>
   <section class="section"><div class="container landing-card-grid">
-    {servicePages.map((service) => <article class="landing-card"><span>{service.eyebrow}</span><h2>{service.title}</h2><p>{service.intro}</p><a class="button secondary" href={`/${service.slug}`}>Ver servicio</a></article>)}
+    {services.map((service) => <article class="landing-card"><span>{service.eyebrow}</span><h2>{service.title}</h2><p>{service.description}</p><a class="button secondary" href={`/servicios/${service.slug}`}>Ver servicio</a></article>)}
+    <article class="landing-card"><span>IA BAJO CONTROL</span><h2>Seguridad para IA</h2><p>Las herramientas de IA ya están en su empresa, las haya aprobado o no. Revisamos cómo se usan, qué datos circulan por ellas y qué controles necesita para usarlas sin exponerse.</p><a class="button secondary" href="/seguridad-inteligencia-artificial">Ver servicio</a></article>
   </div></section>
 </Layout>
