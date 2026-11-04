@@ -13,9 +13,11 @@
   <section class="jefq-ia-panel" id="jefq-ia-panel" role="dialog" aria-label="Asistente virtual de JEFQ Consultor" hidden>
     <header class="jefq-ia-head">
       <span class="jefq-ia-dot" aria-hidden="true"></span>
-      <div><b id="jefq-ia-head-title">Asistente JEFQ</b><small id="jefq-ia-head-sub">En línea · responde al instante</small></div>
+      <div><b id="jefq-ia-head-title">Asistente JEFQ</b><small id="jefq-ia-head-sub">En línea · responde en segundos cuando está disponible</small></div>
       <button class="jefq-ia-close" id="jefq-ia-close" type="button" aria-label="Cerrar asistente">✕</button>
     </header>
+
+    <p class="jefq-ia-notice">Tus mensajes se envían a Google Gemini para responderte. No escribas contraseñas ni datos sensibles. Ver <a href="/privacidad">Política de privacidad</a>.</p>
 
     <div class="jefq-ia-msgs" id="jefq-ia-msgs" aria-live="polite"></div>
 
@@ -294,6 +296,8 @@
   .jefq-ia-head { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: rgba(9,31,54,.9); border-bottom: 1px solid rgba(125,181,225,.2); }
   .jefq-ia-head b { display: block; font-size: .92rem; }
   .jefq-ia-head small { color: #9eb3ca; font-size: .72rem; }
+  .jefq-ia-notice { margin: 0; padding: 10px 16px; color: #9eb3ca; background: rgba(35,215,255,.06); border-bottom: 1px solid rgba(125,181,225,.18); font-size: .74rem; line-height: 1.5; }
+  .jefq-ia-notice a { color: #23d7ff; font-weight: 700; }
   .jefq-ia-dot { width: 10px; height: 10px; background: #5ef0b4; border-radius: 50%; box-shadow: 0 0 10px #5ef0b4; }
   .jefq-ia-close { margin-left: auto; background: transparent; border: 0; color: #9eb3ca; font-size: 1rem; cursor: pointer; padding: 4px 8px; }
   .jefq-ia-msgs { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }

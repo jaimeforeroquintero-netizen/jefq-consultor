@@ -19,6 +19,7 @@ const LINES = [
     {LINES.map((l) => <div class={"st-line st-" + l.c}>{l.t}</div>)}
   </div>
 </div>
+<p class="scan-term-note">Simulación — ejemplo ilustrativo, no una sesión real.</p>
 
 <script>
 (function () {
@@ -81,6 +82,7 @@ const LINES = [
 
 <style>
   .scan-term { margin-top: 18px; overflow: hidden; background: #040d1a; border: 1px solid rgba(35,215,255,.22); border-radius: 14px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .scan-term-note { margin: 8px 2px 0; color: #526b7c; font-size: .72rem; }
   .scan-term-bar { display: flex; align-items: center; gap: 7px; padding: 10px 14px; background: rgba(13,37,64,.9); border-bottom: 1px solid rgba(125,181,225,.16); }
   .scan-term-bar span { width: 10px; height: 10px; border-radius: 50%; background: rgba(125,181,225,.35); }
   .scan-term-bar span:first-child { background: rgba(255,110,110,.75); }
