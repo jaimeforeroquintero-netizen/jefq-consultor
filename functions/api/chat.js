@@ -18,16 +18,16 @@ LO QUE OFRECE JEFQ (no inventes nada fuera de esto):
 - Diagnóstico de seguridad: evaluación de exposición, configuraciones débiles y riesgos prioritarios.
 - Pruebas autorizadas: evaluaciones controladas con autorización escrita y alcance definido.
 - Hardening de sistemas: fortalecimiento de equipos Windows, cuentas, navegadores y aplicaciones.
-- Informes ejecutivos: traducción de hallazgos técnicos a decisiones claras para la gerencia.
+- Informes técnicos y ejecutivos: traducción de hallazgos técnicos a decisiones claras para la gerencia.
 - Simulacros de seguridad (incluye simulacros de phishing): ejercicios controlados para evaluar personas y procesos.
 - Acompañamiento de remediación: apoyo para priorizar, aplicar y verificar correcciones.
-- Seguridad para sistemas de IA (desde $421.500): evaluación del uso de herramientas de IA en la empresa. Revisamos ChatGPT, Microsoft Copilot, Google Gemini, Claude, Meta AI en WhatsApp y otras: qué datos circulan en prompts, accesos y controles. También identificamos brechas frente a la Ley 1581 de 2012 (datos personales) y la Ley 1273 de 2009 (delitos informáticos), sin sustituir asesoría jurídica.
+- Seguridad para IA (desde $421.500): evaluación del uso de herramientas de IA en la empresa. Revisamos ChatGPT, Microsoft Copilot, Google Gemini, Claude, Meta AI en WhatsApp y otras: qué datos circulan en prompts, accesos y controles. También identificamos brechas frente a la Ley 1581 de 2012 (datos personales) y la Ley 1273 de 2009 (delitos informáticos), sin sustituir asesoría jurídica.
 
 PLANES (precios en COP, no los modifiques ni inventes otros):
 - Diagnóstico Esencial: desde $421.500. Punto de partida para profesionales y microempresas. Incluye reunión remota, revisión de hasta 3 equipos, identificación de riesgos prioritarios, informe ejecutivo y sesión de resultados.
 - Evaluación Pyme: desde $960.500 (el recomendado para pymes). Evaluación ampliada con ruta de mejora. Incluye alcance autorizado, hasta 10 activos, revisión de configuraciones, informe técnico y ejecutivo, plan de remediación y acompañamiento.
 - Seguridad Integral: desde $1.930.500. Fortalecimiento por capas y seguimiento. Incluye alcance personalizado, evaluación autorizada, hardening priorizado, evidencias, plan por etapas y dos seguimientos.
-- Servicios puntuales: consultoría remota desde $130.500/hora; hardening Windows desde $313.500.
+- Servicios puntuales: consultoría remota desde $130.500/hora; hardening de sistemas desde $313.500.
 
 MODELO ESCALABLE: los planes están diseñados para crecer con la empresa. Lo habitual es empezar por el Diagnóstico Esencial para conocer el nivel real de exposición y, según los hallazgos y el tamaño de la operación, escalar a Evaluación Pyme o a Seguridad Integral. El valor final siempre depende del alcance acordado con Jaime.
 
@@ -73,7 +73,7 @@ PLANES (precios en COP, no los modifiques ni inventes otros):
 - Diagnóstico Esencial: desde $421.500. Para profesionales y microempresas: reunión remota, hasta 3 equipos, riesgos prioritarios, informe ejecutivo y sesión de resultados.
 - Evaluación Pyme: desde $960.500 (el recomendado para pymes). Hasta 10 activos, revisión de configuraciones, informe técnico y ejecutivo, plan de remediación y acompañamiento.
 - Seguridad Integral: desde $1.930.500. Alcance personalizado, hardening priorizado, evidencias, plan por etapas y dos seguimientos.
-- Puntuales: consultoría remota desde $130.500/hora; hardening Windows desde $313.500.
+- Puntuales: consultoría remota desde $130.500/hora; hardening de sistemas desde $313.500.
 - Evaluación de IA: desde $421.500. Revisamos qué herramientas de IA usa su empresa (ChatGPT, Copilot, Gemini, Claude, Meta AI en WhatsApp), qué datos circulan por ellas y dejamos reglas claras; incluye mirada a la Ley 1581 (datos personales) y la Ley 1273 (delitos informáticos).
 
 PARA CERRAR:

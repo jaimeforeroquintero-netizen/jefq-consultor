@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { precioDe, formatearCOP } from "../data/precios";
 ---
 <Layout title="Ciberseguridad para empresas en Bogotá | JEFQ Consultor" description="Ciberseguridad para empresas en Bogotá: diagnóstico de seguridad, hardening de sistemas y pruebas autorizadas con informes que su gerencia sí entiende. Atención directa de Jaime Forero, remota y en toda Colombia.">
   <section class="landing-hero">
@@ -62,7 +63,7 @@ import Layout from "../layouts/Layout.astro";
     <div class="container">
       <header class="section-head" data-reveal>
         <span>SERVICIOS EN BOGOTÁ</span>
-        <h2>Seis servicios, un mismo método</h2>
+        <h2>Siete servicios, un mismo método</h2>
         <p>Cada servicio se contrata por separado y con alcance definido. La valoración inicial ayuda a decidir por cuál empezar.</p>
       </header>
       <div class="service-grid">
@@ -123,7 +124,7 @@ import Layout from "../layouts/Layout.astro";
         </details>
         <details>
           <summary>¿Cuánto cuesta un diagnóstico en Bogotá?</summary>
-          <p>El Diagnóstico Esencial empieza en $421.500. El valor final depende del alcance, los activos y la complejidad, y se confirma en la propuesta antes de empezar. Los planes y precios están publicados en la página principal.</p>
+          <p>El Diagnóstico Esencial empieza en {formatearCOP(precioDe("esencial"))}. El valor final depende del alcance, los activos y la complejidad, y se confirma en la propuesta antes de empezar. Los planes y precios están publicados en la página principal.</p>
         </details>
         <details>
           <summary>¿Qué recibe la gerencia?</summary>

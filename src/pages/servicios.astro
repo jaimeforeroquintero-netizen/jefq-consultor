@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { services } from "../data/services";
 ---
-<Layout title="Servicios de ciberseguridad | JEFQ Consultor" description="Servicios de diagnóstico de seguridad, hardening de sistemas, pruebas autorizadas, informes técnicos y ejecutivos, simulacros de seguridad y acompañamiento de remediación para empresas en Colombia.">
+<Layout title="Servicios de ciberseguridad | JEFQ Consultor" description="Servicios de diagnóstico de seguridad, hardening de sistemas, pruebas autorizadas, informes técnicos y ejecutivos, simulacros de seguridad, acompañamiento de remediación y seguridad para IA en Colombia.">
   <section class="landing-hero"><div class="container"><span class="section-label">PORTAFOLIO</span><h1>Servicios de ciberseguridad para empresas</h1><p>Alternativas escalables para diagnosticar, priorizar y fortalecer la seguridad de organizaciones en Colombia.</p></div></section>
   <section class="section"><div class="container landing-card-grid">
     {services.map((service) => <article class="landing-card"><span>{service.eyebrow}</span><h2>{service.title}</h2><p>{service.description}</p><a class="button secondary" href={`/servicios/${service.slug}`}>Ver servicio</a></article>)}

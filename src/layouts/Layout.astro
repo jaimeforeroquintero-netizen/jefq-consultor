@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { offersJSONLD } from "../data/precios";
 import AsistenteIA from "../components/AsistenteIA.astro";
 import WhatsAppModal from "../components/WhatsAppModal.astro";
 import "../styles/seo-authority.css";
@@ -59,29 +60,7 @@ const schema = {
       "address": { "@type": "PostalAddress", "addressLocality": "Bogotá", "addressCountry": "CO" },
       "openingHours": "Mo-Su 00:00-23:59",
       "priceRange": "$$",
-      "makesOffer": [
-        {
-          "@type": "Offer",
-          "name": "Plan Esencial",
-          "price": "421500",
-          "priceCurrency": "COP",
-          "description": "Diagnóstico de ciberseguridad para pymes en Colombia."
-        },
-        {
-          "@type": "Offer",
-          "name": "Plan Pyme",
-          "price": "960500",
-          "priceCurrency": "COP",
-          "description": "Diagnóstico ampliado con priorización y acompañamiento."
-        },
-        {
-          "@type": "Offer",
-          "name": "Plan Integral",
-          "price": "1930500",
-          "priceCurrency": "COP",
-          "description": "Cobertura integral: diagnóstico, pruebas autorizadas, hardening e informes."
-        }
-      ]
+      "makesOffer": offersJSONLD(),
     }
   ]
 };
@@ -134,7 +113,7 @@ import "../styles/parches-consolidados.css";
     </div>
   </header>
   <main id="contenido"><slot /></main>
-  <footer class="footer"><div class="container footer-grid"><div class="footer-main"><a class="brand" href="/"><span class="brand-mark">J</span><span><b>JEFQ</b><small>CONSULTOR</small></span></a><p>Ciberseguridad práctica, controlada y comprensible para organizaciones colombianas.</p><a class="footer-cta" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.">Solicitar valoración</a></div><div><h2>Servicios</h2><a href="/servicios/diagnostico-seguridad">Diagnóstico de seguridad</a><a href="/servicios/hardening">Hardening de sistemas</a><a href="/servicios/pruebas-autorizadas">Pruebas autorizadas</a><a href="/servicios/informes-tecnicos">Informes técnicos y ejecutivos</a><a href="/seguridad-inteligencia-artificial">Seguridad para IA</a></div><div><h2>Legal</h2><a href="/privacidad">Privacidad</a><a href="/terminos">Términos</a><a href="/tratamiento-datos">Datos personales</a></div><div><h2>Contacto</h2><a href="#" data-wa-modal>WhatsApp: @JaimeByte</a><a href="mailto:jaimeforeroquintero@gmail.com">jaimeforeroquintero@gmail.com</a><p>Bogotá y toda Colombia · Atención 24/7</p></div></div>      <div class="container footer-trust-access">
+  <footer class="footer"><div class="container footer-grid"><div class="footer-main"><a class="brand" href="/"><span class="brand-mark">J</span><span><b>JEFQ</b><small>CONSULTOR</small></span></a><p>Ciberseguridad práctica, controlada y comprensible para organizaciones colombianas.</p><a class="footer-cta" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.">Solicitar valoración</a></div><div><h2>Servicios</h2><a href="/servicios/diagnostico-seguridad">Diagnóstico de seguridad</a><a href="/servicios/hardening">Hardening de sistemas</a><a href="/servicios/pruebas-autorizadas">Pruebas autorizadas</a><a href="/servicios/informes-tecnicos">Informes técnicos y ejecutivos</a><a href="/servicios/simulacros-seguridad">Simulacros de seguridad</a><a href="/servicios/acompanamiento-remediacion">Acompañamiento de remediación</a><a href="/seguridad-inteligencia-artificial">Seguridad para IA</a></div><div><h2>Legal</h2><a href="/privacidad">Privacidad</a><a href="/terminos">Términos</a><a href="/tratamiento-datos">Datos personales</a></div><div><h2>Contacto</h2><a href="mailto:jaimeforeroquintero@gmail.com">jaimeforeroquintero@gmail.com</a><p>Bogotá y toda Colombia · Atención 24/7</p></div></div>      <div class="container footer-trust-access">
         <div><strong>Atención directa</strong><span>Comunicación con el responsable del servicio.</span></div>
         <div><strong>Intervenciones autorizadas</strong><span>Alcance y límites definidos previamente.</span></div>
         <div><strong>Resultados documentados</strong><span>Prioridades, recomendaciones y próximos pasos.</span></div>
@@ -150,7 +129,6 @@ import "../styles/parches-consolidados.css";
         <a href="/recursos/checklist-seguridad-pyme">Checklist para pymes</a>
         <a href="/seguridad-autorizacion-alcance">Autorización y alcance</a>
         <a href="/preguntas-frecuentes">Preguntas frecuentes</a>
-        <a href="/valoracion">Solicitar valoración</a>
       </nav>
     </div>
   </div>
