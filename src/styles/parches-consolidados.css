@@ -549,4 +549,4 @@ main .why p.why-diff b{color:#0b6e66 !important}
    1b97967 sin !important nunca se aplicó). Sin cambio de fondo,
    textos, precios, enlaces ni rutas. Alcance: 18 páginas (ver PIR-1).
    ========================================================================== */
-.landing-card p,.service-card p,.local-grid p,.landing-process p,.landing-faq p,.pb-card p,.landing-list li{color:#40566b !important}
+.landing-card p,.service-card p,.local-grid p,.landing-process p,.landing-faq p,.pb-card p,.landing-list li,.landing-two-columns article p,section.section:has(.laws-note) ul li,p.laws-note{color:#40566b !important}
