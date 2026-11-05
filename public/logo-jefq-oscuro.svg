@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 110" role="img" aria-label="JEFQ Consultor">
+  <!-- LOGOTIPO FINAL — Sistema de marca A + C (decisión de Jaime 2026-11-05 09:25).
+       Variante C: fondos oscuros (#0d2540 / #14202e). Misma construcción exacta
+       que logo-jefq.svg (variante A): mismo viewBox, misma geometría del
+       hexágono-"J" existente (public/favicon.svg: hexágono
+       M50 2 96 20 89 81 50 108 11 81 4 20Z, "J"
+       M37 29h28v39c0 12-7 19-19 19-7 0-13-2-18-7l9-11c3 3 6 4 9 4 4 0 6-2 6-7V42H37Z),
+       misma posición del símbolo y del wordmark, misma tipografía
+       (Arial/Helvetica; "JEFQ" 56 px peso 800 tracking 1; "CONSULTOR" 18 px peso 700
+       tracking 6.5), mismo espaciado. La ÚNICA diferencia frente a A es adaptación
+       de fondo/contraste: wordmark "JEFQ" blanco #ffffff (15,49:1 sobre #0d2540;
+       16,46:1 sobre #14202e) y "CONSULTOR" ámbar #ffb43f (8,74:1 sobre #0d2540;
+       9,29:1 sobre #14202e). Hexágono con gradiente ámbar del sitio
+       (#ffd07a 0% → #ffb43f 48% → #ff9f1c 100%), idéntico al de A; "J" azul oscuro
+       #0d2540, idéntica a la de A (7,54:1–10,74:1 sobre el gradiente). Sin candado,
+       sin escudo genérico, sin neón, sin circuitos. NO es un activo vivo: no
+       sustituye a ningún archivo del sitio hasta su propio gate de aplicación. -->
+  <defs>
+    <linearGradient id="amber" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd07a"/>
+      <stop offset="0.48" stop-color="#ffb43f"/>
+      <stop offset="1" stop-color="#ff9f1c"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#amber)" d="M50 2 96 20 89 81 50 108 11 81 4 20Z"/>
+  <path fill="#0d2540" d="M37 29h28v39c0 12-7 19-19 19-7 0-13-2-18-7l9-11c3 3 6 4 9 4 4 0 6-2 6-7V42H37Z"/>
+  <text x="120" y="64" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="800" fill="#ffffff" letter-spacing="1">JEFQ</text>
+  <text x="122" y="94" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#ffb43f" letter-spacing="6.5">CONSULTOR</text>
+</svg>
