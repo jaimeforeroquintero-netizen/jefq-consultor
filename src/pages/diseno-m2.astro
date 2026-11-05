@@ -39,6 +39,22 @@ import Layout from "../layouts/Layout.astro";
     <h1>M2 — Una sola cara para JEFQ</h1>
     <p>Hoy la marca tiene tres caras: el sitio claro (ámbar/teal), la og-image marino neón con candado y el favicon cian-verde. Los tres candidatos de abajo usan <strong>el mismo hexágono-“J” que ya existe</strong> (el del header, el pie y el favicon: misma geometría, sin símbolo nuevo) y la paleta real del sitio: gradiente ámbar <code>#ffd07a → #ffb43f → #ff9f1c</code>, teal <code>#0b6e66</code>, azul oscuro <code>#0d2540</code> y fondo claro <code>#f3f7fa</code>.</p>
 
+    <h2><span class="m2-tag">CANDIDATO — NO PUBLICADO</span> Sistema final A + C (decisión de Jaime, 2026-11-05 09:25)</h2>
+    <p><strong>A es la versión principal para superficies claras y C su variante complementaria para fondos oscuros.</strong> No son dos identidades: son dos adaptaciones del mismo sistema. Verificado por código, comparten exactamente la misma geometría del hexágono y de la “J” (mismos datos de path, copiados del favicon), el mismo viewBox (0 0 300 110), la misma posición del símbolo y del wordmark, la misma tipografía (“JEFQ” 56 px peso 800, “CONSULTOR” 18 px peso 700, tracking 1 y 6.5) y el mismo espaciado. La única diferencia es adaptación de fondo/contraste: los colores del wordmark. El candidato <strong>B queda archivado</strong> (no seleccionado como versión principal; el archivo se conserva, no se aplica).</p>
+    <h3>A final — superficies claras</h3>
+    <div class="m2-stage claro">
+      <img src="/logo-jefq.svg" alt="Logotipo final A: hexágono ámbar con J azul oscuro y wordmark JEFQ Consultor sobre fondo claro" width="300" height="110" />
+      <small>Archivo: <code>public/logo-jefq.svg</code>. Contrastes del wordmark (WCAG, ≥ 4,5:1): “JEFQ” azul oscuro <code>#0d2540</code> sobre <code>#f3f7fa</code> = <strong>14,38:1</strong> (sobre <code>#eef6fb</code> = 14,17:1); “CONSULTOR” teal <code>#0b6e66</code> sobre <code>#f3f7fa</code> = <strong>5,67:1</strong> (sobre <code>#eef6fb</code> = 5,59:1).</small>
+    </div>
+    <h3>C final — fondos oscuros</h3>
+    <div class="m2-stage oscuro">
+      <img src="/logo-jefq-oscuro.svg" alt="Logotipo final C: hexágono ámbar con J azul oscuro y wordmark JEFQ Consultor en blanco sobre fondo oscuro" width="300" height="110" />
+      <small>Archivo: <code>public/logo-jefq-oscuro.svg</code>. Contrastes del wordmark (WCAG, ≥ 4,5:1): “JEFQ” blanco <code>#ffffff</code> sobre <code>#0d2540</code> = <strong>15,49:1</strong> (sobre <code>#14202e</code> = 16,46:1); “CONSULTOR” ámbar <code>#ffb43f</code> sobre <code>#0d2540</code> = <strong>8,74:1</strong> (sobre <code>#14202e</code> = 9,29:1). El hexágono y la “J” son idénticos a los de A; la “J” azul oscuro mantiene 7,54:1–10,74:1 sobre el gradiente ámbar en ambas variantes.</small>
+    </div>
+    <div class="m2-note">
+      <p><strong>Diferencias exactas entre A y C (solo estas):</strong> (1) “JEFQ”: <code>#0d2540</code> en A → <code>#ffffff</code> en C. (2) “CONSULTOR”: <code>#0b6e66</code> en A → <code>#ffb43f</code> en C. Todo lo demás —hexágono, “J”, gradiente ámbar, viewBox, posiciones, tipografía, espaciado— es byte-idéntico. Son adaptación de fondo/contraste, no una segunda identidad.</p>
+    </div>
+
     <h2><span class="m2-tag">CANDIDATO — NO PUBLICADO</span> A — Claro principal</h2>
     <p>Hexágono con gradiente ámbar, “J” azul oscuro, wordmark “JEFQ” azul oscuro y “CONSULTOR” en teal. Es la versión pensada para el sitio claro: el ámbar —ya color de acción en botones— pasa a ser también el color de la marca.</p>
     <div class="m2-stage claro">
@@ -50,8 +66,8 @@ import Layout from "../layouts/Layout.astro";
       <small>Sobre fondo oscuro #0d2540 — <strong>no recomendado</strong>: el wordmark azul oscuro pierde contraste. Para fondo oscuro está el candidato C.</small>
     </div>
 
-    <h2><span class="m2-tag">CANDIDATO — NO PUBLICADO</span> B — Teal dominante</h2>
-    <p>Misma geometría, acentos invertidos: hexágono teal sólido <code>#0b6e66</code>, “J” ámbar, wordmark “JEFQ” en teal y “CONSULTOR” en azul oscuro. El teal —color de enlaces y precios en el sitio claro— toma el protagonismo y el ámbar queda como acento.</p>
+    <h2><span class="m2-tag">CANDIDATO — NO PUBLICADO</span> B — Teal dominante — ARCHIVADO (no seleccionado)</h2>
+    <p>Misma geometría, acentos invertidos: hexágono teal sólido <code>#0b6e66</code>, “J” ámbar, wordmark “JEFQ” en teal y “CONSULTOR” en azul oscuro. El teal —color de enlaces y precios en el sitio claro— toma el protagonismo y el ámbar queda como acento. <strong>Decisión de Jaime (2026-11-05 09:25): B no queda seleccionado como versión principal.</strong> No es una jerarquía distinta que compita con A: A (ámbar) lidera la identidad en claro y C la adapta a oscuro. B se conserva como archivo (<code>public/logo-candidato-b.svg</code>), sin aplicar; solo una prueba posterior que demuestre una ventaja material podría reabrirlo.</p>
     <div class="m2-stage claro">
       <img src="/logo-candidato-b.svg" alt="Logotipo candidato B: hexágono teal con J ámbar y wordmark JEFQ Consultor en teal" width="300" height="110" />
       <small>Tamaño real (300 × 110) sobre fondo claro #f3f7fa. Archivo: <code>public/logo-candidato-b.svg</code>.</small>
@@ -69,11 +85,11 @@ import Layout from "../layouts/Layout.astro";
     </div>
     <div class="m2-stage claro">
       <img src="/logo-candidato-c.svg" alt="Logotipo candidato C sobre fondo claro (no recomendado)" width="300" height="110" />
-      <small>Sobre fondo claro #f3f7fa — <strong>no recomendado</strong>: el wordmark blanco desaparece. Para fondo claro están A y B.</small>
+      <small>Sobre fondo claro #f3f7fa — <strong>no recomendado</strong>: el wordmark blanco desaparece. Para fondo claro está A.</small>
     </div>
 
     <h3>El hexágono-“J” solo, a tamaño favicon</h3>
-    <p>Prueba de legibilidad del símbolo del candidato C a tamaños pequeños (misma geometría del favicon actual, con gradiente ámbar). Si Jaime aprueba C, este es el símbolo que iría al favicon.</p>
+    <p>Prueba de legibilidad del símbolo del candidato C a tamaños pequeños (misma geometría del favicon actual, con gradiente ámbar). El favicon que iría a la pestaña no es este símbolo tal cual, sino su variante simplificada V1 (ver sección “Favicon candidato” más abajo).</p>
     <div class="m2-stage claro">
       <div class="m2-fav">
         <figure>
@@ -89,11 +105,66 @@ import Layout from "../layouts/Layout.astro";
           <figcaption>16 px</figcaption>
         </figure>
       </div>
-      <small>Verificación visual a 16 px pendiente (sin navegador en este entorno): a ese tamaño el símbolo debe seguir leyéndose como hexágono con “J”.</small>
+      <small>Verificación visual a 16 px pendiente (sin navegador en este entorno): a ese tamaño el símbolo debe seguir leyéndose como hexágono con “J”. <strong>Actualización 2026-11-05:</strong> esa prueba se hizo con renders reales (ver la sección “Favicon candidato” más abajo): la geometría original a 16 px deja la “J” demasiado pequeña y el gancho se vuelve un rizo — por eso el favicon candidato es una variante simplificada (V1), no el logotipo completo reutilizado.</small>
     </div>
 
-    <h2><span class="m2-tag">CANDIDATO — NO PUBLICADO</span> Og-image candidata</h2>
-    <p>Una sola imagen de 1200 × 630, fondo claro <code>#f3f7fa</code>, con el mismo hexágono-“J” ámbar y el mismo wordmark. Sin candado, sin neón, sin patrón hexagonal decorativo, sin foto. El texto es literal del sitio: el H1 de la home (“Diagnóstico de ciberseguridad para pymes en Colombia”) y el topbar (“Bogotá y toda Colombia · Atención 24/7”). Generada con <code>scripts/generar-og-candidata-a.py</code> (PIL; no había conversor SVG→PNG en el entorno).</p>
+    <h2><span class="m2-tag">CANDIDATO — NO PUBLICADO</span> Favicon candidato (variante para tamaño pequeño)</h2>
+    <p>El favicon actual no está cerrado: a 16 px el hexágono-“J” del logotipo queda diminuto y la “J” pierde reconocimiento (verificado por Pax 2026-11-05 08:59–09:15). La solución no es reutilizar el logotipo completo, sino una <strong>variante específica para tamaño pequeño</strong>: mismo hexágono, misma paleta, “J” simplificada, más grande y más gruesa, sin detalles. Se evaluaron 3 variantes (V1, V2, V3) contra la geometría original (V0) renderizando cada una a 16, 32 y 48 px reales y mirándolas ampliadas sin suavizar. <strong>Ganadora: V1.</strong></p>
+    <div class="m2-stage claro">
+      <img src="/favicon-comparacion.png" alt="Comparación de 4 variantes de favicon a 16, 32 y 48 píxeles, ampliadas sin suavizar, sobre fondo claro y oscuro" width="1230" height="990" />
+      <small>Rejilla de comparación: cada celda es el render real a ese tamaño, ampliado con vecino más cercano (sin suavizar). Mitad izquierda de cada celda sobre fondo claro <code>#f3f7fa</code>, mitad derecha sobre fondo oscuro <code>#0d2540</code>. Abajo, los 16 px en una pestaña de navegador simulada. Archivos: <code>scripts/generar-favicon-candidatos.py</code> (generador reproducible, PIL).</small>
+    </div>
+    <h3>Las 3 variantes, a tamaño real</h3>
+    <div class="m2-stage claro">
+      <div class="m2-fav">
+        <figure>
+          <img src="/favicon-v1-48.png" alt="Favicon variante V1 a 48 píxeles" width="48" height="48" />
+          <figcaption>V1 · 48 px — <strong>ganadora</strong></figcaption>
+        </figure>
+        <figure>
+          <img src="/favicon-v1-32.png" alt="Favicon variante V1 a 32 píxeles" width="32" height="32" />
+          <figcaption>V1 · 32 px</figcaption>
+        </figure>
+        <figure>
+          <img src="/favicon-v1-16.png" alt="Favicon variante V1 a 16 píxeles" width="16" height="16" />
+          <figcaption>V1 · 16 px</figcaption>
+        </figure>
+        <figure>
+          <img src="/favicon-v2-16.png" alt="Favicon variante V2 a 16 píxeles" width="16" height="16" />
+          <figcaption>V2 · 16 px</figcaption>
+        </figure>
+        <figure>
+          <img src="/favicon-v3-16.png" alt="Favicon variante V3 a 16 píxeles" width="16" height="16" />
+          <figcaption>V3 · 16 px</figcaption>
+        </figure>
+        <figure>
+          <img src="/favicon-v0-16.png" alt="Favicon original a 16 píxeles" width="16" height="16" />
+          <figcaption>V0 original · 16 px</figcaption>
+        </figure>
+      </div>
+      <small>Qué se ve a 16 px: <strong>V0 (original)</strong> — la “J” es fina y el gancho inferior se vuelve un rizo casi invisible; se reconoce el hexágono, no la “J”. <strong>V1 (ganadora)</strong> — barra superior, tallo y gancho se distinguen: se lee “J”. <strong>V2</strong> — igual de legible que V1, pero la “J” blanca no existe en ningún activo de la marca (A y C usan “J” azul oscuro). <strong>V3</strong> — sin barra superior se lee como un “1” o una barra con gancho, no como “J”.</small>
+    </div>
+    <h3>Relación entre logotipo principal (A), variante oscura (C) y favicon (V1)</h3>
+    <p>Los tres son <strong>el mismo sistema, no tres marcas</strong>:</p>
+    <ul>
+      <li><strong>Qué comparten:</strong> la misma geometría del hexágono (<code>M50 2 96 20 89 81 50 108 11 81 4 20Z</code>), el mismo gradiente ámbar (<code>#ffd07a → #ffb43f → #ff9f1c</code>) y la misma “J” azul oscuro <code>#0d2540</code>. El favicon no inventa forma ni color nuevos.</li>
+      <li><strong>Qué cambia y por qué:</strong> solo la “J” se redibuja para tamaño pequeño — ocupa 42 de ancho × 69 de alto (frente a 28 × 58 de la original) y su tallo es más grueso, sin serif ni detalles finos. A 16 px una “J” de 4 px de ancho no sobrevive; una de ~7 px sí. Es simplificación por escala, no una marca distinta.</li>
+      <li><strong>A (principal, fondo claro) y C (fondo oscuro)</strong> son el mismo lockup con el wordmark adaptado a su fondo; <strong>el favicon (V1)</strong> es el símbolo solo, con la “J” engrosada para 16–48 px. A tamaños grandes (≥ 48 px) la diferencia entre la “J” del logotipo y la del favicon es imperceptible; a 16 px es la diferencia entre leer “J” o no leerla.</li>
+    </ul>
+    <p><small>Entregable: <code>public/favicon-candidato.svg</code> (+ renders <code>public/favicon-candidato-16/32/48.png</code>). No sustituye a <code>public/favicon.svg</code> (vivo, cian-verde) hasta que Jaime lo apruebe; es un cambio aparte y reversible.</small></p>
+
+    <h2><span class="m2-tag">CANDIDATO — NO PUBLICADO</span> Og-image final candidata</h2>
+    <p>Revalidada contra el sistema final A + C y regenerada desde el logotipo final A (<code>public/logo-jefq.svg</code>). Una sola imagen de 1200 × 630, fondo claro <code>#f3f7fa</code>, con el mismo hexágono-“J” ámbar y el mismo wordmark del final A. Sin candado, sin neón, sin patrón hexagonal decorativo, sin foto. El texto es literal del sitio: el H1 de la home (“Diagnóstico de ciberseguridad para pymes en Colombia”) y el topbar completo (“Bogotá y toda Colombia · Atención remota 24/7”). Generada con <code>scripts/generar-og-candidata-final.py</code> (PIL; no había conversor SVG→PNG en el entorno).</p>
+    <div class="m2-og">
+      <img src="/og-image-candidata-final.png" alt="Og-image final candidata: hexágono ámbar con J exacta del logotipo final A, JEFQ Consultor, Diagnóstico de ciberseguridad para pymes en Colombia" width="1200" height="630" />
+    </div>
+    <p><small>Tamaño real: 1200 × 630. Archivo: <code>public/og-image-candidata-final.png</code> (46.213 B). La og-image viva (<code>public/og-image.png</code>, marino neón con candado) sigue intacta y sigue siendo la que sirven las metaetiquetas.</small></p>
+    <div class="m2-note">
+      <p><strong>Qué cambió respecto a la candidata A (y por qué):</strong> (1) la “J” ya no es un glifo de fuente: es el path exacto de la “J” del logotipo final A (<code>M37 29h28v39c0 12-7 19-19 19-7 0-13-2-18-7l9-11c3 3 6 4 9 4 4 0 6-2 6-7V42H37Z</code>), rasterizado con la misma escala ×3,3 y el mismo origen que el hexágono, en su posición exacta dentro de él — como en el logotipo. La “J” engrosada V1 del favicon no se usa aquí: es variante específica para 16–48 px; a 1200 × 630 manda la geometría del logotipo. (2) El pie ahora dice “Atención <strong>remota</strong> 24/7”: el topbar vivo dice “Bogotá y toda Colombia” + “Atención remota 24/7” (<code>Layout.astro:107</code>); la candidata A omitía “remota”. Todo lo demás —hexágono, gradiente ámbar, wordmark, colores, H1, regla y franja ámbar— es idéntico a la candidata A (verificado por píxeles: solo cambiaron la zona de la “J” y la línea del pie).</p>
+    </div>
+
+    <h2><span class="m2-tag">CANDIDATO — NO PUBLICADO</span> Og-image candidata A (preliminar, superada por la final)</h2>
+    <p>Una sola imagen de 1200 × 630, fondo claro <code>#f3f7fa</code>, con el mismo hexágono-“J” ámbar y el mismo wordmark. Sin candado, sin neón, sin patrón hexagonal decorativo, sin foto. El texto es literal del sitio: el H1 de la home (“Diagnóstico de ciberseguridad para pymes en Colombia”) y el topbar (“Bogotá y toda Colombia · Atención 24/7”). Generada con <code>scripts/generar-og-candidata-a.py</code> (PIL; no había conversor SVG→PNG en el entorno). <strong>Queda superada por la og-image final candidata</strong> (sección anterior): su “J” era un glifo de fuente, no el path exacto del logotipo, y su pie omitía “remota”. Se conserva como archivo para trazabilidad.</p>
     <div class="m2-og">
       <img src="/og-image-candidata-a.png" alt="Og-image candidata: hexágono ámbar con J, JEFQ Consultor, Diagnóstico de ciberseguridad para pymes en Colombia" width="1200" height="630" />
     </div>
@@ -112,13 +183,13 @@ import Layout from "../layouts/Layout.astro";
 
     <h2>Qué debe aprobar Jaime</h2>
     <ol>
-      <li><strong>Qué candidato de logotipo</strong>: A (ámbar, fondo claro), B (teal, fondo claro) o C (fondo oscuro). Solo uno pasa a ser el logotipo; los demás se archivan.</li>
-      <li><strong>La og-image candidata</strong>: ¿sustituye a la actual marino neón con candado? Es la cara del sitio en WhatsApp, X y LinkedIn.</li>
-      <li><strong>El favicon</strong>: si se aprueba C (o el ganador), el favicon actual cian-verde se sustituye por el hexágono-“J” con los colores del ganador. Es un cambio aparte y reversible.</li>
+      <li><strong>Logotipo — DECIDIDO (2026-11-05 09:25): sistema A + C.</strong> A (<code>public/logo-jefq.svg</code>) es la versión principal para superficies claras; C (<code>public/logo-jefq-oscuro.svg</code>) es su variante complementaria para fondos oscuros; misma construcción, solo adaptación de fondo/contraste. B queda archivado (no seleccionado como versión principal).</li>
+      <li><strong>La og-image final candidata</strong> (<code>public/og-image-candidata-final.png</code>): ¿sustituye a la actual marino neón con candado? Es la cara del sitio en WhatsApp, X y LinkedIn. Revalidada contra el sistema final A + C; la candidata A queda superada (su “J” era un glifo de fuente y su pie omitía “remota”).</li>
+      <li><strong>El favicon</strong>: el candidato es <code>public/favicon-candidato.svg</code> (variante V1: hexágono ámbar con “J” azul oscuro agrandada y engrosada; legible a 16 px, ver sección “Favicon candidato”). Si se aprueba, sustituye al favicon actual cian-verde. Es un cambio aparte y reversible.</li>
       <li><strong>Alcance del cambio</strong>: este M2 solo prepara los activos. Aplicarlos al header, al pie y a las metaetiquetas es un paso posterior, con su propio gate y verificación en vivo.</li>
     </ol>
     <div class="m2-note">
-      <p><strong>Reversibilidad.</strong> Nada vivo fue tocado: los candidatos son archivos nuevos (<code>logo-candidato-a.svg</code>, <code>logo-candidato-b.svg</code>, <code>logo-candidato-c.svg</code>, <code>og-image-candidata-a.png</code>) y esta página no está enlazada. Revertir M2 es borrar esos archivos y esta página. Si un candidato se aprueba y se aplica, revertir es restaurar el favicon, la og-image y las clases <code>.brand-mark</code> anteriores desde git.</p>
+      <p><strong>Reversibilidad.</strong> Nada vivo fue tocado: los candidatos y los finales son archivos nuevos (<code>logo-candidato-a.svg</code>, <code>logo-candidato-b.svg</code> —archivado—, <code>logo-candidato-c.svg</code>, <code>logo-jefq.svg</code>, <code>logo-jefq-oscuro.svg</code>, <code>og-image-candidata-a.png</code>, <code>og-image-candidata-final.png</code>, <code>favicon-candidato.svg</code> y los renders <code>favicon-v0/v1/v2/v3-16/32/48.png</code> y <code>favicon-comparacion.png</code>) y esta página no está enlazada. Revertir M2 es borrar esos archivos y esta página. Si el sistema A + C se aplica, revertir es restaurar el favicon, la og-image y las clases <code>.brand-mark</code> anteriores desde git.</p>
     </div>
     <p><small>Rama <code>diseno-m2</code>, base <code>28a7c0a</code> (lote 4). Verificación visual con navegador pendiente para el agente principal. Documento de comparación: <code>COMPARACION_M2_LOGOTIPO_2026-11-05.md</code>.</small></p>
   </div>
