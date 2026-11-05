@@ -504,3 +504,29 @@ main .why p.why-diff b{color:#0b6e66 !important}
 @media (min-width:721px){
   #metodologia .process article{grid-template-columns:84px 1fr !important}
 }
+/* ==========================================================================
+   SAFE-NOTE 2026-11-05 — Contraste del recuadro <p class="safe-note">
+   ("Importante:" / "No envíe") en /como-trabajamos/ y
+   /seguridad-autorizacion-alcance/ (únicas 2 páginas con .safe-note;
+   grep en dist/ lo confirma). Candidato independiente: no amplía las
+   ramas whatsapp-boton-contraste (11a86d7), autorizacion-boton-contraste
+   (6b9c9f2), nota-boton-contraste (dd5b7a5) ni panel-compromisos-contraste
+   (7c7aa8e). Causa raíz: la caja se diseñó para fondo oscuro (texto claro
+   #f5dfbb) y quedó con texto claro sobre fondo claro tras el rediseño
+   claro; el fondo ámbar al 8% no oscurece nada. Medido por fórmula WCAG
+   (fondo semitransparente compuesto sobre la superficie real #eef6fb):
+   fondo efectivo #eff1ed; texto #f5dfbb sobre #eff1ed = 1,14:1 (FAIL,
+   casi ilegible, confirmado en producción). El <strong> SÍ se ve oscuro
+   y legible: la regla main>section:not(.landing-hero):not(.dark-section)
+   strong{color:var(--fg-title)} lo alcanza directamente con --fg-title
+   → #14202e → 14,48:1 sobre #eff1ed (PASA); no se toca. Corrección:
+   texto #40566b (el color de párrafo del cuerpo del sitio) sobre el
+   mismo fondo efectivo #eff1ed = 6,69:1 (AA, ≥4,5:1). La regla existente
+   (authority-premium-v3.css:19) lleva color con !important, así que esta
+   también lo lleva; misma especificidad (0,1,0) y posterior en la
+   cascada (parches-consolidados.css es la última hoja importada en
+   Layout.astro). No se tocan fondo, borde, <strong> ni los párrafos
+   normales del cuerpo (.authority-body p{color:#bdcddd} pierde contra
+   main p{color:#40566b!important} y NO es defectuoso). Sin DELTA.
+   ========================================================================== */
+.safe-note{color:#40566b !important}
