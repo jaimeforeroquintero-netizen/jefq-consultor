@@ -76,6 +76,7 @@ const { candidato = false } = Astro.props;
 .muestra-chip.media{color:#00271f;background:#65e7cc}
 .muestra-chip.baja{color:#08283a;background:#a8d8ef}
 .muestra-pie{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:18px 26px 24px;border-top:1px solid #d7e2ea;margin-top:10px}
-.muestra-pie p{margin:0;max-width:58ch;color:#22394d;font-size:.92rem}
+/* El pie es un <footer>: la regla global footer (hibrido:19) le impone fondo azul marino #0b1b2e dentro de la tarjeta blanca; la nota va en texto claro. 789f575 oscureció el texto (1,45:1) por medirlo sobre blanco; corrección 2026-11-05: #f4f8ff = 16,29:1 sobre #0b1b2e. */
+.muestra-pie p{margin:0;max-width:58ch;color:#f4f8ff;font-size:.92rem}
 @media(max-width:700px){.muestra-metricas{grid-template-columns:repeat(2,1fr)}.muestra-top,.muestra-portada,.muestra-tabla-wrap,.muestra-pie{padding-left:18px;padding-right:18px}}
 </style>
