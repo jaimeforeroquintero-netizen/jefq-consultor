@@ -16,6 +16,20 @@ candidata A (scripts/generar-og-candidata-a.py, public/og-image-candidata-a.png)
 2. El pie ya NO dice "Atención 24/7": el topbar vivo (src/layouts/Layout.astro:107)
    dice "Bogotá y toda Colombia" + "Atención remota 24/7". El texto final es
    la unión literal del topbar: "Bogotá y toda Colombia · Atención remota 24/7".
+3. CORRECCIÓN OBLIGATORIA 2026-11-05 (orden de Jaime vía Copilot, 10:58 -05):
+   el pie YA NO dice "24/7". "24/7" continúa NO DETERMINADO (Jaime no ha
+   definido qué servicio está disponible, qué canal, qué significa atención,
+   qué tiempos ni qué cobertura real existe) y NO se publica esa formulación
+   en una pieza de marca nueva. El pie es ahora el topbar vivo MENOS " 24/7":
+   "Bogotá y toda Colombia · Atención remota". "Atención remota" SÍ está
+   sustentada en el sitio vivo: la FAQ publicada dice literalmente "JEFQ
+   Consultor presta atención remota en Bogotá y toda Colombia"
+   (src/data/faq.ts:24); la home lo afirma en la tarjeta "Nacional"
+   ("Atención remota en Colombia", src/pages/index.astro:26); y es un
+   servicio con precio S1 ("Consultoría remota desde $130.500/h",
+   src/data/precios.ts:70-73). Solo se eliminó la afirmación no verificada
+   ("24/7"); nada más cambió (misma "J", mismo titular, mismos colores,
+   misma banda ámbar).
 
 Todo lo demás es idéntico a la candidata A (ya verificada visualmente por Pax):
 mismo layout, mismas posiciones y tamaños, mismo hexágono con gradiente ámbar
@@ -185,9 +199,12 @@ f_h = ImageFont.truetype(FONT_REG, 47)
 draw.text((TX + 4, 408), "Diagnóstico de ciberseguridad", font=f_h, fill=NAVY2)
 draw.text((TX + 4, 470), "para pymes en Colombia", font=f_h, fill=NAVY2)
 
-# Pie: texto literal del topbar (Layout.astro:107): "Bogotá y toda Colombia"
-# + "Atención remota 24/7". Si no cabe a 27 px, se baja el tamaño, no el texto.
-FOOT = "Bogotá y toda Colombia · Atención remota 24/7"
+# Pie: topbar vivo (Layout.astro:107) MENOS " 24/7" (NO DETERMINADO, corrección
+# obligatoria 2026-11-05): "Bogotá y toda Colombia · Atención remota".
+# "Atención remota" está sustentada (FAQ literal + S1 consultoría remota);
+# "24/7" no se publica en la pieza de marca. Si no cabe a 27 px, se baja el
+# tamaño, no el texto.
+FOOT = "Bogotá y toda Colombia · Atención remota"
 f_foot = ImageFont.truetype(FONT_REG, 27)
 while draw.textlength(FOOT, font=f_foot) > 690 and f_foot.size > 18:
     f_foot = ImageFont.truetype(FONT_REG, f_foot.size - 1)
