@@ -443,3 +443,64 @@ main .why p.why-diff b{color:#0b6e66 !important}
 @media (min-width:721px){
   .landing-hero h1{font-size:clamp(2.9rem,5.2vw,4.5rem) !important;line-height:1.02 !important}
 }
+/* ==========================================================================
+   M4 (2026-11-05) — ROMPER LA CELDA: 3 roles de tarjeta + 2 ritmos de
+   sección. Variante enfocada (home + /servicios/), sin rediseño masivo.
+   Solo presentación: sin textos, precios, enlaces, rutas ni paleta nuevas;
+   misma tipografía (Inter). Rama diseno-m4, sobre diseno-lote4 28a7c0a.
+   NO TOCA: #confianza, hero radar+terminal, vídeo, ámbar de acción,
+   numeración 01–07/01–08, tema claro, escudo-J/hexágono, S1, Wompi/Gate 1,
+   chatbot, honestidad de lo ilustrativo. NO es M5 (foto real: depende de
+   Jaime). Sin DELTA reclamado (efecto sobre D1 candidato, solo tras
+   despliegue y verificación en vivo).
+   ------------------------------------------------------------------------
+   TOKENS DE LOS 3 ROLES (el §6 de este archivo ES el rol CONTENIDO):
+   (a) CONTENIDO — la blanca actual (§6, sin cambio): fondo #ffffff,
+       borde 1px rgba(13,40,64,.13), radio 22px, sombra
+       0 16px 40px rgba(13,40,64,.09), 0 2px 8px rgba(13,40,64,.05).
+       La usan .service-card, .price-card (no featured), .landing-card,
+       .downtime-calc, .contact-form, .section-cta, .faq details, etc.
+   (b) EVIDENCIA ILUSTRATIVA — fondo ámbar #fdf6e0 + borde
+       rgba(180,130,0,.45) (lógica ámbar de la pasada 5, §:396, que era
+       solo `#evidencia .case`; aquí se generaliza a TODO `.case` — hoy
+       .case solo se usa en #evidencia, 5 tarjetas: 2 escenarios + 3
+       testimonios), radio PROPIO 14px (no 22px) y sombra PROPIA: ninguna
+       (una nota ilustrativa no flota como una tarjeta de contenido).
+   (c) DESTACADO — borde ámbar 2px #f2a100 (hoy solo .price-card.featured),
+       radio PROPIO 24px y sombra PROPIA teñida de ámbar
+       0 20px 48px rgba(242,161,0,.20), 0 2px 8px rgba(13,40,64,.05).
+       El levantamiento translateY(-8px) se conserva solo en el featured.
+       No se inventa un segundo espécimen destacado.
+   2 RITMOS (home):
+   (1) #garantia como BANDA TEÑIDA SIN TARJETAS: la sección pasa a banda
+       #eef6fb a sangre completa (mismo tinte claro de los héroes y de
+       .contrast) con filete superior/inferior; .guarantee pierde el
+       cromo de tarjeta (fondo/borde/radio/sombra) y la cita crece a
+       clamp(1.35rem,3vw,2rem). Texto, badge y atribución intactos.
+   (2) #metodologia con NUMERACIÓN GRANDE EN VEZ DE TARJETAS: los
+       artículos de .process ya eran lista (global.css:92-96), no tarjetas
+       — corrección de premisa: lo que cambia es el ritmo, no la
+       estructura. Los números 01–04 pasan de ~1rem a
+       clamp(1.9rem,3.4vw,2.9rem) con columna de 84px en escritorio.
+       .promise sigue siendo CONTENIDO (tarjeta blanca §6, sin cambio).
+   /servicios/ (página interior elegida): sus 8 .landing-card son
+   CONTENIDO puro — la variante NO cambia su aspecto; la página demuestra
+   que el sistema de roles deja intactas las tarjetas de contenido en
+   interior. Se eligió /servicios/ (y no una landing de servicio) porque
+   es el hub al que enlaza #servicios, su única tarjeta es .landing-card
+   y una landing arrastraría ancla de precio, FAQ, proceso y CTA final
+   (6+ selectores, borde de conversión) fuera del alcance enfocado.
+   ========================================================================== */
+/* ROL (b) EVIDENCIA ILUSTRATIVA — generalizado a todo .case. */
+.case{background:#fdf6e0 !important;border:1px solid rgba(180,130,0,.45) !important;border-radius:14px !important;box-shadow:none !important}
+/* ROL (c) DESTACADO — tokens propios (radio 24px, sombra teñida ámbar). */
+.price-card.featured{border:2px solid #f2a100 !important;border-radius:24px !important;box-shadow:0 20px 48px rgba(242,161,0,.20),0 2px 8px rgba(13,40,64,.05) !important;transform:translateY(-8px) !important}
+/* RITMO (1) #garantia — banda teñida a sangre completa, cita grande sin tarjeta. */
+#garantia{background:#eef6fb !important;border-block:1px solid rgba(13,40,64,.13) !important}
+#garantia .guarantee{background:transparent !important;border:0 !important;border-radius:0 !important;box-shadow:none !important;padding:0 !important}
+#garantia .guarantee p{font-size:clamp(1.35rem,3vw,2rem) !important;line-height:1.4 !important}
+/* RITMO (2) #metodologia — numeración grande en vez de tarjetas. */
+#metodologia .process>article>b{font-size:clamp(1.9rem,3.4vw,2.9rem) !important;line-height:1 !important}
+@media (min-width:721px){
+  #metodologia .process article{grid-template-columns:84px 1fr !important}
+}
