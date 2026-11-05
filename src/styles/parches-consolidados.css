@@ -397,10 +397,12 @@ main .why p.why-diff b{color:#0b6e66 !important}
 #evidencia .case-head span{font-size:.8rem !important}
 /* #6 — ANCLA DE PRECIO EN PÁGINAS DE DETALLE DE SERVICIO: "Desde $X" hacia
    /#planes. El hero de /servicios/[slug] es CLARO (parches §: #eef6fb):
-   enlace teal 5,59:1. El hero de ServiceLanding es OSCURO: enlace cian. */
+   enlace teal 5,59:1. El hero de ServiceLanding también es CLARO (#eef6fb,
+   parches :121 con !important): enlace teal 5,59:1. LOTE 4: el cian #23d7ff
+   (1,57:1 sobre claro) era ilegible y el comentario anterior decía OSCURO. */
 .service-price-anchor{margin-top:1.1rem;font-size:1.05rem}
 .service-detail-hero .service-price-anchor a{color:#0b6e66 !important;text-decoration:underline;text-underline-offset:3px}
-.landing-hero .service-price-anchor a{color:#23d7ff !important;text-decoration:underline;text-underline-offset:3px}
+.landing-hero .service-price-anchor a{color:#0b6e66 !important;text-decoration:underline;text-underline-offset:3px}
 /* La banda "INVERSIÓN ORIENTATIVA" de la pág. IA ya mostraba el precio sin
    enlace; su <strong> ahora enlaza a /#planes (color de enlace del sitio). */
 .price-band a{color:#0b6e66 !important}
@@ -425,3 +427,19 @@ main .why p.why-diff b{color:#0b6e66 !important}
 .result-actions .smart-link{border:1px solid #8da7b6 !important;border-radius:999px !important;padding:.85rem 1.15rem !important;text-decoration:none !important;color:#164862 !important;font-weight:750 !important;background:transparent !important;cursor:pointer !important;font:inherit !important}
 .privacy-note{margin-top:1rem !important;font-size:.85rem !important;line-height:1.5 !important;color:#526b7c !important}
 .privacy-note a{color:#0b6e66 !important;font-weight:700 !important}
+/* ==========================================================================
+   LOTE 4 (2026-11-05) — Coherencia visual y contraste: propagar las
+   correcciones de la home a las páginas interiores y cerrar la retirada de
+   glifos. Solo presentación: sin textos, precios, enlaces ni rutas nuevas.
+   Rama diseno-lote4, sobre main 130f833.
+   ========================================================================== */
+/* 1) TAMAÑO DEL H1 EN LANDINGS — el híbrido capa TODOS los H1 (home y
+   landings) a 3,35rem con !important y los H2 de sección (3,8rem) lo
+   superan a ≥1280 px. La pasada 4 lo corrigió solo para .hero h1 (home).
+   Misma corrección para .landing-hero h1: /servicios/, /ciberseguridad-
+   bogota/ y las 6 páginas ServiceLanding. Solo escritorio; el móvil
+   conserva la regla del híbrido (≤720 px). La home no se toca: usa .hero,
+   no .landing-hero, y ya tiene su propia regla. */
+@media (min-width:721px){
+  .landing-hero h1{font-size:clamp(2.9rem,5.2vw,4.5rem) !important;line-height:1.02 !important}
+}

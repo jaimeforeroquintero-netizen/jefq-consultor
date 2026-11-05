@@ -2,9 +2,9 @@
 interface Props {
   title: string;
   text: string;
-  icon?: string;
+  icon: string;
 }
-const { title, text, icon = "◆" } = Astro.props;
+const { title, text, icon } = Astro.props;
 ---
 <article class="f-authority-card">
   <span class="f-authority-icon" aria-hidden="true">{icon}</span>
