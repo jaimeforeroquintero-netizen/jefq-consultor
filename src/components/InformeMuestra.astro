@@ -1,0 +1,81 @@
+---
+// MUESTRA VISUAL DEL ENTREGABLE (M3, candidato).
+// Fragmento visual del informe demostrativo REAL: portada + tabla de los
+// 5 hallazgos con sus prioridades reales. Todos los datos vienen de la
+// fuente única src/data/informe-demostrativo.ts — la misma que alimenta
+// /informe-demostrativo/ — por lo que ningún texto puede divergir.
+// El sello "MUESTRA ILUSTRATIVA" es parte del propio fragmento (arriba y
+// abajo), no un aviso provisional: el fragmento nunca puede confundirse
+// con un informe real de un cliente.
+// Prop `candidato`: muestra la marca provisional "CANDIDATO — NO PUBLICADO"
+// de la preview; debe retirarse (candidato={false}) al aprobarse.
+import { findings, totalActions, counts, NIVEL_GENERAL_DEMO } from "../data/informe-demostrativo";
+const { candidato = false } = Astro.props;
+---
+
+<article class="informe-muestra" aria-label="Muestra visual del informe demostrativo">
+  <div class="muestra-top">
+    <span class="muestra-sello">MUESTRA ILUSTRATIVA · NO CORRESPONDE A UN CLIENTE REAL</span>
+    {candidato && <span class="muestra-candidato">CANDIDATO — NO PUBLICADO</span>}
+  </div>
+  <header class="muestra-portada">
+    <span class="section-label">INFORME DE DIAGNÓSTICO DE SEGURIDAD</span>
+    <h3>Así se ve el informe que recibe</h3>
+    <p>Fragmento del informe demostrativo: portada y tabla de hallazgos con prioridades. El informe completo explica cada hallazgo con situación observada, impacto, evidencia redactada, acción recomendada y beneficio esperado.</p>
+    <dl class="muestra-metricas">
+      <div><dt>Nivel general</dt><dd>{NIVEL_GENERAL_DEMO}</dd></div>
+      <div><dt>Hallazgos</dt><dd>{findings.length}</dd></div>
+      <div><dt>Prioridad alta</dt><dd>{counts.high}</dd></div>
+      <div><dt>Acciones</dt><dd>{totalActions}</dd></div>
+    </dl>
+  </header>
+  <div class="muestra-tabla-wrap">
+    <table class="muestra-tabla">
+      <caption>Hallazgos de la muestra, con su prioridad real</caption>
+      <thead>
+        <tr><th scope="col">ID</th><th scope="col">Área</th><th scope="col">Situación observada</th><th scope="col">Prioridad</th></tr>
+      </thead>
+      <tbody>
+        {findings.map((f) => (
+          <tr>
+            <td class="muestra-id">{f.id}</td>
+            <td>{f.area}</td>
+            <td>{f.observation}</td>
+            <td><strong class:list={["muestra-chip", f.priority.toLowerCase()]}>{f.priority}</strong></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <footer class="muestra-pie">
+    <p><strong>Muestra ilustrativa.</strong> Las cifras, evidencias y situaciones fueron creadas únicamente para demostrar la estructura del entregable y no corresponden a un cliente real.</p>
+    <a class="button secondary" href="/informe-demostrativo">Ver el informe demostrativo completo →</a>
+  </footer>
+</article>
+
+<style>
+.informe-muestra{background:#fff;border:1px solid #d7e2ea;border-radius:20px;box-shadow:0 24px 60px rgba(13,40,64,.12);overflow:hidden;text-align:left}
+.muestra-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:18px 26px 0}
+.muestra-sello{display:inline-flex;padding:7px 12px;border:1px solid rgba(176,120,0,.5);border-radius:999px;color:#7a5200;background:#fff4d6;font-size:.72rem;font-weight:900;letter-spacing:.07em}
+.muestra-candidato{display:inline-flex;padding:7px 12px;border:1px dashed #b3261e;border-radius:999px;color:#b3261e;background:#fff;font-size:.72rem;font-weight:900;letter-spacing:.07em}
+.muestra-portada{padding:22px 26px 8px}
+.muestra-portada h3{margin:10px 0 8px;font-size:clamp(1.5rem,3.4vw,2.1rem);color:#0d2840}
+.muestra-portada p{margin:0;color:#40566b;max-width:62ch}
+.muestra-metricas{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 6px}
+.muestra-metricas div{padding:14px 16px;background:#f3f7fa;border:1px solid #d7e2ea;border-radius:14px}
+.muestra-metricas dt{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#40566b}
+.muestra-metricas dd{margin:6px 0 0;font-size:1.5rem;font-weight:900;color:#0b6e66}
+.muestra-tabla-wrap{overflow-x:auto;padding:12px 26px 6px}
+.muestra-tabla{width:100%;border-collapse:collapse;min-width:560px}
+.muestra-tabla caption{text-align:left;padding:10px 0;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#40566b}
+.muestra-tabla th,.muestra-tabla td{padding:12px 10px;border-top:1px solid #d7e2ea;vertical-align:top;text-align:left;font-size:.95rem;color:#22394d}
+.muestra-tabla thead th{border-top:0;color:#0d2840;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.muestra-id{font-weight:900;white-space:nowrap;color:#0d2840}
+.muestra-chip{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.78rem;white-space:nowrap}
+.muestra-chip.alta{color:#2b1a00;background:#ffc166}
+.muestra-chip.media{color:#00271f;background:#65e7cc}
+.muestra-chip.baja{color:#08283a;background:#a8d8ef}
+.muestra-pie{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:18px 26px 24px;border-top:1px solid #d7e2ea;margin-top:10px}
+.muestra-pie p{margin:0;max-width:58ch;color:#40566b;font-size:.92rem}
+@media(max-width:700px){.muestra-metricas{grid-template-columns:repeat(2,1fr)}.muestra-top,.muestra-portada,.muestra-tabla-wrap,.muestra-pie{padding-left:18px;padding-right:18px}}
+</style>

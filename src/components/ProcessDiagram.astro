@@ -1,0 +1,61 @@
+---
+// DIAGRAMA DEL PROCESO (M3, candidato).
+// Diagrama lineal reutilizable de los 4 pasos reales del método, con la
+// numeración 01–04 y los textos VERBATIM de la home (#metodologia).
+// Fuente única: este componente. La home y /como-trabajamos/ lo importan,
+// así que el método no se duplica en dos versiones distintas.
+// NOTA DE UNIFICACIÓN (decisión para Jaime): /como-trabajamos/ publicaba
+// una lista propia de 5 pasos ("Valoración inicial" … "Presentación y
+// acompañamiento") distinta de los 4 pasos de la home. Este candidato la
+// sustituye por el mismo diagrama de 4 pasos; los 5 textos retirados quedan
+// registrados en CANDIDATO_M3_MUESTRA_Y_PROCESO_2026-11-05.md y la
+// sustitución es reversible por git. NO se tocaron los procesos propios de
+// cada servicio (/servicios/[slug]) ni ConversionEvidence.
+// Prop `candidato`: muestra la marca provisional "CANDIDATO — NO PUBLICADO"
+// de la preview; debe retirarse (candidato={false}) al aprobarse.
+const steps = [
+  ["01", "Conocer el contexto", "Objetivos, activos, restricciones y riesgos."],
+  ["02", "Definir el alcance", "Autorización, límites y condiciones de ejecución."],
+  ["03", "Evaluar con control", "Pruebas proporcionales y evidencia organizada."],
+  ["04", "Entregar y acompañar", "Prioridades, remediación y seguimiento."],
+];
+const { candidato = false } = Astro.props;
+---
+
+<div class="process-diagram">
+  {candidato && <p class="diagram-candidato">CANDIDATO — NO PUBLICADO</p>}
+  <ol class="diagram-steps">
+    {steps.map(([n, t, d]) => (
+      <li>
+        <span class="diagram-num" aria-hidden="true">{n}</span>
+        <h3>{t}</h3>
+        <p>{d}</p>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+.process-diagram{margin-top:8px}
+.diagram-candidato{display:inline-block;margin:0 0 14px;padding:6px 12px;border:1px dashed #b3261e;border-radius:999px;color:#b3261e;background:#fff;font-size:.72rem;font-weight:900;letter-spacing:.07em}
+.diagram-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.diagram-steps li{position:relative;padding:34px 18px 0}
+.diagram-steps li::before{content:"";position:absolute;top:15px;left:0;right:0;height:2px;background:#c8d8e2}
+.diagram-steps li:first-child::before{left:18px}
+.diagram-steps li:last-child::before{right:calc(100% - 18px)}
+.diagram-steps li::after{content:"›";position:absolute;top:4px;right:-4px;font-size:1.3rem;font-weight:900;color:#0b6e66}
+.diagram-steps li:last-child::after{display:none}
+.diagram-num{position:absolute;top:0;left:18px;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#0b6e66;color:#fff;font-size:.82rem;font-weight:900;letter-spacing:.02em}
+.diagram-steps h3{margin:0 0 6px;font-size:1.08rem;color:#0d2840}
+.diagram-steps p{margin:0;color:#40566b;font-size:.95rem}
+@media(max-width:800px){
+  .diagram-steps{grid-template-columns:1fr}
+  .diagram-steps li{padding:0 0 26px 52px}
+  .diagram-steps li::before{top:0;bottom:0;left:15px;right:auto;width:2px;height:auto}
+  .diagram-steps li:first-child::before{left:15px;top:32px}
+  .diagram-steps li:last-child::before{right:auto;bottom:auto;height:0}
+  .diagram-steps li::after{content:"›";top:auto;bottom:2px;left:9px;right:auto;transform:rotate(90deg)}
+  .diagram-steps li:last-child::after{display:none}
+  .diagram-num{left:0;top:0}
+}
+</style>

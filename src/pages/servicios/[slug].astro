@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import InformeMuestra from "../../components/InformeMuestra.astro";
 import { services, serviceBySlug } from "../../data/services";
 import { PRECIOS, precioDe, formatearCOP } from "../../data/precios";
 
@@ -59,6 +60,15 @@ const breadcrumbSchema = {
       </article>
     </div>
   </section>
+
+  {service.slug === "diagnostico-seguridad" && (
+  <section class="section" id="muestra-informe">
+    <div class="container">
+      <header class="section-header"><span>MUESTRA DEL ENTREGABLE</span><h2>Qué recibe por su inversión</h2><p>Un fragmento real del informe demostrativo: la portada y la tabla de hallazgos con prioridades. El informe completo desarrolla cada hallazgo con impacto, evidencia y acciones.</p></header>
+      <InformeMuestra candidato />
+    </div>
+  </section>
+  )}
 
   <section class="section dark-section">
     <div class="container">
