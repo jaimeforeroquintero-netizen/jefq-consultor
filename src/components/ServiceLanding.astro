@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import type { ServicePage } from "../data/service-pages";
+import { PRECIOS, precioDe, formatearCOP } from "../data/precios";
 
 interface Props {
   service: ServicePage;
@@ -8,6 +9,14 @@ interface Props {
 
 const { service } = Astro.props;
 const waMessage = service.whatsappMessage;
+/* Ancla de precio (#6 ronda 2): "Desde $X" desde la fuente única
+   (precios.ts). Sin precioId no hay ancla: no se inventa ningún precio.
+   La IA no lleva ancla aquí: su precio ya aparece enlazado en su banda
+   "INVERSIÓN ORIENTATIVA" (seguridad-inteligencia-artificial.astro). */
+const precio = service.precioId && service.slug !== "seguridad-inteligencia-artificial"
+  ? PRECIOS.find((p) => p.id === service.precioId)
+  : undefined;
+const etiquetaPrecio = precio ? `Desde ${formatearCOP(precioDe(precio.id))}${precio.unidad === "hora" ? "/hora" : ""}` : null;
 const titleKey = service.title.toLocaleLowerCase("es");
 
 type PremiumProfile = {
@@ -135,6 +144,7 @@ const combinedFaq = [...service.faq, ...premium.specificFaq];
           <a class="button primary" href="/valoracion">Solicitar valoración</a>
           <a class="button secondary" href="#" data-wa-modal data-wa-message={waMessage}>Consultar por WhatsApp</a>
         </div>
+        {etiquetaPrecio && (<p class="service-price-anchor"><a href="/#planes">{etiquetaPrecio} · Ver planes</a></p>)}
         <p class="service-security-note">
           No envíe contraseñas, códigos MFA, llaves privadas, vulnerabilidades explotables ni datos personales sensibles.
         </p>

@@ -384,3 +384,44 @@ main .why p.why-diff b{color:#0b6e66 !important}
 @media (min-width:721px){
   .hero h1{font-size:clamp(2.9rem,5.2vw,4.5rem) !important;line-height:1.02 !important}
 }
+/* ==========================================================================
+   PASADA 5 (2026-11-04) — Diseño ronda 2, lote 2 (#4, #6, #9 y /valoracion/).
+   Solo presentación: sin precios nuevos, sin textos comerciales ni jurídicos,
+   sin secciones nuevas. Rama diseno-hero-ajuste, sobre main 7944026.
+   ========================================================================== */
+/* #4 — LO ILUSTRATIVO EN #evidencia: las 5 tarjetas (.case solo se usa aquí)
+   dejan de parecerse a las tarjetas blancas de contenido real: fondo ámbar
+   claro + borde ámbar. El rótulo pasa de 0,68rem a 0,8rem y dice
+   "Ejemplo ilustrativo" en palabras, no en versales abreviadas. */
+#evidencia .case{background:#fdf6e0 !important;border:1px solid rgba(180,130,0,.45) !important}
+#evidencia .case-head span{font-size:.8rem !important}
+/* #6 — ANCLA DE PRECIO EN PÁGINAS DE DETALLE DE SERVICIO: "Desde $X" hacia
+   /#planes. El hero de /servicios/[slug] es CLARO (parches §: #eef6fb):
+   enlace teal 5,59:1. El hero de ServiceLanding es OSCURO: enlace cian. */
+.service-price-anchor{margin-top:1.1rem;font-size:1.05rem}
+.service-detail-hero .service-price-anchor a{color:#0b6e66 !important;text-decoration:underline;text-underline-offset:3px}
+.landing-hero .service-price-anchor a{color:#23d7ff !important;text-decoration:underline;text-underline-offset:3px}
+/* La banda "INVERSIÓN ORIENTATIVA" de la pág. IA ya mostraba el precio sin
+   enlace; su <strong> ahora enlaza a /#planes (color de enlace del sitio). */
+.price-band a{color:#0b6e66 !important}
+/* /valoracion/ — TARJETA DE RESULTADO: el contenido se inyecta por JS
+   (innerHTML) sin data-astro-cid, así que NINGUNA regla del <style> con
+   ámbito de la página lo alcanza (verificado en el CSS compilado: todas
+   llevan [data-astro-cid-cjuzwhqj]). Por eso los 3 datos corrían juntos
+   (spans en línea, sin fondo ni separación) y las 2 acciones quedaban en
+   la misma línea pegadas y sin estilo de píldora. Estas reglas globales
+   (última hoja) replican los estilos previstos para el contenido inyectado.
+   El rótulo dentro de la tarjeta usa teal oscuro (#0b6e66, 5,59:1 sobre
+   blanco) en vez del teal claro del hero (#49d6c7, 1,9:1: ilegible sobre
+   la tarjeta blanca; el rótulo estático "RESULTADO" tenía el mismo defecto). */
+.smart-result h2{font-size:clamp(1.7rem,3vw,2.6rem) !important;color:#0d2840 !important;margin:.4rem 0 !important}
+.smart-result p{color:#455f70 !important}
+.smart-result .smart-kicker{color:#0b6e66 !important}
+.result-facts{display:grid !important;gap:.8rem !important;margin:1.4rem 0 !important}
+.result-facts span{display:block !important;padding:.8rem .9rem !important;border:1px solid #d4e5ea !important;border-radius:10px !important;background:#eff8f8 !important;color:#23485b !important}
+.result-actions{display:flex !important;flex-direction:column !important;align-items:stretch !important;gap:.8rem !important;margin-top:1.5rem !important}
+.result-actions .smart-button,.result-actions .smart-link{width:100% !important;text-align:center !important}
+.result-actions .smart-button{appearance:none !important;border:0 !important;border-radius:999px !important;background:linear-gradient(135deg,#f4ba45,#ffce69) !important;color:#17212b !important;font-weight:850 !important;text-decoration:none !important;padding:.9rem 1.25rem !important;cursor:pointer !important}
+.result-actions .smart-link{border:1px solid #8da7b6 !important;border-radius:999px !important;padding:.85rem 1.15rem !important;text-decoration:none !important;color:#164862 !important;font-weight:750 !important;background:transparent !important;cursor:pointer !important;font:inherit !important}
+.privacy-note{margin-top:1rem !important;font-size:.85rem !important;line-height:1.5 !important;color:#526b7c !important}
+.privacy-note a{color:#0b6e66 !important;font-weight:700 !important}

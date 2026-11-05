@@ -9,11 +9,18 @@ export interface ServicePage {
   process: { title: string; text: string }[];
   faq: { question: string; answer: string }[];
   whatsappMessage: string;
+  /** Id en src/data/precios.ts para el ancla "Desde $X" (#6 ronda 2).
+      Sin valor = la página no tiene precio publicado propio y no muestra
+      ancla (no se inventa ningún precio). La IA no lleva ancla en el hero
+      de ServiceLanding: su precio ya aparece enlazado en su banda
+      "INVERSIÓN ORIENTATIVA" (seguridad-inteligencia-artificial.astro). */
+  precioId?: string;
 }
 
 export const servicePages: ServicePage[] = [
   {
     slug: "diagnostico-seguridad-bogota",
+    precioId: "esencial",
     eyebrow: "DIAGNÓSTICO EN BOGOTÁ Y COLOMBIA",
     title: "Diagnóstico de seguridad en Bogotá",
     description: "Diagnóstico de ciberseguridad para pymes y organizaciones en Bogotá, con revisión priorizada, informe ejecutivo y plan de mejora.",
@@ -34,6 +41,7 @@ export const servicePages: ServicePage[] = [
   },
   {
     slug: "hardening-windows-colombia",
+    precioId: "hardening",
     eyebrow: "FORTALECIMIENTO DE EQUIPOS",
     title: "Hardening de sistemas en Colombia",
     description: "Servicio de hardening de Windows para reducir exposición, fortalecer configuraciones y documentar cambios en equipos empresariales.",
@@ -54,6 +62,7 @@ export const servicePages: ServicePage[] = [
   },
   {
     slug: "consultoria-ciberseguridad-colombia",
+    precioId: "consultoria-hora",
     eyebrow: "CONSULTORÍA REMOTA NACIONAL",
     title: "Consultoría de ciberseguridad para pymes",
     description: "Consultoría de ciberseguridad para pymes colombianas: diagnóstico, priorización, informes y acompañamiento remoto.",
@@ -94,6 +103,7 @@ export const servicePages: ServicePage[] = [
   },
   {
     slug: "auditoria-ciberseguridad-pyme",
+    precioId: "esencial",
     eyebrow: "SEGURIDAD PARA PYMES",
     title: "Auditoría de ciberseguridad para pymes",
     description: "Auditoría de ciberseguridad para pymes: el Diagnóstico de seguridad de JEFQ adaptado a pymes, con revisión de equipos, cuentas, configuraciones, hallazgos y plan de mejora.",
@@ -114,6 +124,7 @@ export const servicePages: ServicePage[] = [
   },
   {
     slug: "seguridad-inteligencia-artificial",
+    precioId: "evaluacion-ia",
     eyebrow: "IA BAJO CONTROL",
     title: "Seguridad para IA",
     description: "Evaluación del uso de herramientas de IA en su pyme: datos en prompts, aplicaciones sin gobierno, riesgos de suplantación y controles proporcionales.",

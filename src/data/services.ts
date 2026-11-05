@@ -4,6 +4,10 @@ export type ServicePage = {
   eyebrow: string;
   description: string;
   promise: string;
+  /** Id en src/data/precios.ts para el ancla "Desde $X" (#6 ronda 2).
+      Sin valor = el servicio no tiene precio publicado propio y la
+      página no muestra ancla (no se inventa ningún precio). */
+  precioId?: string;
   includes: string[];
   deliverables: string[];
   process: { title: string; text: string }[];
@@ -17,6 +21,7 @@ export const services: ServicePage[] = [
     eyebrow: "VISIBILIDAD ANTES DE INVERTIR",
     description: "Identifique configuraciones inseguras, riesgos prioritarios y oportunidades de mejora con un alcance proporcional a su organización.",
     promise: "Convierta incertidumbre técnica en un plan de acción claro y priorizado.",
+    precioId: "esencial",
     includes: ["Revisión inicial de activos y contexto", "Evaluación de configuraciones y exposición", "Clasificación de riesgos", "Reunión de resultados"],
     deliverables: ["Informe ejecutivo", "Hallazgos priorizados", "Recomendaciones aplicables", "Hoja de ruta inicial"],
     process: [{title:"Descubrimiento",text:"Definimos objetivos, activos y restricciones."},{title:"Evaluación",text:"Revisamos los controles acordados."},{title:"Análisis",text:"Priorizamos por riesgo, impacto y esfuerzo."},{title:"Entrega",text:"Presentamos resultados y próximos pasos."}],
@@ -28,6 +33,7 @@ export const services: ServicePage[] = [
     eyebrow: "MENOS SUPERFICIE, MÁS CONTROL",
     description: "Fortalezca equipos Windows, cuentas, navegadores, aplicaciones y configuraciones empresariales sin complicar innecesariamente la operación.",
     promise: "Reduzca oportunidades de ataque mediante configuraciones más seguras y verificables.",
+    precioId: "hardening",
     includes: ["Windows y estaciones de trabajo", "Cuentas y privilegios", "Navegadores y aplicaciones", "Controles básicos de acceso"],
     deliverables: ["Configuración aplicada o recomendada", "Registro de cambios", "Lista de validación", "Plan de mantenimiento"],
     process: [{title:"Línea base",text:"Identificamos el estado actual."},{title:"Priorización",text:"Seleccionamos controles de mayor valor."},{title:"Aplicación",text:"Implementamos cambios acordados."},{title:"Verificación",text:"Comprobamos resultados y documentamos."}],

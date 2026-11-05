@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { services, serviceBySlug } from "../../data/services";
+import { PRECIOS, precioDe, formatearCOP } from "../../data/precios";
 
 export function getStaticPaths() {
   return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
@@ -8,6 +9,10 @@ export function getStaticPaths() {
 
 const { service } = Astro.props;
 const related = service.related.map((slug: string) => serviceBySlug[slug]).filter(Boolean);
+/* Ancla de precio (#6 ronda 2): "Desde $X" desde la fuente única
+   (precios.ts). Sin precioId no hay ancla: no se inventa ningún precio. */
+const precio = service.precioId ? PRECIOS.find((p) => p.id === service.precioId) : undefined;
+const etiquetaPrecio = precio ? `Desde ${formatearCOP(precioDe(precio.id))}${precio.unidad === "hora" ? "/hora" : ""}` : null;
 const waMessage = `Hola Jaime, quiero solicitar información sobre ${service.title}.`;
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -33,6 +38,7 @@ const breadcrumbSchema = {
           <a class="button primary" href="/valoracion">Solicitar valoración</a>
           <a class="button secondary" href="#" data-wa-modal data-wa-message={waMessage}>Consultar por WhatsApp</a>
         </div>
+        {etiquetaPrecio && (<p class="service-price-anchor"><a href="/#planes">{etiquetaPrecio} · Ver planes</a></p>)}
       </div>
       <div class="service-orbit" aria-hidden="true">
         <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
