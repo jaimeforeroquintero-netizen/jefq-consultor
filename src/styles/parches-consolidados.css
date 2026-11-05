@@ -530,3 +530,23 @@ main .why p.why-diff b{color:#0b6e66 !important}
    main p{color:#40566b!important} y NO es defectuoso). Sin DELTA.
    ========================================================================== */
 .safe-note{color:#40566b !important}
+/* ==========================================================================
+   DESCRIPCIÓN DE TARJETAS 2026-11-05 — texto descriptivo <p> en tarjetas
+   blancas de contenido (.landing-card, .service-card, .local-grid,
+   .landing-process, .landing-faq): color oscuro canónico #40566b.
+   CAUSA: la regla §6 "Tarjetas blancas" blanqueó estas tarjetas
+   (background:#fff !important) sin adaptar su texto; los <p> conservan
+   el color pálido de su diseño oscuro original mediante
+   `.landing-card p,.local-grid p,.landing-process p,.landing-faq p
+   {color:var(--muted)!important}` y
+   `.service-card p{color:var(--muted)!important}`, con --muted=#c2d2e4
+   (segundo :root, que vence al primero #9eb3ca). Medido sobre #fff:
+   #c2d2e4 = 1,54:1 FAIL (las demás candidatas también fallan: #b9cde4
+   1,63:1; #9eb3ca 2,15:1). Con #40566b (color de texto del sitio,
+   el mismo de `main p` y de la corrección safe-note): 7,60:1 PASS AA
+   y AAA. !important OBLIGATORIO: los competidores son !important y
+   una declaración normal no puede vencerlos (lección de la nota M3:
+   1b97967 sin !important nunca se aplicó). Sin cambio de fondo,
+   textos, precios, enlaces ni rutas. Alcance: 18 páginas (ver PIR-1).
+   ========================================================================== */
+.landing-card p,.service-card p,.local-grid p,.landing-process p,.landing-faq p{color:#40566b !important}
