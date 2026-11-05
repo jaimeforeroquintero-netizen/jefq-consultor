@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 110" role="img" aria-label="JEFQ Consultor — candidato B">
+  <!-- CANDIDATO B — "Teal dominante". Misma geometría del hexágono-"J" EXISTENTE
+       (public/favicon.svg y .brand-mark del sitio). Diferencia real frente a A:
+       el hexágono es teal sólido #0b6e66 y la "J" es ámbar #ffb43f (acentos
+       invertidos); el wordmark "JEFQ" pasa a teal #0b6e66 y "CONSULTOR" a azul
+       oscuro #0d2540. Pensado para fondo claro. NO es un activo vivo. -->
+  <path fill="#0b6e66" d="M50 2 96 20 89 81 50 108 11 81 4 20Z"/>
+  <path fill="#ffb43f" d="M37 29h28v39c0 12-7 19-19 19-7 0-13-2-18-7l9-11c3 3 6 4 9 4 4 0 6-2 6-7V42H37Z"/>
+  <text x="120" y="64" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="800" fill="#0b6e66" letter-spacing="1">JEFQ</text>
+  <text x="122" y="94" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#0d2540" letter-spacing="6.5">CONSULTOR</text>
+</svg>
