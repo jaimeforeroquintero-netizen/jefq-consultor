@@ -962,3 +962,43 @@ main small,.proof span,.hero-trust,.price-note,.service-top small,.guarantee sma
    ========================================================================== */
 .report-hero-v4 .sample-seal{color:#7a5200 !important}
 .report-hero-v4 .section-label{color:#095e55 !important}
+
+/* ==========================================================================
+   MISIÓN 80 — INTEGRACIÓN CORRECCIÓN VISUAL (2026-11-06) — 3 defectos
+   demostrados por medición EFECTIVA (CDP + cascada ganadora) tras la
+   visual integrada 7/10 PASS, 3 FAIL (Pax, navegador, 13:39-13:43).
+   1. /recursos/ — REGRESIÓN DE B3 (no del merge): C3a restauró texto
+      claro suponiendo fondo oscuro (marketing-conversion:16, 0,1,0),
+      pero el fondo EFECTIVO es #fff: `authority-real-v1.css:11`
+      `.authority-grid article` (0,1,1) derrota los gradientes oscuros
+      declarados (seo-authority:7, marketing-conversion:16) y resetea
+      background-image a none. Medido: h2 #f4f8ff 1,07:1; p #aebfd1
+      1,88:1; span #65e5ff 1,48:1 (FAIL); solo el enlace #0b6e66
+      6,11:1 legible. En producción la tarjeta ES legible (texto oscuro
+      sobre blanco); B3 la rompió y su preview 0f32ddd5 ya la trae rota.
+      Se restaura el fondo oscuro DECLARADO del componente (matices de
+      seo-authority:7, opaco para que el compuesto sea exacto) y se
+      devuelve al enlace su color aprobado C3a #ffc857, derrotado por
+      parches:100 `main a:not(.button)` (0,1,2 > 0,1,1).
+      Ratios DESPUÉS (sobre #112d4c, peor caso del gradiente): h2 13,11:1;
+      p 7,43:1; span 9,45:1; a 9,08:1 — todos >= 4,5:1.
+   2. /blog/ — enlace «Leer guía →»: defecto PREEXISTENTE en producción
+      (#0b6e66 sobre #0a1b30 = 2,83:1 FAIL), pero B3 aprobó su corrección
+      C3b #67f2ae (12,28:1, contado en sus 31/31) y la regla existe sin
+      ser nunca efectiva: parches:100 (0,1,2) derrota a C3b (0,1,1).
+      Mismo error de método que B2 ronda 1 (declarado vs efectivo).
+      Se restaura el valor APROBADO con especificidad, sin color nuevo.
+   3. /informe-demostrativo/ — pie de la anatomía B2: el pie es un
+      <footer> y la regla híbrida:19 `footer` (bare selector) le pinta
+      fondo oscuro #0b1b2e; el texto queda strong #14202e 1,05:1 y p
+      #40566b 2,28:1 (FAIL severo). B2 aprobó pie blanco (7,06:1)
+      midiendo el artículo, no el pie. Se restaura el fondo blanco del
+      artículo: strong 16,46:1; p 7,60:1.
+   Sin diseño nuevo: mismos colores aprobados, solo fondo/especificidad.
+   NO se toca el proceso `.service-process-grid` de /servicios/[slug]:
+   B3 nunca lo cambió (STOP documentado en el PIR-1 consolidado §10.5).
+   ========================================================================== */
+.authority-card{background:linear-gradient(145deg,#112d4c,#071424) !important}
+main .authority-card a{color:#ffc857 !important}
+main .growth-card a{color:#67f2ae !important}
+.hallazgo-anatomia .anatomia-pie{background:#fff !important}
