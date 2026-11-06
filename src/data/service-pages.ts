@@ -111,13 +111,13 @@ export const servicePages: ServicePage[] = [
     audience: ["Pymes en crecimiento", "Negocios que dependen de información y servicios digitales", "Empresas que necesitan ordenar sus controles"],
     includes: ["Definición de activos", "Revisión de controles acordados", "Hallazgos con severidad", "Informe para dirección", "Hoja de ruta de mejora"],
     process: [
-      { title: "Preparar", text: "Definimos alcance y recopilar información." },
+      { title: "Preparar", text: "Definimos el alcance y recopilamos la información." },
       { title: "Revisar", text: "Evaluamos los controles incluidos." },
       { title: "Explicar", text: "Traducimos hallazgos a impacto empresarial." },
       { title: "Mejorar", text: "Entregamos una hoja de ruta priorizada." }
     ],
     faq: [
-      { question: "¿Cuánto cuesta?", answer: "El precio depende de activos, sedes, alcance y complejidad. La web muestra valores orientativos desde." },
+      { question: "¿Cuánto cuesta?", answer: "Los valores orientativos están publicados en la página de planes, desde $421.500 para el Diagnóstico Esencial." },
       { question: "¿Qué recibe la gerencia?", answer: "Un resumen ejecutivo, prioridades y próximos pasos, además del detalle técnico acordado." }
     ],
     whatsappMessage: "Hola Jaime, quiero Solicitar valoración una auditoría de ciberseguridad para una pyme."
