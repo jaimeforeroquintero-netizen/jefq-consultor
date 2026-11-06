@@ -550,3 +550,177 @@ main .why p.why-diff b{color:#0b6e66 !important}
    textos, precios, enlaces ni rutas. Alcance: 18 páginas (ver PIR-1).
    ========================================================================== */
 .landing-card p,.service-card p,.local-grid p,.landing-process p,.landing-faq p,.pb-card p,.landing-list li,.landing-two-columns article p,section.section:has(.laws-note) ul li,p.laws-note{color:#40566b !important}
+/* ==========================================================================
+   CIERRE DE CONTRASTE 2026-11-05 — consolidación de 6 correcciones
+   preparadas en UNA sola rama sobre main 610c5b9 (NO fusión de las 6 ramas
+   antiguas: bases 28a7c0a, conflicto seguro en el EOF; patrón demostrado
+   por safe-note y descripciones: reconstruir la cola limpiamente, leyendo
+   cada diff desde su worktree existente).
+   1. Botón WhatsApp hero landings → #f4f8ff (2,05:1 → 6,89:1).
+      Fuente: whatsapp-boton-contraste, HEAD 11a86d7, +11/−0.
+   2. Botón "Autorización y alcance" .dark-section, 16 páginas → #f4f8ff.
+      Fuente: autorizacion-boton-contraste, HEAD 6b9c9f2, +14/−0.
+   3. "Ver informe demostrativo" .authority-note, 3 artículos → #f4f8ff.
+      Fuente: nota-boton-contraste, HEAD dd5b7a5, +28/−0.
+   4. Panel COMPROMISOS /por-que-jefq/ — restaura colores fase-f
+      (título #23d7ff 5,55:1, ítems #d0deeb 6,96:1).
+      Fuente: panel-compromisos-contraste, HEAD 7c7aa8e, +23/−0.
+   5. Enlace .landing-summary a → #0b6e66 (1,42:1 → 6,11:1), 7 páginas.
+      Fuente: enlace-aside-whatsapp-contraste, HEAD 24d5db3, +1/−0.
+   6. .authority-article-header, 3 artículos de blog
+      (h1 1,20:1 → 16,92:1; intro → 10,74:1; etiqueta ámbar 11,72:1).
+      Fuente: hero-blog-contraste, HEAD 9bb37e9, +41/−0.
+   7. Texto pequeño #526b7c (18 reglas) → #40566b (ver bloque final:
+      investigación de cascada; solo se incluye porque la cascada
+      confirma seguridad — ningún elemento #526b7c sobre fondo oscuro).
+   Total: 118 líneas de las 6 fuentes + bloque #526b7c. 0 eliminaciones.
+   Solo color de texto; sin cambios de fondo, contenido, precios,
+   enlaces, rutas, tamaños ni jerarquía. Reversible: borrar este bloque.
+   ========================================================================== */
+
+/* BOTON WHATSAPP 2026-11-05: el hero es CLARO (#eef6fb, texto heredado #0d2840)
+   pero .button.secondary conserva su fondo OSCURO rgba(20,54,85,.82) de
+   marketing-conversion.css:15 (sin color propio) y la regla de seccion clara
+   del hibrido (:92) excluye explicitamente .landing-hero. Resultado medido:
+   texto #0d2840 sobre fondo efectivo #3b5973 = 2,05:1 (ilegible). Texto claro
+   #f4f8ff (el --text del sitio) sobre ese mismo fondo = 6,89:1 (AA).
+   Regla con ambito solo al hero: no toca .price-button, el boton primario
+   ambar, los secundarios de secciones claras (hibrido :92, !important) ni los
+   de secciones oscuras (ya heredan texto claro). Sin !important: especificidad
+   (0,3,0) gana a la regla compartida (0,2,0). */
+.landing-hero .button.secondary{color:#f4f8ff}
+
+/* BOTON AUTORIZACION 2026-11-05: la regla anterior invierte las .dark-section
+   a fondo CLARO (#eef6fb, texto heredado #0d2840), pero .button.secondary
+   conserva su fondo OSCURO rgba(20,54,85,.82) de marketing-conversion.css:15
+   (sin color propio) y la regla que arregla los secundarios en secciones
+   claras (hibrido :92) excluye explicitamente .dark-section. Resultado
+   medido: texto #0d2840 sobre fondo efectivo #3b5973 = 2,05:1 (ilegible).
+   Texto claro #f4f8ff (el --text del sitio) sobre ese mismo fondo = 6,89:1
+   (AA). Regla con ambito solo a .dark-section: no toca .price-button, el
+   boton primario ambar, los secundarios de secciones claras (hibrido :92,
+   !important, sigue ganando ahi) ni el hero de landings (regla WhatsApp
+   aparte). Sin !important: especificidad (0,3,0) gana a la compartida
+   (0,2,0). El hover no necesita cambio: ningun :hover de secundario fija
+   color fuera de :93 (secciones claras), asi que el texto claro persiste. */
+.dark-section .button.secondary{color:#f4f8ff}
+
+/* ==========================================================================
+   BOTÓN NOTA 2026-11-05 — "Ver informe demostrativo" en <aside
+   class="authority-note"> (3 artículos del blog). Tercer hermano del mismo
+   patrón (texto oscuro sobre fondo oscuro), distinto contenedor: los
+   artículos son <article class="authority-article"> SIN <section>
+   antecesora, así que la regla de secciones claras del híbrido (:92) no
+   los alcanza; tampoco .landing-hero (rama WhatsApp, 11a86d7) ni
+   .dark-section (rama Autorización, 6b9c9f2). Causa raíz: .button.secondary
+   conserva su fondo OSCURO rgba(20,54,85,.82) de marketing-conversion.css:15
+   (sin color propio) y hereda el texto oscuro #0d2840 de main{color:#0d2840}
+   (parches :96 / body !important). Medido por fórmula WCAG (fondo
+   semitransparente compuesto sobre la superficie real: la nota sobre
+   #eef6fb): texto #0d2840 sobre fondo efectivo #3b5973 = 2,05:1 (rango
+   2,00–2,05 según el punto del gradiente de la nota). NOTA DE MEDICIÓN:
+   la cifra ~1,13–1,16:1 del hallazgo inicial corresponde a componer el
+   botón sobre un fondo oscuro que no existe en la página real (fondo
+   opaco #143655 → 1,21:1; compuesto sobre #030814 → 1,08:1); el veredicto
+   es el mismo (FAIL, muy por debajo de 4,5:1) y la corrección supera
+   4,5:1 bajo cualquiera de las dos composiciones. Texto claro #f4f8ff
+   (el --text del sitio) sobre ese mismo fondo = 6,89:1 (AA). Regla con
+   ámbito solo a .authority-note: no toca .price-button, el primario
+   ámbar, los secundarios de secciones claras (híbrido :92, !important),
+   ni los de .landing-hero / .dark-section (ramas hermanas). Sin
+   !important: especificidad (0,3,0) gana a la regla compartida (0,2,0).
+   El hover no necesita cambio: ningún :hover de secundario fija color
+   fuera de :93 (secciones claras), así que el texto claro persiste.
+   Sin DELTA. */
+.authority-note .button.secondary{color:#f4f8ff}
+
+
+/* PASADA — /por-que-jefq/: panel .f-trust-panel "COMPROMISOS DE TRABAJO"
+   (candidato independiente, 2026-11-05; pre-existe en producción, no es
+   regresión; fuera del barrido .button.secondary y de las ramas
+   whatsapp/autorizacion/nota-boton-contraste).
+   Causa raíz: el panel conserva su fondo OSCURO propio
+   (fase-f.css: background rgba(9,28,50,.78), servido #091c32c7) sobre un
+   hero que el sistema claro ya convirtió a CLARO (híbrido:72,
+   nth-of-type(odd) -> #cfdfeb !important); fondo efectivo del panel
+   #35475b. Pero sus textos los imponen las reglas claras: el título
+   (span) lo fija el híbrido:89 a #405466 (1,22:1) y los ítems (li) los
+   fija parches:98 `main li` a #40566b !important (1,25:1). Solo las ✓
+   verdes (var(--green), 6,62:1) se distinguían. Esta regla restaura los
+   colores PREVISTOS por fase-f (título cian, ítems #d0deeb): 5,55:1 y
+   6,96:1 sobre #35475b (AA 4,5:1). El !important es obligatorio: el
+   competidor de los ítems ya es !important y el del título tiene
+   especificidad (0,6,3). Ámbito: solo .f-trust-panel dentro de .f-hero
+   (único uso en todo el sitio: por-que-jefq.astro:32); no toca H1,
+   kicker, párrafo ni botones del hero (todos ≥5,58:1, verificados),
+   ni #confianza, precios, rutas, Wompi ni chatbot. Reversible: borrar
+   este bloque. */
+.f-hero .f-trust-panel>span{color:#23d7ff !important}
+.f-hero .f-trust-panel li{color:#d0deeb !important}
+
+.landing-summary a{color:#0b6e66 !important}
+
+/* ==========================================================================
+   HERO BLOG (2026-11-05) — Contraste del encabezado de los 3 artículos del
+   blog: /blog/como-saber-si-pyme-necesita-evaluacion-seguridad/,
+   /blog/errores-configuracion-microsoft-365-pyme/ y
+   /blog/que-debe-incluir-informe-seguridad-pyme/. Solo presentación: sin
+   textos, precios, enlaces ni rutas nuevas. Rama hero-blog-contraste,
+   sobre main 28a7c0a. Candidato independiente (no amplía las ramas
+   whatsapp-boton-contraste, autorizacion-boton-contraste,
+   nota-boton-contraste ni panel-compromisos-contraste).
+   CAUSA RAÍZ — `.authority-article-header` es un <header> dentro de
+   <article>, NO una <section>: la regla híbrida que invierte las secciones
+   impares a fondo claro (jefq-diseno-hibrido-v1.css:72) NUNCA le aplica, así
+   que su fondo oscuro (linear-gradient #07172a→#06111f, seo-authority.css)
+   sobrevive mientras las reglas globales del sistema claro imponen texto
+   oscuro con !important. Misma familia de trampa de cascada que la clase
+   de botones. Medidas ANTES (fórmula WCAG, sobre ambos extremos del
+   gradiente #07172a / #06111f): h1 #0d2840 1,20:1 / 1,26:1 FAIL;
+   intro <p> #40566b 2,37:1 / 2,49:1 FAIL (la declarada #b8cadb, 10,74:1,
+   nunca se sirve: `main p{color:#40566b!important}` la derrota);
+   etiqueta .section-label #0b6e66 2,95:1 / 3,10:1 FAIL (el texto degradado
+   declarado nunca se sirve: parches:163 `color:#0b6e66!important` lo
+   derrota). Meta .authority-meta #8fa6bb 7,16:1 / 7,53:1 PASA: NO se toca.
+   CORRECCIÓN — reglas con ámbito preciso `.authority-article-header`,
+   todas con !important porque las derrotadas lo llevan; especificidad
+   (0,1,1) > (0,0,2) de `main h1` / `main p` y de la regla de la etiqueta.
+   Medidas DESPUÉS: h1 #f4f8ff 16,92:1 / 17,80:1; intro #b8cadb (color
+   declarado restaurado) 10,74:1 / 11,29:1; etiqueta ámbar #ffc857
+   11,72:1 / 12,32:1. ELECCIÓN DE LA ETIQUETA: ámbar sólido #ffc857, acento
+   canónico del sitio sobre fondos oscuros (ya usado en seo-authority.css
+   para enlaces sobre tarjetas oscuras), en vez de restaurar el texto
+   degradado (color:#0000 + background-clip:text): el degradado depende de
+   marketing-conversion.css y es frágil ante cualquier regla !important
+   futura; el sólido es robusto y mantiene la jerarquía visual (etiqueta
+   ámbar, título casi blanco, intro azul claro). NO se toca
+   `.authority-hero` (las 5 páginas que lo usan lo tienen como 1ª sección
+   impar → fondo claro por la regla híbrida; verificado en /recursos/,
+   /recursos/guias-practicas/ y /seguridad-autorizacion-alcance/).
+   ========================================================================== */
+.authority-article-header h1{color:#f4f8ff !important}
+.authority-article-header p{color:#b8cadb !important}
+.authority-article-header .section-label{color:#ffc857 !important}
+/* ==========================================================================
+   TEXTO PEQUEÑO #526b7c 2026-11-05 — corrección marginal incluida en el
+   cierre (investigación de cascada sobre el CSS servido de producción
+   610c5b9, Layout.dOEjaZzg.css 75.072 B). 18 reglas pintan texto pequeño
+   con #526b7c (!important salvo .testi-note). Ratios WCAG medidos:
+   #fff 5,60:1 PASA; #eef6fb 5,12:1 PASA; #f3f7fa 5,19:1 PASA;
+   #d7e5ee (--jefq-light-primary, secciones pares) 4,35:1 FAIL;
+   #cfdfeb (--jefq-light-secondary, secciones impares) 4,11:1 FAIL.
+   SEGURIDAD VERIFICADA: ningún elemento #526b7c está sobre fondo oscuro.
+   Todas las secciones de <main> son claras (héroe #eef6fb, .dark-section
+   invertida a #eef6fb, pares #d7e5ee, impares #cfdfeb, tarjetas #f3f7fa,
+   .case ámbar #fdf6e0). Los únicos <small> sobre fondo oscuro son los
+   del chatbot (.jefq-ia-*), que están FUERA de <main> (en home:
+   </main> @50312, panel @53669) y no los alcanza `main small` ni
+   ninguno de los 18 selectores. .authority-note y
+   .authority-article-header (fondos oscuros) no contienen <small> ni
+   ninguno de los 18 selectores (verificado en el HTML servido).
+   Con #40566b (color de texto del sitio): #fff 7,60:1; #eef6fb 6,96:1;
+   #f3f7fa 7,06:1; #d7e5ee 5,91:1; #cfdfeb 5,58:1 — todo PASA AA.
+   Misma especificidad que las reglas originales + !important, al final
+   del archivo (último cargado): gana por orden. Solo color.
+   ========================================================================== */
+main small,.proof span,.hero-trust,.price-note,.service-top small,.guarantee small,.testi-who span,.testi-note,.more-links,.finding-v4 small,.finding-top-v4>span,.report-metrics-v4 span,.contact-data small,.compare-table thead th,.compare-note,.contact-form small,.calc-bar-row>span,.calc-result small,.smart-form small,.privacy-note{color:#40566b !important}
