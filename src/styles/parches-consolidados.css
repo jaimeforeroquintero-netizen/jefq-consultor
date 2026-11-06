@@ -937,3 +937,28 @@ main small,.proof span,.hero-trust,.price-note,.service-top small,.guarantee sma
 .report-cta-v4 h2{color:#f4f8ff !important}
 .report-cta-v4 p{color:#b9cfdb !important}
 .report-cta-v4 .section-label{color:#ffc857 !important}
+
+/* ==========================================================================
+   MISIÓN 80 — INTEGRACIÓN sample-seal (2026-11-06).
+   Diagnóstico del coordinador por CDP sobre build local de main 4a2d749
+   (no repetido por otro método; la cascada completa es la evidencia
+   autoritativa). /informe-demostrativo/: hero CLARO en el render (#cfdfeb;
+   el gradiente oscuro declarado en el componente queda anulado).
+   .sample-seal: color EFECTIVO #405466 (la regla hybrid de spans vence al
+   declarado #ffd17a) sobre fondo efectivo compuesto #d3dbdb = 5,58:1 PASS
+   ACCIDENTAL. El 1,02:1 documentado en el PIR-1 B3 usaba el color
+   DECLARADO #ffd17a, no el efectivo — corrección del método: se mide el
+   color EFECTIVO. El sello pasa hoy solo por accidente de cascada; esta
+   corrección lo fija como INTENCIONAL y robusto con #7a5200 (ámbar oscuro
+   M2, el mismo que el sello de la línea temporal): 4,92:1 sobre #d3dbdb.
+   .section-label del mismo hero («INFORME DEMOSTRATIVO V4»): color
+   efectivo #0b6e66 sobre #cfdfeb = 4,48:1 FAIL marginal (medido por CDP
+   y confirmado por cálculo); pasa a #095e55 (teal apenas más oscuro,
+   misma familia): 5,62:1 sobre #cfdfeb. Ratios verificados por cálculo
+   WCAG (luminancia relativa). Solo color: NO se convierte el hero en
+   oscuro, NO se rediseña el hero, NO cambia el texto ni el sello
+   «MUESTRA ILUSTRATIVA · NO CORRESPONDE A UN CLIENTE REAL», NO se
+   tocan fondo ni borde del chip. NO reclama puntos.
+   ========================================================================== */
+.report-hero-v4 .sample-seal{color:#7a5200 !important}
+.report-hero-v4 .section-label{color:#095e55 !important}
