@@ -63,6 +63,34 @@ export const findings: HallazgoDemo[] = [
 
 export const totalActions = findings.reduce((sum, item) => sum + item.actions, 0);
 
+// Ruta de remediación (B2/A1). Textos VERBATIM de /informe-demostrativo/
+// (Fase 1/2/3 con sus títulos y descripciones): la línea temporal y las
+// tarjetas de la ruta comparten esta única fuente, no dos copias.
+export interface FaseRemediacion {
+  fase: string;
+  dias: string;
+  titulo: string;
+  descripcion: string;
+}
+
+export const remediationRoute: FaseRemediacion[] = [
+  {
+    fase: "Fase 1", dias: "Días 0 a 7",
+    titulo: "Contención y correcciones inmediatas",
+    descripcion: "Revisar privilegios, exposición pública y controles de acceso prioritarios."
+  },
+  {
+    fase: "Fase 2", dias: "Días 8 a 30",
+    titulo: "Fortalecimiento prioritario",
+    descripcion: "Homogeneizar configuraciones, completar MFA y documentar líneas base."
+  },
+  {
+    fase: "Fase 3", dias: "Días 31 a 90",
+    titulo: "Consolidación y validación",
+    descripcion: "Probar recuperación, revisar excepciones y establecer seguimiento periódico."
+  }
+];
+
 export const counts = {
   high: findings.filter((item) => item.priority === "Alta").length,
   medium: findings.filter((item) => item.priority === "Media").length,
