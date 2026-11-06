@@ -724,3 +724,40 @@ main .why p.why-diff b{color:#0b6e66 !important}
    del archivo (último cargado): gana por orden. Solo color.
    ========================================================================== */
 main small,.proof span,.hero-trust,.price-note,.service-top small,.guarantee small,.testi-who span,.testi-note,.more-links,.finding-v4 small,.finding-top-v4>span,.report-metrics-v4 span,.contact-data small,.compare-table thead th,.compare-note,.contact-form small,.calc-bar-row>span,.calc-result small,.smart-form small,.privacy-note{color:#40566b !important}
+/* ==========================================================================
+   MISIÓN 80 — B2 CORRECCIÓN RONDA 2 (2026-11-06) — .timeline-num,
+   .anatomia-num y .anatomia-id.
+   Defecto medido por Pax en el CSS servido de la preview c8edbca1: los
+   números NO son blancos en el render aunque el componente declara
+   color:#fff. Son <span> dentro de una sección clara y la regla hybrid
+   `main>section:not(.landing-hero):not(.dark-section)
+   span:not(.section-label):not(.eyebrow):not(.step-number):not(.badge)
+   {color:var(--fg-span,var(--fg-body))}` (especificidad 0,6,3, sin
+   !important) VENCE a `.timeline-num[data-astro-cid]{color:#fff}`
+   (0,2,0). Color EFECTIVO #405466 (oscuro). Ratios efectivos ANTES:
+   nodo 1 (#0b6e66) 1,28:1; nodo 2 (#0d2840) 1,92:1; nodo 3 (#7a5200)
+   1,13:1; anatomía 01/02/04 (#0b6e66) 1,28:1; 03 (#0d2840) 1,92:1;
+   05 (#b97a00) 2,18:1 — todos FAIL < 4,5:1. El fondo del nodo 3
+   (#7a5200, corrección de la ronda 1) SÍ estaba bien y no se toca.
+   La verificación técnica de la ronda 1 midió el color DECLARADO, no
+   el EFECTIVO — ese fue el error; esta vez se mide el color EFECTIVO
+   en el CSS compilado servido, con la cascada completa enumerada.
+   Corrección: color blanco explícito con !important. El !important es
+   necesario: sin él pierde contra la regla hybrid (0,6,3 > 0,2,0).
+   Solo color: no se tocan textos, estructura ni fondos que ya pasan.
+   HALLAZGO DEL ESCANEO: .anatomia-id (span "H-01", #fff sobre #0d2840,
+   0,2,0) tenía el MISMO defecto (efectivo 1,92:1 FAIL) y se corrige en
+   esta misma ronda. .anatomia-sello (span oscuro sobre #fff4d6) queda
+   7,16:1 PASS aun derrotado por la regla hybrid: no se toca. A3
+   (PlanesComparativa): sus spans son oscuros sobre claro y quedan PASS
+   aun derrotados (7,60:1): no se toca. Fondo 05 de anatomía: #b97a00
+   con blanco es 3,59:1 FAIL, así que su fondo pasa a #7a5200 (mismo
+   ámbar oscuro del nodo 3 de la línea temporal, precedente de la
+   ronda 1) en el componente, donde el fondo no está disputado.
+   Ratios EFECTIVOS DESPUÉS (blanco #fff, medidos en el CSS servido):
+   #0b6e66 6,11:1; #0d2840 15,06:1; #7a5200 6,92:1 — los 8 números
+   (01–03 línea temporal + 01–05 anatomía) y el id H-01, todos ≥ 4,5:1.
+   ========================================================================== */
+.remediation-timeline .timeline-num{color:#fff !important}
+.hallazgo-anatomia .anatomia-num{color:#fff !important}
+.hallazgo-anatomia .anatomia-id{color:#fff !important}
