@@ -217,7 +217,7 @@ const combinedFaq = [...service.faq, ...premium.specificFaq];
         <span>PROCESO</span>
         <h2>Trabajo controlado y documentado</h2>
       </header>
-      <div class="landing-process">
+      <div class="landing-process-steps">
         {service.process.map((step, index) => (
           <article>
             <strong>{String(index + 1).padStart(2, "0")}</strong>
@@ -288,3 +288,19 @@ const combinedFaq = [...service.faq, ...premium.specificFaq];
     </div>
   </section>
 </Layout>
+<style>
+/* MISION 80 B3 (C1) — proceso como lista numerada grande, continuacion de M4
+   (#metodologia: numeral grande + filete, sin tarjeta). Mismo contenido (los
+   4 pasos, mismos titulos y textos); solo cambia el patron: la rejilla de
+   tarjetas blancas .landing-process pasa a lista 2x2 sin tarjeta, con el
+   numeral teal a tamano de metodologia (clamp 1,9-2,9 rem). La seccion
+   conserva .dark-section (servida clara #eef6fb por parches:102; el texto
+   hereda #0d2840, el parrafo #40566b por parches:98). Timing y el resto de
+   la plantilla no se tocan. */
+.landing-process-steps{display:grid;grid-template-columns:repeat(2,1fr);gap:0 56px}
+.landing-process-steps article{padding:26px 0;border-top:1px solid rgba(13,40,64,.14)}
+.landing-process-steps strong{display:block;color:#0b6e66;font-size:clamp(1.9rem,3.4vw,2.9rem);line-height:1}
+.landing-process-steps h3{margin:.9rem 0 .4rem}
+.landing-process-steps p{margin:0}
+@media(max-width:620px){.landing-process-steps{grid-template-columns:1fr}}
+</style>

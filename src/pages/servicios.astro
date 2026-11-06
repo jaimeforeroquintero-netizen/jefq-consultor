@@ -1,11 +1,38 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { services } from "../data/services";
+// MISION 80 B3 — agrupacion de las 7 tarjetas (6 de datos + IA) en 2 grupos
+// con subtitulo, sin tarjetas nuevas y sin cambiar textos: Diagnosticar
+// (conocer antes de actuar) / Fortalecer (actuar y sostener). La IA va en
+// Fortalecer: revisa uso y controles de herramientas de IA.
+const diagnosticar = services.filter((s) =>
+  ["diagnostico-seguridad", "pruebas-autorizadas", "informes-tecnicos"].includes(s.slug));
+const fortalecer = services.filter((s) =>
+  ["hardening", "simulacros-seguridad", "acompanamiento-remediacion"].includes(s.slug));
 ---
 <Layout title="Servicios de ciberseguridad | JEFQ Consultor" description="Servicios de diagnóstico de seguridad, hardening de sistemas, pruebas autorizadas, informes técnicos y ejecutivos, simulacros de seguridad, acompañamiento de remediación y seguridad para IA en Colombia.">
   <section class="landing-hero"><div class="container"><span class="section-label">PORTAFOLIO</span><h1>Servicios de ciberseguridad para empresas</h1><p>Alternativas escalables para diagnosticar, priorizar y fortalecer la seguridad de organizaciones en Colombia.</p></div></section>
-  <section class="section"><div class="container landing-card-grid">
-    {services.map((service) => <article class="landing-card"><span>{service.eyebrow}</span><h2>{service.title}</h2><p>{service.description}</p><a class="button secondary" href={`/servicios/${service.slug}`}>Ver servicio</a></article>)}
-    <article class="landing-card"><span>IA BAJO CONTROL</span><h2>Seguridad para IA</h2><p>Las herramientas de IA ya están en su empresa, las haya aprobado o no. Revisamos cómo se usan, qué datos circulan por ellas y qué controles necesita para usarlas sin exponerse.</p><a class="button secondary" href="/seguridad-inteligencia-artificial">Ver servicio</a></article>
+  <section class="section"><div class="container">
+    <div class="servicios-grupo">
+      <h2>Diagnosticar</h2>
+      <div class="landing-card-grid">
+        {diagnosticar.map((service) => <article class="landing-card"><span>{service.eyebrow}</span><h2>{service.title}</h2><p>{service.description}</p><a class="button secondary" href={`/servicios/${service.slug}`}>Ver servicio</a></article>)}
+      </div>
+    </div>
+    <div class="servicios-grupo">
+      <h2>Fortalecer</h2>
+      <div class="landing-card-grid">
+        {fortalecer.map((service) => <article class="landing-card"><span>{service.eyebrow}</span><h2>{service.title}</h2><p>{service.description}</p><a class="button secondary" href={`/servicios/${service.slug}`}>Ver servicio</a></article>)}
+        <article class="landing-card"><span>IA BAJO CONTROL</span><h2>Seguridad para IA</h2><p>Las herramientas de IA ya están en su empresa, las haya aprobado o no. Revisamos cómo se usan, qué datos circulan por ellas y qué controles necesita para usarlas sin exponerse.</p><a class="button secondary" href="/seguridad-inteligencia-artificial">Ver servicio</a></article>
+      </div>
+    </div>
   </div></section>
 </Layout>
+
+<style>
+/* MISION 80 B3 — dos grupos con subtitulo en /servicios/. Solo ritmo: el
+   h2 de grupo ordena las tarjetas; el color del h2 lo fija el hibrido
+   (#14202e sobre seccion clara, ~11,9:1). Sin tarjetas nuevas. */
+.servicios-grupo + .servicios-grupo{margin-top:56px}
+.servicios-grupo h2{margin:0 0 22px;padding-bottom:14px;border-bottom:1px solid rgba(13,40,64,.14);font-size:clamp(1.5rem,3vw,2rem)}
+</style>

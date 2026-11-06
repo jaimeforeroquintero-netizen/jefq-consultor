@@ -150,7 +150,7 @@ main>section:has(form){background:#eef6fb !important;color:#0d2840 !important}
 .footer-trust-access span, .footer-trust-access a{color:#d7e5ee !important}
 .authority-links a{color:#d7e5ee !important}
 /* ---------- 6. Tarjetas blancas ---------- */
-.service-card, .price-card, .case, .benefits article, .landing-two-columns>article, .landing-process>article, .landing-summary, .landing-card, .compare-wrap, .guarantee, .downtime-calc, .contact-form, .service-detail-card, .service-process-grid article, .related-service-grid a, .section-cta, .faq-premium-v2 details, .landing-faq details, .local-grid article, .body aside, .contact-data>*, .promise, .landing-final-cta, .faq-final-v2, .report-cta-v4, .finding-v4, .roadmap-v4 article, .severity-scale-v4 article, .report-metrics-v4 article, .growth-card{background:#ffffff !important;border:1px solid rgba(13,40,64,.13) !important;border-radius:22px !important;box-shadow:0 16px 40px rgba(13,40,64,.09),0 2px 8px rgba(13,40,64,.05) !important;color:#0d2840 !important}
+.service-card, .price-card, .case, .benefits article, .landing-two-columns>article, .landing-process>article, .landing-summary, .landing-card, .compare-wrap, .guarantee, .downtime-calc, .contact-form, .service-detail-card, .service-process-grid article, .related-service-grid a, .section-cta, .faq-premium-v2 details, .landing-faq details, .local-grid article, .body aside, .contact-data>*, .promise, .landing-final-cta, .faq-final-v2{background:#ffffff !important;border:1px solid rgba(13,40,64,.13) !important;border-radius:22px !important;box-shadow:0 16px 40px rgba(13,40,64,.09),0 2px 8px rgba(13,40,64,.05) !important;color:#0d2840 !important}
 .price-card.featured{border:2px solid #f2a100 !important;transform:translateY(-8px) !important}
 .price{color:#0b6e66 !important}
 .price-card li{color:#40566b !important}
@@ -724,3 +724,94 @@ main .why p.why-diff b{color:#0b6e66 !important}
    del archivo (último cargado): gana por orden. Solo color.
    ========================================================================== */
 main small,.proof span,.hero-trust,.price-note,.service-top small,.guarantee small,.testi-who span,.testi-note,.more-links,.finding-v4 small,.finding-top-v4>span,.report-metrics-v4 span,.contact-data small,.compare-table thead th,.compare-note,.contact-form small,.calc-bar-row>span,.calc-result small,.smart-form small,.privacy-note{color:#40566b !important}
+/* ==========================================================================
+   MISION 80 — BLOQUE B3 (C3) 2026-11-06 — reconciliacion de oscuros muertos,
+   POR COMPONENTE. Cada componente decide oscuro intencional (restaurar sus
+   colores declarados con ambito preciso, precedente .f-trust-panel y
+   .authority-article-header) o claro del sistema. Aqui los 3 primeros
+   grupos son OSCURO INTENCIONAL. Los 6 selectores salieron de la regla §6
+   (tarjetas blancas) en este mismo cambio; sin esta seccion quedarian con
+   fondo declarado oscuro y texto forzado oscuro por `main p !important`
+   (parches:98) e hibrido:27/89/91.
+   Verificacion WCAG por formula, peor caso de fondo (mezcla del gradiente
+   translucido declarado sobre el fondo de su seccion; opaco donde el
+   declarado era insuficiente — ver notas por componente). Script:
+   /tmp/wcag-b3.mjs. TODOS los pares >= 4,5:1 (AA); el mas ajustado es
+   .finding-v4 small #8faabd 4,60:1 (color declarado, se mantiene).
+   NO toca textos, precios, M4, hero ni bloques cerrados.
+   ========================================================================== */
+/* --- C3a .authority-card (/recursos/, 6 tarjetas) — oscuro intencional.
+   Fondo: el que SIRVE es marketing-conversion:16 (gradiente translucido
+   rgba(23,52,83,.94)->rgba(11,29,49,.96) sobre seccion par #d7e5ee);
+   peor caso #233f5c. Solo se restauran los TEXTOS (declarados en
+   seo-authority.css, derrotados por hibrido:27 h2, parches:98 p,
+   hibrido:89 span, hibrido:91 a). h2 no tenia color declarado: #f4f8ff
+   (precedente .authority-article-header). Ratios peor caso: h2 10,18:1;
+   p #aebfd1 5,77:1; span #65e5ff 7,33:1; a #ffc857 7,05:1. */
+.authority-card h2{color:#f4f8ff !important}
+.authority-card p{color:#aebfd1 !important}
+.authority-card>span{color:#65e5ff !important}
+.authority-card a{color:#ffc857 !important}
+/* --- C3b .growth-card (/blog/ indice, 7 tarjetas) — oscuro intencional.
+   Fondo declarado opaco #0a1b30 (blog.astro); solo se restauran los TEXTOS
+   (derrotados por parches:98 p, hibrido:89 span, hibrido:91 a; h2 sin color
+   declarado -> #f4f8ff). Ratios sobre #0a1b30: h2 16,26:1; p #9caec3
+   7,63:1; span #25d7ff 10,10:1; a #67f2ae 12,28:1. */
+.growth-card h2{color:#f4f8ff !important}
+.growth-card p{color:#9caec3 !important}
+.growth-card>span{color:#25d7ff !important}
+.growth-card a{color:#67f2ae !important}
+/* --- C3c .finding-v4 (/informe-demostrativo/, 5 hallazgos) — oscuro intencional.
+   Fondo declarado (gradiente translucido sobre #eef6fb de la seccion
+   .dark-section invertida por parches:102); peor caso #213e54. Textos
+   declarados en informe-demostrativo.astro, derrotados por parches:98
+   (p), parches:726 (small, top span), §8 (area teal->oscuro) e
+   hibrido:27 (h3). h3 sin color declarado -> #f4f8ff. Ratios peor caso:
+   h3 10,48:1; p #bfd1dd 7,11:1; small/top span #8faabd 4,60:1 (ajustado,
+   declarado); area #65e7cc 7,36:1; chips 9,99-10,58:1 (fondos opacos
+   propios, no derrotados). */
+.finding-v4 h3{color:#f4f8ff !important}
+.finding-v4 p{color:#bfd1dd !important}
+.finding-v4 small{color:#8faabd !important}
+.finding-top-v4>span{color:#8faabd !important}
+.finding-v4 .finding-area-v4{color:#65e7cc !important}
+/* --- C3d .report-metrics-v4 (/informe-demostrativo/, 4 metricas) — oscuro intencional.
+   Fondo declarado (sobre seccion par #d7e5ee); peor caso #254861.
+   Textos declarados, derrotados por parches:726 (span) y §8 (strong).
+   Ratios peor caso: span #aec7d8 5,49:1; strong #65e7cc 6,36:1 (2 rem). */
+.report-metrics-v4 span{color:#aec7d8 !important}
+.report-metrics-v4 strong{color:#65e7cc !important}
+/* --- C3e .severity-scale-v4 (3 niveles) — oscuro intencional con fondo OPACO.
+   El fondo declarado rgba(16,43,65,.72) sobre #d7e5ee mezcla a #485f71 y
+   el texto declarado #acc4d4 daria 3,68:1 (FAIL): no se puede restaurar
+   solo el texto. Fondo opaco #102b41 (mismo matiz, sin transparencia)
+   para que los colores declarados pasen. Ratios: span #acc4d4 8,03:1;
+   alta #ffbd69 8,82:1; media #65e7cc 9,60:1; baja #a8c9de 8,36:1. */
+.severity-scale-v4 article{background:#102b41 !important;border:1px solid rgba(130,190,215,.22) !important}
+.severity-scale-v4 span{color:#acc4d4 !important}
+.severity-scale-v4 .high strong{color:#ffbd69 !important}
+.severity-scale-v4 .medium strong{color:#65e7cc !important}
+.severity-scale-v4 .low strong{color:#a8c9de !important}
+/* --- C3f .roadmap-v4 (3 fases) — oscuro intencional con fondo OPACO.
+   El fondo declarado rgba(15,46,70,.78) sobre #d7e5ee mezcla a #3b566b y
+   #acc4d4 daria 4,25:1 (FAIL). Fondo opaco #0f2e46 (mismo matiz).
+   Ratios: span #65e7cc 9,24:1; h3 #f4f8ff 13,15:1; p #acc4d4 7,74:1. */
+.roadmap-v4 article{background:#0f2e46 !important;border:1px solid rgba(111,185,213,.25) !important}
+.roadmap-v4 span{color:#65e7cc !important}
+.roadmap-v4 h3{color:#f4f8ff !important}
+.roadmap-v4 p{color:#acc4d4 !important}
+/* --- C3g .report-cta-v4 (cierre del informe) — oscuro intencional con fondo OPACO.
+   El fondo declarado es un tinte translucido (rgba ambar/teal .11/.08)
+   sobre seccion clara: casi blanco; el texto declarado #b9cfdb no puede
+   servirse ahi. Fondo opaco gradiente #0e2438->#0a1a2c (matiz oscuro del
+   informe, borde ambar declarado intacto). h2 sin color declarado ->
+   #f4f8ff; etiqueta .section-label a ambar #ffc857 (precedente
+   .authority-article-header; el teal §8 #0b6e66 daria ~3:1 sobre oscuro).
+   Botones: .button.primary ambar (regla global) y .button.secondary
+   blanco (hibrido:92, sigue aplicando: seccion clara) — ambos legibles
+   sobre oscuro, sin regla adicional. Ratios: h2 14,85:1; p #b9cfdb
+   9,80:1; etiqueta 10,28:1; secundario 16,46:1. */
+.report-cta-v4{background:linear-gradient(135deg,#0e2438,#0a1a2c) !important;border:1px solid rgba(255,190,70,.4) !important}
+.report-cta-v4 h2{color:#f4f8ff !important}
+.report-cta-v4 p{color:#b9cfdb !important}
+.report-cta-v4 .section-label{color:#ffc857 !important}
