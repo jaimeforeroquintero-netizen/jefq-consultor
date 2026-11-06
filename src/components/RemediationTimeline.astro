@@ -1,0 +1,58 @@
+---
+// LÍNEA TEMPORAL DE LA RUTA DE REMEDIACIÓN (B2/A1).
+// Reutiliza la gramática de ProcessDiagram (números sobre una línea,
+// teal #0b6e66 / navy #0d2840 / ámbar #ffc166, misma tipografía) en
+// variante de 3 nodos. Datos VERBATIM de la fuente única
+// src/data/informe-demostrativo.ts (remediationRoute): ningún texto
+// se redacta aquí.
+// Prop `compact`: versión sin descripciones, como cierre de la muestra
+// en /servicios/diagnostico-seguridad/. Sin `compact`, versión completa
+// en /informe-demostrativo/ (sustituye a las tarjetas de la ruta).
+import { remediationRoute } from "../data/informe-demostrativo";
+const { compact = false } = Astro.props;
+---
+
+<div class:list={["remediation-timeline", { compact }]}>
+  <ol class="timeline-steps">
+    {remediationRoute.map((fase, i) => (
+      <li>
+        <span class="timeline-num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+        <p class="timeline-phase">{fase.fase} · {fase.dias}</p>
+        <h3>{fase.titulo}</h3>
+        {!compact && <p class="timeline-desc">{fase.descripcion}</p>}
+      </li>
+    ))}
+  </ol>
+  <p class="timeline-seal">MUESTRA ILUSTRATIVA · RUTA DEL INFORME DEMOSTRATIVO</p>
+</div>
+
+<style>
+.remediation-timeline{margin-top:8px}
+.timeline-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.timeline-steps li{position:relative;padding:40px 18px 0}
+.timeline-steps li::before{content:"";position:absolute;top:17px;left:0;right:0;height:2px;background:#c8d8e2}
+.timeline-steps li:first-child::before{left:18px}
+.timeline-steps li:last-child::before{right:calc(100% - 18px)}
+.timeline-steps li::after{content:"›";position:absolute;top:6px;right:-4px;font-size:1.3rem;font-weight:900;color:#0b6e66}
+.timeline-steps li:last-child::after{display:none}
+.timeline-num{position:absolute;top:0;left:18px;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#0b6e66;color:#fff;font-size:.82rem;font-weight:900;letter-spacing:.02em}
+.timeline-steps li:nth-child(2) .timeline-num{background:#0d2840}
+.timeline-steps li:nth-child(3) .timeline-num{background:#7a5200}
+.timeline-phase{margin:0 0 6px;font-size:.75rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#0b6e66}
+.timeline-steps h3{margin:0 0 6px;font-size:1.15rem;color:#0d2840}
+.timeline-desc{margin:0;color:#40566b;font-size:.95rem}
+.timeline-seal{display:inline-block;margin:22px 0 0;padding:7px 12px;border:1px solid rgba(176,120,0,.5);border-radius:999px;color:#7a5200;background:#fff4d6;font-size:.72rem;font-weight:900;letter-spacing:.07em}
+.remediation-timeline.compact .timeline-steps li{padding-top:40px}
+.remediation-timeline.compact .timeline-steps h3{font-size:1.02rem}
+.remediation-timeline.compact .timeline-seal{margin-top:16px}
+@media(max-width:800px){
+  .timeline-steps{grid-template-columns:1fr}
+  .timeline-steps li{padding:0 0 26px 52px}
+  .timeline-steps li::before{top:0;bottom:0;left:16px;right:auto;width:2px;height:auto}
+  .timeline-steps li:first-child::before{left:16px;top:34px}
+  .timeline-steps li:last-child::before{right:auto;bottom:auto;height:0}
+  .timeline-steps li::after{content:"›";top:auto;bottom:2px;left:10px;right:auto;transform:rotate(90deg)}
+  .timeline-steps li:last-child::after{display:none}
+  .timeline-num{left:0;top:0}
+}
+</style>

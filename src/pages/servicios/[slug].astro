@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import InformeMuestra from "../../components/InformeMuestra.astro";
+import RemediationTimeline from "../../components/RemediationTimeline.astro";
 import { services, serviceBySlug } from "../../data/services";
 import { PRECIOS, precioDe, formatearCOP } from "../../data/precios";
 
@@ -66,6 +67,11 @@ const breadcrumbSchema = {
     <div class="container">
       <header class="section-header"><span>MUESTRA DEL ENTREGABLE</span><h2>Qué recibe por su inversión</h2><p>Un fragmento real del informe demostrativo: la portada y la tabla de hallazgos con prioridades. El informe completo desarrolla cada hallazgo con impacto, evidencia y acciones.</p></header>
       <InformeMuestra />
+      <div class="muestra-cierre">
+        <p class="section-label">RUTA DE REMEDIACIÓN · MUESTRA</p>
+        <h3>La ruta que sigue al informe</h3>
+        <RemediationTimeline compact={true} />
+      </div>
     </div>
   </section>
   )}
@@ -99,5 +105,6 @@ const breadcrumbSchema = {
     </div>
   </div>
 </section>
+<style>.muestra-cierre{margin-top:36px}.muestra-cierre h3{margin:10px 0 4px;font-size:clamp(1.4rem,3vw,1.9rem);color:#0d2840}</style>
 <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </Layout>

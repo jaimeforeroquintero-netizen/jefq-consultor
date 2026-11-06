@@ -1,0 +1,91 @@
+---
+// TABLA COMPARATIVA DE PLANES (B2/A3).
+// Filas = incluidos, columnas = 3 planes, ✓/—. NO sustituye las tarjetas
+// de #planes: va debajo de la rejilla como bloque secundario de comparación.
+// REGLA DURA CUMPLIDA: comparte fuente con las tarjetas — los 3 planes,
+// sus precios y sus listas de incluidos se leen de src/data/precios.ts
+// (PRECIOS / precioDe / formatearCOP), la misma fuente que alimenta la
+// rejilla de la home. Las filas son la unión de los incluidos en orden
+// de primera aparición (Esencial → Pyme → Integral); una celda es ✓ si
+// el plan incluye ese ítem exacto y — si no lo incluye, con la misma
+// honestidad que #confianza. En móvil (≤800 px) la tabla se sustituye
+// por el apilado por plan, con los mismos datos y las mismas ✓/—.
+import { PRECIOS, precioDe, formatearCOP } from "../data/precios";
+const planes = PRECIOS.filter((p) => p.producto);
+const filas: string[] = [];
+for (const p of planes) for (const item of p.incluye) if (!filas.includes(item)) filas.push(item);
+---
+
+<div class="planes-comparativa">
+  <header class="comparativa-head">
+    <p class="section-label">COMPARAR PLANES</p>
+    <h3>Qué incluye cada plan, en una sola vista</h3>
+    <p>La misma información de las tarjetas, ordenada para comparar: ✓ incluido en el plan, — no incluido en el plan.</p>
+  </header>
+  <div class="comparativa-tabla-wrap">
+    <table class="comparativa-tabla">
+      <caption>Comparativa de incluidos por plan (valores de entrada)</caption>
+      <thead>
+        <tr>
+          <th scope="col">Incluido</th>
+          {planes.map((p) => (
+            <th scope="col">{p.nombre}<span>Desde {formatearCOP(precioDe(p.id))}</span></th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {filas.map((fila) => (
+          <tr>
+            <th scope="row">{fila}</th>
+            {planes.map((p) => (
+              <td>{p.incluye.includes(fila) ? <span class="comparativa-si" aria-label="Incluido">✓</span> : <span class="comparativa-no" aria-label="No incluido">—</span>}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div class="comparativa-apilado" aria-label="Comparativa de planes por plan">
+    {planes.map((p) => (
+      <article class="comparativa-plan">
+        <h4>{p.nombre}</h4>
+        <p class="comparativa-precio">Desde {formatearCOP(precioDe(p.id))}</p>
+        <ul>
+          {filas.map((fila) => (
+            <li>{p.incluye.includes(fila) ? <span class="comparativa-si" aria-label="Incluido">✓</span> : <span class="comparativa-no" aria-label="No incluido">—</span>}{fila}</li>
+          ))}
+        </ul>
+      </article>
+    ))}
+  </div>
+  <p class="comparativa-nota">Valores de entrada sujetos al alcance acordado. Consultoría remota desde {formatearCOP(precioDe("consultoria-hora"))} COP por hora. Hardening de sistemas desde {formatearCOP(precioDe("hardening"))} COP.</p>
+</div>
+
+<style>
+.planes-comparativa{margin-top:34px;padding:28px;border:1px solid #d7e2ea;border-radius:20px;background:#fff;text-align:left}
+.comparativa-head h3{margin:10px 0 8px;font-size:clamp(1.4rem,3vw,1.9rem);color:#0d2840}
+.comparativa-head p{margin:0;color:#40566b;max-width:62ch}
+.comparativa-tabla-wrap{overflow-x:auto;margin-top:18px}
+.comparativa-tabla{width:100%;border-collapse:collapse;min-width:560px}
+.comparativa-tabla caption{text-align:left;padding:10px 0;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#40566b}
+.comparativa-tabla th,.comparativa-tabla td{padding:11px 10px;border-top:1px solid #d7e2ea;vertical-align:top;text-align:left;font-size:.95rem;color:#22394d}
+.comparativa-tabla thead th{border-top:0;color:#0d2840;font-size:.95rem}
+.comparativa-tabla thead th span{display:block;margin-top:4px;font-size:.82rem;font-weight:700;color:#0b6e66}
+.comparativa-tabla tbody th{font-weight:700}
+.comparativa-tabla td{text-align:center}
+.comparativa-tabla tbody th:first-child{width:40%}
+.comparativa-si{color:#0b6e66;font-weight:900;font-size:1.1rem}
+.comparativa-no{color:#8aa0b0;font-weight:900;font-size:1.1rem}
+.comparativa-apilado{display:none}
+.comparativa-nota{margin:18px 0 0;color:#40566b;font-size:.92rem}
+@media(max-width:800px){
+  .comparativa-tabla-wrap{display:none}
+  .comparativa-apilado{display:grid;gap:14px;margin-top:18px}
+  .comparativa-plan{padding:20px;border:1px solid #d7e2ea;border-radius:16px;background:#f8fbfd}
+  .comparativa-plan h4{margin:0;color:#0d2840;font-size:1.15rem}
+  .comparativa-precio{margin:6px 0 12px;color:#0b6e66;font-weight:800}
+  .comparativa-plan ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .comparativa-plan li{display:flex;gap:10px;align-items:baseline;color:#22394d;font-size:.95rem}
+  .planes-comparativa{padding:20px}
+}
+</style>

@@ -1,0 +1,76 @@
+---
+// ANATOMÍA DE UN HALLAZGO COMPLETO (B2/A2).
+// Un solo hallazgo — H-01 — desarrollado de principio a fin con sus
+// 9 campos VERBATIM de la fuente única src/data/informe-demostrativo.ts
+// (id, área, prioridad, nº de acciones, situación observada, impacto
+// potencial, evidencia redactada, acción recomendada, beneficio esperado).
+// Nada se redacta aquí: se toma findings[0]. El sello "MUESTRA
+// ILUSTRATIVA" es parte de la ficha, como en InformeMuestra (M3).
+// Se ubica bajo la tabla de 5 hallazgos en /informe-demostrativo/.
+import { findings } from "../data/informe-demostrativo";
+const hallazgo = findings[0];
+const campos = [
+  ["Situación observada", hallazgo.observation],
+  ["Impacto potencial", hallazgo.impact],
+  ["Evidencia redactada", hallazgo.evidence],
+  ["Acción recomendada", hallazgo.recommendation],
+  ["Beneficio esperado", hallazgo.benefit],
+];
+---
+
+<article class="hallazgo-anatomia" aria-label="Anatomía del hallazgo H-01 de la muestra">
+  <div class="anatomia-top">
+    <span class="anatomia-sello">MUESTRA ILUSTRATIVA · NO CORRESPONDE A UN CLIENTE REAL</span>
+    <span class="anatomia-id">{hallazgo.id}</span>
+  </div>
+  <header class="anatomia-head">
+    <p class="section-label">ANATOMÍA DE UN HALLAZGO COMPLETO</p>
+    <h3>Así se lee un hallazgo dentro del informe</h3>
+    <p>Un hallazgo completo de la muestra, con los nueve campos que lleva cada hallazgo del informe: no solo qué se encontró, también qué implica, con qué evidencia y qué hacer.</p>
+  </header>
+  <dl class="anatomia-ficha">
+    <div><dt>Área</dt><dd>{hallazgo.area}</dd></div>
+    <div><dt>Prioridad</dt><dd><strong class:list={["anatomia-chip", hallazgo.priority.toLowerCase()]}>{hallazgo.priority}</strong></dd></div>
+    <div><dt>Acciones asociadas</dt><dd>{hallazgo.actions}</dd></div>
+  </dl>
+  <ol class="anatomia-campos">
+    {campos.map(([etiqueta, texto], i) => (
+      <li>
+        <span class="anatomia-num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+        <h4>{etiqueta}</h4>
+        <p>{texto}</p>
+      </li>
+    ))}
+  </ol>
+  <footer class="anatomia-pie">
+    <p><strong>Muestra ilustrativa.</strong> La situación, la evidencia y las cifras fueron creadas únicamente para demostrar la estructura del entregable y no corresponden a un cliente real.</p>
+  </footer>
+</article>
+
+<style>
+.hallazgo-anatomia{background:#fff;border:1px solid #d7e2ea;border-radius:20px;box-shadow:0 24px 60px rgba(13,40,64,.12);overflow:hidden;text-align:left}
+.anatomia-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:18px 26px 0}
+.anatomia-sello{display:inline-flex;padding:7px 12px;border:1px solid rgba(176,120,0,.5);border-radius:999px;color:#7a5200;background:#fff4d6;font-size:.72rem;font-weight:900;letter-spacing:.07em}
+.anatomia-id{display:inline-grid;place-items:center;min-width:52px;padding:7px 12px;border-radius:999px;background:#0d2840;color:#fff;font-size:.85rem;font-weight:900;letter-spacing:.04em}
+.anatomia-head{padding:20px 26px 4px}
+.anatomia-head h3{margin:10px 0 8px;font-size:clamp(1.5rem,3.4vw,2.1rem);color:#0d2840}
+.anatomia-head p{margin:0;color:#40566b;max-width:62ch}
+.anatomia-ficha{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 26px 6px;padding:0}
+.anatomia-ficha div{padding:14px 16px;background:#f3f7fa;border:1px solid #d7e2ea;border-radius:14px}
+.anatomia-ficha dt{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#40566b}
+.anatomia-ficha dd{margin:6px 0 0;font-size:1.1rem;font-weight:800;color:#0d2840}
+.anatomia-chip{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.85rem}
+.anatomia-chip.alta{color:#2b1a00;background:#ffc166}
+.anatomia-chip.media{color:#00271f;background:#65e7cc}
+.anatomia-chip.baja{color:#08283a;background:#a8d8ef}
+.anatomia-campos{list-style:none;margin:14px 0 0;padding:6px 26px 10px;display:grid;grid-template-columns:1fr;gap:0}
+.anatomia-campos li{position:relative;padding:18px 0 18px 52px;border-top:1px solid #d7e2ea}
+.anatomia-num{position:absolute;top:18px;left:0;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#0b6e66;color:#fff;font-size:.82rem;font-weight:900}
+.anatomia-campos li:nth-child(3) .anatomia-num{background:#0d2840}
+.anatomia-campos li:nth-child(5) .anatomia-num{background:#7a5200}
+.anatomia-campos h4{margin:0 0 6px;font-size:.82rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em;color:#0d2840}
+.anatomia-campos p{margin:0;color:#40566b;max-width:68ch}
+.anatomia-pie{padding:18px 26px 24px;border-top:1px solid #d7e2ea}
+.anatomia-pie p{margin:0;max-width:68ch;color:#40566b;font-size:.92rem}
+@media(max-width:700px){.anatomia-top,.anatomia-head,.anatomia-campos,.anatomia-pie{padding-left:18px;padding-right:18px}.anatomia-ficha{grid-template-columns:1fr;margin-left:18px;margin-right:18px}}
+</style>
