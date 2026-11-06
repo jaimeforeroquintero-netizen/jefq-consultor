@@ -15,7 +15,7 @@ const faqSchema = {
   }))
 };
 ---
-<ServiceLanding service={service} />
+<ServiceLanding service={service}>
 
 <section class="price-band">
   <div class="container" data-reveal>
@@ -160,3 +160,4 @@ const faqSchema = {
 </section>
 
 <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</ServiceLanding>

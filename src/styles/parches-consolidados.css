@@ -356,8 +356,11 @@ main .why p.why-diff b{color:#0b6e66 !important}
       .jefq-ia fixed, z-901), su globo (.jefq-ia-teaser, z-900) y la barra fija
       superior (.scroll-cta, z-990), cuya pastilla "Valoración" cae
       sistemáticamente sobre las primeras letras de este botón centrado cuando
-      la fila pasa bajo la barra. Los botones de esta fila suben a z-995:
-      quedan por encima del cromo fijo y por debajo de la cabecera (z-1000). */
+      la fila pasa bajo la barra. CORRECCIÓN (2026-11-06, B4): la regla z-995
+      prometida aquí nunca se escribió (0 reglas z-index:995 en el CSS
+      servido, verificado por grep); la afirmación anterior era falsa y se
+      retira. No se añade ninguna regla z-index sin evidencia de un
+      solapamiento persistente. */
 /* ==========================================================================
    PASADA 4 (2026-11-04) — H1: contraste y jerarquía.
    Ronda 2 de diseño, mejora principal (#1). Dos defectos medidos en el
