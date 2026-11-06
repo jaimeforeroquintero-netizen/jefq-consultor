@@ -727,3 +727,83 @@ main .why p.why-diff b{color:#0b6e66 !important}
    del archivo (último cargado): gana por orden. Solo color.
    ========================================================================== */
 main small,.proof span,.hero-trust,.price-note,.service-top small,.guarantee small,.testi-who span,.testi-note,.more-links,.finding-v4 small,.finding-top-v4>span,.report-metrics-v4 span,.contact-data small,.compare-table thead th,.compare-note,.contact-form small,.calc-bar-row>span,.calc-result small,.smart-form small,.privacy-note{color:#40566b !important}
+
+/* ==========================================================================
+   MISIÓN 80 — B1 (2026-11-06) — SISTEMA TIPOGRÁFICO.
+   Rama mision80-tipografia, sobre main 901c04b. Solo presentación: sin
+   textos, precios, familias ni dependencias nuevas. Inter se mantiene.
+   Reversibilidad: revert del commit; este bloque + el token H1 del híbrido
+   (jefq-diseno-hibrido-v1.css, cap 3,35rem → 4,5rem) + 5 reglas de tarjeta
+   en su archivo de origen (global.css, seo-authority.css, fase-f.css,
+   authority-premium-v3.css, blog.astro).
+   NO TOCA: hero como concepto, M2/M3/M4, bundle /quien-soy/, cierre de
+   contraste, precios S1, textos. Visual PENDIENTE para Pax.
+   ========================================================================== */
+/* T3 — TOKENS DE ETIQUETA Y LEAD. Un solo token de etiqueta de sección:
+   12 px / 800 / tracking .14em. No se toca .eyebrow (hero, bloque cerrado:
+   sigue a 15 px por el híbrido). Micro-etiquetas de tarjeta (badge, chips,
+   .case-head span) fuera de este token: se dejan como están. */
+:root{
+  --jefq-label-size:.75rem;
+  --jefq-label-weight:800;
+  --jefq-label-tracking:.14em;
+  --jefq-lead-min:1.19rem;
+  --jefq-lead-max:1.25rem;
+}
+/* El !important es necesario aquí: el híbrido fija .section-label a 15 px
+   con !important y aplana todos los p a 17 px con !important. parches es
+   el último archivo cargado: gana por orden a igualdad de importancia.
+   `.smart-hero .smart-kicker` va explícito porque .smart-kicker es un <p>
+   en /valoracion/ y la regla de lead `.smart-hero p` (0,1,1) superaría al
+   token (0,1,0): con (0,2,0) el kicker queda en 12 px. */
+.section-head>span,.label,.section-label,.f-kicker,.ev2-kicker,.smart-kicker,.smart-hero .smart-kicker,.service-detail-label{
+  font-size:var(--jefq-label-size) !important;
+  font-weight:var(--jefq-label-weight) !important;
+  letter-spacing:var(--jefq-label-tracking) !important;
+}
+/* T3 — NIVEL LEAD. Intro de hero 19–20 px, lh 1,5. Antes se servía a
+   17 px, idéntica al cuerpo (el !important del híbrido sobre p derrotaba
+   los clamp declarados en global.css). Solo intros de hero; el cuerpo
+   17/18 px no se toca. .legal-hero p queda fuera a propósito (nota de
+   versión, no intro). */
+.hero-copy>p,.landing-hero p,.f-hero p,.authority-hero p,.authority-article-header p,.ev2-hero p,.trust-hero p,.smart-hero p,.growth-hero p,.commercial-intro,.service-detail-lead,.report-lead{
+  font-size:clamp(var(--jefq-lead-min),1.6vw,var(--jefq-lead-max)) !important;
+  line-height:1.5 !important;
+}
+/* T5 — TOPE DE MEDIDA DE LECTURA 720–760 px. Las legales corrían a ancho
+   completo del .container (1180 px, ~131–139 car./línea) sin ninguna regla
+   .prose; el cuerpo de artículo de blog estaba a 850 px. .authority-
+   article-body se baja 850 → 760 px en su archivo de origen
+   (seo-authority.css); aquí solo el tope de legales. */
+.legal .prose{max-width:760px}
+/* T6 — CIFRAS TABULARES. Precios, métricas del informe y de evidencia, y
+   la cifra de pérdida de la calculadora usan figuras tabulares de Inter
+   (alinean en columna). Sin cambio de valores ni de tamaños: solo la
+   variante numérica. La unificación de tamaños de métrica (27–35 px) queda
+   fuera de B1: no se tocan. */
+.price,.report-metrics-v4 strong,.ev2-metrics strong,.ev2-matrix-card strong,.calc-loss{font-variant-numeric:tabular-nums}
+
+/* ==========================================================================
+   MISIÓN 80 — B1 CORRECCIÓN DE CONTRASTE (2026-11-06) — .f-authority-card.
+   Defecto PREEXISTENTE en /por-que-jefq/ (no regresión de B1): la tarjeta es
+   oscura (gradiente linear-gradient(145deg,#0e253fc7,#06111ff2) sobre sección
+   clara #d7e5ee → compuesto #3a4f65→#111c2a) pero su texto quedaba oscuro por
+   la cascada: h2 sin color propio (gana `main h2{color:#0d2840!important}`,
+   parches:97) 1,78–1,14:1; p #40566b (`main p{...!important}`, parches:98)
+   1,11–2,26:1; icono #405466 en escritorio / #364b5f en móvil ≤720px (regla
+   hybrid:94 de spans, especificidad 0,4,3 > 0,1,0 de .f-authority-icon, que
+   derrota su `color:var(--cyan)`) 1,14:1 / 1,23:1 sobre su chip. Todo FAIL.
+   Corrección: colores claros explícitos con !important. El !important es
+   necesario: sin él pierden contra `main p`/`main h2` (!important) y, en el
+   icono, contra la regla hybrid de spans. Solo color: no se tocan fondo,
+   textos, tamaños (jerarquía H1>H2>H3 de B1 intacta) ni otras páginas.
+   Verificado por cálculo WCAG (luminancia relativa) sobre el fondo compuesto
+   peor caso (extremo más claro del gradiente #3a4f65; chip del icono #385a71):
+   h2 #ffffff 8,45:1; p #d0deeb 6,17:1; icono #65e5ff 4,95:1. Todos ≥ 4,5:1.
+   NOTA: el cian sugerido #23d7ff se descartó para el icono: da 4,26:1 sobre
+   su chip (fondo propio rgba(37,215,255,.08) sobre el gradiente) < 4,5:1.
+   #65e5ff es el cian ya usado en .authority-card>span para el mismo rol.
+   ========================================================================== */
+.f-authority-card h2{color:#ffffff !important}
+.f-authority-card p{color:#d0deeb !important}
+.f-authority-card .f-authority-icon{color:#65e5ff !important}

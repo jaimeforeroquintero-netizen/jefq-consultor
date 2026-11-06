@@ -60,8 +60,13 @@ h1{font-size:clamp(2.25rem, 11vw, 3rem)}}
    y superficies claras en gris azulado. */
 /* El cuerpo conserva 17 px en movil y 18 px en escritorio. */
 body{font-size:1.0625rem !important;line-height:1.65}
-/* El H1 sigue teniendo impacto, pero deja respirar el primer pantallazo. */
-h1, .hero h1, .landing-hero h1{font-size:clamp(2.5rem, 4.2vw, 3.35rem) !important;line-height:1.08 !important;letter-spacing:-0.035em;text-wrap:balance}
+/* El H1 sigue teniendo impacto, pero deja respirar el primer pantallazo.
+   MISIÓN 80 B1 (2026-11-06): token H1 unificado con el H1 de hero/landing
+   (Pasadas 4 / Lote 4: 2,9rem / 5,2vw / 4,5rem). El cap anterior de 3,35rem
+   dejaba el H1 genérico (53,6 px) por debajo del H2 de sección (3,8rem =
+   60,8 px): inversión real en /por-que-jefq/. Con 5,2vw > 4,8vw y tope
+   4,5rem > 3,8rem, H1 > H2 en todos los anchos. */
+h1, .hero h1, .landing-hero h1{font-size:clamp(2.9rem, 5.2vw, 4.5rem) !important;line-height:1.08 !important;letter-spacing:-0.035em;text-wrap:balance}
 /* Textos de lectura y descripciones: minimo practico de 17 px. */
 p, li, label, .service-card p, .landing-summary span, .landing-list li, .landing-process p, details p{font-size:max(1.0625rem, 17px) !important;line-height:1.62 !important}
 /* Microtexto legible sin competir con los encabezados. */
@@ -74,7 +79,7 @@ main>section:not(.landing-hero):not(.dark-section) :is( .service-card,.plan-card
 /* Un poco mas de aire sin agrandar en exceso la pagina. */
 .service-card{padding:clamp(1.35rem, 2.35vw, 1.85rem) !important}
 @media (min-width: 900px){body{font-size:1.125rem !important}}
-@media (max-width: 720px){h1, .hero h1, .landing-hero h1{font-size:clamp(2.1rem, 9vw, 2.75rem) !important;letter-spacing:-0.025em}
+@media (max-width: 720px){h1, .hero h1, .landing-hero h1{font-size:clamp(2.3rem, 9vw, 2.75rem) !important;letter-spacing:-0.025em}
 
 
 p, li, label, .service-card p{font-size:max(1rem, 16px) !important}

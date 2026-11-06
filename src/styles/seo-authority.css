@@ -6,7 +6,7 @@
 .authority-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .authority-card{display:flex;min-height:265px;flex-direction:column;padding:27px;background:linear-gradient(145deg,rgba(17,45,76,.88),rgba(7,20,36,.96));border:1px solid rgba(139,190,230,.19);border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.22)}
 .authority-card>span{color:#65e5ff;font-size:.69rem;font-weight:900;letter-spacing:.16em}
-.authority-card h2{margin:15px 0 10px;font-size:1.32rem}
+.authority-card h2{margin:15px 0 10px;font-size:1.5rem;font-weight:750}
 .authority-card p{color:#aebfd1}
 .authority-card a{margin-top:auto;color:#ffc857;font-weight:850}
 .authority-card:hover{border-color:rgba(255,193,79,.52);transform:translateY(-4px)}
@@ -15,7 +15,7 @@
 .authority-cta p{color:#acbfd2}
 .authority-article-header{padding:105px 0 60px;background:radial-gradient(circle at 80% 10%,rgba(255,190,70,.09),transparent 35%),linear-gradient(180deg,#07172a,#06111f)}
 .authority-meta{display:flex;gap:16px;margin-top:24px;color:#8fa6bb;font-size:.78rem}
-.authority-article-body{max-width:850px;padding-top:65px;padding-bottom:105px}
+.authority-article-body{max-width:760px;padding-top:65px;padding-bottom:105px}
 .authority-article-body section{padding:0 0 34px;margin-bottom:34px;border-bottom:1px solid rgba(139,190,230,.15)}
 .authority-article-body h2{margin:0 0 12px;font-size:clamp(1.5rem,3vw,2.15rem)}
 .authority-article-body p{color:#b7c8d8;font-size:1.02rem}
