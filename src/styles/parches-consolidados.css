@@ -1086,3 +1086,6 @@ main .growth-card a{color:#67f2ae !important}
 .service-detail-orb{background:linear-gradient(135deg,#0f9d8f14,#ffb5471f)}
 .hero .button.primary{box-shadow:0 12px 32px #ff9f1c38,inset 0 0 0 1px #ff9f1c40}
 .hero .button.primary:hover{box-shadow:0 16px 44px #ff9f1c52,inset 0 0 0 1px #ff9f1c59}
+
+/* Cierre-final (Misión 80) — condición de contraste de Copilot: tras el reorden, la etiqueta CONTACTO (#0b6e66) queda en 4,48:1 sobre #cfdfeb. Solo esta etiqueta; las otras superficies 4,48:1 (tira de evidencia) no se tocan. Precedente: .report-hero-v4 .section-label #095e55 (5,62:1). Medido efectivo: #095e55 sobre #cfdfeb = 5,62:1. */
+#contacto .label{color:#095e55 !important}
