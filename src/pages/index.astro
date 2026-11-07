@@ -173,7 +173,16 @@ btn.addEventListener('click',calc);inp.addEventListener('keydown',function(e){if
 #confianza .trust-no li::before{content:"— ";color:#0b6e66;font-weight:700}
 .trust-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 20px;margin-top:38px;text-align:center}
 #confianza .trust-cta p{margin:0;font-size:1.02rem;font-weight:700;color:#14202e}
-/* LOTE 3 — pulido D1 (21:33): botones de planes alineados abajo; precio sin ruptura. */
+/* L2 (2026-11-07): tarjeta 07 huérfana — 7 tarjetas en 3 columnas dejan
+   3+3+1 con 802,7 px (68 %) de vacío a la derecha de la 07 en desktop.
+   Sin octava tarjeta, sin reordenar y sin tocar móvil: la última tarjeta
+   se centra en la tercera fila (columna 2). El vacío queda simétrico y
+   la 07 se lee como cierre deliberado, no como resto. Límite inferior
+   721 px (NO 681): el híbrido impone 1 columna hasta 720 px y
+   grid-column:2 ahí crearía una columna implícita (verificado: a 700 px
+   la rejilla se partía en 2 columnas desiguales). A ≤720 px la rejilla
+   es 1 columna y la regla no aplica. */
+@media(min-width:721px){#servicios .service-grid .service-card:last-child{grid-column:2}}
 .price-card{display:flex;flex-direction:column}
 .price-card ul{flex:1}
 .price-card .price{font-size:clamp(1.5rem,2.8vw,1.9rem);white-space:nowrap}
