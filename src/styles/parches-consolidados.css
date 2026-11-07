@@ -1002,3 +1002,87 @@ main small,.proof span,.hero-trust,.price-note,.service-top small,.guarantee sma
 main .authority-card a{color:#ffc857 !important}
 main .growth-card a{color:#67f2ae !important}
 .hallazgo-anatomia .anatomia-pie{background:#fff !important}
+
+/* ==========================================================================
+   MISIÓN 80 — IDENTIDAD RESIDUAL (2026-11-06) — recolor mínimo A1+A2+A3+A-bajo.
+   Revalidación DELTA-FIRST desde producción viva 4dfe713 (CSS servido
+   Layout.BXPx0Sng.css md5 6cfe4f9c… + estilo COMPUTADO por CDP sobre el
+   build byte-idéntico; nunca el color declarado como sustituto).
+   Clasificación por candidato (auditoría 901c04b revalidada, no copiada):
+   - A1 radar del hero: VIVO. RESIDUO DE MARCA INCOHERENTE. 8 reglas
+     (global.css:43-63). El objeto más visible del hero sigue cian-verde
+     (#2dd4ff/#5cf2b5 efectivos) mientras el sistema es teal/ámbar/navy.
+     Se recoloran anillos/cruz/barrido/puntos al tinte teal #0f9d8f
+     (mismo alfa que el original, solo cambio de matiz), núcleo a ámbar
+     #ffb547→#f2a100 con "J" navy #0d2840 (8,57:1 sobre #ffb547; mismo
+     par que el logotipo vivo logo-jefq-oscuro.svg), numerales 01-03 a
+     #0f9d8f. CORRECCIÓN A LA AUDITORÍA: la auditoría proponía los
+     numerales en teal #0b6e66, pero sobre la tarjeta oscura #051425 eso
+     da 3,03:1 FAIL (texto 18px negrita, exige 4,5:1); #0f9d8f da
+     5,51:1 PASS. El ScanTerminal dentro de .visual NO se toca (E).
+   - A2 escudo + órbitas «Por qué JEFQ»: VIVO. RESIDUO DE MARCA
+     INCOHERENTE. 2 reglas de color (global.css:99-101;
+     services-premium.css:10). Escudo a ámbar/navy como el logotipo
+     (gradiente #ffb547→#f2a100, "J" #0d2840, sombra ámbar mismo alfa);
+     órbitas a teal #0b6e66 (superficie CLARA #eef6fb). `.orbit-b`
+     conserva su borde ámbar: la regla usa :not(.orbit-b) para no
+     pisarlo. .o1/.o2 solo fijan tamaño, sin color: no se tocan.
+   - A3 órbita de servicio: VIVO. RESIDUO DE MARCA INCOHERENTE. 5 reglas
+     de color (services-premium.css:3-17). CORRECCIÓN A LA AUDITORÍA: el
+     hero de servicio NO es oscuro en el render: su fondo EFECTIVO es
+     #cfdfeb (regla hybrid nth-of-type impar vence al #eef6fb
+     !important); el radial cian de .service-detail-hero está MUERTO y
+     no se toca. Lo vivo es el disco (anillos, núcleo tricolor, nodos)
+     sobre claro: anillos/nodos a teal #0b6e66, núcleo a ámbar
+     #ffb547→#f2a100 ("J" conserva #07111d, 10,80:1), radiales al patrón
+     de glow claro #0f9d8f14 (el mismo de .hero/.contact). .orbit-a no
+     tiene color propio (hereda .orbit): no necesita regla. .orbit-b y
+     .orbit-node (ámbar M2) no se tocan.
+   - A4 numerales de cobertura: REFUTADO — NO SE TOCA. El color
+     DECLARADO es var(--cyan), pero el EFECTIVO medido por CDP
+     (CSS.getMatchedStylesForNode) es #40566b: la regla hybrid
+     `main>section:not(.landing-hero):not(.dark-section)
+     span:not(.section-label):not(.eyebrow):not(.step-number):not(.badge)`
+     (jefq-diseno-hibrido-v1.css:94, especificidad 0,6,3) vence a
+     `.local-grid article>span` (0,1,2). #40566b sobre tarjeta blanca
+     = 7,60:1 PASS (mismo par que .anatomia-pie). El 1,75:1 alegado por
+     la auditoría y el DELTA §5/§6 NO existe en el render: no hay
+     defecto de contraste vivo que corregir ni doble beneficio que
+     reclamar. A4 queda CONSERVADO tal cual.
+   - A-bajo halo del CTA del hero: VIVO. RESIDUO DE MARCA INCOHERENTE
+     (menor). 2 reglas (global.css:306-307): sombra cian alrededor del
+     botón ya ámbar. Sombras a ámbar #ff9f1c con los mismos alfas
+     (token ya usado por .button.primary:hover, #ff9f1c52). La regla
+     `.button.primary` con sombra cian está MUERTA (la vence la ámbar
+     posterior de igual especificidad): no se toca.
+   CONSERVADO EXPRESAMENTE (con función demostrada, verificado vivo en
+   el CSS servido): chatbot jefq-ia-* (17 reglas, identidad propia,
+   AAA 10,76:1); ScanTerminal (8 reglas, recurso explicativo);
+   funcionales (5: .skip, .quiz-progress i, .calc-fill.diag,
+   .checklist input, .commercial-result); decoración útil (16 reglas de
+   baja saliencia, incl. .grid-bg, .orb-a/.orb-b, radiales de héroes,
+   .service-card:after, .guarantee-badge); hover de menú (1 regla);
+   todo lo ya recolorado a teal/ámbar/blanco. NO «cero cian»: M2 es un
+   SISTEMA, no una prohibición de colores. 0 contenido, 0 rutas,
+   0 precios. Solo color, solo este bloque.
+   Puntuaciones SIN CAMBIO (74/86/71,94): la ganancia de identidad es
+   solo CANDIDATA (Identidad 7→8, Coherencia 7→8) hasta la revisión
+   visual de Pax, que queda PENDIENTE.
+   ========================================================================== */
+.visual{border-color:#0f9d8f40}
+.radar{background:radial-gradient(circle,#0f9d8f1c,transparent 64%);border-color:#0f9d8f30}
+.ring{border-color:#0f9d8f2b}
+.cross{background:#0f9d8f21}
+.sweep{background:linear-gradient(90deg,#0f9d8f,transparent)}
+.core{color:#0d2840;background:linear-gradient(145deg,#ffb547,#f2a100);box-shadow:0 0 34px #ffb54747}
+.dot{background:#0f9d8f;box-shadow:0 0 13px #0f9d8f}
+.visual-steps b{color:#0f9d8f}
+.shield{color:#0d2840;background:linear-gradient(145deg,#ffb547,#f2a100);filter:drop-shadow(0 20px 35px #ffb5472e)}
+.orbit:not(.orbit-b){border-color:#0b6e664d}
+.service-orbit{background:radial-gradient(circle,#0f9d8f14,transparent 66%);border-color:#0b6e662e}
+.orbit-core{background:linear-gradient(135deg,#ffb547,#f2a100);box-shadow:0 0 50px #ffb54747}
+.node-b{background:#0b6e66;box-shadow:0 0 20px #0b6e66}
+.node-c{background:#0b6e66;box-shadow:0 0 20px #0b6e66}
+.service-detail-orb{background:linear-gradient(135deg,#0f9d8f14,#ffb5471f)}
+.hero .button.primary{box-shadow:0 12px 32px #ff9f1c38,inset 0 0 0 1px #ff9f1c40}
+.hero .button.primary:hover{box-shadow:0 16px 44px #ff9f1c52,inset 0 0 0 1px #ff9f1c59}
