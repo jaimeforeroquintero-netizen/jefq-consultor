@@ -1,8 +1,8 @@
 /* JEFQ SEO AUTHORITY V1 */
-.authority-hero{padding:110px 0 72px;background:radial-gradient(circle at 20% 10%,rgba(37,215,255,.13),transparent 35%),linear-gradient(180deg,#071629,#06111f);border-bottom:1px solid rgba(139,190,230,.18)}
+/* R2: .authority-hero vive solo en authority-real-v1.css (definición única). */
 .authority-hero-inner{max-width:900px}
-.authority-hero h1, .authority-article-header h1{max-width:880px;margin:14px 0 18px;font-size:clamp(2.6rem,7vw,5rem);line-height:1.02;letter-spacing:-.055em}
-.authority-hero p, .authority-article-header p{max-width:760px;color:#b8cadb;font-size:1.08rem}
+.authority-article-header h1{max-width:880px;margin:14px 0 18px;font-size:clamp(2.6rem,7vw,5rem);line-height:1.02;letter-spacing:-.055em}
+.authority-article-header p{max-width:760px;color:#b8cadb;font-size:1.08rem}
 .authority-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .authority-card{display:flex;min-height:265px;flex-direction:column;padding:27px;background:linear-gradient(145deg,rgba(17,45,76,.88),rgba(7,20,36,.96));border:1px solid rgba(139,190,230,.19);border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.22)}
 .authority-card>span{color:#65e5ff;font-size:.69rem;font-weight:900;letter-spacing:.16em}
@@ -29,6 +29,6 @@
 @media (max-width:900px){.authority-grid{grid-template-columns:repeat(2,1fr)}
 .authority-cta{align-items:flex-start;flex-direction:column}}
 @media (max-width:620px){.authority-grid{grid-template-columns:1fr}
-.authority-hero, .authority-article-header{padding:78px 0 48px}
+.authority-article-header{padding:78px 0 48px}
 .authority-card{min-height:0}
 .authority-actions .button{width:100%}}

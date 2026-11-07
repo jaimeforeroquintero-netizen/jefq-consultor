@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ServiceProcess from "../../components/ServiceProcess.astro"; // R2: render único del proceso B
 import InformeMuestra from "../../components/InformeMuestra.astro";
 import RemediationTimeline from "../../components/RemediationTimeline.astro";
 import { services, serviceBySlug } from "../../data/services";
@@ -79,9 +80,7 @@ const breadcrumbSchema = {
   <section class="section dark-section">
     <div class="container">
       <header class="section-header"><span>PROCESO</span><h2>Una intervención clara y documentada</h2></header>
-      <div class="service-process-grid">
-        {service.process.map((step: {title:string;text:string}, index: number) => <article><strong>{String(index+1).padStart(2,"0")}</strong><h3>{step.title}</h3><p>{step.text}</p></article>)}
-      </div>
+      <ServiceProcess steps={service.process} />
     </div>
   </section>
 

@@ -4,22 +4,19 @@
 // numeración 01–04 y los textos VERBATIM de la home (#metodologia).
 // Fuente única: este componente. La home y /como-trabajamos/ lo importan,
 // así que el método no se duplica en dos versiones distintas.
-// NOTA DE UNIFICACIÓN (decisión para Jaime): /como-trabajamos/ publicaba
-// una lista propia de 5 pasos ("Valoración inicial" … "Presentación y
-// acompañamiento") distinta de los 4 pasos de la home. Este candidato la
-// sustituye por el mismo diagrama de 4 pasos; los 5 textos retirados quedan
-// registrados en CANDIDATO_M3_MUESTRA_Y_PROCESO_2026-11-05.md y la
-// sustitución es reversible por git. NO se tocaron los procesos propios de
-// cada servicio (/servicios/[slug]) ni ConversionEvidence.
-// Prop `candidato`: muestra la marca provisional "CANDIDATO — NO PUBLICADO"
-// de la preview; debe retirarse (candidato={false}) al aprobarse.
-const steps = [
+// R2 (2026-11-07): /ciberseguridad-bogota/ también lo importa (antes
+// duplicaba el mismo método a mano en `.process` inline). Prop `steps`
+// opcional: solo para las 2 localizaciones verbatim de Bogotá (01 "de su
+// empresa en Bogotá", 02 "por escrito"); sin ella rige el canónico.
+// NO se tocaron los procesos propios de cada servicio (/servicios/[slug],
+// render único ServiceProcess) ni RemediationTimeline.
+const CANONICAL_STEPS = [
   ["01", "Conocer el contexto", "Objetivos, activos, restricciones y riesgos."],
   ["02", "Definir el alcance", "Autorización, límites y condiciones de ejecución."],
   ["03", "Evaluar con control", "Pruebas proporcionales y evidencia organizada."],
   ["04", "Entregar y acompañar", "Prioridades, remediación y seguimiento."],
 ];
-const { candidato = false } = Astro.props;
+const { candidato = false, steps = CANONICAL_STEPS } = Astro.props;
 ---
 
 <div class="process-diagram">
