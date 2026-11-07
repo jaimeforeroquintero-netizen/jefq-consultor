@@ -1,0 +1,176 @@
+---
+// COMPARATIVA PROGRESIVA 5×3 — R3b PREPARABLE, NO PUBLICADA (2026-11-07).
+// ---------------------------------------------------------------------------
+// ESTADO: arquitectura + componente + responsive + estructura de datos, con
+// placeholders INTERNOS no publicables. NO está importada en ninguna página
+// (grep: cero importaciones de PlanesComparativaProgresiva) y la preview R3
+// MANTIENE VISIBLE la tabla actual (PlanesComparativa.astro, 17 filas ✓/—).
+// NO conectar a index.astro hasta que Jaime resuelva el dato material.
+//
+// DATO MATERIAL NO DETERMINADO (F2 §1.1): ¿Seguridad Integral incluye
+// realmente informe? La tabla actual marca — en Integral para «Informe
+// ejecutivo» e «Informe técnico y ejecutivo», pero la descripción del plan
+// en precios.ts dice «…hardening e informes». Pregunta a Jaime:
+//   (A) Integral incluye informe ejecutivo
+//   (B) Integral incluye informe técnico Y ejecutivo
+//   (C) Integral incluye otro tipo de informe (¿cuál?)
+//   (D) Integral NO incluye informe (y sobra «informes» en su descripción)
+// Hasta entonces, la celda Informe/Integral es un PLACEHOLDER explícito
+// («Por confirmar»), NUNCA un ✓ ni un —: un — repetiría el falso negativo
+// actual y un ✓ inventaría el dato.
+//
+// FUENTE DE LOS VALORES CONOCIDOS: los textos existentes de
+// src/data/precios.ts (5 dimensiones progresivas latentes, F2 §1: 15/17
+// filas en 5 dimensiones + 2 exclusivas de Integral). Nada inventado:
+// cada celda conocida es una cadena literal de `incluye` o una
+// reformulación mínima de ella. Los precios del encabezado se leen en
+// vivo de precios.ts (precioDe), como la tabla actual.
+// ---------------------------------------------------------------------------
+import { PRECIOS, precioDe, formatearCOP } from "../data/precios";
+
+const planes = PRECIOS.filter((p) => p.producto);
+
+// placeholder: true = celda SIN dato verificado; NO renderizar como hecho.
+type Celda = { valor: string; placeholder?: boolean; pregunta?: string };
+type Dimension = { nombre: string; celdas: [Celda, Celda, Celda] };
+
+const DIMENSIONES: Dimension[] = [
+  {
+    nombre: "Alcance",
+    celdas: [
+      { valor: "Hasta 3 equipos" },
+      { valor: "Alcance autorizado · hasta 10 activos" },
+      { valor: "Alcance personalizado" },
+    ],
+  },
+  {
+    nombre: "Informe",
+    celdas: [
+      { valor: "Ejecutivo" },
+      { valor: "Técnico y ejecutivo" },
+      // PLACEHOLDER — PENDIENTE JAIME (A/B/C/D). Ver cabecera del archivo.
+      { valor: "Por confirmar", placeholder: true, pregunta: "INFORME-INTEGRAL" },
+    ],
+  },
+  {
+    nombre: "Ruta de mejora",
+    celdas: [
+      { valor: "Riesgos prioritarios" },
+      { valor: "Plan de remediación" },
+      { valor: "Plan por etapas" },
+    ],
+  },
+  {
+    nombre: "Seguimiento",
+    celdas: [
+      { valor: "Sesión de resultados" },
+      { valor: "Acompañamiento" },
+      { valor: "Dos seguimientos" },
+    ],
+  },
+  {
+    nombre: "Evaluación",
+    celdas: [
+      { valor: "Reunión remota" },
+      { valor: "Revisión de configuraciones" },
+      { valor: "Evaluación autorizada" },
+    ],
+  },
+  {
+    nombre: "Solo en Integral",
+    celdas: [
+      { valor: "No incluido en este plan" },
+      { valor: "No incluido en este plan" },
+      { valor: "Hardening priorizado + evidencias" },
+    ],
+  },
+];
+
+// Inventario de placeholders internos (para el informe R3b; no se publica):
+//   1 × INFORME-INTEGRAL (celda Informe / Seguridad Integral) — pregunta A/B/C/D.
+//   0 placeholders más. Todo lo demás son cadenas literales de precios.ts.
+const PLACEHOLDERS = DIMENSIONES.flatMap((d, i) =>
+  d.celdas.map((c, j) => ({ ...c, dimension: d.nombre, plan: planes[j]?.nombre })).filter((c) => c.placeholder),
+);
+---
+
+<div class="planes-comparativa-progresiva" data-estado="preparable-placeholder" data-placeholders={PLACEHOLDERS.length}>
+  <!-- R3b: componente NO conectado. No renderizar en producción ni en preview
+       hasta resolver INFORME-INTEGRAL con Jaime. La tabla actual sigue viva. -->
+  <header class="comparativa-progresiva-head">
+    <p class="section-label">COMPARAR PLANES</p>
+    <h3>Qué mejora al subir de plan</h3>
+    <p>Las mismas 5 dimensiones en los 3 planes, con valores en vez de ✓/—.</p>
+  </header>
+  <div class="comparativa-progresiva-tabla-wrap">
+    <table class="comparativa-progresiva-tabla">
+      <caption>Comparativa progresiva por dimensión (valores de entrada)</caption>
+      <thead>
+        <tr>
+          <th scope="col">Dimensión</th>
+          {planes.map((p) => (
+            <th scope="col">{p.nombre}<span>Desde {formatearCOP(precioDe(p.id))}</span></th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {DIMENSIONES.map((d) => (
+          <tr>
+            <th scope="row">{d.nombre}</th>
+            {d.celdas.map((c) => (
+              <td class:list={[{ "celda-placeholder": c.placeholder }]} data-pregunta={c.pregunta ?? undefined}>{c.valor}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div class="comparativa-progresiva-apilado" aria-label="Comparativa progresiva por plan">
+    {planes.map((p, j) => (
+      <article class="comparativa-progresiva-plan">
+        <h4>{p.nombre}</h4>
+        <p class="comparativa-progresiva-precio">Desde {formatearCOP(precioDe(p.id))}</p>
+        <dl>
+          {DIMENSIONES.map((d) => (
+            <div>
+              <dt>{d.nombre}</dt>
+              <dd class:list={[{ "celda-placeholder": d.celdas[j].placeholder }]} data-pregunta={d.celdas[j].pregunta ?? undefined}>{d.celdas[j].valor}</dd>
+            </div>
+          ))}
+        </dl>
+      </article>
+    ))}
+  </div>
+  <p class="comparativa-progresiva-nota">Valores de entrada sujetos al alcance acordado. Consultoría remota desde {formatearCOP(precioDe("consultoria-hora"))} COP por hora. Hardening de sistemas desde {formatearCOP(precioDe("hardening"))} COP.</p>
+</div>
+
+<style>
+.planes-comparativa-progresiva{margin-top:34px;padding:28px;border:1px solid #d7e2ea;border-radius:20px;background:#fff;text-align:left}
+.comparativa-progresiva-head h3{margin:10px 0 8px;font-size:clamp(1.4rem,3vw,1.9rem);color:#0d2840}
+.comparativa-progresiva-head p{margin:0;color:#40566b;max-width:62ch}
+.comparativa-progresiva-tabla-wrap{overflow-x:auto;margin-top:18px}
+.comparativa-progresiva-tabla{width:100%;border-collapse:collapse;min-width:560px}
+.comparativa-progresiva-tabla caption{text-align:left;padding:10px 0;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#40566b}
+.comparativa-progresiva-tabla th,.comparativa-progresiva-tabla td{padding:11px 10px;border-top:1px solid #d7e2ea;vertical-align:top;text-align:left;font-size:.95rem;color:#22394d}
+.comparativa-progresiva-tabla thead th{border-top:0;color:#0d2840;font-size:.95rem}
+.comparativa-progresiva-tabla thead th span{display:block;margin-top:4px;font-size:.82rem;font-weight:700;color:#0b6e66}
+.comparativa-progresiva-tabla tbody th{font-weight:700}
+.comparativa-progresiva-tabla tbody th:first-child{width:22%}
+/* Placeholder interno: visible SOLO si el componente se renderiza en un
+   entorno de revisión; marca el dato sin resolver, no un hecho. */
+.celda-placeholder{color:#8a6d00 !important;font-style:italic;background:#fdf6e0}
+.comparativa-progresiva-apilado{display:none}
+.comparativa-progresiva-nota{margin:18px 0 0;color:#40566b;font-size:.92rem}
+@media(max-width:800px){
+  .comparativa-progresiva-tabla-wrap{display:none}
+  .comparativa-progresiva-apilado{display:grid;gap:14px;margin-top:18px}
+  .comparativa-progresiva-plan{padding:20px;border:1px solid #d7e2ea;border-radius:16px;background:#f8fbfd}
+  .comparativa-progresiva-plan h4{margin:0;color:#0d2840;font-size:1.15rem}
+  .comparativa-progresiva-precio{margin:6px 0 12px;color:#0b6e66;font-weight:800}
+  .comparativa-progresiva-plan dl{margin:0;display:grid;gap:10px}
+  .comparativa-progresiva-plan dl div{display:grid;gap:2px}
+  .comparativa-progresiva-plan dt{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#40566b}
+  .comparativa-progresiva-plan dd{margin:0;color:#22394d;font-size:.95rem}
+  .planes-comparativa-progresiva{padding:20px}
+}
+</style>

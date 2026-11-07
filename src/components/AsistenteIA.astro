@@ -103,8 +103,31 @@
     chipsBox.hidden = false;
   }
 
+  // R3b (2026-11-07, F4 opción E): el teaser se oculta (a) cuando el pie
+  // (.footer) entra en viewport — es lo que tapaba el 100 % de «Centro de
+  // recursos» y el 73 % de «Informe demostrativo» en el fondo móvil, sin
+  // escape por scroll — y (b) solo, 45 s después de aparecer, si el
+  // visitante no interactuó con él. Ninguna de las dos es un descarte:
+  // no escriben sessionStorage; si el visitante sube de nuevo (pie fuera
+  // de vista) y no expiró el temporizador, el teaser vuelve a mostrarse.
+  // El descubrimiento proactivo (aparece a los 20 s) se conserva; el
+  // fab sigue siendo el acceso permanente al chatbot. El descarte con
+  // la ✕ (hideTeaser) sí es definitivo por sesión, como antes.
+  var teaserShown = false;      // el teaser llegó a mostrarse (a los 20 s)
+  var teaserFooterHidden = false; // el pie está en viewport
+  var teaserExpired = false;    // pasaron 45 s desde que apareció
+  var teaserTimer = null;
+
+  function refreshTeaser() {
+    if (!teaser) return;
+    teaser.hidden = !(teaserShown && !teaserFooterHidden && !teaserExpired);
+    fab.classList.toggle('jefq-ia-attn', !teaser.hidden);
+  }
+
   function hideTeaser() {
-    if (teaser) teaser.hidden = true;
+    teaserShown = false;
+    if (teaserTimer) { clearTimeout(teaserTimer); teaserTimer = null; }
+    refreshTeaser();
     try { sessionStorage.setItem('jefq-ia-teased', '1'); } catch (e) {}
   }
 
@@ -112,8 +135,11 @@
     if (interacted) return;
     try { if (sessionStorage.getItem('jefq-ia-teased')) return; } catch (e) {}
     if (teaser) {
-      teaser.hidden = false;
-      fab.classList.add('jefq-ia-attn');
+      teaserShown = true;
+      teaserExpired = false;
+      refreshTeaser();
+      if (teaserTimer) clearTimeout(teaserTimer);
+      teaserTimer = setTimeout(function () { teaserExpired = true; refreshTeaser(); }, 45000);
     }
   }
 
@@ -265,6 +291,19 @@
   });
 
   setTimeout(maybeTease, 20000);
+
+  // R3b: observador del pie SOLO para el teaser (un único objetivo, un
+  // único booleano — el bug `nearEnd` de la banda retirada era justo
+  // sobrescribir un booleano con dos objetivos). Umbral 8 %, igual que
+  // el que usaba la banda. AsistenteIA se renderiza después de </footer>
+  // en Layout, así que .footer ya existe aquí.
+  (function () {
+    var foot = document.querySelector('.footer');
+    if (!foot || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { teaserFooterHidden = e.isIntersecting; refreshTeaser(); });
+    }, { threshold: 0.08 }).observe(foot);
+  })();
 
   emailDismiss.addEventListener('click', function () { emailBox.hidden = true; });
 
