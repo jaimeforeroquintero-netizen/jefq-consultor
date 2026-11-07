@@ -326,7 +326,17 @@
 
 <style>
   .jefq-ia { position: fixed; z-index: 901; left: 20px; bottom: 20px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
-  .jefq-ia-fab { display: flex; align-items: center; gap: 9px; padding: 13px 18px 13px 14px; color: #001018; background: linear-gradient(135deg, #23d7ff, #5ef0b4); border: 0; border-radius: 999px; font-weight: 850; font-size: .85rem; cursor: pointer; box-shadow: 0 13px 35px rgba(0,0,0,.4); transition: transform .18s ease; }
+  /* L1 (2026-11-07, cierre gráfico): FAB solo-icono en escritorio, como en
+     móvil (≤680 px, regla intacta abajo). El FAB con etiqueta medía
+     150,9 px de ancho (x 20–170,9) y tapaba en 1440×900 el inicio del
+     enlace secundario .hero-alt (810,4 px²; «O empiece» ilegible, clic a
+     +10 px del borde caía en el FAB) y la esquina inferior del CTA
+     primario (739,7 px²). Solo-icono: 54 px (x 20–74), 48,5 px libre
+     hasta la columna del hero (x 122,5); cero cambio al hero, al radar,
+     a la terminal, al H1 ni al móvil. La etiqueta sigue en el DOM
+     (display:none, sin anuncio) y el botón conserva aria-label. */
+  .jefq-ia-fab { display: flex; align-items: center; gap: 9px; padding: 13px 14px; color: #001018; background: linear-gradient(135deg, #23d7ff, #5ef0b4); border: 0; border-radius: 999px; font-weight: 850; font-size: .85rem; cursor: pointer; box-shadow: 0 13px 35px rgba(0,0,0,.4); transition: transform .18s ease; }
+  .jefq-ia-fab-label { display: none; }
   .jefq-ia-fab:hover { transform: translateY(-2px); }
   .jefq-ia-panel { position: absolute; left: 0; bottom: 68px; width: min(380px, calc(100vw - 40px)); height: 580px; max-height: calc(100vh - 120px); display: flex; flex-direction: column; overflow: hidden; color: #f4f8ff; background: #071426; border: 1px solid rgba(35,215,255,.28); border-radius: 18px; box-shadow: 0 24px 80px rgba(0,0,0,.5); }
   .jefq-ia-panel[hidden] { display: none; }
