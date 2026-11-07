@@ -1,0 +1,28 @@
+---
+/* R2 UNIFICACIÓN (2026-11-07) — render ÚNICO del proceso B por servicio.
+   Misma función (proceso propio de 4 pasos de cada servicio), dos formas
+   históricas: tarjetas (.service-process-grid, /servicios/[slug]) y lista
+   2×2 con numeral gigante (.landing-process-steps, ServiceLanding).
+   Forma canónica = tarjetas: es la de la página canónica de servicio y
+   encaja en el sistema de tarjetas; la lista gigante se retira.
+   Los DATOS no se unifican: cada página alimenta sus propios pasos
+   ([slug] ← src/data/services.ts; landings ← src/data/service-pages.ts;
+   los textos difieren por servicio y se preservan verbatim).
+   El eyebrow y el H2 de cada sección se quedan en la página (copys distintos). */
+interface Props {
+  steps: { title: string; text: string }[];
+}
+const { steps } = Astro.props;
+---
+
+<div class="service-process-grid">
+  {
+    steps.map((step, index) => (
+      <article>
+        <strong>{String(index + 1).padStart(2, "0")}</strong>
+        <h3>{step.title}</h3>
+        <p>{step.text}</p>
+      </article>
+    ))
+  }
+</div>

@@ -1,10 +1,9 @@
 /* JEFQ autoridad premium v3 */
+/* R2: .authority-hero vive solo en authority-real-v1.css (definición única);
+   las reglas de héroe de este archivo eran perdedoras por orden de carga. */
 .authority-body blockquote{margin:28px 0;padding:20px 24px;border-left:3px solid var(--cyan);background:#cdebf9;color:#12314c;border-radius:0 15px 15px 0}
 .authority-actions{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;margin-top:34px}
-.authority-hero{padding:110px 0 60px;background:radial-gradient(circle at 70% 10%,rgba(37,215,255,.12),transparent 36rem),linear-gradient(180deg,rgba(11,34,59,.8),transparent)}
 .authority-narrow{max-width:900px}
-.authority-hero h1{font-size:clamp(2.8rem,7vw,5.5rem);line-height:1;letter-spacing:-.055em;margin:14px 0 22px}
-.authority-hero p{max-width:760px;color:var(--muted);font-size:1.12rem}
 .authority-body{padding:30px 0 110px}
 .authority-body h2{margin-top:44px;font-size:clamp(1.6rem,3vw,2.3rem)}
 .authority-body p, .authority-body li{color:#bdcddd}
@@ -18,5 +17,4 @@
 .method-list p{margin:0}
 .safe-note{margin:30px 0;padding:18px 20px;background:rgba(255,181,71,.08);border:1px solid rgba(255,181,71,.22);border-radius:14px;color:#f5dfbb !important}
 @media (max-width:620px){.authority-grid{grid-template-columns:1fr}
-.authority-hero{padding:80px 0 42px}
 .method-list article{grid-template-columns:46px 1fr}}

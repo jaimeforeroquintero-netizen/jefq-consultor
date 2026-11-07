@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ProcessDiagram from "../components/ProcessDiagram.astro"; // R2: método canónico, no duplicado a mano
 import { precioDe, formatearCOP } from "../data/precios";
 ---
 <Layout title="Ciberseguridad para empresas en Bogotá | JEFQ Consultor" description="Ciberseguridad para empresas en Bogotá: diagnóstico de seguridad, hardening de sistemas y pruebas autorizadas con informes que su gerencia sí entiende. Atención directa de Jaime Forero, remota y en toda Colombia.">
@@ -75,7 +76,7 @@ import { precioDe, formatearCOP } from "../data/precios";
         <article class="service-card" data-reveal><div class="service-top"><small>06</small></div><h3>Acompañamiento de remediación</h3><p>Priorización, aplicación y verificación de correcciones, para que los informes no terminen archivados.</p><a class="service-card-link" href="/servicios/acompanamiento-remediacion">Descubrir el servicio <b>→</b></a></article>
         <article class="service-card" data-reveal><div class="service-top"><small>07</small></div><h3>Seguridad para IA</h3><p>Evaluación del uso de herramientas de inteligencia artificial: datos en prompts, aplicaciones sin gobierno y suplantación.</p><a class="service-card-link" href="/seguridad-inteligencia-artificial">Descubrir el servicio <b>→</b></a></article>
       </div>
-      <div class="section-cta" data-reveal><span>¿No sabe por dónde empezar?</span><a class="button ghost" href="/valoracion">Hacer la valoración en línea</a></div>
+      <div class="section-cta" data-reveal><span>¿No sabe por dónde empezar?</span><a class="button secondary" href="/valoracion">Hacer la valoración en línea</a></div>
     </div>
   </section>
 
@@ -87,12 +88,12 @@ import { precioDe, formatearCOP } from "../data/precios";
         <p>Cada intervención protege el alcance, documenta lo realizado y prioriza lo importante. El método es el mismo en Bogotá que en el resto del país.</p>
         <div class="promise"><b>Compromiso operativo</b><p>No realizamos pruebas sobre activos sin autorización verificable.</p></div>
       </header>
-      <div class="process">
-        <article data-reveal><b>01</b><div><h3>Conocer el contexto</h3><p>Objetivos, activos, restricciones y riesgos de su empresa en Bogotá.</p></div></article>
-        <article data-reveal><b>02</b><div><h3>Definir el alcance</h3><p>Autorización, límites y condiciones de ejecución, por escrito.</p></div></article>
-        <article data-reveal><b>03</b><div><h3>Evaluar con control</h3><p>Pruebas proporcionales y evidencia organizada.</p></div></article>
-        <article data-reveal><b>04</b><div><h3>Entregar y acompañar</h3><p>Prioridades, remediación y seguimiento.</p></div></article>
-      </div>
+      <ProcessDiagram steps={[
+        ["01", "Conocer el contexto", "Objetivos, activos, restricciones y riesgos de su empresa en Bogotá."],
+        ["02", "Definir el alcance", "Autorización, límites y condiciones de ejecución, por escrito."],
+        ["03", "Evaluar con control", "Pruebas proporcionales y evidencia organizada."],
+        ["04", "Entregar y acompañar", "Prioridades, remediación y seguimiento."],
+      ]} />
     </div>
   </section>
 

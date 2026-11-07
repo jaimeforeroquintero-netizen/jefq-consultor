@@ -1,8 +1,16 @@
 /* JEFQ-AUTORIDAD-REAL-V1 */
 .authority-page{background:linear-gradient(180deg,#07192a 0,#0a2033 28rem,#eef7fb 28rem,#eef7fb 100%)}
-.authority-hero{padding:7rem 0 5rem;color:#fff;background:radial-gradient(circle at 80% 15%,rgba(43,230,207,.2),transparent 28%),linear-gradient(135deg,#07192a,#0e3448)}
+/* R2 (2026-11-07) — definición ÚNICA de .authority-hero. Antes en 3 archivos
+   (seo-authority, authority-premium-v3, authority-real-v1): los 3 fondos
+   oscuros declarados los derrota la regla híbrida (:nth-of-type(odd) →
+   #cfdfeb !important; el héroe es 1ª sección impar en las 5 páginas), así
+   que el fondo NO se declara aquí; padding/H1 = real-v1 (ganador por orden
+   de carga); el párrafo hereda color de `main p` y tamaño del token T3-lead
+   de parches; se conserva el filete inferior de seo-authority. */
+.authority-hero{padding:7rem 0 5rem;border-bottom:1px solid rgba(139,190,230,.18)}
 .authority-hero.compact{padding-bottom:4rem}
 .authority-hero h1{max-width:920px;font-size:clamp(2.5rem,6vw,5.4rem);line-height:.98;margin:.7rem 0 1.2rem}
+.authority-hero p{max-width:760px}
 .authority-lead{max-width:760px;color:#d8eaf2;font-size:1.08rem;line-height:1.75}
 .resource-format{display:inline-flex;padding:.45rem .75rem;border:1px solid rgba(255,190,70,.65);border-radius:999px;color:#ffd47b;font-size:.72rem;font-weight:800;letter-spacing:.08em}
 .authority-actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.8rem}

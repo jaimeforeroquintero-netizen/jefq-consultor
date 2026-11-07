@@ -1,6 +1,6 @@
 /* JEFQ Marketing Conversion Theme V2
    Objetivo: más luz, energía y jerarquía sin perder autoridad ni rendimiento. */
-:root{--bg:#07111f;--bg-soft:#0d1b2e;--panel:#10243b;--panel-light:#173453;--text:#f8fbff;--muted:#c2d2e4;--cyan:#2dd4ff;--green:#5cf2b5;--amber:#ffb84d;--amber-strong:#ff9f1c;--blue-electric:#4c8dff;--border:rgba(128, 190, 235, 0.30);--shadow:0 24px 70px rgba(0, 17, 38, 0.34);--shadow-warm:0 18px 42px rgba(255, 159, 28, 0.18)}
+:root{--bg:#07111f;--text:#f8fbff;--muted:#c2d2e4;--cyan:#2dd4ff;--green:#5cf2b5;--amber:#ffb84d;--border:rgba(128, 190, 235, 0.30);--shadow:0 24px 70px rgba(0, 17, 38, 0.34);--shadow-warm:0 18px 42px rgba(255, 159, 28, 0.18)}
 body{color:var(--text);background:radial-gradient(circle at 8% 0%, rgba(76,141,255,.18), transparent 34rem),
     radial-gradient(circle at 92% 14%, rgba(255,184,77,.13), transparent 30rem),
     linear-gradient(180deg, #07111f 0%, #0a1728 48%, #07111f 100%)}

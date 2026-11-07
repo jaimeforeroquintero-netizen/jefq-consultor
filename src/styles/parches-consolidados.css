@@ -10,15 +10,12 @@
    quedaba sin contraste. Este archivo los vuelve sólidos y definidos. */
 :root{--line:rgba(125,181,225,.32)}
 /* En paneles OSCUROS: texto secundario más claro */
-.service-card p, .price-card>p, .price-note, .case-flow p, .benefits p, .process p, .section-head p, .why p, .contact p, .landing-card p, .local-grid p, .landing-process p, .landing-faq p, .landing-summary span, .contact-form>small, .compare-note{color:#b9cde4 !important}
+.service-card p, .price-card>p, .price-note, .case-flow p, .benefits p, .section-head p, .why p, .contact p, .landing-card p, .local-grid p, .landing-process p, .landing-faq p, .landing-summary span, .contact-form>small, .compare-note{color:#b9cde4 !important}
 /* En paneles CLAROS (fondo blanco/gris claro): texto secundario más oscuro */
 .authority-grid p, .authority-faq-list p, .resource-next-step p, .method-list p{color:#4a6276 !important}
 /* Sección metodología y servicios en fondo claro: descripciones legibles */
-.section .process p, .section .section-head p{color:#4a6276 !important}
+.section .section-head p{color:#4a6276 !important}
 .promise p{color:#4a6276 !important}
-/* Títulos de proceso en fondo oscuro deben ser claros */
-.process h3{color:#f4f8ff !important}
-.process>article>b{}
 /* Tarjetas de evidencia (resultados y entregables) */
 /* Panel why-diff en fondo claro: texto oscuro legible */
 .why-diff{}
@@ -28,8 +25,6 @@
 .case{}
 .case h3{color:#f4f8ff !important}
 .case-head span{opacity:1}
-/* Botón en section-cta: texto claro */
-.section-cta .button.ghost{color:#f4f8ff !important;border-color:rgba(125,181,225,.4) !important}
 /* Sección contacto: subtítulo legible */
 .contact p{color:#4a6276 !important}
 .contact h2{color:#0a1f33 !important}
@@ -53,8 +48,6 @@
 /* Resumen landing */
 .landing-summary{background:#0d2440 !important;border-color:rgba(125,181,225,.32)}
 .landing-summary span{}
-/* Proceso home */
-.process p{color:var(--muted) !important}
 /* Encabezados de sección */
 .section-head p, .why p, .contact p{color:var(--muted) !important}
 /* Texto pequeño del top de tarjetas (era rgba .4 = casi invisible) */
@@ -124,13 +117,25 @@ main>section:has(form){background:#eef6fb !important;color:#0d2840 !important}
 .service-detail-hero{background:#eef6fb !important}
 .service-detail-lead{color:#40566b !important}
 .service-detail-promise{color:#0d2840 !important}
-.service-detail-label{color:#0b6e66 !important}
+/* R2: .service-detail-label en teal oscuro #095e55 (5,62:1 sobre #cfdfeb).
+   El héroe de [slug] se sirve CLARO por el híbrido (1ª sección impar →
+   #cfdfeb; el degradado oscuro declarado está muerto), así que el teal
+   estándar #0b6e66 daría 4,48:1 (FAIL, mismo motivo del arreglo CONTACTO
+   en main 6dddf48) y el ámbar declarado #ffbd59 no corresponde a fondo
+   claro. Mismo verde-teal que el resto de etiquetas de la página. */
+.service-detail-label{color:#095e55 !important}
 .local-hero{background:radial-gradient(circle at 80% 20%,rgba(15,157,143,.08),transparent 28rem),#eef6fb !important}
 .local-hero h1{color:#0d2840 !important}
 .local-hero p{color:#40566b !important}
 .growth-hero{background:radial-gradient(circle at 80% 20%,rgba(15,157,143,.08),transparent 30rem),#eef6fb !important}
 .growth-hero h1{color:#0d2840 !important}
 .growth-hero p{color:#40566b !important}
+/* R2: .growth-hero span en #095e55 (5,62:1 sobre #cfdfeb, fondo efectivo
+   del héroe por el híbrido). El cian declarado #25d7ff nunca se servía
+   aquí (lo derrotaba la regla híbrida de spans → #405466); el teal
+   estándar #0b6e66 daría 4,48:1 (FAIL). La tarjeta conserva su cian
+   #25d7ff sobre oscuro (10,10:1). */
+.growth-hero span{color:#095e55 !important}
 .article header{background:linear-gradient(180deg,#eef6fb,transparent)}
 .article header span{color:#0b6e66}
 /* ---------- 5. Cabecera y pie: azul marino, texto blanco puro ---------- */
@@ -167,7 +172,6 @@ main>section:has(form){background:#eef6fb !important;color:#0d2840 !important}
 .case-head b{color:#0b6e66 !important;background:rgba(11,110,102,.12) !important}
 .case-flow small{color:#0b6e66 !important}
 .case em{}
-.process>article>b{color:#0b6e66 !important}
 .landing-summary strong{color:#0b6e66 !important}
 .landing-summary span{color:#40566b !important}
 .landing-list li:before{color:#0b6e66 !important}
@@ -199,10 +203,8 @@ details summary{color:#0d2840 !important}
 .contact-data small{color:#526b7c !important}
 .contact-data b{color:#0d2840}
 /* ---------- 9. Botones, tablas y formularios ---------- */
-.button.ghost{background:#ffffff !important;border-color:rgba(13,40,64,.25) !important;color:#0d2840 !important}
 .scroll-cta{background:#ffffff !important;border-bottom:1px solid rgba(13,40,64,.13) !important;box-shadow:0 10px 30px rgba(13,40,64,.12) !important}
 .scroll-cta>span{color:#0d2840 !important}
-.scroll-cta .button.ghost{background:#eef6fb !important}
 .compare-table thead th{color:#526b7c !important;background:#eef6fb !important}
 .compare-table tbody th{color:#0d2840 !important}
 .compare-table td{color:#40566b}
@@ -236,9 +238,6 @@ details summary{color:#0d2840 !important}
 /* Causa: color-fix-v1.css y otras hojas originales ponen texto casi blanco con
    !important; la hoja clara perdía por especificidad. Estas reglas usan selectores
    más específicos + !important para ganar. Solo muestra; producción intacta. */
-/* 1. Metodología — títulos y cuerpo de los pasos 01–04 */
-main .process h3{color:#0d2840 !important}
-main .process p{color:#40566b !important}
 /* 2. Por qué JEFQ — títulos y cuerpo */
 main .benefits b{color:#0d2840 !important}
 main .benefits p{color:#40566b !important}
@@ -249,9 +248,7 @@ main .price-card .price{color:#0b6e66 !important}
 /* 4. Evidencia — títulos y cuerpo de los casos */
 main .case h3{color:#0d2840 !important}
 main .case-flow p{color:#40566b !important}
-/* 5. Botones fantasma con texto blanco sobre fondo claro (dentro de .section-cta) */
-main .section-cta .button.ghost{color:#0d2840 !important;background:#eef6fb !important;border-color:rgba(13,40,64,.28) !important}
-/* 6. Contacto — intro y aviso de seguridad (su clase real es .data-safety-note) */
+/* 5. Contacto — intro y aviso de seguridad (su clase real es .data-safety-note) */
 main .section-head p{color:#40566b !important}
 main .contact p{color:#40566b !important}
 .data-safety-note{color:#40566b !important}
@@ -425,9 +422,6 @@ main .why p.why-diff b{color:#0b6e66 !important}
 .result-facts{display:grid !important;gap:.8rem !important;margin:1.4rem 0 !important}
 .result-facts span{display:block !important;padding:.8rem .9rem !important;border:1px solid #d4e5ea !important;border-radius:10px !important;background:#eff8f8 !important;color:#23485b !important}
 .result-actions{display:flex !important;flex-direction:column !important;align-items:stretch !important;gap:.8rem !important;margin-top:1.5rem !important}
-.result-actions .smart-button,.result-actions .smart-link{width:100% !important;text-align:center !important}
-.result-actions .smart-button{appearance:none !important;border:0 !important;border-radius:999px !important;background:linear-gradient(135deg,#f4ba45,#ffce69) !important;color:#17212b !important;font-weight:850 !important;text-decoration:none !important;padding:.9rem 1.25rem !important;cursor:pointer !important}
-.result-actions .smart-link{border:1px solid #8da7b6 !important;border-radius:999px !important;padding:.85rem 1.15rem !important;text-decoration:none !important;color:#164862 !important;font-weight:750 !important;background:transparent !important;cursor:pointer !important;font:inherit !important}
 .privacy-note{margin-top:1rem !important;font-size:.85rem !important;line-height:1.5 !important;color:#526b7c !important}
 .privacy-note a{color:#0b6e66 !important;font-weight:700 !important}
 /* ==========================================================================
@@ -502,11 +496,6 @@ main .why p.why-diff b{color:#0b6e66 !important}
 #garantia{background:#eef6fb !important;border-block:1px solid rgba(13,40,64,.13) !important}
 #garantia .guarantee{background:transparent !important;border:0 !important;border-radius:0 !important;box-shadow:none !important;padding:0 !important}
 #garantia .guarantee p{font-size:clamp(1.35rem,3vw,2rem) !important;line-height:1.4 !important}
-/* RITMO (2) #metodologia — numeración grande en vez de tarjetas. */
-#metodologia .process>article>b{font-size:clamp(1.9rem,3.4vw,2.9rem) !important;line-height:1 !important}
-@media (min-width:721px){
-  #metodologia .process article{grid-template-columns:84px 1fr !important}
-}
 /* ==========================================================================
    SAFE-NOTE 2026-11-05 — Contraste del recuadro <p class="safe-note">
    ("Importante:" / "No envíe") en /como-trabajamos/ y
@@ -756,7 +745,7 @@ main small,.proof span,.hero-trust,.price-note,.service-top small,.guarantee sma
    `.smart-hero .smart-kicker` va explícito porque .smart-kicker es un <p>
    en /valoracion/ y la regla de lead `.smart-hero p` (0,1,1) superaría al
    token (0,1,0): con (0,2,0) el kicker queda en 12 px. */
-.section-head>span,.label,.section-label,.f-kicker,.ev2-kicker,.smart-kicker,.smart-hero .smart-kicker,.service-detail-label{
+.section-head>span,.label,.section-label,.f-kicker,.smart-kicker,.smart-hero .smart-kicker,.service-detail-label,.growth-hero span,.growth-card>span,.evidence-stamp{
   font-size:var(--jefq-label-size) !important;
   font-weight:var(--jefq-label-weight) !important;
   letter-spacing:var(--jefq-label-tracking) !important;
@@ -766,7 +755,7 @@ main small,.proof span,.hero-trust,.price-note,.service-top small,.guarantee sma
    los clamp declarados en global.css). Solo intros de hero; el cuerpo
    17/18 px no se toca. .legal-hero p queda fuera a propósito (nota de
    versión, no intro). */
-.hero-copy>p,.landing-hero p,.f-hero p,.authority-hero p,.authority-article-header p,.ev2-hero p,.trust-hero p,.smart-hero p,.growth-hero p,.commercial-intro,.service-detail-lead,.report-lead{
+.hero-copy>p,.landing-hero p,.f-hero p,.authority-hero p,.authority-article-header p,.trust-hero p,.smart-hero p,.growth-hero p,.commercial-intro,.service-detail-lead,.report-lead{
   font-size:clamp(var(--jefq-lead-min),1.6vw,var(--jefq-lead-max)) !important;
   line-height:1.5 !important;
 }
@@ -781,7 +770,7 @@ main small,.proof span,.hero-trust,.price-note,.service-top small,.guarantee sma
    (alinean en columna). Sin cambio de valores ni de tamaños: solo la
    variante numérica. La unificación de tamaños de métrica (27–35 px) queda
    fuera de B1: no se tocan. */
-.price,.report-metrics-v4 strong,.ev2-metrics strong,.ev2-matrix-card strong,.calc-loss{font-variant-numeric:tabular-nums}
+.price,.report-metrics-v4 strong,.calc-loss{font-variant-numeric:tabular-nums}
 
 /* ==========================================================================
    MISIÓN 80 — B1 CORRECCIÓN DE CONTRASTE (2026-11-06) — .f-authority-card.
