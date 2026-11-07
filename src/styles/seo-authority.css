@@ -32,3 +32,13 @@
 .authority-article-header{padding:78px 0 48px}
 .authority-card{min-height:0}
 .authority-actions .button{width:100%}}
+/* L3 (2026-11-07): aire inferior en el bloque de enlaces de confianza.
+   A <=680 px la pildora fija de WhatsApp (.whatsapp, global.css) queda en
+   right:12px bottom:12px, 48 px de alto (borde superior a vh-60). Sin este
+   aire, en el fondo de pagina el centro de "Preguntas frecuentes" (y la
+   esquina de "Autorizacion y alcance") quedaba bajo la pildora y el clic
+   abria WhatsApp. Con 89 px (25 px base + 64 px) el enlace inferior queda
+   29 px por encima de la pildora en cualquier altura de viewport; los
+   demas enlaces tambien quedan libres, incluido el rincon del FAB sobre
+   "Checklist para pymes". Solo CSS, sin JS; desktop intacto. */
+@media (max-width:680px){.authority-links{padding-bottom:89px}}
