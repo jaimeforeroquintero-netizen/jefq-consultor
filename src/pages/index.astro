@@ -154,15 +154,9 @@ btn.addEventListener('click',calc);inp.addEventListener('keydown',function(e){if
 @media(max-width:680px){.section-cta{flex-direction:column}}
 .inline-link{color:var(--cyan);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .inline-link:hover{color:var(--green)}
-.more-links{margin-top:26px;text-align:center;color:var(--muted);font-size:.92rem}
-.more-links a{color:var(--cyan);font-weight:700}
-.more-links a:hover{text-decoration:underline}
-.testi-quote{margin:20px 0 0;font-size:1.06rem;font-style:italic;color:#dbe7f2}
-.testi-who{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
-.testi-who b{display:block}
-.testi-who span{color:var(--muted);font-size:.85rem}
-.testi-note{display:block;margin-top:22px;color:#7890a8;font-size:.76rem;text-align:center}
-.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:10px}
+/* R1 (2026-11-07): #confianza consolidada a 6 tarjetas -> rejilla 3x2 deliberada
+   (4+1fr dejaba 2 huecos visuales en la segunda fila; sin tarjetas nuevas). */
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
 @media(max-width:1020px){.trust-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.trust-grid{grid-template-columns:1fr}}
 .trust-card{display:flex;flex-direction:column;gap:10px;padding:22px 20px;border:1px solid rgba(13,40,64,.14);border-radius:var(--radius);background:#f3f7fa}
@@ -180,27 +174,8 @@ btn.addEventListener('click',calc);inp.addEventListener('keydown',function(e){if
 #confianza .trust-no li::before{content:"— ";color:#0b6e66;font-weight:700}
 .trust-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 20px;margin-top:38px;text-align:center}
 #confianza .trust-cta p{margin:0;font-size:1.02rem;font-weight:700;color:#14202e}
-/* LOTE 3 — pulido D1 (21:33): botones de planes alineados abajo; precio sin ruptura;
-   testimonios en 3 columnas (solo esa rejilla). */
+/* LOTE 3 — pulido D1 (21:33): botones de planes alineados abajo; precio sin ruptura. */
 .price-card{display:flex;flex-direction:column}
 .price-card ul{flex:1}
 .price-card .price{font-size:clamp(1.5rem,2.8vw,1.9rem);white-space:nowrap}
-.testi-cases{grid-template-columns:repeat(3,1fr)}
-@media(max-width:1020px){.testi-cases{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:680px){.testi-cases{grid-template-columns:1fr}}
-/* MISION 80 B3 (C1) — #evidencia: testimonios como banda teñida sin tarjetas,
-   continuacion de M4 (#garantia banda, #metodologia numeracion). Mismo texto,
-   mismas citas y atribucion; solo cambia el ritmo: sin tarjeta blanca,
-   columnas separadas por filete sobre banda #eef6fb->#e3eef7 (vocabulario
-   .contrast). Los escenarios conservan sus tarjetas .case. */
-.testi-band{margin-top:10px;padding:36px 34px 30px;border:1px solid rgba(13,40,64,.13);border-radius:22px;background:linear-gradient(180deg,#eef6fb,#e3eef7)}
-.testi-band .evidencia-sub{margin-top:0;text-align:center}
-.testi-list{margin-top:28px}
-.testi{padding:0 26px}
-.testi+.testi{border-left:1px solid rgba(13,40,64,.14)}
-.testi:first-child{padding-left:0}
-.testi:last-child{padding-right:0}
-.testi-band .testi-note{margin-top:28px}
-@media(max-width:1020px){.testi{padding:0}.testi+.testi{border-left:0}}
-@media(max-width:680px){.testi-band{padding:28px 22px}}
 </style>
