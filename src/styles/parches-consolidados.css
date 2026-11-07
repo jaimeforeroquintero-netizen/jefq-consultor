@@ -156,7 +156,7 @@ main>section:has(form){background:#eef6fb !important;color:#0d2840 !important}
 .authority-links a{color:#d7e5ee !important}
 /* ---------- 6. Tarjetas blancas ---------- */
 .service-card, .price-card, .case, .benefits article, .landing-two-columns>article, .landing-process>article, .landing-summary, .landing-card, .compare-wrap, .guarantee, .downtime-calc, .contact-form, .service-detail-card, .service-process-grid article, .related-service-grid a, .section-cta, .faq-premium-v2 details, .landing-faq details, .local-grid article, .body aside, .contact-data>*, .promise, .landing-final-cta, .faq-final-v2{background:#ffffff !important;border:1px solid rgba(13,40,64,.13) !important;border-radius:22px !important;box-shadow:0 16px 40px rgba(13,40,64,.09),0 2px 8px rgba(13,40,64,.05) !important;color:#0d2840 !important}
-.price-card.featured{border:2px solid #f2a100 !important;transform:translateY(-8px) !important}
+.price-card.featured{border:2px solid #f2a100 !important}
 .price{color:#0b6e66 !important}
 .price-card li{color:#40566b !important}
 .price-card li i{color:#0b6e66 !important}
@@ -203,8 +203,9 @@ details summary{color:#0d2840 !important}
 .contact-data small{color:#526b7c !important}
 .contact-data b{color:#0d2840}
 /* ---------- 9. Botones, tablas y formularios ---------- */
-.scroll-cta{background:#ffffff !important;border-bottom:1px solid rgba(13,40,64,.13) !important;box-shadow:0 10px 30px rgba(13,40,64,.12) !important}
-.scroll-cta>span{color:#0d2840 !important}
+/* R3b (2026-11-07): reglas blancas de .scroll-cta retiradas con la banda (F4 E).
+   Resolución de rebase R3→a315ef5: la regla `.button.ghost` de R2 ya no
+   existe aquí (R2 la eliminó); las 2 reglas `.scroll-cta` se retiran. */
 .compare-table thead th{color:#526b7c !important;background:#eef6fb !important}
 .compare-table tbody th{color:#0d2840 !important}
 .compare-table td{color:#40566b}
@@ -466,7 +467,9 @@ main .why p.why-diff b{color:#0b6e66 !important}
    (c) DESTACADO — borde ámbar 2px #f2a100 (hoy solo .price-card.featured),
        radio PROPIO 24px y sombra PROPIA teñida de ámbar
        0 20px 48px rgba(242,161,0,.20), 0 2px 8px rgba(13,40,64,.05).
-       El levantamiento translateY(-8px) se conserva solo en el featured.
+       El levantamiento translateY(-8px) se RETIRÓ en R3b (2026-11-07, F2):
+       desalineaba marco (−8 px) y contenido (+34,42 px) del destacado.
+       El destacado se distingue por borde/sombra/pastilla/CTA, sin elevación.
        No se inventa un segundo espécimen destacado.
    2 RITMOS (home):
    (1) #garantia como BANDA TEÑIDA SIN TARJETAS: la sección pasa a banda
@@ -491,7 +494,7 @@ main .why p.why-diff b{color:#0b6e66 !important}
 /* ROL (b) EVIDENCIA ILUSTRATIVA — generalizado a todo .case. */
 .case{background:#fdf6e0 !important;border:1px solid rgba(180,130,0,.45) !important;border-radius:14px !important;box-shadow:none !important}
 /* ROL (c) DESTACADO — tokens propios (radio 24px, sombra teñida ámbar). */
-.price-card.featured{border:2px solid #f2a100 !important;border-radius:24px !important;box-shadow:0 20px 48px rgba(242,161,0,.20),0 2px 8px rgba(13,40,64,.05) !important;transform:translateY(-8px) !important}
+.price-card.featured{border:2px solid #f2a100 !important;border-radius:24px !important;box-shadow:0 20px 48px rgba(242,161,0,.20),0 2px 8px rgba(13,40,64,.05) !important}
 /* RITMO (1) #garantia — banda teñida a sangre completa, cita grande sin tarjeta. */
 #garantia{background:#eef6fb !important;border-block:1px solid rgba(13,40,64,.13) !important}
 #garantia .guarantee{background:transparent !important;border:0 !important;border-radius:0 !important;box-shadow:none !important;padding:0 !important}

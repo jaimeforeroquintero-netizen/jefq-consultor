@@ -19,7 +19,6 @@ import ScanTerminal from "../components/ScanTerminal.astro";
 import VideoPromo from "../components/VideoPromo.astro";
 ---
 <Layout title="JEFQ Consultor | Ciberseguridad para empresas en Colombia" description="Diagnóstico, hardening, pruebas autorizadas e informes de ciberseguridad para pymes y empresas en Bogotá y toda Colombia.">
-<div class="scroll-cta" id="scroll-cta" aria-hidden="true"><span>¿Ya conoce su nivel de exposición?</span><div><a class="button primary" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.">WhatsApp</a></div></div>
 <section class="hero"><div class="grid-bg"></div><div class="orb orb-a"></div><div class="orb orb-b"></div><div class="container hero-grid">
   <div class="hero-copy" data-reveal><div class="eyebrow"><i></i>Ciberseguridad práctica para Colombia</div><h1>Diagnóstico de ciberseguridad <span>para pymes en Colombia</span></h1><p>Sepa exactamente dónde está expuesto antes de que un incidente lo descubra por usted. <a class="inline-link" href="/diagnostico-seguridad-bogota">Evaluación autorizada</a>, informe ejecutivo que su gerencia sí entiende y ruta de remediación priorizada — desde {formatearCOP(precioDe("esencial"))}, con atención directa del consultor.</p><div class="hero-actions"><a class="button primary" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.">Solicitar valoración</a><a class="button secondary" href="#servicios">Explorar servicios</a></div><a class="hero-alt" href="/valoracion">O empiece con la valoración orientativa en línea <b>→</b></a><div class="hero-trust"><span>Autorización previa</span><span>Alcance controlado</span><span>Informes accionables</span><span>Atención 24/7</span></div></div>
   <div class="visual" data-reveal><div class="radar"><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="cross x"></div><div class="cross y"></div><div class="sweep"></div><div class="core">J</div><i class="dot d1"></i><i class="dot d2"></i><i class="dot d3"></i></div><div class="visual-steps"><div><b>01</b><span>Diagnosticar</span></div><div><b>02</b><span>Priorizar</span></div><div><b>03</b><span>Fortalecer</span></div></div><ScanTerminal /></div>
@@ -130,13 +129,13 @@ import VideoPromo from "../components/VideoPromo.astro";
         <button class="button primary full" type="submit">Contactar por WhatsApp</button><small>No almacenamos este formulario. El mensaje se prepara para que pueda revisarlo.</small></form></div></section>
 <script define:vars={{ diagPrecio: precioDe("esencial") }}>
 const f=document.querySelector('#contact-form');f?.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(f);const text=["Hola Jaime, quiero información sobre ciberseguridad.","",`Nombre: ${d.get('nombre')}`,`Empresa: ${d.get('empresa')||'No indicada'}`,`Servicio: ${d.get('servicio')}`,`Activos: ${d.get('activos')}`,`Necesidad: ${d.get('mensaje')}`].join('\n');if(window.JEFQ_wa){window.JEFQ_wa.open(text);}});
-// Barra CTA al hacer scroll: aparece tras el hero, se oculta en contacto/footer
-(function(){var bar=document.getElementById('scroll-cta');if(!bar)return;var hero=document.querySelector('.hero');var contact=document.getElementById('contacto');var foot=document.querySelector('.footer');var past=false,nearEnd=false;
-function upd(){bar.classList.toggle('show',past&&!nearEnd);bar.setAttribute('aria-hidden',past&&!nearEnd?'false':'true');}
-function onScroll(){var y=window.scrollY||0;past=y>(hero?hero.offsetHeight*0.75:600);upd();}
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.target===contact||e.target===foot){nearEnd=e.isIntersecting;upd();}});},{threshold:0.08});
-if(contact)io.observe(contact);if(foot)io.observe(foot);
-window.addEventListener('scroll',onScroll,{passive:true});onScroll();})();
+// R3b (2026-11-07): banda .scroll-cta RETIRADA — F4 opción E. Era el tercer
+// duplicado de WhatsApp (header + píldora + banda) y el control que más
+// viewport tapaba (61 px desktop / 90,1 px móvil, sin cierre). Con ella
+// desaparece también el bug de reaparición `nearEnd` en el fondo móvil
+// (el booleano único del IntersectionObserver ya no existe). WhatsApp
+// sigue por la píldora persistente + CTA del header; el chatbot, por el
+// fab + teaser (ver AsistenteIA.astro).
 // Mini-calculadora de costo de inactividad
 (function(){var inp=document.getElementById('calc-monthly'),btn=document.getElementById('calc-btn'),res=document.getElementById('calc-result');if(!inp||!btn||!res)return;var DIAG=diagPrecio;
 function fmt(n){return '$'+Math.round(n).toLocaleString('es-CO');}

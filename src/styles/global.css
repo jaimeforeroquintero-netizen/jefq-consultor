@@ -101,7 +101,17 @@ button, input, select, textarea{font:inherit}
 .benefits p{margin:5px 0 0;font-size:.86rem}
 .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:19px}
 .price-card{position:relative;padding:30px;background:linear-gradient(155deg,rgba(14,38,65,.84),rgba(5,17,31,.97));border:1px solid var(--line);border-radius:var(--radius)}
-.price-card.featured{border-color:rgba(35,215,255,.58);box-shadow:0 20px 70px rgba(0,174,232,.13);transform:translateY(-8px)}
+.price-card.featured{border-color:rgba(35,215,255,.58);box-shadow:0 20px 70px rgba(0,174,232,.13)}
+/* R3b (2026-11-07, F2): la pastilla sale del flujo — position:absolute sobre el
+   borde superior, centrada. Sin ella en flujo, título/precio/descripción/
+   lista/CTA de la destacada vuelven a la baseline común (antes +34,42 px).
+   El translateY(-8px) que elevaba el marco se eliminó aquí y en
+   parches-consolidados.css (:154 y :500); el destacado se distingue por
+   borde ámbar 2 px + sombra + pastilla + CTA ámbar, no por elevación.
+   .price-card ya es position:relative. La pastilla mide ~29 px de alto:
+   con top:-14px queda ~14 px por encima del borde y ~15 px dentro del
+   padding superior (30 px): no toca el h3. */
+.price-card .badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);z-index:1;margin-bottom:0;white-space:nowrap}
 .badge{display:inline-block;margin-bottom:12px;padding:6px 10px;color:#001018;background:var(--cyan);border-radius:999px;font-size:.66rem;font-weight:950}
 .price-card h3{margin:0}
 .price{display:block;margin:14px 0 8px;color:var(--cyan);font-size:clamp(1.65rem,3.5vw,2.25rem)}
@@ -336,11 +346,12 @@ button, input, select, textarea{font:inherit}
 @media (max-width:680px){.section-cta{flex-direction:column}}
 /* ============ JEFQ Ronda 3: animación WOW + ganchos de marketing ============ */
 /* Barra CTA fija al hacer scroll */
-.scroll-cta{position:fixed;z-index:990;top:110px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:18px;padding:10px 18px;background:rgba(4,12,24,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(14px);transform:translateY(-130%);transition:transform .32s ease;box-shadow:0 10px 30px rgba(0,0,0,.35);visibility:hidden}
-.scroll-cta.show{transform:none;visibility:visible}
-.scroll-cta>span{color:#d1deea;font-size:.9rem;font-weight:700}
-.scroll-cta>div{display:flex;gap:10px}
-.scroll-cta .button{min-height:40px;padding:0 16px;font-size:.82rem}
+/* R3b (2026-11-07): .scroll-cta eliminado — banda retirada (F4 opción E).
+   Sus reglas vivían aquí (bloque .scroll-cta/.show, variante móvil
+   ≤680 px y la excepción de reduced-motion). El resto del cromo fijo
+   (header sticky 77 px, píldoras WA/IA) no cambia.
+   Resolución de rebase R3→a315ef5: la línea `.scroll-cta .button.ghost`
+   que R2 eliminó queda subsumida por la retirada del bloque completo. */
 /* Franja de garantía honesta */
 #garantia{padding:64px 0}
 .guarantee{max-width:820px;margin:0 auto;padding:38px 34px;text-align:center;background:linear-gradient(150deg,rgba(94,240,180,.07),rgba(35,215,255,.05));border:1px solid rgba(94,240,180,.32);border-radius:var(--radius)}
@@ -378,23 +389,8 @@ button, input, select, textarea{font:inherit}
 .calc-fill.diag{background:linear-gradient(90deg,var(--cyan),var(--green))}
 .calc-bar-row>b{text-align:right;color:var(--text)}
 .calc-result small{display:block;margin-top:6px;color:#7890a8;font-size:.74rem}
-@media (prefers-reduced-motion: reduce){.scroll-cta{transition:none}
-
-
-.calc-fill{transition:none}}
-@media (max-width:680px){.scroll-cta{top:110px;flex-direction:column;gap:8px;padding:10px 14px}
-
-
-.scroll-cta>span{font-size:.8rem}
-
-
-.scroll-cta>div{width:100%}
-
-
-.scroll-cta .button{flex:1}
-
-
-.calc-bar-row{grid-template-columns:1fr;gap:6px}
+@media (prefers-reduced-motion: reduce){.calc-fill{transition:none}}
+@media (max-width:680px){.calc-bar-row{grid-template-columns:1fr;gap:6px}
 
 
 .calc-bar-row>b{text-align:left}
