@@ -1,23 +1,37 @@
 ---
 // COMPARATIVA PROGRESIVA 5×3 — R3b PREPARABLE, NO PUBLICADA (2026-11-07).
 // ---------------------------------------------------------------------------
-// ESTADO: arquitectura + componente + responsive + estructura de datos, con
-// placeholders INTERNOS no publicables. NO está importada en ninguna página
+// ESTADO: arquitectura + componente + responsive + estructura de datos,
+// con el dato INFORME-INTEGRAL YA RESUELTO por Jaime 2026-11-07 16:04
+// (opción B: informe técnico y ejecutivo, único informe integrado).
+// NO está importada en ninguna página
 // (grep: cero importaciones de PlanesComparativaProgresiva) y la preview R3
 // MANTIENE VISIBLE la tabla actual (PlanesComparativa.astro, 17 filas ✓/—).
-// NO conectar a index.astro hasta que Jaime resuelva el dato material.
+// NO conectar a index.astro hasta el R3 final autorizado (no en este paso).
 //
-// DATO MATERIAL NO DETERMINADO (F2 §1.1): ¿Seguridad Integral incluye
-// realmente informe? La tabla actual marca — en Integral para «Informe
-// ejecutivo» e «Informe técnico y ejecutivo», pero la descripción del plan
-// en precios.ts dice «…hardening e informes». Pregunta a Jaime:
-//   (A) Integral incluye informe ejecutivo
-//   (B) Integral incluye informe técnico Y ejecutivo
-//   (C) Integral incluye otro tipo de informe (¿cuál?)
-//   (D) Integral NO incluye informe (y sobra «informes» en su descripción)
-// Hasta entonces, la celda Informe/Integral es un PLACEHOLDER explícito
-// («Por confirmar»), NUNCA un ✓ ni un —: un — repetiría el falso negativo
-// actual y un ✓ inventaría el dato.
+// RESUELTO 2026-11-07 16:04 (decisión de Jaime, opción B): Seguridad
+// Integral SÍ incluye informe — técnico Y ejecutivo — como UN ÚNICO
+// INFORME INTEGRADO: sección ejecutiva + desarrollo técnico en un solo
+// documento. Estructura decidida (A): un solo informe integrado, NO dos
+// documentos separados. Fundamento: (1) preferencia expresa de Jaime;
+// (2) el servicio «Informes técnicos y ejecutivos» del propio sitio
+// (services.ts) ya define el entregable como UNO solo — «Documento
+// ejecutivo» + «Anexo técnico» (+ Matriz de hallazgos + Sesión de
+// presentación) —, por lo que dos documentos contradirían esa definición
+// y crearían riesgo de divergencia entre versiones; (3) la progresión
+// Esencial «Ejecutivo» → Pyme «Técnico y ejecutivo» → Integral «Técnico
+// y ejecutivo» es el mismo tipo de entregable con mayor alcance y
+// profundidad, no un documento adicional; (4) no hay precio ni evidencia
+// de un segundo documento, y la separación de audiencias ya existe dentro
+// del informe (sección ejecutiva para responsables, cuerpo técnico para
+// quienes remedian). Ninguna ventaja material demostrable de dos
+// documentos: no se adopta la opción B-documentos.
+//
+// La tabla actual (PlanesComparativa.astro) SIGUE mostrando — en Integral
+// para ambas filas de informe porque `incluye` de Integral en precios.ts
+// no contiene la cadena «Informe técnico y ejecutivo»; ese falso negativo
+// se corrige SOLO al conectar la comparativa final 5×3 (R3 final, no
+// autorizado aquí). Este componente sigue NO conectado.
 //
 // FUENTE DE LOS VALORES CONOCIDOS: los textos existentes de
 // src/data/precios.ts (5 dimensiones progresivas latentes, F2 §1: 15/17
@@ -48,8 +62,10 @@ const DIMENSIONES: Dimension[] = [
     celdas: [
       { valor: "Ejecutivo" },
       { valor: "Técnico y ejecutivo" },
-      // PLACEHOLDER — PENDIENTE JAIME (A/B/C/D). Ver cabecera del archivo.
-      { valor: "Por confirmar", placeholder: true, pregunta: "INFORME-INTEGRAL" },
+      // RESUELTO 2026-11-07 16:04 (Jaime, opción B): informe técnico y
+      // ejecutivo como UN ÚNICO informe integrado (sección ejecutiva +
+      // desarrollo técnico). Ver cabecera del archivo.
+      { valor: "Técnico y ejecutivo" },
     ],
   },
   {
@@ -87,16 +103,18 @@ const DIMENSIONES: Dimension[] = [
 ];
 
 // Inventario de placeholders internos (para el informe R3b; no se publica):
-//   1 × INFORME-INTEGRAL (celda Informe / Seguridad Integral) — pregunta A/B/C/D.
-//   0 placeholders más. Todo lo demás son cadenas literales de precios.ts.
+//   0 placeholders. INFORME-INTEGRAL RESUELTO 2026-11-07 16:04 (Jaime,
+//   opción B: informe técnico y ejecutivo, único informe integrado).
+//   Todo son cadenas literales de precios.ts.
 const PLACEHOLDERS = DIMENSIONES.flatMap((d, i) =>
   d.celdas.map((c, j) => ({ ...c, dimension: d.nombre, plan: planes[j]?.nombre })).filter((c) => c.placeholder),
 );
 ---
 
-<div class="planes-comparativa-progresiva" data-estado="preparable-placeholder" data-placeholders={PLACEHOLDERS.length}>
-  <!-- R3b: componente NO conectado. No renderizar en producción ni en preview
-       hasta resolver INFORME-INTEGRAL con Jaime. La tabla actual sigue viva. -->
+<div class="planes-comparativa-progresiva" data-estado="preparable-resuelto" data-placeholders={PLACEHOLDERS.length}>
+  <!-- R3b: componente NO conectado. INFORME-INTEGRAL resuelto 2026-11-07
+       16:04 por Jaime (opción B, único informe integrado); la tabla actual
+       sigue viva hasta el R3 final. -->
   <header class="comparativa-progresiva-head">
     <p class="section-label">COMPARAR PLANES</p>
     <h3>Qué mejora al subir de plan</h3>
