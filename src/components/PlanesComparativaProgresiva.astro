@@ -1,13 +1,10 @@
 ---
-// COMPARATIVA PROGRESIVA 5×3 — R3b PREPARABLE, NO PUBLICADA (2026-11-07).
+// COMPARATIVA PROGRESIVA 5×3 (+1 FILA DE EXCLUSIVIDAD) — R3 PUBLICADA (2026-11-07).
 // ---------------------------------------------------------------------------
-// ESTADO: arquitectura + componente + responsive + estructura de datos,
-// con el dato INFORME-INTEGRAL YA RESUELTO por Jaime 2026-11-07 16:04
-// (opción B: informe técnico y ejecutivo, único informe integrado).
-// NO está importada en ninguna página
-// (grep: cero importaciones de PlanesComparativaProgresiva) y la preview R3
-// MANTIENE VISIBLE la tabla actual (PlanesComparativa.astro, 17 filas ✓/—).
-// NO conectar a index.astro hasta el R3 final autorizado (no en este paso).
+// ESTADO: conectada en src/pages/index.astro en lugar de PlanesComparativa.astro
+// (17 filas ✓/—, ELIMINADA en R3: la tabla vieja era redundante — 17 ✓, 34 —,
+// 0 filas compartidas — y mostraba un falso negativo en Integral).
+// Rebase R3 sobre main a315ef5 (R2 desplegado); HEAD histórico 2173118.
 //
 // RESUELTO 2026-11-07 16:04 (decisión de Jaime, opción B): Seguridad
 // Integral SÍ incluye informe — técnico Y ejecutivo — como UN ÚNICO
@@ -26,19 +23,26 @@
 // del informe (sección ejecutiva para responsables, cuerpo técnico para
 // quienes remedian). Ninguna ventaja material demostrable de dos
 // documentos: no se adopta la opción B-documentos.
+// CORRECCIÓN CANÓNICA R3: el `incluye` de Integral en src/data/precios.ts
+// ahora contiene «Informe técnico y ejecutivo» (antes ausente: ese era el
+// falso negativo). Solo ese valor; demás entregables y precios SIN CAMBIO.
+// La tarjeta de Integral gana esa línea en su lista (7 ítems): es la
+// corrección misma, no un entregable nuevo.
 //
-// La tabla actual (PlanesComparativa.astro) SIGUE mostrando — en Integral
-// para ambas filas de informe porque `incluye` de Integral en precios.ts
-// no contiene la cadena «Informe técnico y ejecutivo»; ese falso negativo
-// se corrige SOLO al conectar la comparativa final 5×3 (R3 final, no
-// autorizado aquí). Este componente sigue NO conectado.
+// ESTRUCTURA (6 filas × 3 planes): 5 dimensiones progresivas (Alcance,
+// Informe, Ruta de mejora, Seguimiento, Evaluación) + 1 fila «Solo en
+// Integral» (Hardening priorizado + Evidencias). Las 5 dimensiones cubren
+// 15/17 filas de la tabla vieja; los 2 entregables exclusivos de Integral
+// no caben en ninguna dimensión y viven en la fila de exclusividad, porque
+// la pregunta «¿qué tiene solo Integral?» es material para decidir y las
+// tarjetas no la responden de forma inmediata (listan ítems por plan sin
+// marcar exclusividad). «5×3» nombra las cinco dimensiones; la tabla
+// publicada es 6×3 por esa fila, no 17 filas disjuntas.
 //
-// FUENTE DE LOS VALORES CONOCIDOS: los textos existentes de
-// src/data/precios.ts (5 dimensiones progresivas latentes, F2 §1: 15/17
-// filas en 5 dimensiones + 2 exclusivas de Integral). Nada inventado:
-// cada celda conocida es una cadena literal de `incluye` o una
+// FUENTE DE LOS VALORES: textos existentes de src/data/precios.ts. Nada
+// inventado: cada celda es una cadena literal de `incluye` o una
 // reformulación mínima de ella. Los precios del encabezado se leen en
-// vivo de precios.ts (precioDe), como la tabla actual.
+// vivo de precios.ts (precioDe), como la tabla anterior.
 // ---------------------------------------------------------------------------
 import { PRECIOS, precioDe, formatearCOP } from "../data/precios";
 
@@ -102,27 +106,30 @@ const DIMENSIONES: Dimension[] = [
   },
 ];
 
-// Inventario de placeholders internos (para el informe R3b; no se publica):
+// Inventario de placeholders internos (para el informe R3; no se publica):
 //   0 placeholders. INFORME-INTEGRAL RESUELTO 2026-11-07 16:04 (Jaime,
-//   opción B: informe técnico y ejecutivo, único informe integrado).
-//   Todo son cadenas literales de precios.ts.
+//   opción B: informe técnico y ejecutivo, único informe integrado) y
+//   corregido en la fuente canónica (precios.ts: Integral incluye
+//   «Informe técnico y ejecutivo»). Todo son cadenas literales de precios.ts.
 const PLACEHOLDERS = DIMENSIONES.flatMap((d, i) =>
   d.celdas.map((c, j) => ({ ...c, dimension: d.nombre, plan: planes[j]?.nombre })).filter((c) => c.placeholder),
 );
 ---
 
-<div class="planes-comparativa-progresiva" data-estado="preparable-resuelto" data-placeholders={PLACEHOLDERS.length}>
-  <!-- R3b: componente NO conectado. INFORME-INTEGRAL resuelto 2026-11-07
-       16:04 por Jaime (opción B, único informe integrado); la tabla actual
-       sigue viva hasta el R3 final. -->
+<div class="planes-comparativa-progresiva" data-estado="publicada" data-placeholders={PLACEHOLDERS.length}>
+  <!-- R3: comparativa progresiva publicada (sustituye a PlanesComparativa,
+       17 filas ✓/—, eliminada). INFORME-INTEGRAL resuelto 2026-11-07
+       16:04 por Jaime (opción B, único informe integrado); la fuente
+       canónica precios.ts ya contiene «Informe técnico y ejecutivo» en
+       Integral. 5 dimensiones + 1 fila «Solo en Integral» (ver cabecera). -->
   <header class="comparativa-progresiva-head">
     <p class="section-label">COMPARAR PLANES</p>
     <h3>Qué mejora al subir de plan</h3>
-    <p>Las mismas 5 dimensiones en los 3 planes, con valores en vez de ✓/—.</p>
+    <p>Cinco dimensiones progresivas y una fila de exclusividad, con valores en vez de ✓/—.</p>
   </header>
   <div class="comparativa-progresiva-tabla-wrap">
     <table class="comparativa-progresiva-tabla">
-      <caption>Comparativa progresiva por dimensión (valores de entrada)</caption>
+      <caption>Comparativa progresiva por dimensión</caption>
       <thead>
         <tr>
           <th scope="col">Dimensión</th>

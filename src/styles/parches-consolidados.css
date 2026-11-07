@@ -283,12 +283,21 @@ main section[id]{}
       barra, así que el título aterrizaba tapado. Nuevos valores: 200px escritorio
       (29px de margen sobre 171px) y 260px móvil (30-42px sobre 218-230px).
       La barra se mantiene fija (diseño aprobado); solo se sube el despeje. */
-html{scroll-padding-top:200px !important}
-main section[id]{scroll-margin-top:200px !important}
-@media (max-width:680px){html{scroll-padding-top:260px !important}
+html{scroll-padding-top:110px !important}
+main section[id]{scroll-margin-top:110px !important}
+@media (max-width:680px){html{scroll-padding-top:110px !important}
 
 
-main section[id]{scroll-margin-top:260px !important}}
+main section[id]{scroll-margin-top:110px !important}}
+/* R3 (2026-11-07, caveat A): banda .scroll-cta RETIRADA — el cromo fijo es
+   solo la cabecera (77 px medidos por CDP en producción, desktop 1440 y
+   móvil 390; .header sticky top:0). El despeje 200/260 px reservaba
+   123/183 px inútiles bajo la cabecera en cada salto de ancla; el valor
+   110 px = 77 px de cabecera + 33 px de margen, igual a la base de
+   global.css (que el override de parches derrotaba). El cálculo histórico
+   de arriba se conserva como historia (la banda existió); los valores
+   vigentes son estos. Verificado en preview R3 por sonda CDP (aterrizaje
+   de #planes con scroll-behavior:auto). */
 /* 2) PANEL OSCURO DEL HERO — el panel se queda oscuro por diseño, pero el texto
       sube a blanco legible (antes gris apagado #c8d7e6 / #9eb3ca / #7890a8). */
 .visual-head{color:#ffffff !important}

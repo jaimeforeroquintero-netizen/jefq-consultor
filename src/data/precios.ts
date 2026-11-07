@@ -62,7 +62,7 @@ export const PRECIOS: Precio[] = [
     unidad: "proyecto",
     descripcion: "Cobertura integral: diagnóstico, pruebas autorizadas, hardening e informes.",
     texto: "Fortalecimiento por capas y seguimiento.",
-    incluye: ["Alcance personalizado", "Evaluación autorizada", "Hardening priorizado", "Evidencias", "Plan por etapas", "Dos seguimientos"],
+    incluye: ["Alcance personalizado", "Evaluación autorizada", "Hardening priorizado", "Evidencias", "Informe técnico y ejecutivo", "Plan por etapas", "Dos seguimientos"],
   },
   {
     id: "consultoria-hora",
