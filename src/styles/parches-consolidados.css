@@ -284,20 +284,26 @@ main section[id]{}
       (29px de margen sobre 171px) y 260px móvil (30-42px sobre 218-230px).
       La barra se mantiene fija (diseño aprobado); solo se sube el despeje. */
 html{scroll-padding-top:110px !important}
-main section[id]{scroll-margin-top:110px !important}
+main section[id]{scroll-margin-top:0 !important}
 @media (max-width:680px){html{scroll-padding-top:110px !important}
 
 
-main section[id]{scroll-margin-top:110px !important}}
+main section[id]{scroll-margin-top:0 !important}}
 /* R3 (2026-11-07, caveat A): banda .scroll-cta RETIRADA — el cromo fijo es
    solo la cabecera (77 px medidos por CDP en producción, desktop 1440 y
    móvil 390; .header sticky top:0). El despeje 200/260 px reservaba
    123/183 px inútiles bajo la cabecera en cada salto de ancla; el valor
-   110 px = 77 px de cabecera + 33 px de margen, igual a la base de
-   global.css (que el override de parches derrotaba). El cálculo histórico
-   de arriba se conserva como historia (la banda existió); los valores
-   vigentes son estos. Verificado en preview R3 por sonda CDP (aterrizaje
-   de #planes con scroll-behavior:auto). */
+   correcto es 110 px = 77 px de cabecera + 33 px de margen, igual a la
+   base de global.css (que el override de parches derrotaba).
+   CORRECCIÓN DE MEDICIÓN (2026-11-07 ~22:10, preview R3 e6683350): el
+   aterrizaje real de #planes NO es scroll-padding-top: con padding 110 +
+   margin 110 la sección aterrizó a 219,73 px (desktop) y 219,80 px (móvil);
+   en producción, con 200 + 200, aterrizó a 399,73 px. Los dos valores SE
+   SUMAN (padding del contenedor + margin del destino). Por eso el margin
+   queda en 0 y el despeje total es solo el padding: 110 px en ambos
+   viewports (aterrizaje verificado ~110 px en la preview tras el cambio).
+   El cálculo histórico de arriba se conserva como historia (la banda
+   existió); los valores vigentes son estos. */
 /* 2) PANEL OSCURO DEL HERO — el panel se queda oscuro por diseño, pero el texto
       sube a blanco legible (antes gris apagado #c8d7e6 / #9eb3ca / #7890a8). */
 .visual-head{color:#ffffff !important}
