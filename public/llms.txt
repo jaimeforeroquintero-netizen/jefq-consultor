@@ -3,7 +3,7 @@
 > NOTA DE MANTENIMIENTO: los precios de este archivo se sincronizan a mano desde src/data/precios.ts; verificar con node scripts/verificar-precios.mjs.
 > JEFQ Consultor es una consultoría de ciberseguridad para pymes en Colombia, liderada por Jaime Forero.
 > Ofrece diagnóstico de seguridad, pruebas autorizadas, hardening e informes ejecutivos que la gerencia sí entiende.
-> Atiende en Bogotá y toda Colombia, con atención remota 24/7. Todas las pruebas se hacen únicamente con autorización escrita.
+> Atiende en Bogotá y toda Colombia, con atención remota. Todas las pruebas se hacen únicamente con autorización escrita.
 
 ## Páginas clave
 
@@ -54,4 +54,4 @@ No. Es orientativa y sirve para determinar si existe un alcance adecuado para am
 - Correo: jaimeforeroquintero@gmail.com
 - WhatsApp: a través del botón de contacto en https://jefq-consultor.pages.dev/ (canal /api/whatsapp)
 - X/Twitter: @JaimeByte
-- Cobertura: Bogotá y toda Colombia · Atención remota 24/7
+- Cobertura: Bogotá y toda Colombia · Atención remota

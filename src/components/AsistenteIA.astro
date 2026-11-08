@@ -196,7 +196,7 @@
     if (window.JEFQ_wa) {
       window.JEFQ_wa.open(message || WA_MSG);
     } else {
-      bubble('assistant', 'Puede escribirle a Jaime por WhatsApp como <b>@JaimeByte</b> (búsquelo por su usuario). Atención 24/7.', true);
+      bubble('assistant', 'Puede escribirle a Jaime por WhatsApp como <b>@JaimeByte</b> (búsquelo por su usuario).', true);
     }
   }
 
@@ -211,7 +211,7 @@
     if (jaimeMode) return;
     jaimeMode = true;
     if (headTitle) headTitle.textContent = 'Asistente de Jaime';
-    if (headSub) headSub.textContent = 'En línea · atención 24/7';
+    if (headSub) headSub.textContent = 'En línea';
   }
 
   function wantsJaime(text) {
@@ -226,7 +226,7 @@
     fab.setAttribute('aria-label', 'Cerrar asistente virtual');
     if (!greeted) {
       greeted = true;
-      bubble('assistant', 'Hola, soy el asistente de JEFQ Consultor. Puedo orientarle sobre nuestros servicios, precios y cuál se ajusta mejor a su empresa. Atendemos 24/7. ¿En qué le ayudo?');
+      bubble('assistant', 'Hola, soy el asistente de JEFQ Consultor. Puedo orientarle sobre nuestros servicios, precios y cuál se ajusta mejor a su empresa. ¿En qué le ayudo?');
       renderChips();
     }
     setTimeout(function () { input.focus(); }, 60);
