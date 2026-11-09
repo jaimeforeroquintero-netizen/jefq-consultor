@@ -175,7 +175,9 @@ async function handler(context) {
       out = await env.AI.run(model, {
         messages: [{ role: "system", content: prompt }, ...history],
         temperature: 0.7,
-        max_tokens: 1024,
+        // 4096: GLM-4.7-flash razona antes de responder; con 1024 el
+        // razonamiento agotaba el presupuesto y content llegaba null.
+        max_tokens: 4096,
       });
       break;
     } catch (e) {
@@ -192,15 +194,26 @@ async function handler(context) {
     }
   }
 
-  const reply = (typeof out?.response === "string" ? out.response : "").trim();
+  // Forma clasica Workers AI: out.response (string).
+  // Forma OpenAI (GLM-4.7-flash): out.choices[0].message.content.
+  const choice = Array.isArray(out?.choices) ? out.choices[0] : null;
+  const reply = (
+    typeof out?.response === "string"
+      ? out.response
+      : typeof choice?.message?.content === "string"
+        ? choice.message.content
+        : ""
+  ).trim();
   if (!reply) {
     // DIAGNÓSTICO TEMPORAL (preview, se retira tras ver la forma real de env.AI.run).
     const diag = {
       out_type: typeof out,
       out_keys: out && typeof out === "object" ? Object.keys(out) : null,
       response_type: typeof out?.response,
-      response_preview: typeof out?.response === "string" ? out.response.slice(0, 200) : String(out?.response).slice(0, 200),
-      raw_preview: JSON.stringify(out).slice(0, 500),
+      finish_reason: choice?.finish_reason ?? null,
+      usage: out?.usage ?? null,
+      reasoning_len: typeof choice?.message?.reasoning === "string" ? choice.message.reasoning.length : null,
+      content_preview: typeof choice?.message?.content === "string" ? choice.message.content.slice(0, 200) : String(choice?.message?.content).slice(0, 200),
     };
     return new Response(JSON.stringify({ error: "empty-reply", diag }), {
       status: 502,
