@@ -1,6 +1,6 @@
 // functions/api/whatsapp.js — Redirección privada a WhatsApp (Cloudflare Pages).
-// El número vive SOLO en la variable de entorno WHATSAPP_NUMBER de Cloudflare
-// (nunca en el HTML, el JS ni el repositorio).
+// Destino: el nombre de usuario público @JaimeByte (wa.me/JaimeByte).
+// No se usa ningún número telefónico: el visitante nunca lo ve.
 import { withSentry } from '../_sentry.js';
 import { contar, ipCliente } from '../lib/redis.js';
 
@@ -16,15 +16,10 @@ async function handler(context) {
   }
   if (!c.ok) console.error('[jefq] Redis no disponible (whatsapp), limite desactivado:', c.motivo);
 
-  const number = env.WHATSAPP_NUMBER;
-  if (!number) {
-    return new Response("WhatsApp no configurado", { status: 500 });
-  }
   const url = new URL(request.url);
   const text = (url.searchParams.get("text") || "").slice(0, 600);
   const waUrl =
-    "https://wa.me/" +
-    number +
+    "https://wa.me/JaimeByte" +
     (text ? "?text=" + encodeURIComponent(text) : "");
   return Response.redirect(waUrl, 302);
 }
