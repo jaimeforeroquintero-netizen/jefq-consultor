@@ -194,7 +194,15 @@ async function handler(context) {
 
   const reply = (typeof out?.response === "string" ? out.response : "").trim();
   if (!reply) {
-    return new Response(JSON.stringify({ error: "empty-reply" }), {
+    // DIAGNÓSTICO TEMPORAL (preview, se retira tras ver la forma real de env.AI.run).
+    const diag = {
+      out_type: typeof out,
+      out_keys: out && typeof out === "object" ? Object.keys(out) : null,
+      response_type: typeof out?.response,
+      response_preview: typeof out?.response === "string" ? out.response.slice(0, 200) : String(out?.response).slice(0, 200),
+      raw_preview: JSON.stringify(out).slice(0, 500),
+    };
+    return new Response(JSON.stringify({ error: "empty-reply", diag }), {
       status: 502,
       headers: { "Content-Type": "application/json" },
     });
