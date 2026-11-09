@@ -1,0 +1,91 @@
+---
+import Layout from "../layouts/Layout.astro";
+const waMessage = "Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.";
+---
+<Layout title="Ejercicio ficticio de método: ¿Qué llaves de su empresa se irían con quien le administra los sistemas? | JEFQ Consultor" description="Ejercicio ficticio de método. No es un cliente ni un caso real: un ejemplo inventado para mostrar cómo razona JEFQ cuando una pyme depende de quien le administra los sistemas.">
+<section class="authority-hero"><div class="container authority-narrow"><span class="ejercicio-sello">EJERCICIO FICTICIO DE MÉTODO</span><span class="section-label">EJERCICIO FICTICIO DE MÉTODO</span><h1>¿Qué llaves de su empresa se irían con quien le administra los sistemas?</h1><p>Un ejercicio hipotético: así empezaríamos si usted nos pidiera revisar este riesgo.</p><p class="ejercicio-honestidad"><strong>No es un cliente. No es un caso real. No hay resultados reales.</strong> Todo lo que sigue está inventado para mostrar cómo razonaríamos.</p><div class="authority-actions"><a class="button primary" href="/valoracion">Solicitar valoración</a><a class="button secondary" href="#" data-wa-modal data-wa-message={waMessage}>WhatsApp @JaimeByte</a></div></div></section>
+<section class="authority-body"><div class="container authority-narrow">
+<h2>El problema</h2>
+<p>Una pyme puede depender de una persona o empresa externa que “administra todo”: correo, dominio, software contable, alojamiento web. Funciona hasta que esa persona se va, el contrato termina o se descubre que nadie sabe qué accesos existen.</p>
+<p>No es desconfianza: es inventario.</p>
+<p>Dato global, no colombiano: Verizon DBIR 2026 reportó participación de terceros en el 48 % de las brechas analizadas.</p>
+
+<h2>La primera pregunta</h2>
+<p>No sería: “¿Qué contraseña cambiamos?”</p>
+<p>Sería: <strong>¿Qué podría quedar fuera de su control si esta persona se fuera mañana?</strong></p>
+<p>Y tres preguntas detrás:</p>
+<ol>
+<li><strong>¿A nombre de quién está cada cosa importante?</strong> Por ejemplo: dominio, cuenta administradora del correo, cuenta de facturación electrónica.</li>
+<li><strong>¿Quién puede entrar hoy y desde cuándo?</strong></li>
+<li><strong>¿Qué dejaría de funcionar si cortáramos un acceso hoy?</strong></li>
+</ol>
+
+<h2>Alcance — antes de tocar nada</h2>
+<p>Autorización escrita y alcance definido, antes de tocar nada. En este ejercicio: cuentas administradoras del correo y del dominio, lista de usuarios y roles (incluidos externos), configuración de acceso, verificación en dos pasos, acceso remoto y registros disponibles; únicamente la información estrictamente necesaria. Fuera del alcance: sistemas propios del proveedor y cuentas personales de cualquier persona.</p>
+<p><a href="/seguridad-autorizacion-alcance">Ver autorización y alcance →</a></p>
+
+<h2>Si encontráramos…</h2>
+<p>Todos los hallazgos siguientes son <strong>inventados</strong>. No describen ninguna empresa real.</p>
+<div class="ejercicio-hallazgos">
+<article class="ejercicio-hallazgo"><div class="ejercicio-hallazgo-top"><span>H-01 · EJEMPLO INVENTADO</span><strong class="ejercicio-chip alta">ALTA</strong></div><p><strong>Si encontráramos:</strong> el dominio de la web registrado a nombre personal del proveedor.</p><p><strong>Por qué:</strong> quien controla el dominio puede tener control material sobre servicios asociados como sitio y correo. Se resuelve principalmente mediante titularidad y control administrativo, no mediante “más ciberseguridad”.</p></article>
+<article class="ejercicio-hallazgo"><div class="ejercicio-hallazgo-top"><span>H-02 · EJEMPLO INVENTADO</span><strong class="ejercicio-chip alta">ALTA</strong></div><p><strong>Si encontráramos:</strong> cuentas administradoras sin verificación en dos pasos.</p><p><strong>Por qué:</strong> una credencial comprometida podría entregar capacidades administrativas.</p></article>
+<article class="ejercicio-hallazgo"><div class="ejercicio-hallazgo-top"><span>H-03 · EJEMPLO INVENTADO</span><strong class="ejercicio-chip media">MEDIA</strong></div><p><strong>Si encontráramos:</strong> cuentas de personas o proveedores que ya no trabajan con la empresa.</p><p><strong>Por qué:</strong> una cuenta sin uso NO demuestra abuso. La prioridad depende de qué permite hacer. Subiría a ALTA si alcanzan pagos, información crítica o datos de clientes.</p></article>
+<article class="ejercicio-hallazgo"><div class="ejercicio-hallazgo-top"><span>H-04 · EJEMPLO INVENTADO</span><strong class="ejercicio-chip media">MEDIA</strong></div><p><strong>Si encontráramos:</strong> ningún documento que defina qué puede hacer el proveedor dentro de los sistemas.</p><p><strong>Por qué:</strong> sin reglas explícitas, cada nuevo acceso puede convertirse en una decisión informal difícil de auditar después.</p></article>
+</div>
+
+<h2>Qué podríamos afirmar y qué no</h2>
+<p><strong>DEMOSTRADO</strong> (si la revisión realmente lo permite verificar): quién figura como administrador; qué cuentas existen; cuáles tienen verificación en dos pasos; a nombre de quién está el dominio.</p>
+<p><strong>PROBABLE:</strong> que una cuenta sin actividad durante meses sea un remanente y no una puerta utilizada activamente. Probable NO significa probado.</p>
+<p><strong>NO DETERMINADO:</strong> si alguien utilizó indebidamente un acceso en el pasado. Eso depende de registros disponibles, calidad de registros, período conservado y otras evidencias. Si la evidencia no existe, JEFQ no debería afirmar que ocurrió. Tampoco debería afirmar que nunca ocurrió.</p>
+
+<h2>En qué orden lo haríamos</h2>
+<ol>
+<li><strong>Asegurar lo irremplazable.</strong> Que la empresa controle su dominio, una cuenta administradora principal y una cuenta de emergencia bajo su control.</li>
+<li><strong>Proteger lo que tiene poder.</strong> Aplicar controles adecuados, incluida verificación adicional, a las cuentas administrativas cuando corresponda.</li>
+<li><strong>Retirar lo que sobra.</strong> Hacerlo en una ventana acordada. Nunca cortar accesos críticos sin entender primero qué depende de ellos.</li>
+<li><strong>Dejarlo por escrito.</strong> Definir quién puede acceder, para qué, con qué alcance, cómo se concede y cómo se retira.</li>
+</ol>
+<p><strong>Principio:</strong> primero se asegura lo que no se puede reemplazar. Lo que se puede rehacer va después.</p>
+
+<h2>Cómo terminaría este ejercicio</h2>
+<p><span class="ejercicio-sello">EJERCICIO FICTICIO — NO ES RESULTADO REAL</span></p>
+<p>La empresa imaginaria terminaría con: dominio bajo control empresarial; cuenta administrativa principal bajo su control; inventario de accesos; responsable identificado para cada acceso; verificación adicional en cuentas con privilegios; reglas escritas para el proveedor; accesos injustificados identificados para retiro.</p>
+<p><strong>Seguirían abiertos:</strong> los accesos que todavía no pudieran retirarse justificadamente.</p>
+<p><strong>También seguiría NO DETERMINADA:</strong> cualquier pregunta sobre un posible uso indebido histórico cuando no existan registros suficientes.</p>
+<p>No es riesgo cero. Es riesgo mejor conocido + control con responsable.</p>
+
+<h2>Qué recibiría usted</h2>
+<p>Según el alcance real del servicio: resumen para gerencia, inventario priorizado de accesos, plan de retiro por ventanas y constancia de alcance. Puede ver cómo se ve un informe JEFQ en la muestra de informe.</p>
+<p><a href="/informe-demostrativo">Ver la muestra de informe →</a></p>
+
+<h2>Lo que JEFQ no haría</h2>
+<ul>
+<li>No asumir mala fe.</li>
+<li>No llamar “intrusión” a una cuenta simplemente porque fue olvidada.</li>
+<li>No cortar accesos sin comprender su dependencia operativa.</li>
+<li>No dar concepto laboral o jurídico sobre la relación con el proveedor.</li>
+</ul>
+<p>El resto de lo que JEFQ no hace en ningún servicio está publicado en la página principal.</p>
+<p><a href="/#confianza">Ver lo que no hacemos →</a></p>
+
+<h2>Cierre</h2>
+<p>¿Qué respondería su empresa a la primera pregunta? La valoración puede empezar por entender quién tiene acceso a qué y qué quedaría fuera de su control si un proveedor o administrador dejara de estar disponible.</p>
+<div class="authority-actions"><a class="button primary" href="/valoracion">Solicitar valoración</a><a class="button secondary" href="#" data-wa-modal data-wa-message={waMessage}>WhatsApp @JaimeByte</a></div>
+<p class="safe-note"><strong>JEFQ todavía no publica casos de clientes.</strong> Este es un ejercicio ficticio diseñado únicamente para mostrar cómo razona JEFQ. No constituye testimonio, referencia de cliente, experiencia histórica ni resultado obtenido.</p>
+</div></section></Layout>
+
+<style>
+/* Sello y tarjetas del ejercicio: reutilizan el lenguaje visual de la muestra
+   ilustrativa (InformeMuestra: sello ámbar #fff4d6 / #7a5200; chips de
+   prioridad #ffc166 / #65e7cc). Sin componentes ni estilos nuevos de diseño. */
+.ejercicio-sello{display:inline-flex;padding:7px 12px;border:1px solid rgba(176,120,0,.5);border-radius:999px;color:#7a5200;background:#fff4d6;font-size:.72rem;font-weight:900;letter-spacing:.07em}
+.ejercicio-honestidad{max-width:62ch}
+.ejercicio-hallazgos{display:grid;gap:14px;margin:18px 0}
+.ejercicio-hallazgo{padding:20px;border:1px solid #d7e2ea;border-radius:16px;background:#f3f7fa}
+.ejercicio-hallazgo-top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}
+.ejercicio-hallazgo-top>span{color:#40566b;font-size:.72rem;font-weight:800;letter-spacing:.08em}
+.ejercicio-hallazgo p{margin:8px 0}
+.ejercicio-chip{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.78rem;white-space:nowrap}
+.ejercicio-chip.alta{color:#2b1a00;background:#ffc166}
+.ejercicio-chip.media{color:#00271f;background:#65e7cc}
+</style>
