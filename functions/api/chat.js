@@ -215,10 +215,7 @@ async function handler(context) {
     });
   }
 
-  // TEMPORAL (batería Q1–Q8): se devuelve usage para medir el consumo real
-  // de neuronas (tokens de entrada/salida, incluido el razonamiento del modelo).
-  // Se retira tras la batería; el widget solo lee data.reply.
-  return new Response(JSON.stringify({ reply, usage: out?.usage ?? null }), {
+  return new Response(JSON.stringify({ reply }), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
