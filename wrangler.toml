@@ -1,0 +1,11 @@
+# JEFQ Consultor — Cloudflare Pages (candidato Cloudflare Workers AI, BORRADOR).
+# Declara el binding Workers AI (variable AI) para las Pages Functions.
+# El binding también puede configurarse en el dashboard (Workers & Pages →
+# proyecto → Settings → Bindings → Add → Workers AI → Variable name "AI").
+# Sin este binding, functions/api/chat.js responde 503 (fallback a WhatsApp).
+name = "jefq-consultor"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-19"
+
+[ai]
+binding = "AI"

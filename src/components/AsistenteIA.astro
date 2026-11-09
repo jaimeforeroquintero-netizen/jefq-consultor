@@ -13,11 +13,11 @@
   <section class="jefq-ia-panel" id="jefq-ia-panel" role="dialog" aria-label="Asistente virtual de JEFQ Consultor" hidden>
     <header class="jefq-ia-head">
       <span class="jefq-ia-dot" aria-hidden="true"></span>
-      <div><b id="jefq-ia-head-title">Asistente JEFQ</b><small id="jefq-ia-head-sub">En línea · responde en segundos cuando está disponible</small></div>
+      <div><b id="jefq-ia-head-title">Asistente JEFQ</b><small id="jefq-ia-head-sub">Asistente digital · responde en segundos</small></div>
       <button class="jefq-ia-close" id="jefq-ia-close" type="button" aria-label="Cerrar asistente">✕</button>
     </header>
 
-    <div class="jefq-ia-msgs" id="jefq-ia-msgs" aria-live="polite"><p class="jefq-ia-notice">Tus mensajes se envían a Google Gemini para responderte. No escribas contraseñas ni datos sensibles. Ver <a href="/privacidad">Política de privacidad</a>.</p></div>
+    <div class="jefq-ia-msgs" id="jefq-ia-msgs" aria-live="polite"><p class="jefq-ia-notice">Asistente digital, no una persona. Tus mensajes se envían a Cloudflare Workers AI para responderte. No escribas contraseñas, datos personales, datos de tus sistemas ni detalles de incidentes. Ver <a href="/privacidad">Política de privacidad</a>.</p></div>
 
     <div class="jefq-ia-chips" id="jefq-ia-chips" hidden></div>
 
@@ -226,7 +226,7 @@
     fab.setAttribute('aria-label', 'Cerrar asistente virtual');
     if (!greeted) {
       greeted = true;
-      bubble('assistant', 'Hola, soy el asistente de JEFQ Consultor. Puedo orientarle sobre nuestros servicios, precios y cuál se ajusta mejor a su empresa. ¿En qué le ayudo?');
+      bubble('assistant', 'Hola, soy el asistente digital de JEFQ Consultor. Puedo orientarle en general sobre nuestros servicios, precios y cuál se ajusta mejor a su empresa. Lo concreto de su caso lo revisa Jaime por WhatsApp. ¿En qué le ayudo?');
       renderChips();
     }
     setTimeout(function () { input.focus(); }, 60);
