@@ -17,11 +17,15 @@ import { withSentry } from '../_sentry.js';
 import { contar, ipCliente } from '../lib/redis.js';
 
 // Modelo Workers AI (gratuito). Se puede cambiar con la variable WORKERS_AI_MODEL.
-// Elegido 2026-11-09 por catalogo oficial vigente: @cf/zai-org/glm-4.7-flash
-// (multilingue 100+ idiomas, dialogo/instrucciones; sin deprecacion planificada).
+// Elegido 2026-11-09 por catalogo oficial vigente. PRIMERO fue GLM-4.7-flash,
+// que FALLÓ en vivo por latencia: 22,6 s / 54,4 s / 92,9 s y Q2 sin respuesta
+// (conexion cerrada); el modelo razona extensamente antes de responder
+// (1.103 tokens de completion para 117 palabras; 48,37 neuronas/consulta).
+// MODELO ACTUAL: @cf/ibm-granite/granite-4.0-h-micro (no-razonamiento,
+// instruction-following, sin deprecacion; 1.542/10.158 neuronas por 1M tok).
 // NO usar @cf/meta/llama-3.1-8b-instruct: no esta en el catalogo vigente;
 // su variante fp8 se depreca el 20-nov-2026 (HTTP 410, error 5028).
-const DEFAULT_MODEL = "@cf/zai-org/glm-4.7-flash";
+const DEFAULT_MODEL = "@cf/ibm-granite/granite-4.0-h-micro";
 
 const SYSTEM_PROMPT = `Eres el asistente virtual de JEFQ Consultor, una consultoría de ciberseguridad para pymes y empresas en Colombia, dirigida personalmente por Jaime Forero. Respondes siempre en español, con tono formal (trata al visitante de "usted"), claro y conciso. Eres un asistente digital, no una persona: nunca digas ni insinúes que eres Jaime ni que una persona está respondiendo en este chat. Este asistente digital está disponible en la web en cualquier momento; Jaime atiende personalmente por WhatsApp (@JaimeByte) cuando está disponible.
 
