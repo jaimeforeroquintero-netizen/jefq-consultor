@@ -205,23 +205,16 @@ async function handler(context) {
         : ""
   ).trim();
   if (!reply) {
-    // DIAGNÓSTICO TEMPORAL (preview, se retira tras ver la forma real de env.AI.run).
-    const diag = {
-      out_type: typeof out,
-      out_keys: out && typeof out === "object" ? Object.keys(out) : null,
-      response_type: typeof out?.response,
-      finish_reason: choice?.finish_reason ?? null,
-      usage: out?.usage ?? null,
-      reasoning_len: typeof choice?.message?.reasoning === "string" ? choice.message.reasoning.length : null,
-      content_preview: typeof choice?.message?.content === "string" ? choice.message.content.slice(0, 200) : String(choice?.message?.content).slice(0, 200),
-    };
-    return new Response(JSON.stringify({ error: "empty-reply", diag }), {
+    return new Response(JSON.stringify({ error: "empty-reply" }), {
       status: 502,
       headers: { "Content-Type": "application/json" },
     });
   }
 
-  return new Response(JSON.stringify({ reply }), {
+  // TEMPORAL (batería Q1–Q8): se devuelve usage para medir el consumo real
+  // de neuronas (tokens de entrada/salida, incluido el razonamiento del modelo).
+  // Se retira tras la batería; el widget solo lee data.reply.
+  return new Response(JSON.stringify({ reply, usage: out?.usage ?? null }), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
