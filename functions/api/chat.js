@@ -133,6 +133,105 @@ function toAiMessages(messages) {
     }));
 }
 
+// ---------------------------------------------------------------------------
+// FILTRO DETERMINISTA PRE-MODELO — ejercicio ficticio de método (llaves).
+// Cambio de DISEÑO justificado por consulta a Claude (2026-11-12), NO de
+// prompt: la afinación de prompt está DETENIDA (limitación del modelo;
+// Workers AI aceptaba la premisa de caso real en Q2 en 2 de 3 muestras).
+// Ante preguntas sobre el ejercicio / el caso del proveedor, el handler
+// devuelve un texto fijo SIN llamar al modelo. Coincidencia de patrones
+// sobre texto normalizado (sin LLM, sin azar): misma entrada, misma salida.
+// NO modifica el prompt, el modelo, la temperatura ni max_tokens.
+// LÍMITE CONOCIDO (Claude): reduce el riesgo, no lo cierra — las
+// paráfrasis sin palabras de la página pueden atravesarlo y llegar al
+// modelo (segunda capa: el bloque EJERCICIO FICTICIO DE MÉTODO del prompt).
+// Lo único que cierra por construcción es no tener chatbot mientras el
+// ejercicio esté publicado. El filtro también puede activarse ante
+// preguntas legítimas cercanas al tema (p. ej. "¿quién administra mis
+// sistemas?"); es el coste documentado de priorizar cero aceptaciones.
+// ---------------------------------------------------------------------------
+const RESPUESTA_EJERCICIO_FICTICIO = "Es un ejercicio ficticio para mostrar el método de JEFQ Consultor. No es un cliente ni un caso real; no hay hallazgos reales ni trabajo realizado.";
+
+function normalizarTextoFiltro(s) {
+  return (s || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9 ]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// Nivel A: la pregunta, por sí sola, trata del ejercicio / caso del proveedor.
+// Se usan raíces (llav, proveed, administr, ejercic...) para tolerar
+// errores de tipeo habituales (letra omitida o traspuesta al final de la
+// raíz) y variantes de flexión (administra/administraba/administrador).
+function esPreguntaSobreEjercicio(textoNormalizado) {
+  const t = textoNormalizado;
+  if (!t) return false;
+  const tiene = (f) => t.includes(f);
+  const llav = tiene("llav");
+  const proveed = tiene("proveed");
+  const administr = tiene("administr");
+  const ejercic = tiene("ejercic");
+  const caso = tiene("caso");
+  const encontr = tiene("encontr") || tiene("hallazg") || tiene("descubr");
+  const tercero = tiene("tercero") || tiene("externo");
+  const clav = tiene("clav");
+  // A1: llaves + ancla del ejercicio.
+  if (llav && (proveed || administr || ejercic || caso || tiene("empres") || tiene("sistem") || tiene("irian") || tiene("se ir"))) return true;
+  // A2: proveedor + ancla (administra / todo / caso / ejercicio / llaves).
+  if (proveed && (administr || tiene("todo") || caso || llav || ejercic)) return true;
+  // A3: administra + ancla (todo / sistemas / llaves / ejercicio / caso / proveedor).
+  if (administr && (tiene("todo") || llav || ejercic || caso || tiene("sistem") || proveed)) return true;
+  // A4: ejercicio + ancla.
+  if (ejercic && (llav || caso || proveed || tiene("metodo") || tiene("ficticio") || tiene("jefq") || administr || tiene("web") || tiene("pagina"))) return true;
+  // A5: caso + ancla del proveedor/ejercicio.
+  if (caso && (proveed || llav || ejercic || administr || encontr)) return true;
+  // A6: qué encontraron/hallaron/descubrieron + ancla.
+  if (encontr && (caso || proveed || ejercic || llav)) return true;
+  // A7: claves (sinónimo de llaves) + ancla.
+  if (clav && (administr || proveed || tercero || tiene("se ir") || tiene("irian"))) return true;
+  // A8: tercero/externo que lo maneja/controla todo.
+  if (tercero && (tiene("todo") || administr || llav || clav || tiene("manej") || tiene("depend") || tiene("control"))) return true;
+  return false;
+}
+
+// Nivel B: seguimiento que solo tiene sentido si la premisa ya se instaló
+// en un turno previo ("¿qué encontraron?", "ese caso", "cuéntame más").
+// Solo dispara si algún mensaje de usuario anterior coincidió con el nivel A.
+function esSeguimientoDelCaso(textoNormalizado) {
+  const t = textoNormalizado;
+  if (!t) return false;
+  const conBordes = ` ${t} `;
+  return (
+    t.includes("que encontraron") || t.includes("que hallaron") || t.includes("que descubrieron") ||
+    t.includes("que paso") || t.includes("que salio") ||
+    t.includes("ese caso") || t.includes("este caso") || t.includes("ese proveedor") ||
+    t.includes("este proveedor") || t.includes("ese ejercicio") || t.includes("este ejercicio") ||
+    t.includes("del caso") || t.includes("del proveedor") ||
+    t.includes("cuentame mas") || t.includes("contame mas") ||
+    t.includes("y entonces") || t.includes("y que mas") || t.includes("y despues") ||
+    t.includes("que mas paso") ||
+    conBordes.includes(" sigue ") || conBordes.includes(" continua ")
+  );
+}
+
+// Devuelve true si la conversación trata del ejercicio / caso del proveedor:
+// el último mensaje del usuario coincide con el nivel A, o es un seguimiento
+// (nivel B) de una premisa instalada en un turno anterior (nivel A).
+// Recibe solo los textos de los mensajes del usuario, en orden.
+function filtroEjercicioFicticio(textosUsuario) {
+  const normalizados = (textosUsuario || []).map(normalizarTextoFiltro).filter(Boolean);
+  if (normalizados.length === 0) return false;
+  const ultimo = normalizados[normalizados.length - 1];
+  if (esPreguntaSobreEjercicio(ultimo)) return true;
+  if (esSeguimientoDelCaso(ultimo)) {
+    return normalizados.slice(0, -1).some(esPreguntaSobreEjercicio);
+  }
+  return false;
+}
+
 
 // Límite anti-abuso: 30 peticiones por minuto por IP (ventana fija de 60s).
 // Sin Redis configurado o si Redis falla, el límite se desactiva (fail-open)
@@ -178,6 +277,16 @@ async function handler(context) {
   if (history.length === 0 || history[history.length - 1].role !== "user") {
     return new Response(JSON.stringify({ error: "bad-request" }), {
       status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  // FILTRO DETERMINISTA PRE-MODELO: ante preguntas sobre el ejercicio /
+  // el caso del proveedor, responder el texto fijo SIN llamar al modelo.
+  // En esta ruta no se envía contenido del ejercicio al modelo.
+  if (filtroEjercicioFicticio(history.filter((m) => m.role === "user").map((m) => m.content))) {
+    return new Response(JSON.stringify({ reply: RESPUESTA_EJERCICIO_FICTICIO }), {
+      status: 200,
       headers: { "Content-Type": "application/json" },
     });
   }
