@@ -176,7 +176,7 @@ function esPreguntaSobreEjercicio(textoNormalizado) {
   const ejercic = tiene("ejercic");
   const caso = tiene("caso");
   const encontr = tiene("encontr") || tiene("hallazg") || tiene("descubr");
-  const tercero = tiene("tercero") || tiene("externo");
+  const tercero = tiene("tercero") || tiene("extern");
   const clav = tiene("clav");
   // A1: llaves + ancla del ejercicio.
   if (llav && (proveed || administr || ejercic || caso || tiene("empres") || tiene("sistem") || tiene("irian") || tiene("se ir"))) return true;
@@ -213,6 +213,9 @@ function esSeguimientoDelCaso(textoNormalizado) {
     t.includes("cuentame mas") || t.includes("contame mas") ||
     t.includes("y entonces") || t.includes("y que mas") || t.includes("y despues") ||
     t.includes("que mas paso") ||
+    t.includes("caso real") || t.includes("fue real") || t.includes("es real") ||
+    t.includes("era real") || t.includes("trabajo real") || t.includes("cliente real") ||
+    t.includes("un cliente") || t.includes("de un cliente") || t.includes("para un cliente") ||
     conBordes.includes(" sigue ") || conBordes.includes(" continua ")
   );
 }
