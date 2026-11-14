@@ -1,14 +1,15 @@
-JEFQ CONSULTOR - 10 CONTROLES MÍNIMOS PARA UNA PYME
+JEFQ CONSULTOR - CONTROLES MÍNIMOS PARA UNA PYME
 
-1. Inventario de cuentas, equipos, aplicaciones y servicios críticos.
-2. MFA en correo, administradores y servicios esenciales.
-3. Cuentas administrativas separadas y privilegios mínimos.
-4. Actualizaciones regulares de sistemas y aplicaciones.
-5. Copias de seguridad con pruebas de restauración.
-6. Protección de correo y verificación de pagos o cambios bancarios.
-7. Baja oportuna de accesos cuando una persona cambia de función o sale.
-8. Procedimiento simple para reportar incidentes.
-9. Alcance y responsables documentados para proveedores tecnológicos.
-10. Revisión periódica de exposición, configuraciones y mejoras pendientes.
+1. MFA en correo, cuentas administrativas y servicios críticos.
+2. Inventario de equipos, cuentas, dominios y aplicaciones.
+3. Actualizaciones automáticas o proceso documentado de parchado.
+4. Copias de seguridad probadas y separadas del entorno principal.
+5. Cuentas individuales, cuentas administrativas separadas y retiro oportuno de accesos.
+6. Protección del correo frente a suplantación y fraude, y verificación de pagos o cambios bancarios.
+7. Cifrado y bloqueo de equipos portátiles.
+8. Procedimiento para reportar correos o actividades sospechosas.
+9. Revisión periódica de permisos, cuentas antiguas, exposición y configuraciones.
+10. Plan básico de respuesta y contactos de emergencia.
+11. Alcance y responsables documentados para proveedores tecnológicos.
 
-Material informativo. Para priorizar controles según su contexto, solicite una valoración inicial.
+Material informativo. Completar esta lista no equivale a una auditoría ni garantiza ausencia de riesgos. Para priorizar controles según su contexto, solicite una valoración inicial.

@@ -12,6 +12,12 @@ export type ServicePage = {
   deliverables: string[];
   process: { title: string; text: string }[];
   related: string[];
+  /** Público al que va dirigido (fusionado desde las páginas de
+      aterrizaje retiradas en la optimización 2026-11-13). */
+  audience?: string[];
+  /** Preguntas frecuentes del servicio (fusionadas desde las páginas
+      de aterrizaje retiradas en la optimización 2026-11-13). */
+  faq?: { question: string; answer: string }[];
 };
 
 export const services: ServicePage[] = [
@@ -25,7 +31,15 @@ export const services: ServicePage[] = [
     includes: ["Revisión inicial de activos y contexto", "Evaluación de configuraciones y exposición", "Clasificación de riesgos", "Reunión de resultados"],
     deliverables: ["Informe ejecutivo", "Hallazgos priorizados", "Recomendaciones aplicables", "Hoja de ruta inicial"],
     process: [{title:"Descubrimiento",text:"Definimos objetivos, activos y restricciones."},{title:"Evaluación",text:"Revisamos los controles acordados."},{title:"Análisis",text:"Priorizamos por riesgo, impacto y esfuerzo."},{title:"Entrega",text:"Presentamos resultados y próximos pasos."}],
-    related: ["hardening", "informes-tecnicos", "acompanamiento-remediacion"]
+    related: ["hardening", "informes-tecnicos", "acompanamiento-remediacion"],
+    audience: ["Pymes que necesitan conocer su nivel actual de seguridad", "Empresas antes de ampliar su operación digital", "Pymes sin responsable interno de seguridad", "Empresas que necesitan priorizar inversiones y ordenar sus controles"],
+    faq: [
+      { question: "¿Puede hacerse de forma remota?", answer: "Sí, cuando el alcance y los accesos autorizados lo permitan." },
+      { question: "¿Incluye correcciones?", answer: "La propuesta define si incluye acompañamiento o implementación de mejoras." },
+      { question: "¿La consultoría obliga a comprar productos?", answer: "No. Las recomendaciones deben justificarse por necesidad y riesgo." },
+      { question: "¿Cuánto cuesta?", answer: "Los valores orientativos están publicados en la página de planes, desde $421.500 para el Diagnóstico Esencial." },
+      { question: "¿Qué recibe la gerencia?", answer: "Un resumen ejecutivo, prioridades y próximos pasos, además del detalle técnico acordado." }
+    ]
   },
   {
     slug: "hardening",
@@ -37,7 +51,12 @@ export const services: ServicePage[] = [
     includes: ["Windows y estaciones de trabajo", "Cuentas y privilegios", "Navegadores y aplicaciones", "Controles básicos de acceso"],
     deliverables: ["Configuración aplicada o recomendada", "Registro de cambios", "Lista de validación", "Plan de mantenimiento"],
     process: [{title:"Línea base",text:"Identificamos el estado actual."},{title:"Priorización",text:"Seleccionamos controles de mayor valor."},{title:"Aplicación",text:"Implementamos cambios acordados."},{title:"Verificación",text:"Comprobamos resultados y documentamos."}],
-    related: ["diagnostico-seguridad", "pruebas-autorizadas", "acompanamiento-remediacion"]
+    related: ["diagnostico-seguridad", "pruebas-autorizadas", "acompanamiento-remediacion"],
+    audience: ["Empresas con equipos sin una línea base común", "Organizaciones que manejan información sensible", "Pymes que quieren reducir configuraciones innecesarias"],
+    faq: [
+      { question: "¿Se desinstalan componentes críticos?", answer: "No se eliminan componentes críticos sin justificación, autorización y posibilidad de recuperación." },
+      { question: "¿Puede adaptarse por áreas?", answer: "Sí. La línea base puede variar según funciones, aplicaciones y nivel de riesgo." }
+    ]
   },
   {
     slug: "pruebas-autorizadas",
@@ -48,7 +67,12 @@ export const services: ServicePage[] = [
     includes: ["Definición de alcance", "Reglas de ejecución", "Pruebas controladas", "Registro de evidencias"],
     deliverables: ["Informe de hallazgos", "Evidencias disponibles", "Impacto y prioridad", "Recomendaciones de remediación"],
     process: [{title:"Autorización",text:"Validamos titularidad y permiso."},{title:"Alcance",text:"Definimos activos, límites y ventanas."},{title:"Pruebas",text:"Ejecutamos actividades acordadas."},{title:"Cierre",text:"Entregamos resultados y recomendaciones."}],
-    related: ["diagnostico-seguridad", "informes-tecnicos", "acompanamiento-remediacion"]
+    related: ["diagnostico-seguridad", "informes-tecnicos", "acompanamiento-remediacion"],
+    audience: ["Empresas que necesitan validar controles", "Organizaciones antes de publicar un servicio", "Pymes que requieren evidencias y prioridades"],
+    faq: [
+      { question: "¿Se hacen pruebas sin autorización?", answer: "No. Toda prueba requiere autorización escrita y alcance acordado." },
+      { question: "¿Puede afectar la operación?", answer: "Las condiciones se diseñan para reducir el impacto, pero cualquier riesgo específico debe quedar acordado antes de iniciar." }
+    ]
   },
   {
     slug: "informes-tecnicos",

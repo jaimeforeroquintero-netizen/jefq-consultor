@@ -9,8 +9,7 @@
 
 - [Inicio](https://jefq-consultor.pages.dev/): qué es JEFQ Consultor, servicios, metodología y planes con precios en COP.
 - [Valoración en línea](https://jefq-consultor.pages.dev/valoracion): valoración inicial orientativa para saber qué servicio se ajusta a su organización, sin compromiso.
-- [Diagnóstico de seguridad en Bogotá](https://jefq-consultor.pages.dev/diagnostico-seguridad-bogota): diagnóstico de ciberseguridad para pymes en Bogotá, con revisión priorizada, informe ejecutivo y plan de mejora.
-- [Consultoría de ciberseguridad en Colombia](https://jefq-consultor.pages.dev/consultoria-ciberseguridad-colombia): consultoría para pymes colombianas: diagnóstico, priorización, informes y acompañamiento remoto.
+- [Diagnóstico de seguridad](https://jefq-consultor.pages.dev/servicios/diagnostico-seguridad): diagnóstico de ciberseguridad para pymes en Bogotá y Colombia, con revisión priorizada, informe ejecutivo y plan de mejora. Incluye consultoría remota por horas.
 - [Quién soy](https://jefq-consultor.pages.dev/quien-soy): Jaime Forero, consultor en ciberseguridad para pymes en Colombia: trayectoria y principios de trabajo.
 - [Preguntas frecuentes](https://jefq-consultor.pages.dev/preguntas-frecuentes): respuestas sobre alcance, autorización, entregables, precios y proceso.
 - [Servicios](https://jefq-consultor.pages.dev/servicios): catálogo de servicios: diagnóstico, hardening, pruebas autorizadas e informes técnicos.

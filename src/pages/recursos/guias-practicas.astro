@@ -2,7 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 
 const resources = [
-  { title: "10 controles mínimos para una pyme", description: "Punto de partida para ordenar cuentas, equipos, copias, actualizaciones y respuesta.", download: "/recursos/checklist-seguridad-pyme-v2.txt" },
+  { title: "Controles mínimos para una pyme", description: "Punto de partida para ordenar cuentas, equipos, copias, actualizaciones y respuesta.", download: "/recursos/checklist-seguridad-pyme-v2.txt" },
   { title: "MFA para cuentas críticas", description: "Lista práctica para reducir el riesgo de acceso indebido y mejorar la recuperación.", download: "/recursos/checklist-mfa.txt" },
   { title: "Copias de seguridad y restauración", description: "Controles para respaldar información y comprobar que realmente puede recuperarse.", download: "/recursos/checklist-copias-seguridad.txt" },
   { title: "Microsoft 365 para pymes", description: "Medidas básicas para cuentas, permisos, aplicaciones, compartición y respuesta.", download: "/recursos/checklist-microsoft-365.txt" },
@@ -31,6 +31,25 @@ const resources = [
             </article>
           ))}
         </div>
+        <div class="checklist-interactive">
+          <span class="section-label">LISTA INTERACTIVA</span>
+          <h2>Controles mínimos para revisar esta semana</h2>
+          <p>Una lista orientativa para identificar vacíos básicos antes de contratar una evaluación. Marque cada control que ya tenga cubierto.</p>
+          <div class="checklist">
+            <label><input type="checkbox"/><span><strong>1.</strong> MFA en correo, cuentas administrativas y servicios críticos.</span></label>
+            <label><input type="checkbox"/><span><strong>2.</strong> Inventario de equipos, cuentas, dominios y aplicaciones.</span></label>
+            <label><input type="checkbox"/><span><strong>3.</strong> Actualizaciones automáticas o proceso documentado de parchado.</span></label>
+            <label><input type="checkbox"/><span><strong>4.</strong> Copias de seguridad probadas y separadas del entorno principal.</span></label>
+            <label><input type="checkbox"/><span><strong>5.</strong> Cuentas individuales, cuentas administrativas separadas y retiro oportuno de accesos.</span></label>
+            <label><input type="checkbox"/><span><strong>6.</strong> Protección del correo frente a suplantación y fraude, y verificación de pagos o cambios bancarios.</span></label>
+            <label><input type="checkbox"/><span><strong>7.</strong> Cifrado y bloqueo de equipos portátiles.</span></label>
+            <label><input type="checkbox"/><span><strong>8.</strong> Procedimiento para reportar correos o actividades sospechosas.</span></label>
+            <label><input type="checkbox"/><span><strong>9.</strong> Revisión periódica de permisos, cuentas antiguas, exposición y configuraciones.</span></label>
+            <label><input type="checkbox"/><span><strong>10.</strong> Plan básico de respuesta y contactos de emergencia.</span></label>
+            <label><input type="checkbox"/><span><strong>11.</strong> Alcance y responsables documentados para proveedores tecnológicos.</span></label>
+          </div>
+          <p class="data-safety-note"><strong>Nota:</strong> completar esta lista no equivale a una auditoría ni garantiza ausencia de riesgos.</p>
+        </div>
         <div class="resource-next-step">
           <div><p class="section-label">SIGUIENTE PASO</p><h2>Priorice los controles según su contexto</h2><p>Una lista general no reemplaza una valoración proporcional a los activos, riesgos y restricciones de la organización.</p></div>
           <a class="button secondary" href="/valoracion" data-jefq-event="inicio_valoracion">Solicitar valoración</a>
@@ -42,4 +61,11 @@ const resources = [
 
 <style>
   .resource-notice { margin-top: .75rem; color: #526b7c; font-size: .85rem; line-height: 1.5; }
+  .checklist-interactive { margin: 2.5rem 0; padding: 2rem; background: #f8fbfd; border: 1px solid #cfe0ea; border-radius: 20px; }
+  .checklist-interactive h2 { margin: .5rem 0 .75rem; font-size: clamp(1.4rem, 3vw, 1.9rem); color: #0d2840; }
+  .checklist-interactive > p { color: #455f70; max-width: 760px; }
+  .checklist-interactive .checklist { display: grid; gap: .6rem; margin-top: 1.25rem; }
+  .checklist-interactive .checklist label { display: flex; gap: .75rem; align-items: flex-start; padding: .8rem 1rem; background: #fff; border: 1px solid #cfe0ea; border-radius: 12px; cursor: pointer; color: #23485b; }
+  .checklist-interactive .checklist input { margin-top: .2rem; accent-color: #0b6e66; width: 1.1rem; height: 1.1rem; }
+  .checklist-interactive .data-safety-note { margin-top: 1.25rem; color: #526b7c; font-size: .9rem; }
 </style>

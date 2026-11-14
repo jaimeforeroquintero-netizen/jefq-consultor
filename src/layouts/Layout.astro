@@ -99,7 +99,6 @@ import "../styles/parches-consolidados.css";
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content={new URL('/og-image.png', baseUrl).toString()} />
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-  <script src="https://checkout.wompi.co/widget.js"></script>
 </head>
 <body>
   <a class="skip" href="#contenido">Saltar al contenido</a>
@@ -108,15 +107,15 @@ import "../styles/parches-consolidados.css";
     <div class="container nav">
       <a class="brand" href="/" aria-label="JEFQ Consultor, inicio"><img src="/logo-jefq-oscuro.svg" alt="JEFQ Consultor" width="131" height="48" /></a>
       <button class="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false"><i></i><i></i><i></i></button>
-      <nav class="menu" aria-label="Navegación principal"><a href="/#servicios">Servicios</a><a href="/#metodologia">Metodología</a><a href="/#planes">Planes</a><a href="/#evidencia">Evidencia</a><a href="/quien-soy">Quién soy</a><a href="/blog">Blog</a><a class="nav-cta" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.">Solicitar valoración</a></nav>
+      <nav class="menu" aria-label="Navegación principal"><a href="/#servicios">Servicios</a><a href="/#metodologia">Metodología</a><a href="/#planes">Planes</a><a href="/#evidencia">Evidencia</a><a href="/quien-soy">Quién soy</a><a href="/blog">Blog</a><a class="nav-cta" href="/valoracion">Solicitar valoración</a></nav>
     </div>
   </header>
   <main id="contenido"><slot /></main>
-  <footer class="footer"><div class="container footer-grid"><div class="footer-main"><a class="brand" href="/"><img src="/logo-jefq-oscuro.svg" alt="JEFQ Consultor" width="131" height="48" /></a><p>Ciberseguridad práctica, controlada y comprensible para organizaciones colombianas.</p><a class="footer-cta" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad.">Solicitar valoración</a></div><div><h2>Servicios</h2><a href="/servicios/diagnostico-seguridad">Diagnóstico de seguridad</a><a href="/servicios/hardening">Hardening de sistemas</a><a href="/servicios/pruebas-autorizadas">Pruebas autorizadas</a><a href="/servicios/informes-tecnicos">Informes técnicos y ejecutivos</a><a href="/servicios/simulacros-seguridad">Simulacros de seguridad</a><a href="/servicios/acompanamiento-remediacion">Acompañamiento de remediación</a><a href="/seguridad-inteligencia-artificial">Seguridad para IA</a></div><div><h2>Legal</h2><a href="/privacidad">Privacidad</a><a href="/terminos">Términos</a><a href="/tratamiento-datos">Datos personales</a><a href="https://www.sic.gov.co" target="_blank" rel="noopener">Superintendencia de Industria y Comercio (SIC)</a></div><div><h2>Contacto</h2><a href="mailto:jaimeforeroquintero@gmail.com">jaimeforeroquintero@gmail.com</a><p>Bogotá y toda Colombia</p></div></div>      <div class="container footer-trust-access">
+  <footer class="footer"><div class="container footer-grid"><div class="footer-main"><a class="brand" href="/"><img src="/logo-jefq-oscuro.svg" alt="JEFQ Consultor" width="131" height="48" /></a><p>Ciberseguridad práctica, controlada y comprensible para organizaciones colombianas.</p><a class="footer-cta" href="/valoracion">Solicitar valoración</a></div><div><h2>Servicios</h2><a href="/servicios/diagnostico-seguridad">Diagnóstico de seguridad</a><a href="/servicios/hardening">Hardening de sistemas</a><a href="/servicios/pruebas-autorizadas">Pruebas autorizadas</a><a href="/servicios/informes-tecnicos">Informes técnicos y ejecutivos</a><a href="/servicios/simulacros-seguridad">Simulacros de seguridad</a><a href="/servicios/acompanamiento-remediacion">Acompañamiento de remediación</a><a href="/seguridad-inteligencia-artificial">Seguridad para IA</a></div><div><h2>Legal</h2><a href="/privacidad">Privacidad</a><a href="/terminos">Términos</a><a href="/tratamiento-datos">Datos personales</a><a href="https://www.sic.gov.co" target="_blank" rel="noopener">Superintendencia de Industria y Comercio (SIC)</a></div><div><h2>Contacto</h2><a href="mailto:jaimeforeroquintero@gmail.com">jaimeforeroquintero@gmail.com</a><p>Bogotá y toda Colombia</p></div></div>      <div class="container footer-trust-access">
         <div><strong>Atención directa</strong><span>Comunicación con el responsable del servicio.</span></div>
         <div><strong>Intervenciones autorizadas</strong><span>Alcance y límites definidos previamente.</span></div>
         <div><strong>Resultados documentados</strong><span>Prioridades, recomendaciones y próximos pasos.</span></div>
-        <nav aria-label="Accesos de confianza"><a href="/quien-soy">Quién soy</a><a href="/diagnostico-seguridad-bogota">Diagnóstico en Bogotá</a><a href="/consultoria-ciberseguridad-colombia">Consultoría en Colombia</a><a href="/ciberseguridad-bogota">Ciberseguridad en Bogotá</a><a href="/auditoria-ciberseguridad-pyme">Auditoría para pymes</a><a href="/hardening-windows-colombia">Hardening de sistemas en Colombia</a><a href="/pruebas-seguridad-autorizadas">Pruebas autorizadas</a><a href="/como-trabajamos">Cómo trabajamos</a><a href="/blog">Blog</a><a href="/orientacion-de-servicios">Elegir servicio</a></nav>
+        <nav aria-label="Accesos de confianza"><a href="/quien-soy">Quién soy</a><a href="/servicios/diagnostico-seguridad">Diagnóstico de seguridad</a><a href="/servicios/hardening">Hardening de sistemas</a><a href="/servicios/pruebas-autorizadas">Pruebas autorizadas</a><a href="/ciberseguridad-bogota">Ciberseguridad en Bogotá</a><a href="/como-trabajamos">Cómo trabajamos</a><a href="/blog">Blog</a><a href="/valoracion">Solicitar valoración</a></nav>
       </div>
 <div class="container footer-bottom"><span>© {new Date().getFullYear()} JEFQ Consultor</span><span>Pruebas únicamente con autorización escrita.</span></div>  <!-- JEFQ-SEO-AUTHORITY-LINKS -->
   <div class="authority-links">
@@ -124,14 +123,14 @@ import "../styles/parches-consolidados.css";
       <nav aria-label="Recursos y confianza">
         <a href="/recursos">Centro de recursos</a>
         <a href="/informe-demostrativo">Informe demostrativo</a>
-        <a href="/recursos/checklist-seguridad-pyme">Checklist para pymes</a>
-        <a href="/seguridad-autorizacion-alcance">Autorización y alcance</a>
+        <a href="/recursos/guias-practicas">Checklist para pymes</a>
+        <a href="/como-trabajamos">Autorización y alcance</a>
         <a href="/preguntas-frecuentes">Preguntas frecuentes</a>
       </nav>
     </div>
   </div>
 </footer>
-  <a class="whatsapp" href="#" data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad." aria-label="Contactar por WhatsApp"><span>WA</span><b>Solicitar valoración</b></a>
+  <a class="whatsapp" href="/api/whatsapp?text=Hola%20Jaime%2C%20quiero%20solicitar%20una%20valoraci%C3%B3n%20inicial%20de%20ciberseguridad." data-wa-modal data-wa-message="Hola Jaime, quiero solicitar una valoración inicial de ciberseguridad." aria-label="Contactar por WhatsApp"><span>WA</span><b>WhatsApp</b></a>
   <AsistenteIA />
   <WhatsAppModal />
   <script>
@@ -143,29 +142,6 @@ import "../styles/parches-consolidados.css";
   </script>
 <!-- JEFQ-AUTORIDAD-REAL-V1 -->
 <script defer src="/jefq-events.js"></script>
-<!-- Sentry cliente (solo errores). DSN desde variable de entorno de Vercel
-     (PUBLIC_SENTRY_DSN); sin ella o si falla, no hace nada: la página abre igual. -->
-<script src="https://browser.sentry-cdn.com/11.8.0/bundle.min.js" crossorigin="anonymous"></script>
-<script define:vars={{ sentryDsn: import.meta.env.PUBLIC_SENTRY_DSN }}>
-  try {
-    if (sentryDsn && window.Sentry) {
-      window.Sentry.init({
-        dsn: sentryDsn,
-        sendDefaultPii: false,
-        tracesSampleRate: 0,
-        beforeSend: function (event) {
-          if (event.request) {
-            delete event.request.data;
-            delete event.request.cookies;
-          }
-          return event;
-        },
-      });
-    }
-  } catch (e) {
-    /* Sentry es opcional: un fallo aquí jamás tumba la página. */
-  }
-</script>
 <!-- PostHog: mapa de visitantes (solo JEFQ). Sin clave en Vercel = no hace nada. -->
 <script define:vars={{ posthogKey }}>
 (function () {

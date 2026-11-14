@@ -48,6 +48,7 @@ import Layout from "../layouts/Layout.astro";
             <option value="informe">Organizar hallazgos e informes</option>
             <option value="simulacro">Preparar un simulacro controlado</option>
             <option value="acompanamiento">Acompañar la remediación</option>
+            <option value="ia">Revisar el uso de herramientas de IA</option>
           </select>
         </label>
 
@@ -65,6 +66,34 @@ import Layout from "../layouts/Layout.astro";
         <h2>Complete la valoración</h2>
         <p>La recomendación aparecerá aquí. No sustituye una propuesta ni implica la ejecución de pruebas.</p>
       </aside>
+    </section>
+
+    <section class="smart-shell smart-share">
+      <h2>Qué compartir y qué no</h2>
+      <div class="smart-share-grid">
+        <article>
+          <h3>Puede compartir</h3>
+          <ul>
+            <li>Tipo de organización.</li>
+            <li>Número aproximado de activos.</li>
+            <li>Servicio de interés.</li>
+            <li>Situación general y objetivo.</li>
+            <li>Restricciones operativas relevantes.</li>
+          </ul>
+        </article>
+        <article>
+          <h3>No debe compartir</h3>
+          <ul>
+            <li>Contraseñas.</li>
+            <li>Códigos MFA.</li>
+            <li>Llaves privadas o tokens.</li>
+            <li>Datos personales sensibles.</li>
+            <li>Vulnerabilidades explotables.</li>
+            <li>Accesos remotos.</li>
+          </ul>
+        </article>
+      </div>
+      <p>Si un servicio requiere acceso, se definirá previamente el alcance, la autorización, la ventana de trabajo, el responsable y el canal apropiado. WhatsApp no se utiliza para recibir secretos.</p>
     </section>
   </main>
 
@@ -125,6 +154,12 @@ import Layout from "../layouts/Layout.astro";
         service: 'Acompañamiento de remediación',
         reason: 'Recomendado cuando ya existen hallazgos y se necesita organizar, aplicar y verificar mejoras progresivas.',
         path: '/servicios/acompanamiento-remediacion'
+      },
+      ia: {
+        plan: 'Seguridad para IA',
+        service: 'Seguridad para IA',
+        reason: 'Conviene revisar qué herramientas de IA usa su equipo, qué datos circulan por ellas y qué reglas necesita para usarlas sin exponerse.',
+        path: '/seguridad-inteligencia-artificial'
       }
     };
 
@@ -160,7 +195,7 @@ import Layout from "../layouts/Layout.astro";
           <a class="button primary" href="${recommendation.path}">Conocer el servicio</a>
           <button type="button" class="button secondary" id="wa-continue">Continuar por WhatsApp</button>
         </div>
-        <p class="privacy-note">Al pulsar "Continuar por WhatsApp" se abrirá WhatsApp con tu valoración para enviarla a JEFQ Consultor y que podamos contactarte. No escribas contraseñas ni datos sensibles en el campo de contexto adicional. Ver <a href="/privacidad">Política de privacidad</a>.</p>`;
+        <p class="privacy-note">Al pulsar "Continuar por WhatsApp" se abrirá WhatsApp con su valoración para enviarla a JEFQ Consultor y que podamos contactarle. No escribas contraseñas ni datos sensibles en el campo de contexto adicional. Ver <a href="/privacidad">Política de privacidad</a>.</p>`;
       result.classList.remove('reveal');
       void result.offsetWidth;
       result.classList.add('reveal');
@@ -173,5 +208,6 @@ import Layout from "../layouts/Layout.astro";
 
   <style>
     .smart-page{background:linear-gradient(180deg,#071526,#0b2036 55%,#eef6fb 55%);min-height:100vh}.smart-shell{width:min(1120px,calc(100% - 2rem));margin:auto}.smart-hero{padding:5.5rem 0 3.5rem;color:#fff}.smart-hero h1{max-width:850px;font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.03;margin:.7rem 0 1rem}.smart-hero p{max-width:760px;color:#cfe1ee;font-size:1.08rem}.smart-kicker{font-weight:800;letter-spacing:.14em;color:#49d6c7;font-size:.77rem}.smart-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:1.5rem;padding:0 0 5rem}.smart-form,.smart-result{background:#fff;border:1px solid #cfe0ea;border-radius:24px;padding:clamp(1.25rem,3vw,2.2rem);box-shadow:0 22px 65px rgba(3,20,37,.16)}.smart-form{display:grid;gap:1.15rem}.smart-form label{display:grid;gap:.45rem;font-weight:750;color:#102a43}.smart-form select,.smart-form textarea{width:100%;border:1px solid #b7ccd8;border-radius:12px;padding:.9rem 1rem;background:#f8fcfe;color:#102a43;font:inherit}.smart-form select:focus,.smart-form textarea:focus{outline:3px solid rgba(18,185,174,.2);border-color:#12b9ae}.smart-form small{font-weight:500;color:#526b7c}.security-note{border-left:3px solid #e4a72c;padding-left:.75rem}.smart-result h2{font-size:clamp(1.7rem,3vw,2.6rem);color:#0d2840;margin:.4rem 0}.smart-result p{color:#455f70}.result-facts{display:grid;gap:.65rem;margin:1.4rem 0}.result-facts span{padding:.8rem;border-radius:10px;background:#eff8f8;color:#23485b}.result-actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.5rem}.privacy-note{margin-top:1rem;font-size:.85rem;line-height:1.5;color:#526b7c}.privacy-note a{color:#0b6e66;font-weight:700}@media(max-width:780px){.smart-grid{grid-template-columns:1fr}.smart-hero{padding-top:3.5rem}.smart-page{background:linear-gradient(180deg,#071526,#0b2036 38%,#eef6fb 38%)}}
+    .smart-share{padding:0 0 4rem}.smart-share h2{color:#0d2840;font-size:clamp(1.5rem,3vw,2.2rem);margin:0 0 1rem}.smart-share-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1rem}.smart-share-grid article{background:#fff;border:1px solid #cfe0ea;border-radius:18px;padding:1.5rem}.smart-share-grid h3{color:#0d2840;margin:0 0 .75rem;font-size:1.1rem}.smart-share-grid ul{margin:0;padding-left:1.2rem;color:#455f70}.smart-share-grid li{margin-bottom:.35rem}.smart-share>p{color:#455f70;max-width:760px}@media(max-width:780px){.smart-share-grid{grid-template-columns:1fr}}
   </style>
 </Layout>

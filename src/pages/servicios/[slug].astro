@@ -39,7 +39,7 @@ const breadcrumbSchema = {
         <strong class="service-detail-promise">{service.promise}</strong>
         <div class="hero-actions">
           <a class="button primary" href="/valoracion">Solicitar valoración</a>
-          <a class="button secondary" href="#" data-wa-modal data-wa-message={waMessage}>Consultar por WhatsApp</a>
+          <a class="button secondary" href={`/api/whatsapp?text=${encodeURIComponent(waMessage)}`} data-wa-modal data-wa-message={waMessage}>Consultar por WhatsApp</a>
         </div>
         {etiquetaPrecio && (<p class="service-price-anchor"><a href="/#planes">{etiquetaPrecio} · Ver planes</a></p>)}
       </div>
@@ -63,6 +63,36 @@ const breadcrumbSchema = {
     </div>
   </section>
 
+  {service.audience && (
+  <section class="section">
+    <div class="container">
+      <header class="section-header"><span>PARA QUIÉN ES</span><h2>Organizaciones que se benefician de este servicio</h2></header>
+      <ul class="landing-list">
+        {service.audience.map((item: string) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </section>
+  )}
+
+  {service.slug === "diagnostico-seguridad" && (
+  <section class="section">
+    <div class="container">
+      <header class="section-header"><span>CONSULTORÍA POR HORAS</span><h2>¿Necesita acompañamiento continuo, no una evaluación puntual?</h2><p>La consultoría remota trabaja por horas: contexto, criterio, plan y seguimiento, sin obligar a comprar productos. Las recomendaciones se justifican por necesidad y riesgo.</p></header>
+      <div class="service-detail-columns">
+        <article class="service-detail-card">
+          <span class="section-label">QUÉ INCLUYE</span><h2>Consultoría remota</h2>
+          <ul><li><span>✓</span>Análisis de contexto</li><li><span>✓</span>Mapa inicial de riesgos</li><li><span>✓</span>Recomendaciones priorizadas</li><li><span>✓</span>Sesiones de acompañamiento</li><li><span>✓</span>Seguimiento según propuesta</li></ul>
+        </article>
+        <article class="service-detail-card featured-detail-card">
+          <span class="section-label">INVERSIÓN ORIENTATIVA</span><h2>Consultoría remota</h2>
+          <p>Desde {formatearCOP(precioDe("consultoria-hora"))}/hora. El valor final, impuestos aplicables y condiciones se detallan en la propuesta antes de contratar.</p>
+          <div class="hero-actions"><a class="button primary" href="/valoracion">Solicitar valoración</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+  )}
+
   {service.slug === "diagnostico-seguridad" && (
   <section class="section" id="muestra-informe">
     <div class="container">
@@ -84,6 +114,25 @@ const breadcrumbSchema = {
     </div>
   </section>
 
+  {service.faq && (
+  <section class="section">
+    <div class="container landing-faq-wrap">
+      <header class="section-header">
+        <span>PREGUNTAS FRECUENTES</span>
+        <h2>Antes de solicitar este servicio</h2>
+      </header>
+      <div class="landing-faq">
+        {service.faq.map((item: { question: string; answer: string }) => (
+          <details>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+  )}
+
   <section class="section">
     <div class="container">
       <header class="section-header"><span>CONTINUIDAD</span><h2>Servicios relacionados</h2></header>
@@ -100,7 +149,7 @@ const breadcrumbSchema = {
     <p>Revise una muestra del informe y consulte cómo se define la autorización, el alcance y los límites de cada intervención.</p>
     <div class="service-trust-actions">
       <a class="button primary" href="/informe-demostrativo">Ver informe demostrativo</a>
-      <a class="button secondary" href="/seguridad-autorizacion-alcance">Autorización y alcance</a>
+      <a class="button secondary" href="/como-trabajamos">Autorización y alcance</a>
     </div>
   </div>
 </section>
