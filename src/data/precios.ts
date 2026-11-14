@@ -51,7 +51,7 @@ export const PRECIOS: Precio[] = [
     destacado: true,
     descripcion: "Diagnóstico ampliado con priorización y acompañamiento.",
     texto: "Evaluación ampliada con ruta de mejora.",
-    incluye: ["Alcance autorizado", "Hasta 10 activos", "Revisión de configuraciones", "Informe técnico y ejecutivo", "Plan de remediación", "Acompañamiento"],
+    incluye: ["Alcance autorizado", "Hasta 10 equipos", "Revisión de configuraciones", "Informe técnico y ejecutivo", "Plan de remediación", "Acompañamiento"],
   },
   {
     id: "integral",

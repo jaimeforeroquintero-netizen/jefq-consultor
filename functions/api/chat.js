@@ -145,7 +145,7 @@ async function handler(context) {
   }
 
   if (await limiteExcedido(request, env, 'chat')) {
-    return new Response(JSON.stringify({ error: "rate-limited", reply: "Estás enviando mensajes muy rápido. Espera un minuto e inténtalo de nuevo, o escríbenos por WhatsApp con el botón del sitio." }), {
+    return new Response(JSON.stringify({ error: "rate-limited", reply: "Está enviando mensajes muy rápido. Espere un minuto e inténtelo de nuevo, o escríbanos por WhatsApp con el botón del sitio." }), {
       status: 429,
       headers: { "Content-Type": "application/json" },
     });

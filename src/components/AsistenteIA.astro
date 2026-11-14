@@ -1,7 +1,7 @@
 ---
 // Asistente virtual de JEFQ Consultor.
 // Burbuja flotante abajo-IZQUIERDA (el flotante de WhatsApp vive abajo-derecha).
-// Habla con /api/chat (Gemini). Sin GEMINI_API_KEY muestra el modal de WhatsApp (@JaimeByte).
+// Habla con /api/chat (Cloudflare Workers AI). Sin el binding de IA muestra el modal de WhatsApp (@JaimeByte).
 ---
 
 <div class="jefq-ia" id="jefq-ia">
@@ -17,7 +17,7 @@
       <button class="jefq-ia-close" id="jefq-ia-close" type="button" aria-label="Cerrar asistente">✕</button>
     </header>
 
-    <div class="jefq-ia-msgs" id="jefq-ia-msgs" aria-live="polite"><p class="jefq-ia-notice">Asistente digital, no una persona. Tus mensajes se envían a Cloudflare Workers AI para responderte. No escribas contraseñas, datos personales, datos de tus sistemas ni detalles de incidentes. Ver <a href="/privacidad">Política de privacidad</a>.</p></div>
+    <div class="jefq-ia-msgs" id="jefq-ia-msgs" aria-live="polite"><p class="jefq-ia-notice">Asistente digital, no una persona. Sus mensajes se envían a Cloudflare Workers AI para responderle. No escriba contraseñas, datos personales, datos de sus sistemas ni detalles de incidentes. Ver <a href="/privacidad">Política de privacidad</a>.</p></div>
 
     <div class="jefq-ia-chips" id="jefq-ia-chips" hidden></div>
 

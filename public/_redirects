@@ -54,3 +54,8 @@
 /laboratorio-jefq /como-trabajamos/ 301
 /mejoras-del-proyecto/ / 301
 /mejoras-del-proyecto / 301
+
+# Corrección V-21 (verificación transversal 2026-11-13): /contacto/ daba 404
+# sin enlaces internos; redirige a la sección de contacto de la home.
+/contacto/ /#contacto 301
+/contacto /#contacto 301

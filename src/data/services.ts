@@ -91,7 +91,7 @@ export const services: ServicePage[] = [
     eyebrow: "PREPARAR ANTES DEL INCIDENTE",
     description: "Realice ejercicios autorizados para fortalecer la respuesta de personas y procesos frente a situaciones de seguridad plausibles.",
     promise: "Detecte vacíos de preparación y conviértalos en oportunidades de mejora.",
-    includes: ["Escenario acordado", "Objetivos de aprendizaje", "Ejecución controlada", "Retroalimentación"],
+    includes: ["Escenario acordado", "Simulacros de phishing", "Objetivos de aprendizaje", "Ejecución controlada", "Retroalimentación"],
     deliverables: ["Resumen del ejercicio", "Observaciones", "Oportunidades de mejora", "Recomendaciones de preparación"],
     process: [{title:"Diseño",text:"Definimos escenario y objetivos."},{title:"Preparación",text:"Establecemos reglas y participantes."},{title:"Ejecución",text:"Realizamos el ejercicio controlado."},{title:"Lecciones",text:"Documentamos mejoras y acciones."}],
     related: ["diagnostico-seguridad", "informes-tecnicos", "acompanamiento-remediacion"]
