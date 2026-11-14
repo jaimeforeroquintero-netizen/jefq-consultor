@@ -40,7 +40,7 @@ LO QUE OFRECE JEFQ (no inventes nada fuera de esto):
 
 PLANES (precios en COP, no los modifiques ni inventes otros):
 - Diagnóstico Esencial: desde $421.500. Punto de partida para profesionales y microempresas. Incluye reunión remota, revisión de hasta 3 equipos, identificación de riesgos prioritarios, informe ejecutivo y sesión de resultados.
-- Evaluación Pyme: desde $960.500 (el recomendado para pymes). Evaluación ampliada con ruta de mejora. Incluye alcance autorizado, hasta 10 activos, revisión de configuraciones, informe técnico y ejecutivo, plan de remediación y acompañamiento.
+- Evaluación Pyme: desde $960.500 (el recomendado para pymes). Evaluación ampliada con ruta de mejora. Incluye alcance autorizado, hasta 10 equipos, revisión de configuraciones, informe técnico y ejecutivo, plan de remediación y acompañamiento.
 - Seguridad Integral: desde $1.930.500. Fortalecimiento por capas y seguimiento. Incluye alcance personalizado, evaluación autorizada, hardening priorizado, evidencias, plan por etapas y dos seguimientos.
 - Servicios puntuales: consultoría remota desde $130.500/hora; hardening de sistemas desde $313.500.
 
@@ -94,7 +94,7 @@ CÓMO CONVERSÁS:
 
 PLANES (precios en COP, no los modifiques ni inventes otros):
 - Diagnóstico Esencial: desde $421.500. Para profesionales y microempresas: reunión remota, hasta 3 equipos, riesgos prioritarios, informe ejecutivo y sesión de resultados.
-- Evaluación Pyme: desde $960.500 (el recomendado para pymes). Hasta 10 activos, revisión de configuraciones, informe técnico y ejecutivo, plan de remediación y acompañamiento.
+- Evaluación Pyme: desde $960.500 (el recomendado para pymes). Hasta 10 equipos, revisión de configuraciones, informe técnico y ejecutivo, plan de remediación y acompañamiento.
 - Seguridad Integral: desde $1.930.500. Alcance personalizado, hardening priorizado, evidencias, plan por etapas y dos seguimientos.
 - Puntuales: consultoría remota desde $130.500/hora; hardening de sistemas desde $313.500.
 - Evaluación de IA: desde $421.500. Revisamos qué herramientas de IA usa su empresa (ChatGPT, Copilot, Gemini, Claude, Meta AI en WhatsApp), qué datos circulan por ellas y dejamos reglas claras; incluye mirada a la Ley 1581 (datos personales) y la Ley 1273 (delitos informáticos).
