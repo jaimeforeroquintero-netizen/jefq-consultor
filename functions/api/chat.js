@@ -135,7 +135,9 @@ function toAiMessages(messages) {
 // corrección R7 2026-11-19, filtro v8, según la lista (e) consolidada A–E
 // del cierre NO-GO del PIR-1 R7, verificada por Pax;
 // corrección R8 2026-11-19, filtro v9, según la lista (e) consolidada A–F
-// del cierre NO-GO del PIR-1 R8, verificada por Pax).
+// del cierre NO-GO del PIR-1 R8, verificada por Pax;
+// corrección R9 2026-11-19, filtro v10, según la lista (e) consolidada A–E
+// del cierre NO-GO del PIR-1 R9, verificada por Pax).
 // Impide que el chatbot confirme como verdaderos acuerdos comerciales previos
 // no verificables (precios especiales, descuentos, promociones, acuerdos,
 // colaboraciones, contratos, pagos, clientes, compromisos, conversaciones
@@ -786,8 +788,8 @@ const V01_RE_MONTO = v01Patron(V01_SENAL_MONTO);
 // cola temporal es la misma lista que la regla 1d ya admitía en v6.
 const V01_COLA_ATRIBUCION = "(?:(?:para|de) (?:mi|nuestro|nuestra)(?: (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme))?|para (?:nosotros|nosotras))";
 const V01_COLA_TEMPORAL = "(?:ayer|la semana pasada|el mes pasado|el ano pasado|la vez pasada|la ultima vez|de ayer|de la semana pasada|del mes pasado|del ano pasado|de la vez pasada|de la ultima vez|de la llamada)";
-const V01_VERBOS_CONCESION_MONTO = ["dieron", "dio", "diste", "ofrecieron", "ofreciste", "prometieron", "prometiste", "aprobaron", "aprobaste", "asignaron", "asignaste", "concedieron", "concediste", "negociaron", "negociaste", "confirmaron", "confirmaste", "pasaron", "pasaste", "cotizaron", "cotizaste", "contaron", "contaste", "dijeron", "dijiste", "hicieron", "hiciste", "hizo", "respetaron", "respeto", "respetaste", "han respetado", "has respetado", "han dado", "has dado", "han ofrecido", "has ofrecido", "han prometido", "has prometido", "han aprobado", "has aprobado", "han asignado", "has asignado", "han concedido", "has concedido", "han confirmado", "has confirmado"];
-const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERBOS_CONCESION_MONTO.join("|")}) (?:el|la|los|las) (?:precio|precios|tarifa|tarifas|condicion|condiciones|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION})?(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_VERBOS_CONCESION_MONTO = ["dieron", "dio", "diste", "ofrecieron", "ofreciste", "prometieron", "prometiste", "aprobaron", "aprobaste", "asignaron", "asignaste", "concedieron", "concediste", "negociaron", "negociaste", "confirmaron", "confirmaste", "pasaron", "pasaste", "cotizaron", "cotizaste", "contaron", "contaste", "dijeron", "dijiste", "hicieron", "hiciste", "hizo", "respetaron", "respeto", "respetaste", "han respetado", "has respetado", "han dado", "has dado", "han ofrecido", "has ofrecido", "han prometido", "has prometido", "han aprobado", "has aprobado", "han asignado", "has asignado", "han concedido", "has concedido", "han confirmado", "has confirmado", "acordaron", "pactaron", "convinieron", "concertaron", "fijaron", "establecieron", "cerraron", "aceptaron", "definieron", "autorizaron", "consensuaron", "ratificaron", "homologaron", "han cerrado", "han aceptado", "han definido", "han autorizado", "han consensuado", "han ratificado", "han homologado", "cerro", "acepto", "definio", "autorizo", "consensuo", "ratifico", "homologo", "cerraste", "aceptaste", "definiste", "autorizaste", "consensuaste", "ratificaste", "homologaste"];
+const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERBOS_CONCESION_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION})?(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // CORRECCIÓN R5 (lista (e) A, hallazgo determinante de GPT): la regla
 // 1d contempla ahora el destinatario «te» («¿Te dieron el precio?»,
 // «¿Te aprobaron el precio?», «¿Te concedieron la tarifa?») y los
@@ -798,6 +800,44 @@ const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERB
 // atribución tras el objeto («¿Me dieron el precio para mi empresa?»
 // dispara; B-2 del PIR-1 R6). La guarda pública queda intacta: la
 // cola no admite «del Diagnóstico Esencial» ni «para clientes nuevos».
+// CORRECCIÓN R9 (lista (e) A del cierre del PIR-1 R9): el canal del
+// pronombre («me/te/nos/le/les» + verbo + sustantivo de cantidad +
+// fin de mensaje) se extiende a los verbos que entraron al filtro
+// DESPUÉS de la generalización de esta regla y nunca pasaron por
+// ella: los de acuerdo/pacto y fijación de la 1e (corrección R7:
+// «acordaron», «pactaron», «convinieron», «concertaron», «fijaron»,
+// «establecieron») y los excluidos de la 1e y la familia de Ultra
+// (corrección R8: «cerraron», «aceptaron», «definieron»,
+// «autorizaron», «consensuaron», «ratificaron», «homologaron»), con
+// sus formas de 3.ª y 2.ª singular y los compuestos con «han»,
+// igual que la lista original mezcla «dieron/dio/diste» y «han
+// dado». El diagnóstico previo a esta corrección (ejecutado contra
+// v9) mostró la asimetría exacta: los 20 verbos de la lista de la
+// 1e YA disparaban con «me» en las cuatro formas de artículo — la
+// regex de la 1e casa desde el verbo y el pronombre queda fuera de
+// su anclaje —, y SOLO los 7 verbos de la 1g atravesaban el canal
+// en todas sus formas, porque su única vía (la 1g) exige la cola
+// de atribución POSTERIOR al objeto y no contempla el pronombre
+// ANTERIOR al verbo. El PIR-1 R9 lo verificó por triple ejecución
+// («¿Me aceptaron una tarifa?», «¿Me cerraron una tarifa?», «¿Me
+// definieron un precio?», «¿Me autorizaron una tarifa?»): el
+// pronombre es atribución expresa en su forma más fuerte — es la
+// señal que funda esta regla — y no estaba declarado como
+// limitación en esta forma. Con la extensión, el grupo de artículo
+// se unifica con el de las reglas 1e/1f/1g (definido, indefinido u
+// omitido): las formas verificadas usan artículo indefinido («una
+// tarifa», «un precio»), y exigir el definido dejaría fuera
+// justamente el mínimo verificado (es la misma razón por la que la
+// familia B1 del PIR-1 R7 disparaba en v7: por la 1e, no por esta
+// regla). Esto EXTIENDE el patrón de la 1d a los verbos nuevos; NO
+// rediseña la regla: mismo grupo de pronombres, misma lista de
+// sustantivos de cantidad («pago» sigue fuera, como fijó la
+// corrección R8), mismos participios opcionales, mismas colas y el
+// mismo anclaje a fin de mensaje que protege las preguntas públicas
+// («¿Me diste el precio del Diagnóstico Esencial?» sigue sin
+// disparar: hay más tras el objeto). Los verbos que no son de
+// concesión/cierre no entran («¿Me enviaron el contrato?», «¿Me
+// llamaron ayer?» siguen al modelo).
 // Regla 1e (corrección R5, lista (e) E — DEFINICIÓN ADOPTADA para la
 // 3.ª persona plural sin pronombre; REVISADA en la corrección R6,
 // lista (e) C del cierre del PIR-1 R6): verbo de concesión en 3.ª
@@ -921,6 +961,47 @@ const V01_RE_ATRIBUIDO_EXCLUIDOS = new RegExp(`\\b(?:${V01_VERBOS_EXCLUIDOS_1E.j
 const V01_RE_ATRIBUIDO_EXCLUIDOS_SE = new RegExp(`\\bse (?:${V01_VERBOS_EXCLUIDOS_1E_SE.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_1G.join("|")})${V01_PARTICIPIOS_1G} ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 const V01_RE_ATRIBUIDO_CONTRATO_SE = new RegExp(`\\bse (?:(?:${V01_SE_CONCESION_FINITO.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:contrato|contratos|pago|pagos) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 const V01_RE_ATRIBUIDO_CONTRATO_PLURAL = new RegExp(`\\b(?:${V01_VERBOS_TERCERA_PLURAL_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:contrato|contratos|pago|pagos) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+// Regla 1h (corrección R9, lista (e) B del cierre del PIR-1 R9):
+// pasiva con «fue/fueron» + participio de concesión/acuerdo + objeto
+// + ATRIBUCIÓN EXPRESA obligatoria + fin de mensaje, en los dos
+// órdenes («¿El contrato fue negociado para mi empresa?» y «¿Fue
+// negociado el contrato para mi empresa?»). En v9 las pasivas con
+// «fue» no las cubría ninguna regla para ningún sustantivo — la
+// 1f cubre la pasiva con «se», no esta — y la limitación estaba
+// declarada en el informe v9; el
+// PIR-1 R9 aportó el ejemplo verificado y atribuido y el cierre lo
+// convirtió en condición de esta corrección (con el precedente de
+// R8: la limitación declarada con ejemplo verificado pasa a
+// condición de la ronda siguiente). Los participios son los de las
+// familias ya conocidas: concesión de la 1f (concedido, negociado,
+// aprobado, asignado, respetado, ofrecido, prometido, dado,
+// confirmado, cotizado), acuerdo/pacto de la 1e (acordado, pactado,
+// convenido) y fijación de la 1e-R7 (concertado, fijado,
+// establecido) y los de los verbos de la 1g (cerrado, aceptado,
+// definido, autorizado, consensuado, ratificado, homologado), en
+// sus cuatro formas de género/número. Se excluye «pasado»
+// (participio de «pasaron»): masivamente polisémico y la pasiva
+// «fue pasado» no es formulación natural de una concesión de
+// precio; exclusión documentada con su criterio, como en la 1e. Los objetos son los de la 1g
+// (sustantivos de cantidad + «contrato») más «pago», que la 1g ya
+// admitía en su vía atribuida. Guardas: la atribución es
+// OBLIGATORIA y es la misma cola de las reglas 1d/1e/1g — sin ella
+// la pasiva es una pregunta por un hecho público o de terceros y
+// sigue al modelo («¿El contrato fue negociado?», «¿El contrato
+// fue negociado para otra empresa?», «¿Qué contratos fueron
+// negociados el año pasado?») —; los participios ajenos a la
+// concesión no casan («¿El contrato fue firmado para mi empresa?»
+// pregunta por la firma de un contrato, hecho operativo, no por
+// una condición comercial previa: sigue al modelo); la cola
+// temporal solo se admite tras la atribución, como en la 1e/1g.
+const V01_OBJETOS_FUE = [...V01_OBJETOS_1G, "pago", "pagos"];
+const V01_PARTICIPIOS_FUE = [];
+for (const _p of ["acordado", "pactado", "convenido", "concertado", "negociado", "concedido", "aprobado", "asignado", "respetado", "ofrecido", "prometido", "confirmado", "cotizado", "fijado", "establecido", "dado", "cerrado", "aceptado", "definido", "autorizado", "consensuado", "ratificado", "homologado"]) {
+  const _f = _p.slice(0, -1) + "a";
+  V01_PARTICIPIOS_FUE.push(_p, _f, _p + "s", _f + "s");
+}
+const V01_RE_FUE_PASIVA_ATRIBUIDA = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")}) (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_FUE_PASIVA_INV_ATRIBUIDA = new RegExp(`\\b(?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) (?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // Atribución expresa al visitante (corrección R6, lista (e) D):
 // posesivo o complemento que ata la condición al propio visitante,
 // a su grupo o a su empresa («para nuestro grupo», «para mi
@@ -1032,6 +1113,18 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      con «se»; y «contrato»/«pago» como objeto con verbo de concesión
 //      (vía «se» o 3.ª plural de la 1e) SOLO con atribución; las formas
 //      escuetas de ambas familias siguen yendo al modelo)
+//  1d'. Extensión del canal «me» (R9, lista (e) A: la lista de verbos
+//      de la 1d crece con los de las familias 1e-R7 y 1g — acordaron,
+//      pactaron, convinieron, concertaron, fijaron, establecieron,
+//      cerraron, aceptaron, definieron, autorizaron, consensuaron,
+//      ratificaron, homologaron, con singulares y compuestos con
+//      «han» — y el grupo de artículo se unifica con el de la
+//      1e/1f/1g; los 20 verbos de la 1e ya disparaban con «me» por la
+//      propia 1e, solo los 7 de la 1g atravesaban el canal)
+//  1h. Pasiva con «fue/fueron» + participio de concesión/acuerdo +
+//      objeto + ATRIBUCIÓN EXPRESA obligatoria + fin de mensaje
+//      («¿El contrato fue negociado para mi empresa?»; R9, lista
+//      (e) B; sin atribución sigue al modelo)
 //  2. A_DEBIL + B_FUERTE (verbo de continuidad + objeto específico;
 //      R5: las formas negociado/concedido/preferencial ya NO están en
 //      B_FUERTE: la forma escueta con solo continuidad no dispara)
@@ -1082,6 +1175,7 @@ function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   if (V01_RE_TERCERA_PLURAL_MONTO.test(n)) return true;
   if (V01_RE_SE_IMPERSONAL.test(n)) return true;
   if (V01_RE_ATRIBUIDO_EXCLUIDOS.test(n) || V01_RE_ATRIBUIDO_EXCLUIDOS_SE.test(n) || V01_RE_ATRIBUIDO_CONTRATO_SE.test(n) || V01_RE_ATRIBUIDO_CONTRATO_PLURAL.test(n)) return true;
+  if (V01_RE_FUE_PASIVA_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_INV_ATRIBUIDA.test(n)) return true;
   if (V01_RE_A_DEBIL.test(n) && V01_RE_B_FUERTE.test(n)) return true;
   if (V01_RE_OBJETOS_CONFIRMA_NEGOCIADO.test(n) && V01_RE_ATRIBUCION.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n)) return true;
   if (V01_RE_OBJETO_NEGOCIADO_ATRIBUIDO.test(n)) return true;
