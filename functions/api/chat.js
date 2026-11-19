@@ -127,7 +127,9 @@ function toAiMessages(messages) {
 // corrección R3 2026-11-19, filtro v4, según la lista (e) consolidada del
 // cierre NO-GO definitivo del PIR-1 R3, verificada por Pax;
 // corrección R4 2026-11-19, filtro v5, según la lista (e) consolidada A–G
-// del cierre NO-GO definitivo del PIR-1 R4, verificada por Pax).
+// del cierre NO-GO definitivo del PIR-1 R4, verificada por Pax;
+// corrección R5 2026-11-19, filtro v6, según la lista (e) consolidada A–H
+// del cierre NO-GO del PIR-1 R5, verificada por Pax).
 // Impide que el chatbot confirme como verdaderos acuerdos comerciales previos
 // no verificables (precios especiales, descuentos, promociones, acuerdos,
 // colaboraciones, contratos, pagos, clientes, compromisos, conversaciones
@@ -231,6 +233,27 @@ const V01_SENAL_A_FUERTE = [
   "le negociaron", "les negociaron", "te negociaron", "han negociado",
   "has negociado",
   "hicimos", "hicieron", "hiciste", "hizo",
+  // CORRECCIÓN R5 (lista (e) C): había/habías/habían + participio con
+  // «te/le/les» para los verbos de concesión (en v5 solo había formas
+  // con «me» para «confirmado»; GPT lo juzgó NO ACEPTABLE). Cubre
+  // «¿Te habían aprobado el descuento?» por la regla 1; la forma
+  // «X que Y» («¿El precio que te habían aprobado sigue vigente?») la
+  // cubre la regla 1c con las mismas formas en V01_VERBOS_QUE.
+  "te habia aprobado", "te habias aprobado", "te habian aprobado",
+  "le habia aprobado", "le habias aprobado", "le habian aprobado",
+  "les habia aprobado", "les habias aprobado", "les habian aprobado",
+  "te habia asignado", "te habias asignado", "te habian asignado",
+  "le habia asignado", "le habias asignado", "le habian asignado",
+  "les habia asignado", "les habias asignado", "les habian asignado",
+  "te habia concedido", "te habias concedido", "te habian concedido",
+  "le habia concedido", "le habias concedido", "le habian concedido",
+  "les habia concedido", "les habias concedido", "les habian concedido",
+  "te habia negociado", "te habias negociado", "te habian negociado",
+  "le habia negociado", "le habias negociado", "le habian negociado",
+  "les habia negociado", "les habias negociado", "les habian negociado",
+  "te habia respetado", "te habias respetado", "te habian respetado",
+  "le habia respetado", "le habias respetado", "le habian respetado",
+  "les habia respetado", "les habias respetado", "les habian respetado",
   "nos dieron", "nos dio", "nos ofrecieron", "nos prometieron",
   "nos dijeron", "nos confirmaron", "nos hicieron", "nos han dado",
   "nos han ofrecido", "nos pasaron", "nos cotizaron", "nos diste",
@@ -330,11 +353,15 @@ const V01_SENAL_B = [
   "promocion acordada", "oferta acordada", "beneficio acordado",
   "pago acordado", "pago convenido", "pago pactado",
   // CORRECCIÓN R4 (lista (e) B): participios negociado/concedido y
-  // «preferencial». Entran también en B_FUERTE (no están en la lista de
-  // exclusión), así que la regla 2 cubre la forma escueta con continuidad
-  // («¿Las tarifas negociadas siguen vigentes?»); las descripciones
-  // públicas sin continuidad («¿Ofrecen tarifas negociadas?») siguen sin
-  // disparar. El impacto en FP se mide en el ciclo (sonda FP).
+  // «preferencial». CORRECCIÓN R5 (lista (e) D): las 16 entradas quedan
+  // FUERA de B_FUERTE (están en su lista de exclusión): la forma escueta
+  // con solo continuidad («¿Siguen ofreciendo tarifas negociadas?»,
+  // «¿Las tarifas negociadas siguen vigentes?») es indistinguible de
+  // una descripción pública de la oferta vigente y ya NO dispara por
+  // la regla 2 (falso positivo material según Ultra y GPT en el PIR-1
+  // R5). Siguen en B: con un marcador fuerte (regla 1), con «X que Y»
+  // (regla 1c), con las reglas 1d/1e o con «confirmar» (reglas 6/7a,
+  // vía la lista dedicada V01_OBJETOS_CONFIRMA_NEGOCIADO) sí disparan.
   "precio negociado", "precios negociados",
   "tarifa negociada", "tarifas negociadas",
   "condicion negociada", "condiciones negociadas",
@@ -438,7 +465,47 @@ V01_VERBOS_QUE.push(
   "me habia enviado", "me habias enviado", "me habian enviado",
   "nos habia enviado", "nos habias enviado", "nos habian enviado",
   "nos habia dicho", "nos habias dicho", "nos habian dicho",
-  "nos habia confirmado", "nos habias confirmado", "nos habian confirmado"
+  "nos habia confirmado", "nos habias confirmado", "nos habian confirmado",
+  // CORRECCIÓN R5 (lista (e) C): había/habías/habían + participio con
+  // «te/le/les» (en v5 solo «me/nos»). «han/has» no cubre las
+  // construcciones con «había»: «¿El precio que te habían aprobado
+  // sigue vigente?» no disparaba (hallazgo de GPT en el PIR-1 R5).
+  "te habia aprobado", "te habias aprobado", "te habian aprobado",
+  "le habia aprobado", "le habias aprobado", "le habian aprobado",
+  "les habia aprobado", "les habias aprobado", "les habian aprobado",
+  "te habia asignado", "te habias asignado", "te habian asignado",
+  "le habia asignado", "le habias asignado", "le habian asignado",
+  "les habia asignado", "les habias asignado", "les habian asignado",
+  "te habia concedido", "te habias concedido", "te habian concedido",
+  "le habia concedido", "le habias concedido", "le habian concedido",
+  "les habia concedido", "les habias concedido", "les habian concedido",
+  "te habia respetado", "te habias respetado", "te habian respetado",
+  "le habia respetado", "le habias respetado", "le habian respetado",
+  "les habia respetado", "les habias respetado", "les habian respetado",
+  "te habia negociado", "te habias negociado", "te habian negociado",
+  "le habia negociado", "le habias negociado", "le habian negociado",
+  "les habia negociado", "les habias negociado", "les habian negociado",
+  "te habia dado", "te habias dado", "te habian dado",
+  "le habia dado", "le habias dado", "le habian dado",
+  "les habia dado", "les habias dado", "les habian dado",
+  "te habia ofrecido", "te habias ofrecido", "te habian ofrecido",
+  "le habia ofrecido", "le habias ofrecido", "le habian ofrecido",
+  "les habia ofrecido", "les habias ofrecido", "les habian ofrecido",
+  "te habia prometido", "te habias prometido", "te habian prometido",
+  "le habia prometido", "le habias prometido", "le habian prometido",
+  "les habia prometido", "les habias prometido", "les habian prometido",
+  "te habia hecho", "te habias hecho", "te habian hecho",
+  "le habia hecho", "le habias hecho", "le habian hecho",
+  "les habia hecho", "les habias hecho", "les habian hecho",
+  "te habia enviado", "te habias enviado", "te habian enviado",
+  "le habia enviado", "le habias enviado", "le habian enviado",
+  "les habia enviado", "les habias enviado", "les habian enviado",
+  "te habia dicho", "te habias dicho", "te habian dicho",
+  "le habia dicho", "le habias dicho", "le habian dicho",
+  "les habia dicho", "les habias dicho", "les habian dicho",
+  "te habia confirmado", "te habias confirmado", "te habian confirmado",
+  "le habia confirmado", "le habias confirmado", "le habian confirmado",
+  "les habia confirmado", "les habias confirmado", "les habian confirmado"
 );
 for (const _s of V01_SUSTANTIVOS_X_QUE) for (const _v of V01_VERBOS_QUE) V01_SENAL_B.push(`${_s} que ${_v}`);
 
@@ -452,6 +519,14 @@ for (const _s of V01_SUSTANTIVOS_X_QUE) for (const _v of V01_VERBOS_QUE) V01_SEN
 // el acuerdo de confidencialidad?»). Esos solo disparan con un marcador
 // FUERTE (regla 1): «firmamos», «me diste», «nuestro acuerdo»... «trato»
 // sigue en B_FUERTE (limitación residual: ver informe R2).
+// CORRECCIÓN R5 (lista (e) D, opción A de Ultra, respaldada por GPT):
+// las 16 formas «precio/tarifa/condición + negociado/concedido» y
+// «precio/tarifa + preferencial» (singular/plural) también se EXCLUYEN
+// de B_FUERTE: con solo un verbo de continuidad forman preguntas
+// públicas sobre la oferta vigente («¿Siguen ofreciendo tarifas
+// negociadas?») que recibían la respuesta fija (falso positivo material
+// del PIR-1 R5). Quedan en B (reglas 1, 1c, 1d, 1e) y en la lista
+// dedicada de las reglas 6/7a (V01_OBJETOS_CONFIRMA_NEGOCIADO).
 const V01_SENAL_B_FUERTE = V01_SENAL_B.filter((s) => ![
   "pago", "pagos", "cliente", "clientes", "oferta", "ofertas",
   "promocion", "promociones", "promosion", "promosiones",
@@ -460,6 +535,12 @@ const V01_SENAL_B_FUERTE = V01_SENAL_B.filter((s) => ![
   "contrato", "contratos", "acuerdo", "acuerdos", "convenio", "convenios",
   "colaboracion", "colaboraciones", "compromiso", "compromisos",
   "cotizacion", "cotizaciones", "presupuesto", "presupuestos",
+  "precio negociado", "precios negociados", "tarifa negociada",
+  "tarifas negociadas", "condicion negociada", "condiciones negociadas",
+  "precio concedido", "precios concedidos", "tarifa concedida",
+  "tarifas concedidas", "condicion concedida", "condiciones concedidas",
+  "precio preferencial", "precios preferenciales",
+  "tarifa preferencial", "tarifas preferenciales",
 ].includes(s));
 
 // (C_FUERTE) Referencias previas sin objeto comercial que por sí solas
@@ -572,6 +653,21 @@ const V01_RE_A_TEMPORAL = v01Patron(V01_SENAL_A_TEMPORAL);
 // regla 2 («¿Sigue el trato?» dispara) y en B para la regla 1.
 const V01_SENAL_B_FUERTE_SIN_TRATO = V01_SENAL_B_FUERTE.filter((s) => s !== "trato" && s !== "tratos");
 const V01_RE_B_FUERTE_SIN_TRATO = v01Patron(V01_SENAL_B_FUERTE_SIN_TRATO);
+// Lista dedicada de las reglas 6/7a (corrección R5, lista (e) D, opción
+// A de Ultra): las formas negociado/concedido/preferencial salieron de
+// B_FUERTE (ya no disparan con solo continuidad, regla 2), pero con
+// «confirmar» SÍ afirman una condición previa concreta del visitante
+// («¿Me confirmas el precio negociado?» dispara, como en v5). La regla
+// 7a ya las cubre por sustantivo + participio («precio» + «negociado»);
+// esta lista da a la regla 6 la misma cobertura de forma explícita.
+const V01_OBJETOS_CONFIRMA_NEGOCIADO = [
+  "precio negociado", "precios negociados", "tarifa negociada", "tarifas negociadas",
+  "condicion negociada", "condiciones negociadas",
+  "precio concedido", "precios concedidos", "tarifa concedida", "tarifas concedidas",
+  "condicion concedida", "condiciones concedidas",
+  "precio preferencial", "precios preferenciales", "tarifa preferencial", "tarifas preferenciales",
+];
+const V01_RE_OBJETOS_CONFIRMA_NEGOCIADO = v01Patron(V01_OBJETOS_CONFIRMA_NEGOCIADO);
 // Patrones «X que Y» como regex compacta (corrección R3, regla 1c): el
 // producto cartesiano sustantivo × verbo se expresa como
 // (sustantivos) que (verbos), sin enumerar los ~900 patrones. Dispara sola:
@@ -579,7 +675,15 @@ const V01_RE_B_FUERTE_SIN_TRATO = v01Patron(V01_SENAL_B_FUERTE_SIN_TRATO);
 // patrón sin entrar en A_FUERTE, donde serían falsos positivos («¿Negociamos
 // un descuento?» es prospectivo; «¿Me enviaron el contrato?» pregunta por
 // un envío).
-const V01_RE_X_QUE = new RegExp(`\\b(?:${V01_SUSTANTIVOS_X_QUE.join("|")}) que (?:${V01_VERBOS_QUE.join("|")})\\b`);
+// CORRECCIÓN R5 (lista (e) B): la pasiva/impersonal con «se» («¿El
+// precio que se negoció sigue vigente?», «¿La tarifa que se concedió
+// sigue vigente?») entra con el «se» opcional tras «que». Los verbos
+// siguen siendo los de concesión/comunicación en pasado: «que se
+// ofrece» o «que se publica» (presente o verbo ajeno a la lista) NO
+// casa y sigue al modelo. En v5 la desviación «sin variantes con se»
+// fue juzgada NO ACEPTABLE por GPT: la pasiva con «se» no es un
+// destinatario, es otra voz gramatical.
+const V01_RE_X_QUE = new RegExp(`\\b(?:${V01_SUSTANTIVOS_X_QUE.join("|")}) que (?:se )?(?:${V01_VERBOS_QUE.join("|")})\\b`);
 // Objeto vinculado al temporal por «de» (corrección R3, regla 1b): «el
 // descuento de ayer», «la tarifa de la semana pasada». Solo sustantivos de
 // CONDICIÓN (descuento, promoción, oferta...), NO de cantidad (precio,
@@ -610,7 +714,32 @@ const V01_RE_MONTO = v01Patron(V01_SENAL_MONTO);
 // el precio del Diagnóstico Esencial?» sigue sin disparar. La forma
 // «X que Y» («el precio que me respetaron») la cubre la regla 1c.
 const V01_VERBOS_CONCESION_MONTO = ["dieron", "dio", "diste", "ofrecieron", "ofreciste", "prometieron", "prometiste", "aprobaron", "aprobaste", "asignaron", "asignaste", "concedieron", "concediste", "negociaron", "negociaste", "confirmaron", "confirmaste", "pasaron", "pasaste", "cotizaron", "cotizaste", "contaron", "contaste", "dijeron", "dijiste", "hicieron", "hiciste", "hizo", "respetaron", "respeto", "respetaste", "han respetado", "has respetado", "han dado", "has dado", "han ofrecido", "has ofrecido", "han prometido", "has prometido", "han aprobado", "has aprobado", "han asignado", "has asignado", "han concedido", "has concedido", "han confirmado", "has confirmado"];
-const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|nos|le|les) (?:${V01_VERBOS_CONCESION_MONTO.join("|")}) (?:el|la|los|las) (?:precio|tarifa|condicion|costo|monto|valor|cuota|importe)(?: (?:acordado|acordada|convenido|convenida|pactado|pactada|negociado|negociada|concedido|concedida|aprobado|aprobada|asignado|asignada|especial|especiales))?(?: (?:ayer|la semana pasada|el mes pasado|el ano pasado|la vez pasada|la ultima vez|de ayer|de la semana pasada|del mes pasado|del ano pasado|de la vez pasada|de la ultima vez|de la llamada))?\\s*(?:por favor)?\\s*$`);
+const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERBOS_CONCESION_MONTO.join("|")}) (?:el|la|los|las) (?:precio|precios|tarifa|tarifas|condicion|condiciones|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: (?:ayer|la semana pasada|el mes pasado|el ano pasado|la vez pasada|la ultima vez|de ayer|de la semana pasada|del mes pasado|del ano pasado|de la vez pasada|de la ultima vez|de la llamada))?\\s*(?:por favor)?\\s*$`);
+// CORRECCIÓN R5 (lista (e) A, hallazgo determinante de GPT): la regla
+// 1d contempla ahora el destinatario «te» («¿Te dieron el precio?»,
+// «¿Te aprobaron el precio?», «¿Te concedieron la tarifa?») y los
+// plurales de todos los sustantivos de cantidad («¿Me dieron los
+// precios?», «¿Me asignaron las tarifas?», «¿Me concedieron las
+// condiciones?»); en v5 solo contemplaba me/nos/le/les y el singular.
+// Regla 1e (corrección R5, lista (e) E — DEFINICIÓN ADOPTADA para la
+// 3.ª persona plural sin pronombre): verbo de concesión en 3.ª plural
+// SIN pronombre + sustantivo de cantidad + fin de mensaje. Definición
+// adoptada (la propuesta de Ultra en su (e) 1 del PIR-1 R5):
+// «¿Negociaron la tarifa?», «¿Negociaron el precio?» y «¿Concedieron
+// la condición?» SÍ son premisas previas no verificables y disparan.
+// Motivo: en el contexto del chatbot, quien pregunta así presupone que
+// la empresa negoció/concedió ESA tarifa/precio/condición (la suya);
+// dejar la forma al modelo permitía confirmar un acuerdo inexistente
+// (§8). La posición de GPT (caso pendiente de definición, no
+// fundamento de su NO-GO) queda registrada en el expediente; la
+// definición se somete al PIR-1 R6. Distinciones de la definición:
+// SIN cola temporal («¿Negociaron la tarifa ayer?» se lee como
+// pregunta por un evento pasado y NO dispara); el presente no entra
+// («¿Ofrecen tarifas?» no lleva verbo de concesión en 3.ª plural);
+// «pago» y «contrato» no están en la lista de sustantivos (como en la
+// propuesta de Ultra).
+const V01_VERBOS_TERCERA_PLURAL_MONTO = ["dieron", "dijeron", "ofrecieron", "prometieron", "confirmaron", "hicieron", "pasaron", "cotizaron", "contaron", "negociaron", "aprobaron", "asignaron", "concedieron", "respetaron"];
+const V01_RE_TERCERA_PLURAL_MONTO = new RegExp(`\\b(?:${V01_VERBOS_TERCERA_PLURAL_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?\\s*(?:por favor)?\\s*$`);
 // Regla 4, excepción documento (corrección R4, lista (e) D, L3): «¿Lo que
 // me dijiste sigue en el informe?» pregunta por el contenido de un
 // documento, no por una condición comercial. La continuidad seguida de
@@ -640,7 +769,7 @@ const V01_RE_SIGUE_ACUERDO_1 = new RegExp(`\\b(?:sigue|siga|siguen|sigan)\\s+(?:
 const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUSTANTIVOS_ACUERDO.join("|")})\\s+(?:sigue|siga|siguen|sigan)\\s+(?:vigente|activo|activa|en pie|igual)?\\s*$`);
 
 // Determinista: el mismo mensaje produce siempre el mismo resultado.
-// Reglas (OR) — corrección R4 (2026-11-19, filtro v5):
+// Reglas (OR) — corrección R5 (2026-11-19, filtro v6):
 //  1. A_FUERTE (verbal) + B (cualquier objeto, incluido «pago/cliente/oferta»)
 //  1b. A_TEMPORAL + B, solo con continuidad («sigue», «vigente», «todavía»,
 //      «vale»...) o con el objeto vinculado por «de» («el descuento de
@@ -655,8 +784,15 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      mensaje («¿Me dieron el precio?»; generalización R4 de «me/nos
 //      respetaron el precio»: dar, ofrecer, prometer, aprobar, asignar,
 //      conceder, negociar, confirmar, pasar, cotizar, contar, decir,
-//      hacer, respetar; con y sin auxiliar; cola temporal opcional)
-//  2. A_DEBIL + B_FUERTE (verbo de continuidad + objeto específico)
+//      hacer, respetar; con y sin auxiliar; cola temporal opcional;
+//      R5: + destinatario «te» y plurales de cantidad)
+//  1e. Concesión en 3.ª plural SIN pronombre + sustantivo de cantidad +
+//      fin de mensaje, SIN cola temporal («¿Negociaron la tarifa?»;
+//      corrección R5, lista (e) E: definición adoptada — propuesta de
+//      Ultra; «¿Negociaron la tarifa ayer?» NO dispara: evento pasado)
+//  2. A_DEBIL + B_FUERTE (verbo de continuidad + objeto específico;
+//      R5: las formas negociado/concedido/preferencial ya NO están en
+//      B_FUERTE: la forma escueta con solo continuidad no dispara)
 //  3. D_A + D_B («el mismo precio...» + marcador previo estrecho;
 //      D_A incluye ahora «me/nos das/dan/da» para L1)
 //  4. C_FUERTE, o C_DEBIL + CONTINUIDAD_FUERTE (referencia previa sin
@@ -665,8 +801,9 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      comercial en el mensaje (L3 resuelto)
 //  4b. Referencia vaga previa + «todavía»/«aún» + «vale/válido...»
 //      («¿Lo que hablamos todavía vale?», «¿Todavía vale lo que hablamos?»)
-//  6. CONFIRMAR_DEBIL + (CONTINUIDAD_FUERTE o B_FUERTE sin «trato»)
-//     («confirmar» en presente/infinitivo con continuidad u objeto
+//  6. CONFIRMAR_DEBIL + (CONTINUIDAD_FUERTE o B_FUERTE sin «trato» o
+//     lista dedicada negociado/concedido/preferencial de la corrección
+//     R5) («confirmar» en presente/infinitivo con continuidad u objeto
 //     específico; solo con un objeto genérico NO dispara; «trato» fuera
 //     por FP3/FP4)
 //  7a. «me confirmas/confirma/confirman el X» y nada más («¿Me confirmas
@@ -683,12 +820,13 @@ function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   if (V01_RE_A_TEMPORAL.test(n) && V01_RE_CONTINUIDAD.test(n) && V01_RE_MONTO.test(n)) return true;
   if (V01_RE_X_QUE.test(n)) return true;
   if (V01_RE_CONCESION_MONTO.test(n)) return true;
+  if (V01_RE_TERCERA_PLURAL_MONTO.test(n)) return true;
   if (V01_RE_A_DEBIL.test(n) && V01_RE_B_FUERTE.test(n)) return true;
   if (V01_RE_D_A.test(n) && V01_RE_D_B.test(n)) return true;
   if (V01_RE_C_FUERTE.test(n)) return true;
   if (V01_RE_C_DEBIL.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n) && !(V01_RE_CONTINUIDAD_EN_DOCUMENTO.test(n) && !V01_RE_B.test(n) && !V01_RE_MONTO.test(n))) return true;
   if ((V01_RE_C_DEBIL.test(n) || V01_RE_REF_VAGA_VALE.test(n)) && /\b(todavia|aun)\b/.test(n) && /\b(vale|valen|valido|valida|validos|validas)\b/.test(n)) return true;
-  if (V01_RE_CONFIRMAR_DEBIL.test(n) && (V01_RE_CONTINUIDAD_FUERTE.test(n) || V01_RE_B_FUERTE_SIN_TRATO.test(n))) return true;
+  if (V01_RE_CONFIRMAR_DEBIL.test(n) && (V01_RE_CONTINUIDAD_FUERTE.test(n) || V01_RE_B_FUERTE_SIN_TRATO.test(n) || V01_RE_OBJETOS_CONFIRMA_NEGOCIADO.test(n))) return true;
   if (V01_RE_CONFIRMA_DEFINIDO.test(n)) return true;
   if (V01_RE_SIGUE_ACUERDO_1.test(n) || V01_RE_SIGUE_ACUERDO_2.test(n)) return true;
   return false;
