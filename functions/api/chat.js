@@ -133,7 +133,9 @@ function toAiMessages(messages) {
 // corrección R6 2026-11-19, filtro v7, según la lista (e) consolidada A–F
 // del cierre NO-GO del PIR-1 R6, verificada por Pax;
 // corrección R7 2026-11-19, filtro v8, según la lista (e) consolidada A–E
-// del cierre NO-GO del PIR-1 R7, verificada por Pax).
+// del cierre NO-GO del PIR-1 R7, verificada por Pax;
+// corrección R8 2026-11-19, filtro v9, según la lista (e) consolidada A–F
+// del cierre NO-GO del PIR-1 R8, verificada por Pax).
 // Impide que el chatbot confirme como verdaderos acuerdos comerciales previos
 // no verificables (precios especiales, descuentos, promociones, acuerdos,
 // colaboraciones, contratos, pagos, clientes, compromisos, conversaciones
@@ -184,12 +186,26 @@ function v01Normalizar(texto) {
 // pregunta por un envío; solo funcionan dentro de patrones «X que Y»
 // (regla 1c). «trabajamos juntos» entra por H6 #16 («Como ya trabajamos
 // juntos el año pasado...»), que en v3 solo disparaba por el temporal.
+// CORRECCIÓN R8 (lista (e) D del cierre R8): los participios escuetos
+// «acordado(s)/a(s)», «pactado(s)/a(s)» y «convenido(s)/a» SALEN de
+// A_FUERTE. Como marcadores fuertes hacían disparar por la regla 1
+// preguntas públicas de existencia en presente («¿Ofrecen precios
+// pactados?», «¿Tienen tarifas acordadas?»): es la misma asimetría
+// que la corrección R5 resolvió para negociado/concedido/preferencial
+// (esos participios nunca estuvieron en A_FUERTE). Las formas con
+// «lo» («lo acordado», «lo pactado», «lo convenido», «segun lo
+// acordado») SÍ quedan: son referencias a un arreglo concreto ya
+// nombrado, no descripciones de la oferta. Las combinaciones
+// «precio/tarifa/... + participio» quedan en B (con un marcador
+// fuerte genuino la regla 1 sigue disparando: «¿Me respetó el precio
+// acordado?»), salen de B_FUERTE (ver su comentario) y quedan
+// cubiertas para premisa personal por la lista dedicada de las
+// reglas 6/2b/2c y por la regla nueva 2d.
 const V01_SENAL_A_FUERTE = [
-  "acordamos", "acordaron", "acordo", "acordado", "acordada", "acordados",
-  "acordadas", "acordaste", "acordabamos", "acordaba",
-  "pactamos", "pactado", "pactada", "pactados", "pactadas", "pactaron",
+  "acordamos", "acordaron", "acordo", "acordaste", "acordabamos", "acordaba",
+  "pactamos", "pactaron",
   "pactaste", "pacte",
-  "convenimos", "convenido", "convenidos", "convenida", "convinimos",
+  "convenimos", "convinimos",
   "conveniste",
   "confirmado", "confirmada", "confirmados", "confirmadas", "confirmaste",
   "confirmaron", "confirmo",
@@ -545,6 +561,29 @@ const V01_SENAL_B_FUERTE = V01_SENAL_B.filter((s) => ![
   "tarifas concedidas", "condicion concedida", "condiciones concedidas",
   "precio preferencial", "precios preferenciales",
   "tarifa preferencial", "tarifas preferenciales",
+  // CORRECCIÓN R8 (lista (e) D del cierre R8): las combinaciones con
+  // acordado/convenido/pactado y los participios escuetos también se
+  // EXCLUYEN de B_FUERTE (espejo de la corrección R5): con solo un
+  // verbo de continuidad forman preguntas públicas de oferta vigente
+  // («¿Siguen ofreciendo tarifas acordadas?») indistinguibles de una
+  // descripción pública. Quedan en B (regla 1 con marcador fuerte),
+  // en la lista dedicada de las reglas 6/2b/2c (con «confirmar» o con
+  // atribución) y en la regla 2d (objeto definido + participio +
+  // continuidad predicada del propio objeto: «¿El precio acordado
+  // sigue vigente?»).
+  "acordado", "acordada", "acordados", "acordadas",
+  "pactado", "pactada", "pactados", "pactadas",
+  "convenido", "convenidos", "convenida",
+  "precio acordado", "precio convenido", "precio pactado",
+  "precios acordados", "precios convenidos", "precios pactados",
+  "tarifa acordada", "tarifa convenida", "tarifa pactada",
+  "tarifas acordadas", "tarifas convenidas", "tarifas pactadas",
+  "condicion acordada", "condicion convenida", "condicion pactada",
+  "condiciones acordadas", "condiciones convenidas", "condiciones pactadas",
+  "descuento acordado", "descuento convenido", "descuento pactado",
+  "descuentos acordados",
+  "promocion acordada", "oferta acordada", "beneficio acordado",
+  "pago acordado", "pago convenido", "pago pactado",
 ].includes(s));
 
 // (C_FUERTE) Referencias previas sin objeto comercial que por sí solas
@@ -664,12 +703,29 @@ const V01_RE_B_FUERTE_SIN_TRATO = v01Patron(V01_SENAL_B_FUERTE_SIN_TRATO);
 // («¿Me confirmas el precio negociado?» dispara, como en v5). La regla
 // 7a ya las cubre por sustantivo + participio («precio» + «negociado»);
 // esta lista da a la regla 6 la misma cobertura de forma explícita.
+// CORRECCIÓN R8 (lista (e) D del cierre R8): la lista se amplía con
+// las combinaciones acordado/convenido/pactado, que en este ciclo
+// salen de B_FUERTE por la misma razón. La lista pasa a ser la vía
+// dedicada de TODOS los participios de acuerdo para las reglas 6
+// («confirmar» + objeto participado), 2b (objeto + atribución +
+// continuidad fuerte) y 2c (objeto + atribución anclada): con
+// atribución o con «confirmar» la premisa es personal y dispara; la
+// forma escueta con solo continuidad va al modelo.
 const V01_OBJETOS_CONFIRMA_NEGOCIADO = [
   "precio negociado", "precios negociados", "tarifa negociada", "tarifas negociadas",
   "condicion negociada", "condiciones negociadas",
   "precio concedido", "precios concedidos", "tarifa concedida", "tarifas concedidas",
   "condicion concedida", "condiciones concedidas",
   "precio preferencial", "precios preferenciales", "tarifa preferencial", "tarifas preferenciales",
+  "precio acordado", "precios acordados", "tarifa acordada", "tarifas acordadas",
+  "condicion acordada", "condiciones acordadas",
+  "precio convenido", "precios convenidos", "tarifa convenida", "tarifas convenidas",
+  "condicion convenida", "condiciones convenidas",
+  "precio pactado", "precios pactados", "tarifa pactada", "tarifas pactadas",
+  "condicion pactada", "condiciones pactadas",
+  "descuento acordado", "descuento convenido", "descuento pactado", "descuentos acordados",
+  "promocion acordada", "oferta acordada", "beneficio acordado",
+  "pago acordado", "pago convenido", "pago pactado",
 ];
 const V01_RE_OBJETOS_CONFIRMA_NEGOCIADO = v01Patron(V01_OBJETOS_CONFIRMA_NEGOCIADO);
 // Patrones «X que Y» como regex compacta (corrección R3, regla 1c): el
@@ -790,6 +846,13 @@ const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERB
 // formas disparan en v7 por otra vía): la regla 1d NO se toca en
 // este ciclo y las formas B1 entran al corpus como controles que
 // disparan.
+// CORRECCIÓN R8 (lista (e) A del cierre del PIR-1 R8): la exclusión
+// de «aceptaron», «definieron» y «cerraron» se mantiene SOLO para
+// las formas escuetas de esta regla. El PIR-1 R8 verificó que con
+// atribución expresa («¿Cerraron una tarifa para mi empresa?») la
+// exclusión dejaba pasar premisas del caso propio — la misma clase
+// que fundó los NO-GO de R6 —: esas formas atribuidas las cubre la
+// regla nueva 1g, sin tocar esta lista ni la definición revisada.
 const V01_VERBOS_TERCERA_PLURAL_MONTO = ["dieron", "dijeron", "ofrecieron", "prometieron", "confirmaron", "hicieron", "pasaron", "cotizaron", "contaron", "negociaron", "aprobaron", "asignaron", "concedieron", "respetaron", "acordaron", "pactaron", "convinieron", "concertaron", "fijaron", "establecieron"];
 const V01_RE_TERCERA_PLURAL_MONTO = new RegExp(`\\b(?:${V01_VERBOS_TERCERA_PLURAL_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?)?\\s*(?:por favor)?\\s*$`);
 // Regla 1f (corrección R6, lista (e) A — impersonales con «se»):
@@ -810,6 +873,54 @@ const V01_RE_TERCERA_PLURAL_MONTO = new RegExp(`\\b(?:${V01_VERBOS_TERCERA_PLURA
 const V01_SE_CONCESION_FINITO = ["concedio", "concedieron", "negocio", "negociaron", "aprobo", "aprobaron", "asigno", "asignaron", "respeto", "respetaron", "ofrecio", "ofrecieron", "prometio", "prometieron", "dio", "dieron", "confirmo", "confirmaron", "cotizo", "cotizaron", "pacto", "pactaron", "acordo", "acordaron"];
 const V01_SE_CONCESION_PARTICIPIO = ["concedido", "negociado", "aprobado", "asignado", "respetado", "ofrecido", "prometido", "dado", "confirmado", "cotizado", "pactado", "acordado"];
 const V01_RE_SE_IMPERSONAL = new RegExp(`\\bse (?:(?:${V01_SE_CONCESION_FINITO.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?)?\\s*(?:por favor)?\\s*$`);
+// Regla 1g (corrección R8, lista (e) A, B y C del cierre R8):
+// concesión/acuerdo en pasado + objeto + ATRIBUCIÓN EXPRESA obligatoria
+// + fin de mensaje. Cubre tres familias que en v8 atravesaban el filtro
+// SOLO cuando la premisa se ataba al caso propio del visitante:
+//  (A) Los verbos EXCLUIDOS de la lista de la 1e en la corrección R7
+//      («cerraron», «aceptaron», «definieron»): su exclusión se calibró
+//      sobre las formas ESCUETAS (aceptación unilateral, definición
+//      interna, «cerraron» polisémico) y para escuetas se mantiene —
+//      las formas escuetas siguen yendo al modelo —; pero con
+//      atribución expresa la lectura pública desaparece («¿Cerraron
+//      una tarifa para mi empresa?» solo se lee como condición
+//      comercial particular previa del visitante). El PIR-1 R8 lo
+//      verificó por ejecución (GPT, Pax y el cierre, 3 ejecuciones
+//      concordantes) y lo juzgó la misma clase que fundó los NO-GO
+//      de R6 (B-1, B-2, D-1). La distinción escueta/atribuida queda
+//      aquí documentada: estos verbos SOLO disparan con atribución.
+//  (C) La familia nombrada por Ultra en el PIR-1 R8 («autorizaron»,
+//      «consensuaron», «ratificaron», «homologaron»): escuetas no
+//      disparan (registro formal, sin ejemplo verificado de uso); con
+//      atribución DISPARAN — juicio expreso de esta corrección, por
+//      coherencia con (A): «autorizaron» es sinónimo directo de
+//      «aprobaron», que ya dispara con atribución por la 1e, y la
+//      sonda del cierre R8 verificó que ninguna de las cuatro
+//      disparaba ni siquiera atribuida.
+//  (B) «Contrato» (y «pago») como objeto: la 1e/1f no los cubren como
+//      sustantivos (limitación 5 de v8). Con atribución expresa la
+//      premisa es del caso propio («¿Se negoció el contrato para mi
+//      empresa?», verificado en el PIR-1 R8) y dispara por esta regla
+//      en sus dos vías: impersonal con «se» + verbo de concesión de
+//      la 1f, y 3.ª plural de la lista de la 1e. La forma escueta
+//      («¿Se negoció el contrato?») sigue yendo al modelo: no fue
+//      verificada como pertinente. «pago» entra SOLO en esta vía
+//      atribuida (con «se» o con verbo de la 1e); la 1d no se toca.
+// La vía impersonal de (A)/(C) («¿Se cerró una tarifa para mi
+// empresa?») usa las formas de 3.ª singular y plural con «se».
+// Guardas: la atribución es OBLIGATORIA y es la misma cola de las
+// reglas 1d/1e — el segmento público sin posesivo («para empresas»,
+// «para otra empresa», «del Diagnóstico Esencial») NO casa y sigue
+// rompiendo el anclaje —; la cola temporal solo se admite tras la
+// atribución, como en la 1e.
+const V01_VERBOS_EXCLUIDOS_1E = ["cerraron", "aceptaron", "definieron", "autorizaron", "consensuaron", "ratificaron", "homologaron"];
+const V01_VERBOS_EXCLUIDOS_1E_SE = ["cerro", "cerraron", "acepto", "aceptaron", "definio", "definieron", "autorizo", "autorizaron", "consensuo", "consensuaron", "ratifico", "ratificaron", "homologo", "homologaron"];
+const V01_OBJETOS_1G = ["precio", "precios", "tarifa", "tarifas", "condicion", "condiciones", "descuento", "descuentos", "oferta", "ofertas", "beneficio", "beneficios", "costo", "costos", "monto", "montos", "valor", "valores", "cuota", "cuotas", "importe", "importes", "contrato", "contratos"];
+const V01_PARTICIPIOS_1G = "(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?";
+const V01_RE_ATRIBUIDO_EXCLUIDOS = new RegExp(`\\b(?:${V01_VERBOS_EXCLUIDOS_1E.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_1G.join("|")})${V01_PARTICIPIOS_1G} ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_ATRIBUIDO_EXCLUIDOS_SE = new RegExp(`\\bse (?:${V01_VERBOS_EXCLUIDOS_1E_SE.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_1G.join("|")})${V01_PARTICIPIOS_1G} ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_ATRIBUIDO_CONTRATO_SE = new RegExp(`\\bse (?:(?:${V01_SE_CONCESION_FINITO.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:contrato|contratos|pago|pagos) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_ATRIBUIDO_CONTRATO_PLURAL = new RegExp(`\\b(?:${V01_VERBOS_TERCERA_PLURAL_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:contrato|contratos|pago|pagos) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // Atribución expresa al visitante (corrección R6, lista (e) D):
 // posesivo o complemento que ata la condición al propio visitante,
 // a su grupo o a su empresa («para nuestro grupo», «para mi
@@ -825,6 +936,35 @@ const V01_RE_ATRIBUCION = /\b(?:(?:para|de) (?:mi|nuestro|nuestra)(?: (?:grupo|e
 // lleve verbo de continuidad. Sin posesivo («¿La tarifa negociada
 // para empresas?») NO dispara.
 const V01_RE_OBJETO_NEGOCIADO_ATRIBUIDO = new RegExp(`^(?:(?:el|la|los|las) )?(?:${V01_OBJETOS_CONFIRMA_NEGOCIADO.join("|")}) (?:(?:para|de) (?:mi|nuestro|nuestra) (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme)|para (?:mi|nosotros|nosotras))\\s*(?:por favor)?\\s*$`);
+// Regla 2d (corrección R8, lista (e) D del cierre R8): objeto DEFINIDO
+// + participio de acuerdo (acordado/pactado/convenido) + continuidad
+// predicada DEL PROPIO OBJETO. En v8 las combinaciones con estos
+// participios disparaban por las reglas 1 y 2 (el participio estaba
+// en A_FUERTE y la combinación en B_FUERTE), y eso cubría a la vez
+// dos clases opuestas: la premisa personal («¿El precio acordado
+// sigue vigente?», cat. 13 del corpus) y la pregunta pública de
+// existencia («¿Ofrecen precios pactados?», «¿Siguen ofreciendo
+// tarifas acordadas?»). La corrección R8 separa las clases como hizo
+// la R5 con negociado/concedido/preferencial: los participios salen
+// de A_FUERTE y las combinaciones salen de B_FUERTE, y la premisa
+// personal queda cubierta por esta regla, que exige la forma que la
+// premisa realmente tiene: un objeto concreto ya nombrado (artículo
+// definido) cuya vigencia se predica («el precio acordado SIGUE
+// vigente», «SE MANTIENE el precio pactado», «¿SIGUE VIGENTE el
+// precio acordado?»). La pregunta pública no tiene esa forma: su
+// verbo es de oferta/existencia en presente («ofrecen», «tienen»,
+// «siguen OFRECIENDO») y su objeto es genérico, sin artículo definido
+// singular que lo ate a un acuerdo previo. Las demás vías de la
+// premisa con estos participios no dependen de esta regla: con
+// marcador fuerte dispara la regla 1 (la combinación sigue en B),
+// con «confirmar» las reglas 6/7a, con atribución las reglas 2b/2c
+// (la lista dedicada ya incluye estas combinaciones).
+const V01_OBJETOS_2D = ["precio", "precios", "tarifa", "tarifas", "condicion", "condiciones", "descuento", "descuentos", "promocion", "promociones", "oferta", "ofertas", "beneficio", "beneficios", "pago", "pagos"];
+const V01_PARTICIPIOS_2D = ["acordado", "acordada", "acordados", "acordadas", "pactado", "pactada", "pactados", "pactadas", "convenido", "convenida", "convenidos", "convenidas"];
+const V01_CONTINUIDAD_2D = "(?:se (?:mantiene|mantienen)|sigue|siga|siguen|sigan|mantiene|mantienen|continua|continue|continuan|continuen)";
+const V01_RE_OBJETO_PARTICIPIO_CONTINUIDAD = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_2D.join("|")}) (?:${V01_PARTICIPIOS_2D.join("|")}) ${V01_CONTINUIDAD_2D}(?: (?:vigente|en pie|igual|activo|activa))?\\b`);
+const V01_RE_CONTINUIDAD_OBJETO_PARTICIPIO = new RegExp(`\\b${V01_CONTINUIDAD_2D} (?:el|la|los|las) (?:${V01_OBJETOS_2D.join("|")}) (?:${V01_PARTICIPIOS_2D.join("|")})\\b`);
+const V01_RE_SIGUE_VIGENTE_OBJETO_PARTICIPIO = new RegExp(`\\b(?:sigue|siga|siguen|sigan) vigente (?:el|la|los|las) (?:${V01_OBJETOS_2D.join("|")}) (?:${V01_PARTICIPIOS_2D.join("|")})\\b`);
 // Regla 4, excepción documento (corrección R4, lista (e) D, L3): «¿Lo que
 // me dijiste sigue en el informe?» pregunta por el contenido de un
 // documento, no por una condición comercial. La continuidad seguida de
@@ -884,6 +1024,14 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //  1f. Impersonal con «se» + verbo de concesión en pasado + sustantivo
 //      de cantidad + fin de mensaje («¿Se concedió una tarifa?»; R6,
 //      lista (e) A; «se ofrece»/«se publicó» NO casan)
+//  1g. Concesión/acuerdo en pasado + objeto + ATRIBUCIÓN EXPRESA
+//      obligatoria + fin de mensaje (R8, lista (e) A/B/C: los verbos
+//      excluidos de la 1e — cerraron, aceptaron, definieron — y la
+//      familia de Ultra — autorizaron, consensuaron, ratificaron,
+//      homologaron — SOLO con atribución, en forma finita o impersonal
+//      con «se»; y «contrato»/«pago» como objeto con verbo de concesión
+//      (vía «se» o 3.ª plural de la 1e) SOLO con atribución; las formas
+//      escuetas de ambas familias siguen yendo al modelo)
 //  2. A_DEBIL + B_FUERTE (verbo de continuidad + objeto específico;
 //      R5: las formas negociado/concedido/preferencial ya NO están en
 //      B_FUERTE: la forma escueta con solo continuidad no dispara)
@@ -895,6 +1043,15 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //  2c. Forma escueta anclada: objeto negociado/concedido/preferencial
 //      + complemento de atribución y nada más («¿La tarifa negociada
 //      para nuestro grupo?»; R6, lista (e) D)
+//  2d. Objeto definido + participio de acuerdo (acordado/pactado/
+//      convenido) + continuidad predicada del propio objeto («¿El
+//      precio acordado sigue vigente?», «¿Se mantiene el precio
+//      pactado?»; R8, lista (e) D: los participios salieron de
+//      A_FUERTE y sus combinaciones de B_FUERTE — la pregunta pública
+//      de existencia («¿Ofrecen precios pactados?») ya no dispara —
+//      y la premisa personal de la cat. 13 queda cubierta por esta
+//      regla; la lista dedicada de 6/2b/2c incluye ahora también las
+//      combinaciones con estos participios)
 //  3. D_A + D_B («el mismo precio...» + marcador previo estrecho;
 //      D_A incluye ahora «me/nos das/dan/da» para L1)
 //  4. C_FUERTE, o C_DEBIL + CONTINUIDAD_FUERTE (referencia previa sin
@@ -924,9 +1081,11 @@ function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   if (V01_RE_CONCESION_MONTO.test(n)) return true;
   if (V01_RE_TERCERA_PLURAL_MONTO.test(n)) return true;
   if (V01_RE_SE_IMPERSONAL.test(n)) return true;
+  if (V01_RE_ATRIBUIDO_EXCLUIDOS.test(n) || V01_RE_ATRIBUIDO_EXCLUIDOS_SE.test(n) || V01_RE_ATRIBUIDO_CONTRATO_SE.test(n) || V01_RE_ATRIBUIDO_CONTRATO_PLURAL.test(n)) return true;
   if (V01_RE_A_DEBIL.test(n) && V01_RE_B_FUERTE.test(n)) return true;
   if (V01_RE_OBJETOS_CONFIRMA_NEGOCIADO.test(n) && V01_RE_ATRIBUCION.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n)) return true;
   if (V01_RE_OBJETO_NEGOCIADO_ATRIBUIDO.test(n)) return true;
+  if (V01_RE_OBJETO_PARTICIPIO_CONTINUIDAD.test(n) || V01_RE_CONTINUIDAD_OBJETO_PARTICIPIO.test(n) || V01_RE_SIGUE_VIGENTE_OBJETO_PARTICIPIO.test(n)) return true;
   if (V01_RE_D_A.test(n) && V01_RE_D_B.test(n)) return true;
   if (V01_RE_C_FUERTE.test(n)) return true;
   if (V01_RE_C_DEBIL.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n) && !(V01_RE_CONTINUIDAD_EN_DOCUMENTO.test(n) && !V01_RE_B.test(n) && !V01_RE_MONTO.test(n))) return true;
