@@ -131,7 +131,9 @@ function toAiMessages(messages) {
 // corrección R5 2026-11-19, filtro v6, según la lista (e) consolidada A–H
 // del cierre NO-GO del PIR-1 R5, verificada por Pax;
 // corrección R6 2026-11-19, filtro v7, según la lista (e) consolidada A–F
-// del cierre NO-GO del PIR-1 R6, verificada por Pax).
+// del cierre NO-GO del PIR-1 R6, verificada por Pax;
+// corrección R7 2026-11-19, filtro v8, según la lista (e) consolidada A–E
+// del cierre NO-GO del PIR-1 R7, verificada por Pax).
 // Impide que el chatbot confirme como verdaderos acuerdos comerciales previos
 // no verificables (precios especiales, descuentos, promociones, acuerdos,
 // colaboraciones, contratos, pagos, clientes, compromisos, conversaciones
@@ -772,7 +774,23 @@ const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERB
 // verbo de concesión en 3.ª plural); «pago» y «contrato» no están
 // en la lista de sustantivos (como en la propuesta de Ultra). La
 // definición revisada se somete al PIR-1 R7.
-const V01_VERBOS_TERCERA_PLURAL_MONTO = ["dieron", "dijeron", "ofrecieron", "prometieron", "confirmaron", "hicieron", "pasaron", "cotizaron", "contaron", "negociaron", "aprobaron", "asignaron", "concedieron", "respetaron"];
+// CORRECCIÓN R7 (lista (e) A del cierre del PIR-1 R7): la lista de
+// verbos de la 1e se amplía con los verbos de acuerdo/pacto
+// verificados por GPT en el PIR-1 R7 (familia B2, confirmada 3/3
+// por ejecución contra v7): «acordaron», «pactaron», «convinieron»
+// — la misma premisa de la definición adoptada con solo el verbo
+// cambiado — y los equivalentes de la misma familia: «concertaron»
+// (acuerdo conjunto) y los verbos de fijación del monto acordado
+// «fijaron» y «establecieron» (la misma clase de «cotizaron» y
+// «pasaron», ya en la lista). Quedan fuera, por no ser acuerdo
+// conjunto ni fijación del monto: «aceptaron» (aceptación
+// unilateral), «definieron» (definición interna) y «cerraron»
+// (polisémico). La familia B1 de GPT (artículos indefinidos en la
+// regla 1d) quedó REFUTADA por ejecución en el PIR-1 R7 (las 4
+// formas disparan en v7 por otra vía): la regla 1d NO se toca en
+// este ciclo y las formas B1 entran al corpus como controles que
+// disparan.
+const V01_VERBOS_TERCERA_PLURAL_MONTO = ["dieron", "dijeron", "ofrecieron", "prometieron", "confirmaron", "hicieron", "pasaron", "cotizaron", "contaron", "negociaron", "aprobaron", "asignaron", "concedieron", "respetaron", "acordaron", "pactaron", "convinieron", "concertaron", "fijaron", "establecieron"];
 const V01_RE_TERCERA_PLURAL_MONTO = new RegExp(`\\b(?:${V01_VERBOS_TERCERA_PLURAL_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?)?\\s*(?:por favor)?\\s*$`);
 // Regla 1f (corrección R6, lista (e) A — impersonales con «se»):
 // «se» + verbo de concesión en pasado (3.ª singular o plural, o
@@ -860,7 +878,9 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      lista (e) C: premisa por defecto contextual — sin ningún otro
 //      referente en el mensaje —; la cola temporal solo se admite tras
 //      cola de atribución; «¿Negociaron la tarifa ayer?» NO dispara:
-//      evento pasado sin atribución)
+//      evento pasado sin atribución; R7, lista (e) A: + verbos de
+//      acuerdo/pacto y de fijación del monto — acordaron, pactaron,
+//      convinieron, concertaron, fijaron, establecieron)
 //  1f. Impersonal con «se» + verbo de concesión en pasado + sustantivo
 //      de cantidad + fin de mensaje («¿Se concedió una tarifa?»; R6,
 //      lista (e) A; «se ofrece»/«se publicó» NO casan)
