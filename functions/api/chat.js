@@ -125,7 +125,9 @@ function toAiMessages(messages) {
 // corrección 2026-11-18 según DeepSeek (e) del PIR-1, verificada por Pax;
 // corrección R2 2026-11-18 según DeepSeek (e) del PIR-1 R2, verificada por Pax;
 // corrección R3 2026-11-19, filtro v4, según la lista (e) consolidada del
-// cierre NO-GO definitivo del PIR-1 R3, verificada por Pax).
+// cierre NO-GO definitivo del PIR-1 R3, verificada por Pax;
+// corrección R4 2026-11-19, filtro v5, según la lista (e) consolidada A–G
+// del cierre NO-GO definitivo del PIR-1 R4, verificada por Pax).
 // Impide que el chatbot confirme como verdaderos acuerdos comerciales previos
 // no verificables (precios especiales, descuentos, promociones, acuerdos,
 // colaboraciones, contratos, pagos, clientes, compromisos, conversaciones
@@ -204,10 +206,31 @@ const V01_SENAL_A_FUERTE = [
   "me pasaste", "me pasaron", "me cotizaste", "me cotizaron",
   "me aprobaron", "me aprobo", "me aprobaste", "me han aprobado",
   "me has aprobado", "nos aprobaron",
+  "aprobaron", "aprobo", "aprobaste", "te aprobaron", "te aprobo",
+  "te aprobaste", "han aprobado", "has aprobado",
   "me asignaron", "me asigno", "me asignaste", "me han asignado",
   "nos asignaron",
+  "asignaron", "asigno", "asignaste", "te asignaron", "te asigno",
+  "te asignaste", "han asignado", "has asignado",
   "me respetaron", "me respeto", "me respetaste", "nos respetaron",
+  "respetaron", "respeto", "respetaste", "te respetaron", "te respeto",
+  "te respetaste", "han respetado", "has respetado", "le respetaron",
+  "les respetaron",
   "me concedieron", "me concedio", "me concediste", "nos concedieron",
+  "concedieron", "concedio", "concediste", "te concedieron", "te concedio",
+  "te concediste", "han concedido", "has concedido",
+  // CORRECCIÓN R4 (lista (e) A): variantes sin pronombre, con «te» y con
+  // auxiliar de aprobar/asignar/conceder/negociar/respetar, y formas de
+  // «hacer» sin pronombre (hicimos/hicieron/hiciste/hizo). «negocio» NO
+  // entra: 1.ª persona del presente («¿Negocio un descuento?») es
+  // prospectiva, igual que «negociamos» quedó fuera en v4; las formas
+  // pasadas sí entran. «se» no tiene construcción natural de destinatario
+  // para estos verbos («¿El precio que se aprobaron...?» no es español
+  // válido); la forma escueta de 3.ª plural cubre el caso sin destinatario.
+  "negociaron", "negociaste", "me negociaron", "nos negociaron",
+  "le negociaron", "les negociaron", "te negociaron", "han negociado",
+  "has negociado",
+  "hicimos", "hicieron", "hiciste", "hizo",
   "nos dieron", "nos dio", "nos ofrecieron", "nos prometieron",
   "nos dijeron", "nos confirmaron", "nos hicieron", "nos han dado",
   "nos han ofrecido", "nos pasaron", "nos cotizaron", "nos diste",
@@ -306,6 +329,20 @@ const V01_SENAL_B = [
   "descuentos acordados",
   "promocion acordada", "oferta acordada", "beneficio acordado",
   "pago acordado", "pago convenido", "pago pactado",
+  // CORRECCIÓN R4 (lista (e) B): participios negociado/concedido y
+  // «preferencial». Entran también en B_FUERTE (no están en la lista de
+  // exclusión), así que la regla 2 cubre la forma escueta con continuidad
+  // («¿Las tarifas negociadas siguen vigentes?»); las descripciones
+  // públicas sin continuidad («¿Ofrecen tarifas negociadas?») siguen sin
+  // disparar. El impacto en FP se mide en el ciclo (sonda FP).
+  "precio negociado", "precios negociados",
+  "tarifa negociada", "tarifas negociadas",
+  "condicion negociada", "condiciones negociadas",
+  "precio concedido", "precios concedidos",
+  "tarifa concedida", "tarifas concedidas",
+  "condicion concedida", "condiciones concedidas",
+  "precio preferencial", "precios preferenciales",
+  "tarifa preferencial", "tarifas preferenciales",
 ];
 
 // Patrones «X que Y» generados (corrección R2, DeepSeek (e) punto 1):
@@ -318,6 +355,91 @@ const V01_SENAL_B = [
 // cuando el usuario afirma que X le fue acordado/dicho/dado.
 const V01_SUSTANTIVOS_X_QUE = ["precio", "tarifa", "condicion", "descuento", "oferta", "beneficio", "pago", "costo", "monto", "valor", "cuota", "importe", "cotizacion", "presupuesto", "trato", "rebaja"];
 const V01_VERBOS_QUE = ["acordamos", "acordaste", "acordaron", "acordo", "pactamos", "convenimos", "convinimos", "quedamos", "me diste", "me dijiste", "me dijeron", "me dieron", "me ofreciste", "me ofrecieron", "me prometiste", "me prometieron", "me confirmaste", "me confirmaron", "me has dado", "me han dado", "me hiciste", "me hicieron", "me hizo", "me pasaste", "me pasaron", "me cotizaste", "me cotizaron", "me aprobaron", "me aprobo", "me aprobaste", "me han aprobado", "me has aprobado", "nos aprobaron", "aprobaron", "me asignaron", "me asigno", "me asignaste", "me han asignado", "nos asignaron", "asignaron", "me respetaron", "me respeto", "me respetaste", "nos respetaron", "respetaron", "negociamos", "negociaste", "negociaron", "negocio", "me enviaron", "me envio", "me enviaste", "me han enviado", "nos enviaron", "enviaron", "me concedieron", "me concedio", "me concediste", "nos concedieron", "concedieron", "nos dieron", "nos dio", "nos ofrecieron", "nos prometieron", "nos dijeron", "nos confirmaron", "nos hicieron", "nos han dado", "nos han ofrecido", "nos pasaron", "nos cotizaron", "nos diste", "nos dijiste", "nos hiciste", "nos pasaste", "nos cotizaste", "le dieron", "les dieron", "le ofrecieron", "les ofrecieron", "le prometieron", "les prometieron", "le confirmaron", "les confirmaron", "le asignaron", "les asignaron", "le aprobaron", "les aprobaron", "le enviaron", "les enviaron", "le concedieron", "les concedieron", "me contaste", "me contaron", "me has dicho", "me han dicho", "me habia dicho", "me habias dicho", "me habian dicho", "me habia confirmado", "me habias confirmado", "me habian confirmado", "me han confirmado"];
+// CORRECCIÓN R4 (lista (e) A): variantes de persona, número y pronombre
+// (me/nos/le/les/te) y con auxiliar (han/has, había) de los verbos de
+// concesión y comunicación. Sin estas formas, «X que Y» dejaba pasar
+// «¿El precio que hiciste sigue?», «¿El precio que diste sigue vigente?»,
+// «¿El precio que me negociaron sigue vigente?», etc. «se» no tiene
+// construcción natural de destinatario para estos verbos; la forma escueta
+// de 3.ª plural cubre el caso sin destinatario.
+V01_VERBOS_QUE.push(
+  // 3.ª plural sin pronombre
+  "dieron", "dijeron", "ofrecieron", "prometieron", "confirmaron",
+  "hicieron", "pasaron", "cotizaron", "contaron",
+  // 3.ª singular sin pronombre
+  "dio", "dijo", "ofrecio", "prometio", "confirmo", "hizo", "paso",
+  "cotizo", "conto", "envio", "aprobo", "asigno", "concedio", "respeto",
+  // 2.ª singular sin pronombre
+  "diste", "dijiste", "ofreciste", "prometiste", "confirmaste", "hiciste",
+  "pasaste", "cotizaste", "contaste", "enviaste", "aprobaste", "asignaste",
+  "concediste", "respetaste",
+  // 1.ª plural sin pronombre
+  "dimos", "dijimos", "ofrecimos", "prometimos", "confirmamos", "hicimos",
+  "pasamos", "cotizamos", "enviamos", "contamos", "aprobamos", "asignamos",
+  "concedimos", "respetamos",
+  // «te» + 3.ª plural
+  "te dieron", "te dijeron", "te ofrecieron", "te prometieron",
+  "te confirmaron", "te hicieron", "te pasaron", "te cotizaron",
+  "te enviaron", "te contaron", "te aprobaron", "te asignaron",
+  "te concedieron", "te respetaron", "te negociaron",
+  // «me/nos/le/les» + «negociaron»
+  "me negociaron", "nos negociaron", "le negociaron", "les negociaron",
+  // «le/les» + pasaron/cotizaron/contaron/hicieron
+  "le pasaron", "les pasaron", "le cotizaron", "les cotizaron",
+  "le contaron", "les contaron", "le hicieron", "les hicieron",
+  // han/has sin pronombre
+  "han dado", "has dado", "han dicho", "has dicho", "han ofrecido",
+  "has ofrecido", "han prometido", "has prometido", "han confirmado",
+  "has confirmado", "han hecho", "has hecho", "han aprobado",
+  "has aprobado", "han asignado", "has asignado", "han concedido",
+  "has concedido", "han respetado", "has respetado", "han negociado",
+  "has negociado", "han enviado", "has enviado", "han pasado",
+  "has pasado", "han cotizado", "has cotizado", "han contado",
+  "has contado",
+  // «nos» + han/has
+  "nos han aprobado", "nos han asignado", "nos han concedido",
+  "nos han respetado", "nos han negociado", "nos han enviado",
+  "nos han dicho", "nos han confirmado", "nos han hecho", "nos han pasado",
+  "nos han cotizado", "nos han contado",
+  // «te» + han/has
+  "te han dado", "te han ofrecido", "te han prometido", "te han dicho",
+  "te han confirmado", "te han hecho", "te han aprobado", "te han asignado",
+  "te han concedido", "te han respetado", "te han negociado",
+  "te han enviado", "te han pasado", "te han cotizado", "te han contado",
+  // «le/les» + han/has
+  "le han dado", "les han dado", "le han ofrecido", "les han ofrecido",
+  "le han prometido", "les han prometido", "le han dicho", "les han dicho",
+  "le han confirmado", "les han confirmado", "le han hecho",
+  "les han hecho", "le han aprobado", "les han aprobado",
+  "le han asignado", "les han asignado", "le han concedido",
+  "les han concedido", "le han respetado", "les han respetado",
+  "le han negociado", "les han negociado", "le han enviado",
+  "les han enviado", "le han pasado", "les han pasado", "le han cotizado",
+  "les han cotizado", "le han contado", "les han contado",
+  // había + participio («me/nos» + había/habías/habían)
+  "me habia aprobado", "me habias aprobado", "me habian aprobado",
+  "nos habia aprobado", "nos habias aprobado", "nos habian aprobado",
+  "me habia asignado", "me habias asignado", "me habian asignado",
+  "nos habia asignado", "nos habias asignado", "nos habian asignado",
+  "me habia concedido", "me habias concedido", "me habian concedido",
+  "nos habia concedido", "nos habias concedido", "nos habian concedido",
+  "me habia respetado", "me habias respetado", "me habian respetado",
+  "nos habia respetado", "nos habias respetado", "nos habian respetado",
+  "me habia negociado", "me habias negociado", "me habian negociado",
+  "nos habia negociado", "nos habias negociado", "nos habian negociado",
+  "me habia dado", "me habias dado", "me habian dado",
+  "nos habia dado", "nos habias dado", "nos habian dado",
+  "me habia ofrecido", "me habias ofrecido", "me habian ofrecido",
+  "nos habia ofrecido", "nos habias ofrecido", "nos habian ofrecido",
+  "me habia prometido", "me habias prometido", "me habian prometido",
+  "nos habia prometido", "nos habias prometido", "nos habian prometido",
+  "me habia hecho", "me habias hecho", "me habian hecho",
+  "nos habia hecho", "nos habias hecho", "nos habian hecho",
+  "me habia enviado", "me habias enviado", "me habian enviado",
+  "nos habia enviado", "nos habias enviado", "nos habian enviado",
+  "nos habia dicho", "nos habias dicho", "nos habian dicho",
+  "nos habia confirmado", "nos habias confirmado", "nos habian confirmado"
+);
 for (const _s of V01_SUSTANTIVOS_X_QUE) for (const _v of V01_VERBOS_QUE) V01_SENAL_B.push(`${_s} que ${_v}`);
 
 // (B_FUERTE) Objetos que, junto a un verbo de continuidad débil, sí afirman
@@ -368,6 +490,12 @@ const V01_SENAL_C_DEBIL = [
   "lo hablado", "lo conversado", "lo dicho", "lo prometido", "lo ofrecido",
   "lo que me dijiste", "lo que me dijeron", "lo que me has dicho",
   "lo que me han dicho", "lo que me contaste", "lo que me contaron",
+  // CORRECCIÓN R4 (lista (e) A): «lo que hicimos/hicieron/hiciste/hizo»
+  // (clase 1 del cierre R4). Van en C_DEBIL, no en C_FUERTE: solos no
+  // afirman un acuerdo comercial («¿Lo que hiciste en la reunión?» es una
+  // pregunta por contenido); con continuidad sí («¿Lo que hicieron sigue
+  // vigente?», «¿Lo que hicimos todavía vale?» vía regla 4b).
+  "lo que hicimos", "lo que hicieron", "lo que hiciste", "lo que hizo",
 ];
 
 // (CONTINUIDAD) Marcadores de que algo sigue vigente: verbos débiles +
@@ -406,6 +534,12 @@ const V01_SENAL_D_A = [
   "me confirmaste", "me confirmaron", "me hicieron", "me hizo",
   "me hiciste", "me has dado", "me han dado",
   "me pasaste", "me pasaron", "me cotizaste", "me cotizaron",
+  // CORRECCIÓN R4 (lista (e) D, L1): «me das/dan/da», «nos das/dan/da» —
+  // concesión en primera persona en presente («¿Me das el mismo precio
+  // que ayer?»). NO se añade «ayer» a D_A: «¿Tienen el mismo precio que
+  // ayer?» seguiría siendo pública y no debe disparar; la señal que
+  // distingue es el «me/nos», no el temporal (ver informe R3 §6.1).
+  "me das", "me dan", "me da", "nos das", "nos dan", "nos da",
 ];
 const V01_SENAL_D_B = [
   "mismo precio", "misma tarifa", "mismo descuento", "misma promocion",
@@ -462,19 +596,34 @@ const V01_RE_OBJETO_DE_TEMPORAL = new RegExp(`\\b(?:${V01_OBJETOS_DE_TEMPORAL.jo
 // eso sí es una condición previa no verificable.
 const V01_SENAL_MONTO = ["precio", "precios", "tarifa", "tarifas", "condicion", "condiciones", "costo", "costos", "monto", "montos", "valor", "valores", "cuota", "cuotas", "importe", "importes"];
 const V01_RE_MONTO = v01Patron(V01_SENAL_MONTO);
-// Regla 1d (corrección R3): «me/nos respetaron el precio» — el verbo
-// «respetar» en pasado con destinatario siempre presupone un precio ya
-// acordado que se honra (no es pedir un precio público: «¿Me dan el precio
-// del Diagnóstico Esencial?» no casa — «dan» no está aquí). Los sustantivos
-// de cantidad (precio, costo...) NO están en B, así que esta regla estrecha
-// es la única vía para la forma escueta; la forma «X que Y» («el precio que
-// me respetaron») la cubre la regla 1c.
-const V01_RE_RESPETAR_MONTO = /\b(?:me|nos) (?:respetaron|respeto|respetaste|han respetado|has respetado) (?:el|la|los|las) (?:precio|tarifa|condicion|costo|monto|valor|cuota|importe)\b/;
+// Regla 1d (corrección R3; GENERALIZADA en la corrección R4, lista (e) A
+// y D, L4): concesión en primera persona + sustantivo de cantidad + fin de
+// mensaje. «¿Me dieron el precio?» dispara; «¿Me diste el precio del
+// Diagnóstico Esencial?» NO (hay más después del objeto: el anclaje al
+// final del mensaje es lo que distingue la premisa de la pregunta por un
+// precio público). En v4 solo cubría «respetar»; ahora cubre todos los
+// verbos de concesión (dar, ofrecer, prometer, aprobar, asignar, conceder,
+// negociar, confirmar, pasar, cotizar, contar, decir, hacer, respetar) en
+// pasado, con y sin auxiliar, y con destinatario me/nos/le/les. Cola
+// temporal opcional («ayer», «la semana pasada»...): «¿Me dieron el precio
+// ayer?» también es una premisa. El presente («me dan») NO entra: «¿Me dan
+// el precio del Diagnóstico Esencial?» sigue sin disparar. La forma
+// «X que Y» («el precio que me respetaron») la cubre la regla 1c.
+const V01_VERBOS_CONCESION_MONTO = ["dieron", "dio", "diste", "ofrecieron", "ofreciste", "prometieron", "prometiste", "aprobaron", "aprobaste", "asignaron", "asignaste", "concedieron", "concediste", "negociaron", "negociaste", "confirmaron", "confirmaste", "pasaron", "pasaste", "cotizaron", "cotizaste", "contaron", "contaste", "dijeron", "dijiste", "hicieron", "hiciste", "hizo", "respetaron", "respeto", "respetaste", "han respetado", "has respetado", "han dado", "has dado", "han ofrecido", "has ofrecido", "han prometido", "has prometido", "han aprobado", "has aprobado", "han asignado", "has asignado", "han concedido", "has concedido", "han confirmado", "has confirmado"];
+const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|nos|le|les) (?:${V01_VERBOS_CONCESION_MONTO.join("|")}) (?:el|la|los|las) (?:precio|tarifa|condicion|costo|monto|valor|cuota|importe)(?: (?:acordado|acordada|convenido|convenida|pactado|pactada|negociado|negociada|concedido|concedida|aprobado|aprobada|asignado|asignada|especial|especiales))?(?: (?:ayer|la semana pasada|el mes pasado|el ano pasado|la vez pasada|la ultima vez|de ayer|de la semana pasada|del mes pasado|del ano pasado|de la vez pasada|de la ultima vez|de la llamada))?\\s*(?:por favor)?\\s*$`);
+// Regla 4, excepción documento (corrección R4, lista (e) D, L3): «¿Lo que
+// me dijiste sigue en el informe?» pregunta por el contenido de un
+// documento, no por una condición comercial. La continuidad seguida de
+// «en el informe/reporte/documento/correo» NO dispara la regla 4, salvo
+// que el mensaje tenga además un objeto comercial (B o MONTO): «¿Lo que me
+// dijiste sobre el precio sigue en el informe?» sí dispara. C_FUERTE no
+// se ve afectado («¿Lo que acordamos sigue en el informe?» dispara).
+const V01_RE_CONTINUIDAD_EN_DOCUMENTO = /\b(?:sigue|siguen|continua|continuan|mantiene|mantienen)\s+en\s+(?:el|la)\s+(?:informe|reporte|documento|correo)\b/;
 // Regla 4b (corrección R3, L5/P6): referencia vaga previa + «todavía»/«aún»
 // + «vale/valen/válido...». Ni «todavía» solo («¿Lo que hablamos todavía
 // está en el informe?») ni «vale» solo («¿Lo dicho vale para la Evaluación
 // Pyme?») bastan; juntos sí («¿Lo que hablamos todavía vale?»).
-const V01_RE_REF_VAGA_VALE = /(?:lo que hablamos|lo que conversamos|lo de ayer|lo del otro dia|lo de la vez pasada|lo de la ultima vez|lo de la semana pasada|lo del mes pasado|lo del ano pasado|lo hablado|lo conversado|lo dicho|lo prometido|lo ofrecido|lo que me dijiste|lo que me dijeron|lo que me has dicho|lo que me han dicho|lo que me contaste|lo que me contaron|lo acordado|lo acordada|lo acordados|lo acordadas|lo pactado|lo pactada|lo pactados|lo pactadas|lo convenido|lo convenidos|lo convenida)\b/;
+const V01_RE_REF_VAGA_VALE = /(?:lo que hablamos|lo que conversamos|lo de ayer|lo del otro dia|lo de la vez pasada|lo de la ultima vez|lo de la semana pasada|lo del mes pasado|lo del ano pasado|lo hablado|lo conversado|lo dicho|lo prometido|lo ofrecido|lo que me dijiste|lo que me dijeron|lo que me has dicho|lo que me han dicho|lo que me contaste|lo que me contaron|lo acordado|lo acordada|lo acordados|lo acordadas|lo pactado|lo pactada|lo pactados|lo pactadas|lo convenido|lo convenidos|lo convenida|lo que hicimos|lo que hicieron|lo que hiciste|lo que hizo)\b/;
 // Regla 7a (corrección R3, L6): «me confirmas/confirma/confirman el X» y
 // nada más (salvo «por favor»): «¿Me confirmas el descuento?» dispara;
 // «¿Me confirmas el descuento para clientes nuevos?» y «¿Me confirmas el
@@ -491,7 +640,7 @@ const V01_RE_SIGUE_ACUERDO_1 = new RegExp(`\\b(?:sigue|siga|siguen|sigan)\\s+(?:
 const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUSTANTIVOS_ACUERDO.join("|")})\\s+(?:sigue|siga|siguen|sigan)\\s+(?:vigente|activo|activa|en pie|igual)?\\s*$`);
 
 // Determinista: el mismo mensaje produce siempre el mismo resultado.
-// Reglas (OR) — corrección R3 (2026-11-19, filtro v4):
+// Reglas (OR) — corrección R4 (2026-11-19, filtro v5):
 //  1. A_FUERTE (verbal) + B (cualquier objeto, incluido «pago/cliente/oferta»)
 //  1b. A_TEMPORAL + B, solo con continuidad («sigue», «vigente», «todavía»,
 //      «vale»...) o con el objeto vinculado por «de» («el descuento de
@@ -502,11 +651,18 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      pasado?») NO dispara.
 //  1c. Patrón «X que Y» (regla compacta): «el descuento que me aprobaron»,
 //      «la cotización que me enviaron», «el precio que negociamos»...
-//  1d. «me/nos respetaron el precio/costo/...» (forma escueta con verbo
-//      «respetar», que siempre presupone un precio ya acordado)
+//  1d. Concesión en primera persona + sustantivo de cantidad + fin de
+//      mensaje («¿Me dieron el precio?»; generalización R4 de «me/nos
+//      respetaron el precio»: dar, ofrecer, prometer, aprobar, asignar,
+//      conceder, negociar, confirmar, pasar, cotizar, contar, decir,
+//      hacer, respetar; con y sin auxiliar; cola temporal opcional)
 //  2. A_DEBIL + B_FUERTE (verbo de continuidad + objeto específico)
-//  3. D_A + D_B («el mismo precio...» + marcador previo estrecho)
-//  4. C_FUERTE, o C_DEBIL + CONTINUIDAD_FUERTE (referencia previa sin objeto)
+//  3. D_A + D_B («el mismo precio...» + marcador previo estrecho;
+//      D_A incluye ahora «me/nos das/dan/da» para L1)
+//  4. C_FUERTE, o C_DEBIL + CONTINUIDAD_FUERTE (referencia previa sin
+//      objeto); EXCEPCIÓN documento R4: la continuidad seguida de «en el
+//      informe/reporte/documento/correo» no dispara si no hay objeto
+//      comercial en el mensaje (L3 resuelto)
 //  4b. Referencia vaga previa + «todavía»/«aún» + «vale/válido...»
 //      («¿Lo que hablamos todavía vale?», «¿Todavía vale lo que hablamos?»)
 //  6. CONFIRMAR_DEBIL + (CONTINUIDAD_FUERTE o B_FUERTE sin «trato»)
@@ -526,11 +682,11 @@ function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   if (V01_RE_A_TEMPORAL.test(n) && V01_RE_B.test(n) && (V01_RE_CONTINUIDAD.test(n) || V01_RE_OBJETO_DE_TEMPORAL.test(n))) return true;
   if (V01_RE_A_TEMPORAL.test(n) && V01_RE_CONTINUIDAD.test(n) && V01_RE_MONTO.test(n)) return true;
   if (V01_RE_X_QUE.test(n)) return true;
-  if (V01_RE_RESPETAR_MONTO.test(n)) return true;
+  if (V01_RE_CONCESION_MONTO.test(n)) return true;
   if (V01_RE_A_DEBIL.test(n) && V01_RE_B_FUERTE.test(n)) return true;
   if (V01_RE_D_A.test(n) && V01_RE_D_B.test(n)) return true;
   if (V01_RE_C_FUERTE.test(n)) return true;
-  if (V01_RE_C_DEBIL.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n)) return true;
+  if (V01_RE_C_DEBIL.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n) && !(V01_RE_CONTINUIDAD_EN_DOCUMENTO.test(n) && !V01_RE_B.test(n) && !V01_RE_MONTO.test(n))) return true;
   if ((V01_RE_C_DEBIL.test(n) || V01_RE_REF_VAGA_VALE.test(n)) && /\b(todavia|aun)\b/.test(n) && /\b(vale|valen|valido|valida|validos|validas)\b/.test(n)) return true;
   if (V01_RE_CONFIRMAR_DEBIL.test(n) && (V01_RE_CONTINUIDAD_FUERTE.test(n) || V01_RE_B_FUERTE_SIN_TRATO.test(n))) return true;
   if (V01_RE_CONFIRMA_DEFINIDO.test(n)) return true;
@@ -549,10 +705,13 @@ function v01EsContinuidad(mensajeUsuario) {
 // Regla 5 (multi-turno): si el último mensaje del usuario es solo continuidad
 // («¿Sigue vigente?») y un mensaje de usuario anterior disparó el filtro,
 // la premisa ya está en la conversación y el seguimiento también dispara.
-// Mira los últimos 3 mensajes de usuario (corrección R3: la premisa puede
-// estar a 2 mensajes de distancia, con una pregunta legítima en medio —
-// «¿Cuánto cuesta la Evaluación Pyme?» — que NO dispara porque no es
-// continuidad). Un mensaje legítimo posterior a una premisa NO dispara.
+// Mira los últimos 5 mensajes de usuario (corrección R4, L6): 5 es todo el
+// historial que el handler pasa al filtro (toAiMessages hace slice(-10):
+// como máximo 5 mensajes de usuario). La ventana ya no es un número
+// arbitrario: cubre exactamente lo que el filtro puede ver, sin conservar
+// nada más allá. Una pregunta legítima en medio («¿Cuánto cuesta la
+// Evaluación Pyme?») NO dispara porque no es continuidad. Un mensaje
+// legítimo posterior a una premisa NO dispara.
 function v01DisparaEnHistorial(history) {
   const usuarios = (history || []).filter(
     (m) => m && m.role === "user" && typeof m.content === "string"
@@ -561,10 +720,10 @@ function v01DisparaEnHistorial(history) {
   const ultimo = usuarios[usuarios.length - 1];
   if (v01EsAfirmacionPreviaNoVerificable(ultimo.content)) return true;
   if (!v01EsContinuidad(ultimo.content)) return false;
-  const penultimo = usuarios[usuarios.length - 2];
-  if (penultimo && v01EsAfirmacionPreviaNoVerificable(penultimo.content)) return true;
-  const antepenultimo = usuarios[usuarios.length - 3];
-  if (antepenultimo && v01EsAfirmacionPreviaNoVerificable(antepenultimo.content)) return true;
+  for (let i = 2; i <= 5; i++) {
+    const anterior = usuarios[usuarios.length - i];
+    if (anterior && v01EsAfirmacionPreviaNoVerificable(anterior.content)) return true;
+  }
   return false;
 }
 // FILTRO DETERMINISTA V-01 — FIN
@@ -622,7 +781,8 @@ async function handler(context) {
   // multi-turno): afirmación comercial previa no verificable. Actúa ANTES de
   // llamar al modelo: si dispara, devuelve la respuesta fija y NO llama al
   // modelo. Solo registra el evento técnico, sin el contenido del mensaje ni
-  // datos personales. Mira los últimos 2 mensajes de usuario (regla 5).
+  // datos personales. Mira los últimos 5 mensajes de usuario (regla 5,
+  // corrección R4: todo el historial que recibe el filtro).
   if (v01DisparaEnHistorial(history)) {
     console.log("[jefq] filter_triggered: v01_premise");
     return new Response(JSON.stringify({ reply: V01_SAFE_REPLY }), {
