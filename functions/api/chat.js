@@ -129,7 +129,9 @@ function toAiMessages(messages) {
 // corrección R4 2026-11-19, filtro v5, según la lista (e) consolidada A–G
 // del cierre NO-GO definitivo del PIR-1 R4, verificada por Pax;
 // corrección R5 2026-11-19, filtro v6, según la lista (e) consolidada A–H
-// del cierre NO-GO del PIR-1 R5, verificada por Pax).
+// del cierre NO-GO del PIR-1 R5, verificada por Pax;
+// corrección R6 2026-11-19, filtro v7, según la lista (e) consolidada A–F
+// del cierre NO-GO del PIR-1 R6, verificada por Pax).
 // Impide que el chatbot confirme como verdaderos acuerdos comerciales previos
 // no verificables (precios especiales, descuentos, promociones, acuerdos,
 // colaboraciones, contratos, pagos, clientes, compromisos, conversaciones
@@ -713,33 +715,98 @@ const V01_RE_MONTO = v01Patron(V01_SENAL_MONTO);
 // ayer?» también es una premisa. El presente («me dan») NO entra: «¿Me dan
 // el precio del Diagnóstico Esencial?» sigue sin disparar. La forma
 // «X que Y» («el precio que me respetaron») la cubre la regla 1c.
+// Colas compartidas de las reglas 1d/1e/1f (corrección R6, lista (e) B):
+// complemento de ATRIBUCIÓN al visitante tras el objeto («para nuestro
+// grupo», «para mi empresa», «de mi empresa», «para nosotros», «para
+// mí»). En el PIR-1 R6, GPT demostró que las reglas 1d/1e anclaban a
+// fin de mensaje y que cualquier complemento posterior rompía la
+// detección, aunque el complemento ATRIBUYERA la condición al propio
+// visitante (B-1, B-2). La cola solo admite atribución expresa: NO
+// admite complementos de la oferta pública («del Diagnóstico
+// Esencial», «para clientes nuevos», «para empresas», «para otra
+// empresa»), que siguen rompiendo el anclaje y yendo al modelo. La
+// cola temporal es la misma lista que la regla 1d ya admitía en v6.
+const V01_COLA_ATRIBUCION = "(?:(?:para|de) (?:mi|nuestro|nuestra)(?: (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme))?|para (?:nosotros|nosotras))";
+const V01_COLA_TEMPORAL = "(?:ayer|la semana pasada|el mes pasado|el ano pasado|la vez pasada|la ultima vez|de ayer|de la semana pasada|del mes pasado|del ano pasado|de la vez pasada|de la ultima vez|de la llamada)";
 const V01_VERBOS_CONCESION_MONTO = ["dieron", "dio", "diste", "ofrecieron", "ofreciste", "prometieron", "prometiste", "aprobaron", "aprobaste", "asignaron", "asignaste", "concedieron", "concediste", "negociaron", "negociaste", "confirmaron", "confirmaste", "pasaron", "pasaste", "cotizaron", "cotizaste", "contaron", "contaste", "dijeron", "dijiste", "hicieron", "hiciste", "hizo", "respetaron", "respeto", "respetaste", "han respetado", "has respetado", "han dado", "has dado", "han ofrecido", "has ofrecido", "han prometido", "has prometido", "han aprobado", "has aprobado", "han asignado", "has asignado", "han concedido", "has concedido", "han confirmado", "has confirmado"];
-const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERBOS_CONCESION_MONTO.join("|")}) (?:el|la|los|las) (?:precio|precios|tarifa|tarifas|condicion|condiciones|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: (?:ayer|la semana pasada|el mes pasado|el ano pasado|la vez pasada|la ultima vez|de ayer|de la semana pasada|del mes pasado|del ano pasado|de la vez pasada|de la ultima vez|de la llamada))?\\s*(?:por favor)?\\s*$`);
+const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERBOS_CONCESION_MONTO.join("|")}) (?:el|la|los|las) (?:precio|precios|tarifa|tarifas|condicion|condiciones|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION})?(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // CORRECCIÓN R5 (lista (e) A, hallazgo determinante de GPT): la regla
 // 1d contempla ahora el destinatario «te» («¿Te dieron el precio?»,
 // «¿Te aprobaron el precio?», «¿Te concedieron la tarifa?») y los
 // plurales de todos los sustantivos de cantidad («¿Me dieron los
 // precios?», «¿Me asignaron las tarifas?», «¿Me concedieron las
 // condiciones?»); en v5 solo contemplaba me/nos/le/les y el singular.
+// CORRECCIÓN R6 (lista (e) B): la regla 1d admite ahora la cola de
+// atribución tras el objeto («¿Me dieron el precio para mi empresa?»
+// dispara; B-2 del PIR-1 R6). La guarda pública queda intacta: la
+// cola no admite «del Diagnóstico Esencial» ni «para clientes nuevos».
 // Regla 1e (corrección R5, lista (e) E — DEFINICIÓN ADOPTADA para la
-// 3.ª persona plural sin pronombre): verbo de concesión en 3.ª plural
-// SIN pronombre + sustantivo de cantidad + fin de mensaje. Definición
-// adoptada (la propuesta de Ultra en su (e) 1 del PIR-1 R5):
-// «¿Negociaron la tarifa?», «¿Negociaron el precio?» y «¿Concedieron
-// la condición?» SÍ son premisas previas no verificables y disparan.
-// Motivo: en el contexto del chatbot, quien pregunta así presupone que
-// la empresa negoció/concedió ESA tarifa/precio/condición (la suya);
-// dejar la forma al modelo permitía confirmar un acuerdo inexistente
-// (§8). La posición de GPT (caso pendiente de definición, no
-// fundamento de su NO-GO) queda registrada en el expediente; la
-// definición se somete al PIR-1 R6. Distinciones de la definición:
-// SIN cola temporal («¿Negociaron la tarifa ayer?» se lee como
-// pregunta por un evento pasado y NO dispara); el presente no entra
-// («¿Ofrecen tarifas?» no lleva verbo de concesión en 3.ª plural);
-// «pago» y «contrato» no están en la lista de sustantivos (como en la
-// propuesta de Ultra).
+// 3.ª persona plural sin pronombre; REVISADA en la corrección R6,
+// lista (e) C del cierre del PIR-1 R6): verbo de concesión en 3.ª
+// plural SIN pronombre + sustantivo de cantidad + fin de mensaje.
+// DEFINICIÓN REVISADA (R6): la regla NO sostiene que la ausencia de
+// pronombre demuestre que el visitante es el destinatario (objeción
+// semántica de GPT en el PIR-1 R6). Sostiene algo más estrecho y
+// delimitado: en ESTE chatbot no existe información pública sobre
+// negociaciones con terceros — los únicos precios públicos son los
+// publicados, y se preguntan en presente o con verbos de existencia
+// («¿Tienen tarifas?», «¿Ofrecen descuentos?»), no con verbos de
+// concesión en pasado —. Por tanto, una concesión pasada +
+// sustantivo de cantidad SIN ningún otro referente en el mensaje
+// (sin pronombre, sin tercero nombrado, sin complemento de
+// atribución, sin ancla temporal o de evento) no tiene en este
+// contexto otro referente disponible que el caso del propio
+// visitante: es una premisa por defecto contextual, no por
+// gramática. Delimitación operativa: (1) si el mensaje nombra otro
+// referente («a terceros», «para otra empresa», «con un cliente»)
+// o ancla el hecho en el tiempo («ayer», «la semana pasada», «en
+// 2024»), la forma SALE de la regla y va al modelo como pregunta
+// por un evento: la cola temporal sigue sin admitirse en la forma
+// escueta; (2) si el mensaje lleva atribución expresa al visitante
+// (cola de atribución, punto B), la atribución ya no depende del
+// defecto contextual y la forma dispara AUNQUE lleve cola temporal
+// («¿Negociaron la tarifa para nuestro grupo ayer?» dispara). Por
+// eso la regla 1d (con «me/te», atribución gramatical) siempre
+// admitió cola temporal y la 1e solo la admite tras la cola de
+// atribución. El presente no entra («¿Ofrecen tarifas?» no lleva
+// verbo de concesión en 3.ª plural); «pago» y «contrato» no están
+// en la lista de sustantivos (como en la propuesta de Ultra). La
+// definición revisada se somete al PIR-1 R7.
 const V01_VERBOS_TERCERA_PLURAL_MONTO = ["dieron", "dijeron", "ofrecieron", "prometieron", "confirmaron", "hicieron", "pasaron", "cotizaron", "contaron", "negociaron", "aprobaron", "asignaron", "concedieron", "respetaron"];
-const V01_RE_TERCERA_PLURAL_MONTO = new RegExp(`\\b(?:${V01_VERBOS_TERCERA_PLURAL_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?\\s*(?:por favor)?\\s*$`);
+const V01_RE_TERCERA_PLURAL_MONTO = new RegExp(`\\b(?:${V01_VERBOS_TERCERA_PLURAL_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?)?\\s*(?:por favor)?\\s*$`);
+// Regla 1f (corrección R6, lista (e) A — impersonales con «se»):
+// «se» + verbo de concesión en pasado (3.ª singular o plural, o
+// «había/habían» + participio) + sustantivo de cantidad + fin de
+// mensaje, con la misma cola de atribución de las reglas 1d/1e.
+// GPT en el PIR-1 R6 (problema A): la pasiva con «se» solo estaba
+// cubierta tras «que» (regla 1c); la construcción impersonal
+// independiente («¿Se concedió una tarifa?», «¿Se negoció una
+// tarifa?») atravesaba el filtro. Es la misma voz gramatical sin
+// destinatario expreso: se rige por la definición contextual de la
+// regla 1e (sin otro referente en el mensaje, la concesión pasada
+// solo puede referirse al caso del visitante). Guardas: los verbos
+// son SOLO los de concesión en pasado — «se ofrece»/«se ofrecen»
+// (presente, oferta vigente) y «se publicó»/«se actualizó» (verbos
+// ajenos a la concesión) NO casan y siguen al modelo —; y la cola
+// pública («del Diagnóstico Esencial») sigue rompiendo el anclaje.
+const V01_SE_CONCESION_FINITO = ["concedio", "concedieron", "negocio", "negociaron", "aprobo", "aprobaron", "asigno", "asignaron", "respeto", "respetaron", "ofrecio", "ofrecieron", "prometio", "prometieron", "dio", "dieron", "confirmo", "confirmaron", "cotizo", "cotizaron", "pacto", "pactaron", "acordo", "acordaron"];
+const V01_SE_CONCESION_PARTICIPIO = ["concedido", "negociado", "aprobado", "asignado", "respetado", "ofrecido", "prometido", "dado", "confirmado", "cotizado", "pactado", "acordado"];
+const V01_RE_SE_IMPERSONAL = new RegExp(`\\bse (?:(?:${V01_SE_CONCESION_FINITO.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?)?\\s*(?:por favor)?\\s*$`);
+// Atribución expresa al visitante (corrección R6, lista (e) D):
+// posesivo o complemento que ata la condición al propio visitante,
+// a su grupo o a su empresa («para nuestro grupo», «para mi
+// empresa», «de mi empresa», «nuestro grupo», «mi tarifa»). NO es
+// atribución el segmento público sin posesivo («para empresas»,
+// «para grupos», «para clientes nuevos») ni el tercero («a
+// terceros», «para otra empresa»).
+const V01_RE_ATRIBUCION = /\b(?:(?:para|de) (?:mi|nuestro|nuestra)(?: (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme))?|para (?:nosotros|nosotras)|(?:mi|mis|nuestro|nuestra|nuestros|nuestras) (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme)|(?:mi|mis|nuestro|nuestra|nuestros|nuestras) (?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios))\b/;
+// Regla 2c (corrección R6, lista (e) D): la forma escueta anclada
+// «(artículo) + objeto negociado/concedido/preferencial +
+// complemento de atribución» y nada más: «¿La tarifa negociada
+// para nuestro grupo?» presupone la condición atribuida aunque no
+// lleve verbo de continuidad. Sin posesivo («¿La tarifa negociada
+// para empresas?») NO dispara.
+const V01_RE_OBJETO_NEGOCIADO_ATRIBUIDO = new RegExp(`^(?:(?:el|la|los|las) )?(?:${V01_OBJETOS_CONFIRMA_NEGOCIADO.join("|")}) (?:(?:para|de) (?:mi|nuestro|nuestra) (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme)|para (?:mi|nosotros|nosotras))\\s*(?:por favor)?\\s*$`);
 // Regla 4, excepción documento (corrección R4, lista (e) D, L3): «¿Lo que
 // me dijiste sigue en el informe?» pregunta por el contenido de un
 // documento, no por una condición comercial. La continuidad seguida de
@@ -769,7 +836,7 @@ const V01_RE_SIGUE_ACUERDO_1 = new RegExp(`\\b(?:sigue|siga|siguen|sigan)\\s+(?:
 const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUSTANTIVOS_ACUERDO.join("|")})\\s+(?:sigue|siga|siguen|sigan)\\s+(?:vigente|activo|activa|en pie|igual)?\\s*$`);
 
 // Determinista: el mismo mensaje produce siempre el mismo resultado.
-// Reglas (OR) — corrección R5 (2026-11-19, filtro v6):
+// Reglas (OR) — corrección R6 (2026-11-19, filtro v7):
 //  1. A_FUERTE (verbal) + B (cualquier objeto, incluido «pago/cliente/oferta»)
 //  1b. A_TEMPORAL + B, solo con continuidad («sigue», «vigente», «todavía»,
 //      «vale»...) o con el objeto vinculado por «de» («el descuento de
@@ -785,14 +852,29 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      respetaron el precio»: dar, ofrecer, prometer, aprobar, asignar,
 //      conceder, negociar, confirmar, pasar, cotizar, contar, decir,
 //      hacer, respetar; con y sin auxiliar; cola temporal opcional;
-//      R5: + destinatario «te» y plurales de cantidad)
+//      R5: + destinatario «te» y plurales de cantidad; R6: + cola de
+//      atribución tras el objeto («para mi empresa»))
 //  1e. Concesión en 3.ª plural SIN pronombre + sustantivo de cantidad +
-//      fin de mensaje, SIN cola temporal («¿Negociaron la tarifa?»;
-//      corrección R5, lista (e) E: definición adoptada — propuesta de
-//      Ultra; «¿Negociaron la tarifa ayer?» NO dispara: evento pasado)
+//      fin de mensaje («¿Negociaron la tarifa?»; corrección R5, lista
+//      (e) E: definición adoptada — propuesta de Ultra; REVISADA en R6,
+//      lista (e) C: premisa por defecto contextual — sin ningún otro
+//      referente en el mensaje —; la cola temporal solo se admite tras
+//      cola de atribución; «¿Negociaron la tarifa ayer?» NO dispara:
+//      evento pasado sin atribución)
+//  1f. Impersonal con «se» + verbo de concesión en pasado + sustantivo
+//      de cantidad + fin de mensaje («¿Se concedió una tarifa?»; R6,
+//      lista (e) A; «se ofrece»/«se publicó» NO casan)
 //  2. A_DEBIL + B_FUERTE (verbo de continuidad + objeto específico;
 //      R5: las formas negociado/concedido/preferencial ya NO están en
 //      B_FUERTE: la forma escueta con solo continuidad no dispara)
+//  2b. Objeto negociado/concedido/preferencial + atribución expresa +
+//      continuidad fuerte («¿La tarifa negociada para nuestro grupo
+//      sigue vigente?»; R6, lista (e) D: resolución del punto D sin
+//      reintroducir el FP público — la forma escueta SIN atribución
+//      sigue yendo al modelo)
+//  2c. Forma escueta anclada: objeto negociado/concedido/preferencial
+//      + complemento de atribución y nada más («¿La tarifa negociada
+//      para nuestro grupo?»; R6, lista (e) D)
 //  3. D_A + D_B («el mismo precio...» + marcador previo estrecho;
 //      D_A incluye ahora «me/nos das/dan/da» para L1)
 //  4. C_FUERTE, o C_DEBIL + CONTINUIDAD_FUERTE (referencia previa sin
@@ -821,7 +903,10 @@ function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   if (V01_RE_X_QUE.test(n)) return true;
   if (V01_RE_CONCESION_MONTO.test(n)) return true;
   if (V01_RE_TERCERA_PLURAL_MONTO.test(n)) return true;
+  if (V01_RE_SE_IMPERSONAL.test(n)) return true;
   if (V01_RE_A_DEBIL.test(n) && V01_RE_B_FUERTE.test(n)) return true;
+  if (V01_RE_OBJETOS_CONFIRMA_NEGOCIADO.test(n) && V01_RE_ATRIBUCION.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n)) return true;
+  if (V01_RE_OBJETO_NEGOCIADO_ATRIBUIDO.test(n)) return true;
   if (V01_RE_D_A.test(n) && V01_RE_D_B.test(n)) return true;
   if (V01_RE_C_FUERTE.test(n)) return true;
   if (V01_RE_C_DEBIL.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n) && !(V01_RE_CONTINUIDAD_EN_DOCUMENTO.test(n) && !V01_RE_B.test(n) && !V01_RE_MONTO.test(n))) return true;
