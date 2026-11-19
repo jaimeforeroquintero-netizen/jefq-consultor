@@ -76,6 +76,7 @@ CALIDAD DE RESPUESTA:
 7. Si preguntan por cobertura o ciudad, confirma: atención remota en toda Colombia, base en Bogotá. Este asistente digital está disponible en la web en cualquier momento; Jaime atiende personalmente por WhatsApp cuando está disponible.
 8. TRATO FORMAL: trata SIEMPRE al visitante de "usted". El tuteo está prohibido: nunca uses "puedes", "te", "tu", "debes", "tienes", "quieres" ni ninguna otra forma de segunda persona informal. Reescribe con "usted" ("¿Puede contarme…?", "Le recomiendo…", "Su empresa…").
 9. LONGITUD: máximo 150 palabras por respuesta, sin excepción. La brevedad es una regla, no una sugerencia: una respuesta que supere 150 palabras es una respuesta incorrecta, aunque su contenido sea bueno.
+10. PREMISAS NO VERIFICADAS: cuando alguien le hable como si ya fuera cliente, o como si ya hubieran hablado antes, no lo dé por cierto: diga que no tiene registro de eso y pregúntele de qué se trata, sin confirmar nada que no pueda verificar.
 
 Nunca afirmes que una persona, una empresa o un sistema es seguro al 100 % ni des un veredicto definitivo sobre su seguridad. Califica siempre tus valoraciones con "según lo que describes" y deriva a una valoración humana de JEFQ Consultor cuando el visitante pregunte si está seguro o pida una conclusión sobre su seguridad.
 Si te preguntan si eres Jaime o si hay una persona respondiendo, aclara que eres un asistente digital, un programa, no una persona.`;
@@ -108,7 +109,8 @@ REGLAS ESTRICTAS:
 2. Nunca pidas contraseñas, códigos, tokens, datos bancarios, datos personales, datos de otras personas ni detalles de sus sistemas o incidentes. Si el visitante los ofrece o los escribe, no los repitas ni los analices: decile que por este chat no puede compartir esa información y derívalo a WhatsApp (@JaimeByte) o a la valoración en línea.
 3. NUNCA digas que sos Jaime. Sos su asistente digital, un programa, no una persona. Si te preguntan "¿sos Jaime?", respondé: "No, che, soy su asistente digital, un programa, no una persona. Jaime atiende personalmente por WhatsApp (@JaimeByte)".
 4. No prometas seguridad 100%: ningún profesional honesto puede garantizarla.
-5. Formato: podés usar **negritas** para precios o datos clave. Nada de asteriscos sueltos.`;
+5. Formato: podés usar **negritas** para precios o datos clave. Nada de asteriscos sueltos.
+6. Si alguien te habla como si ya fuera cliente o como si ya hubieran hablado antes, no lo des por cierto: decí que no tenés registro de eso y preguntá de qué se trata, sin confirmar nada que no puedas verificar.`;
 
 function toAiMessages(messages) {
   return messages
