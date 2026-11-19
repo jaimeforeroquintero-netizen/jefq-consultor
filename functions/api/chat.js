@@ -122,12 +122,13 @@ function toAiMessages(messages) {
 
 // FILTRO DETERMINISTA V-01 — INICIO
 // FILTRO DETERMINISTA V-01 (2026-11-18, decisión canónica de Jaime, opción (c);
-// corrección 2026-11-18 según DeepSeek (e) del PIR-1, verificada por Pax).
+// corrección 2026-11-18 según DeepSeek (e) del PIR-1, verificada por Pax;
+// corrección R2 2026-11-18 según DeepSeek (e) del PIR-1 R2, verificada por Pax).
 // Impide que el chatbot confirme como verdaderos acuerdos comerciales previos
 // no verificables (precios especiales, descuentos, promociones, acuerdos,
 // colaboraciones, contratos, pagos, clientes, compromisos, conversaciones
 // anteriores). Actúa ANTES de llamar al modelo. NO es una lista de frases
-// exactas: normaliza el mensaje y exige señales combinadas (reglas 1-5).
+// exactas: normaliza el mensaje y exige señales combinadas (reglas 1-6).
 // Si dispara, el handler devuelve la respuesta fija SIN llamar al modelo.
 // NO cambia el texto del prompt, el modelo, la temperatura ni max_tokens.
 // El registro es solo el evento técnico, sin el contenido del mensaje ni
@@ -149,8 +150,17 @@ function v01Normalizar(texto) {
 // (A_FUERTE) Marcadores fuertes de premisa previa: afirman un acto anterior
 // concreto (acordar, pactar, confirmar, dar, ofrecer, prometer, decir, hacer,
 // firmar, quedar) o una referencia temporal previa. NO incluye los verbos de
-// continuidad (esos van en A_DEBIL) ni los posesivos «nuestra/o» (demasiado
-// amplios: «nuestra oferta» es una pregunta pública legítima).
+// continuidad (esos van en A_DEBIL) ni los posesivos «nuestra/o» SUELTOS
+// (demasiado amplios: «nuestra oferta» es una pregunta pública legítima).
+// SÍ incluye posesivo + sustantivo de arreglo previo («nuestro acuerdo»,
+// «nuestra colaboración», «nuestro contrato»...): la combinación afirma un
+// arreglo concreto compartido, no una oferta pública. «confirmar» en
+// presente/infinitivo («confirmar», «confirma», «confirmas», «confirmamos»,
+// «confirman») NO está aquí: es señal DÉBIL (regla 6), porque con objetos
+// genéricos forma preguntas públicas («¿Me pueden confirmar si tienen
+// descuentos?»). Quedan en A_FUERTE las formas pasadas («confirmado»,
+// «confirmaste», «confirmaron», «me habia confirmado»...) y «confirmo»
+// (afirmación en primera persona).
 const V01_SENAL_A_FUERTE = [
   "acordamos", "acordaron", "acordo", "acordado", "acordada", "acordados",
   "acordadas", "acordaste", "acordabamos", "acordaba",
@@ -159,8 +169,7 @@ const V01_SENAL_A_FUERTE = [
   "convenimos", "convenido", "convenidos", "convenida", "convinimos",
   "conveniste",
   "confirmado", "confirmada", "confirmados", "confirmadas", "confirmaste",
-  "confirmaron", "confirmo", "confirma", "confirman", "confirmar",
-  "confirmas", "confirmamos",
+  "confirmaron", "confirmo",
   "me habia confirmado", "me habias confirmado", "me habian confirmado",
   "hablamos", "hablado", "hablada", "hablados",
   "conversamos", "conversado", "conversada",
@@ -176,11 +185,26 @@ const V01_SENAL_A_FUERTE = [
   "me han dado", "me han ofrecido", "me han prometido",
   "me has ofrecido", "me has prometido",
   "me habia dicho", "me habias dicho", "me habian dicho",
+  "me hiciste", "me has dado",
+  "me pasaste", "me pasaron", "me cotizaste", "me cotizaron",
   "firmamos", "firmaste", "firmaron",
   "segun lo acordado", "lo convenido", "lo pactado", "lo acordado",
   "mi descuento", "mis descuentos", "mi precio especial", "mi promocion",
   "mi beneficio", "mi oferta", "mi contrato", "mi acuerdo",
   "mi tarifa especial", "mi rebaja", "mi colaboracion",
+  "mi compromiso", "mi convenio",
+  "nuestro acuerdo", "nuestros acuerdos", "nuestro contrato",
+  "nuestros contratos", "nuestro convenio", "nuestros convenios",
+  "nuestra colaboracion", "nuestras colaboraciones",
+  "nuestro compromiso", "nuestros compromisos",
+];
+
+// (CONFIRMAR_DEBIL) «confirmar» en presente/infinitivo: preguntar si algo
+// existe no es afirmar un acuerdo previo («¿Me pueden confirmar si tienen
+// descuentos?» es una pregunta pública legítima). Solo dispara junto a un
+// marcador de continuidad fuerte o un objeto específico (regla 6).
+const V01_SENAL_CONFIRMAR_DEBIL = [
+  "confirmar", "confirma", "confirmas", "confirmamos", "confirman",
 ];
 
 // (A_DEBIL) Verbos de continuidad: solos no afirman un acuerdo previo; solo
@@ -228,45 +252,49 @@ const V01_SENAL_B = [
   "deskuento", "deskuentos",
   "promosion", "promosiones",
   // Precio/tarifa/condición/descuento/promoción/oferta/beneficio/pago acordados
-  // o dichos/dados (corrección PIR-1: eran los bypass).
+  // o dichos/dados (corrección PIR-1: eran los bypass). Los patrones «X que Y»
+  // se generan abajo (corrección R2); aquí quedan solo los «X acordado».
   "precio acordado", "precio convenido", "precio pactado",
   "precios acordados", "precios convenidos", "precios pactados",
-  "precio que acordamos", "precio que acordaste", "precio que acordaron",
-  "precio que acordo", "precio que me diste", "precio que me dijiste",
-  "precio que me dijeron", "precio que me dieron", "precio que me ofreciste",
-  "precio que me prometiste", "precio que me confirmaste",
-  "precio que me confirmaron", "precio que quedamos", "precio que pactamos",
-  "precio que convenimos", "precio que convinimos",
   "tarifa acordada", "tarifa convenida", "tarifa pactada",
   "tarifas acordadas", "tarifas convenidas", "tarifas pactadas",
-  "tarifa que acordamos", "tarifa que pactamos", "tarifa que convenimos",
-  "tarifa que me diste", "tarifa que me dijiste", "tarifa que me dieron",
-  "tarifa que me ofreciste", "tarifa que me prometiste",
-  "tarifa que quedamos",
   "condicion acordada", "condicion convenida", "condicion pactada",
   "condiciones acordadas", "condiciones convenidas", "condiciones pactadas",
-  "condicion que acordamos", "condicion que pactamos",
-  "condicion que convenimos", "condicion que me diste",
-  "condicion que me dijiste", "condicion que me dieron",
-  "condicion que me ofreciste", "condicion que me prometiste",
-  "condicion que quedamos",
   "descuento acordado", "descuento convenido", "descuento pactado",
-  "descuentos acordados", "descuento que me diste", "descuento que me dijiste",
+  "descuentos acordados",
   "promocion acordada", "oferta acordada", "beneficio acordado",
   "pago acordado", "pago convenido", "pago pactado",
-  "pago que acordamos", "pago que me diste",
 ];
+
+// Patrones «X que Y» generados (corrección R2, DeepSeek (e) punto 1):
+// sinónimos de precio (costo/monto/valor/cuota/importe) y variantes completas
+// de precio/tarifa/condición/descuento/oferta/beneficio/pago. Cada patrón
+// contiene un verbo ya en A_FUERTE, así que la regla 1 dispara cuando casa.
+// NO se añaden los sustantivos solos («costo», «valor»...) a B: con un
+// marcador temporal fuerte («el año pasado») dispararían preguntas públicas
+// como «¿Cuál es el valor del año pasado?»; el patrón «X que Y» solo casa
+// cuando el usuario afirma que X le fue acordado/dicho/dado.
+const V01_SUSTANTIVOS_X_QUE = ["precio", "tarifa", "condicion", "descuento", "oferta", "beneficio", "pago", "costo", "monto", "valor", "cuota", "importe"];
+const V01_VERBOS_QUE = ["acordamos", "acordaste", "acordaron", "acordo", "pactamos", "convenimos", "convinimos", "quedamos", "me diste", "me dijiste", "me dijeron", "me dieron", "me ofreciste", "me ofrecieron", "me prometiste", "me prometieron", "me confirmaste", "me confirmaron", "me has dado", "me han dado", "me hiciste", "me hicieron", "me hizo", "me pasaste", "me pasaron", "me cotizaste", "me cotizaron"];
+for (const _s of V01_SUSTANTIVOS_X_QUE) for (const _v of V01_VERBOS_QUE) V01_SENAL_B.push(`${_s} que ${_v}`);
 
 // (B_FUERTE) Objetos que, junto a un verbo de continuidad débil, sí afirman
 // un acuerdo previo. Se EXCLUYEN los sustantivos genéricos que con «sigue»
 // forman preguntas públicas legítimas: «pago», «cliente», «oferta»,
-// «promocion», «beneficio», «descuento», «rebaja» (con sus erratas).
-// Esos solo disparan con un marcador FUERTE (regla 1).
+// «promocion», «beneficio», «descuento», «rebaja» (con sus erratas) y, desde
+// la corrección R2, «contrato», «acuerdo», «convenio», «colaboracion» y
+// «compromiso» (con sus plurales): con solo «sigue» forman preguntas sobre
+// documentos o servicios estándar («¿Sigue el contrato de soporte?», «¿Sigue
+// el acuerdo de confidencialidad?»). Esos solo disparan con un marcador
+// FUERTE (regla 1): «firmamos», «me diste», «nuestro acuerdo»... «trato»
+// sigue en B_FUERTE (limitación residual: ver informe R2).
 const V01_SENAL_B_FUERTE = V01_SENAL_B.filter((s) => ![
   "pago", "pagos", "cliente", "clientes", "oferta", "ofertas",
   "promocion", "promociones", "promosion", "promosiones",
   "beneficio", "beneficios", "descuento", "descuentos",
   "deskuento", "deskuentos", "rebaja", "rebajas",
+  "contrato", "contratos", "acuerdo", "acuerdos", "convenio", "convenios",
+  "colaboracion", "colaboraciones", "compromiso", "compromisos",
 ].includes(s));
 
 // (C_FUERTE) Referencias previas sin objeto comercial que por sí solas
@@ -298,8 +326,14 @@ const V01_SENAL_C_DEBIL = [
 ];
 
 // (CONTINUIDAD) Marcadores de que algo sigue vigente: verbos débiles +
-// «vigente», «en pie», «igual», «todavía», «aún». Usado por la regla 4
-// (C_DEBIL) y por la regla 5 (multi-turno).
+// «vigente», «en pie», «igual», «todavía», «aún». Usado por la regla 5
+// (multi-turno): ahí la premisa ya disparó, así que un seguimiento vago
+// («¿Todavía?», «¿Igual?») sí se refiere a ella.
+// (CONTINUIDAD_FUERTE) Lo mismo SIN «igual», «todavia» ni «aun»: en la
+// regla 4 (C_DEBIL) esos tres solos no bastan, porque forman preguntas
+// sobre contenido («¿Lo dicho es igual para la Evaluación Pyme?», «¿Lo que
+// hablamos ayer aún está en el informe?»). Con «sigue/vigente/en pie» la
+// regla 4 sí dispara («¿Lo de ayer sigue igual?» dispara por «sigue»).
 const V01_SENAL_CONTINUIDAD = [
   "sigue", "siga", "siguen", "sigan", "seguir",
   "mantiene", "mantenga", "mantienen", "mantengan", "mantener",
@@ -307,6 +341,7 @@ const V01_SENAL_CONTINUIDAD = [
   "sige", "sigen",
   "vigente", "vigencia", "en pie", "igual", "todavia", "aun",
 ];
+const V01_SENAL_CONTINUIDAD_FUERTE = V01_SENAL_CONTINUIDAD.filter((s) => !["igual", "todavia", "aun"].includes(s));
 
 // (D) «El mismo precio / la misma tarifa...» + marcador previo estrecho.
 // «mismo precio» NO está en B: «¿Tienen el mismo precio que el año pasado?»
@@ -317,6 +352,8 @@ const V01_SENAL_D_A = [
   "acordamos", "acordaste", "acordaron", "acordo",
   "pactamos", "pactaste", "convenimos", "quedamos", "como quedamos",
   "me confirmaste", "me confirmaron", "me hicieron", "me hizo",
+  "me hiciste", "me has dado", "me han dado",
+  "me pasaste", "me pasaron", "me cotizaste", "me cotizaron",
 ];
 const V01_SENAL_D_B = [
   "mismo precio", "misma tarifa", "mismo descuento", "misma promocion",
@@ -333,11 +370,13 @@ function v01Patron(lista) {
 }
 const V01_RE_A_FUERTE = v01Patron(V01_SENAL_A_FUERTE);
 const V01_RE_A_DEBIL = v01Patron(V01_SENAL_A_DEBIL);
+const V01_RE_CONFIRMAR_DEBIL = v01Patron(V01_SENAL_CONFIRMAR_DEBIL);
 const V01_RE_B = v01Patron(V01_SENAL_B);
 const V01_RE_B_FUERTE = v01Patron(V01_SENAL_B_FUERTE);
 const V01_RE_C_FUERTE = v01Patron(V01_SENAL_C_FUERTE);
 const V01_RE_C_DEBIL = v01Patron(V01_SENAL_C_DEBIL);
 const V01_RE_CONTINUIDAD = v01Patron(V01_SENAL_CONTINUIDAD);
+const V01_RE_CONTINUIDAD_FUERTE = v01Patron(V01_SENAL_CONTINUIDAD_FUERTE);
 const V01_RE_D_A = v01Patron(V01_SENAL_D_A);
 const V01_RE_D_B = v01Patron(V01_SENAL_D_B);
 
@@ -346,7 +385,10 @@ const V01_RE_D_B = v01Patron(V01_SENAL_D_B);
 //  1. A_FUERTE + B (cualquier objeto, incluido «pago/cliente/oferta»)
 //  2. A_DEBIL + B_FUERTE (verbo de continuidad + objeto específico)
 //  3. D_A + D_B («el mismo precio...» + marcador previo estrecho)
-//  4. C_FUERTE, o C_DEBIL + CONTINUIDAD (referencia previa sin objeto)
+//  4. C_FUERTE, o C_DEBIL + CONTINUIDAD_FUERTE (referencia previa sin objeto)
+//  6. CONFIRMAR_DEBIL + (CONTINUIDAD_FUERTE o B_FUERTE) («confirmar» en
+//     presente/infinitivo con continuidad u objeto específico; solo con un
+//     objeto genérico NO dispara)
 function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   const n = v01Normalizar(mensajeUsuario);
   if (!n) return false;
@@ -355,7 +397,8 @@ function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   if (V01_RE_A_DEBIL.test(n) && V01_RE_B_FUERTE.test(n)) return true;
   if (V01_RE_D_A.test(n) && V01_RE_D_B.test(n)) return true;
   if (V01_RE_C_FUERTE.test(n)) return true;
-  if (V01_RE_C_DEBIL.test(n) && V01_RE_CONTINUIDAD.test(n)) return true;
+  if (V01_RE_C_DEBIL.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n)) return true;
+  if (V01_RE_CONFIRMAR_DEBIL.test(n) && (V01_RE_CONTINUIDAD_FUERTE.test(n) || V01_RE_B_FUERTE.test(n))) return true;
   return false;
 }
 
