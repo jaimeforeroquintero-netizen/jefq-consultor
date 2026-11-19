@@ -120,6 +120,108 @@ function toAiMessages(messages) {
     }));
 }
 
+// FILTRO DETERMINISTA V-01 (2026-11-18, decisión canónica de Jaime, opción (c)).
+// Impide que el chatbot confirme como verdaderos acuerdos comerciales previos
+// no verificables (precios especiales, descuentos, promociones, acuerdos,
+// colaboraciones, contratos, pagos, clientes, compromisos, conversaciones
+// anteriores). Actúa ANTES de llamar al modelo. NO es una lista de frases
+// exactas: normaliza el mensaje y exige DOS señales juntas:
+//   (A) un marcador de premisa previa  Y  (B) un objeto comercial.
+// Si dispara, el handler devuelve la respuesta fija SIN llamar al modelo.
+// NO cambia el texto del prompt, el modelo, la temperatura ni max_tokens.
+// El registro es solo el evento técnico, sin el contenido del mensaje ni
+// datos personales.
+const V01_SAFE_REPLY = "No tengo un registro verificable de ese acuerdo, descuento o condición especial. Para confirmarlo, por favor comuníquese directamente con JEFQ Consultor.";
+
+// Normalización determinista: minúsculas, sin tildes, puntuación a espacios,
+// espacios colapsados. Conserva los límites de palabra.
+function v01Normalizar(texto) {
+  return (texto || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// (A) Marcadores de premisa previa (formas normalizadas, sin tildes).
+// Raíces verbales en sus formas: NO el sustantivo "acuerdo" solo, para no
+// disparar con "estoy de acuerdo" (que no afirma un acuerdo previo).
+const V01_SENAL_A = [
+  "acordamos", "acordaron", "acordo", "acordado", "acordada", "acordados",
+  "acordadas", "acordaste", "acordabamos", "acordaba",
+  "pactamos", "pactado", "pactada", "pactados", "pactadas", "pactaron",
+  "pactaste", "pacte",
+  "convenimos", "convenido", "convenidos", "convenida", "convinimos",
+  "conveniste",
+  "confirmado", "confirmada", "confirmados", "confirmadas", "confirmaste",
+  "confirmaron", "confirmo", "confirma", "confirman", "confirmar",
+  "confirmas", "confirmamos",
+  "me habia confirmado", "me habias confirmado",
+  "hablamos", "hablado", "hablada", "hablados",
+  "conversamos", "conversado", "conversada",
+  "llamada", "llamadas", "llamado", "llamados",
+  "ayer", "el ano pasado", "la semana pasada", "el mes pasado",
+  "la vez pasada", "la ultima vez",
+  "sigue", "siga", "siguen", "sigan", "seguir",
+  "mantiene", "mantenga", "mantienen", "mantengan", "mantener",
+  "continua", "continue", "continuan", "continuen", "continuar",
+  "quedamos", "quede", "quedaste", "quedaron", "como quedamos",
+  "habiamos", "habias",
+  "me diste", "me dieron", "me ofreciste", "me prometiste",
+  "me dijiste", "me dijeron",
+  "segun lo acordado", "lo convenido", "lo pactado", "lo acordado",
+  "nuestra", "nuestro", "nuestras", "nuestros",
+  "mi descuento", "mis descuentos", "mi precio especial", "mi promocion",
+  "mi beneficio", "mi oferta", "mi contrato", "mi acuerdo",
+  "mi tarifa especial", "mi rebaja", "mi colaboracion",
+  "sige", "sigen",
+];
+
+// (B) Objetos comerciales (formas normalizadas, sin tildes).
+// "precio" solo NO es objeto (el precio público es información verificable);
+// solo "precio especial". "condicion" solo tampoco; solo "condicion especial".
+// "acordado/pactado/convenido" como objeto: el acuerdo mismo.
+const V01_SENAL_B = [
+  "precio especial", "precios especiales",
+  "descuento", "descuentos",
+  "promocion", "promociones",
+  "colaboracion", "colaboraciones",
+  "contrato", "contratos",
+  "pago", "pagos",
+  "cliente", "clientes",
+  "compromiso", "compromisos",
+  "condicion especial", "condiciones especiales",
+  "beneficio", "beneficios",
+  "tarifa especial", "tarifas especiales",
+  "oferta", "ofertas",
+  "acuerdo", "acuerdos",
+  "convenio", "convenios",
+  "trato", "tratos",
+  "rebaja", "rebajas",
+  "acordado", "acordada", "acordados", "acordadas",
+  "pactado", "pactada", "pactados", "pactadas",
+  "convenido", "convenidos", "convenida",
+  "presio especial", "presios especiales",
+  "deskuento", "deskuentos",
+  "promosion", "promosiones",
+];
+
+function v01Patron(lista) {
+  const escapadas = lista.map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  return new RegExp(`\\b(?:${escapadas.join("|")})\\b`);
+}
+const V01_RE_A = v01Patron(V01_SENAL_A);
+const V01_RE_B = v01Patron(V01_SENAL_B);
+
+// Determinista: el mismo mensaje produce siempre el mismo resultado.
+function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
+  const n = v01Normalizar(mensajeUsuario);
+  if (!n) return false;
+  return V01_RE_A.test(n) && V01_RE_B.test(n);
+}
+
 
 // Límite anti-abuso: 30 peticiones por minuto por IP (ventana fija de 60s).
 // Sin Redis configurado o si Redis falla, el límite se desactiva (fail-open)
@@ -165,6 +267,18 @@ async function handler(context) {
   if (history.length === 0 || history[history.length - 1].role !== "user") {
     return new Response(JSON.stringify({ error: "bad-request" }), {
       status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  // FILTRO DETERMINISTA V-01 (2026-11-18): afirmación comercial previa no
+  // verificable. Actúa ANTES de llamar al modelo: si dispara, devuelve la
+  // respuesta fija y NO llama al modelo. Solo registra el evento técnico,
+  // sin el contenido del mensaje ni datos personales.
+  if (v01EsAfirmacionPreviaNoVerificable(history[history.length - 1].content)) {
+    console.log("[jefq] filter_triggered: v01_premise");
+    return new Response(JSON.stringify({ reply: V01_SAFE_REPLY }), {
+      status: 200,
       headers: { "Content-Type": "application/json" },
     });
   }
