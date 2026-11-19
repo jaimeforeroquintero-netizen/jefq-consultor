@@ -123,12 +123,14 @@ function toAiMessages(messages) {
 // FILTRO DETERMINISTA V-01 — INICIO
 // FILTRO DETERMINISTA V-01 (2026-11-18, decisión canónica de Jaime, opción (c);
 // corrección 2026-11-18 según DeepSeek (e) del PIR-1, verificada por Pax;
-// corrección R2 2026-11-18 según DeepSeek (e) del PIR-1 R2, verificada por Pax).
+// corrección R2 2026-11-18 según DeepSeek (e) del PIR-1 R2, verificada por Pax;
+// corrección R3 2026-11-19, filtro v4, según la lista (e) consolidada del
+// cierre NO-GO definitivo del PIR-1 R3, verificada por Pax).
 // Impide que el chatbot confirme como verdaderos acuerdos comerciales previos
 // no verificables (precios especiales, descuentos, promociones, acuerdos,
 // colaboraciones, contratos, pagos, clientes, compromisos, conversaciones
 // anteriores). Actúa ANTES de llamar al modelo. NO es una lista de frases
-// exactas: normaliza el mensaje y exige señales combinadas (reglas 1-6).
+// exactas: normaliza el mensaje y exige señales combinadas (reglas 1-7).
 // Si dispara, el handler devuelve la respuesta fija SIN llamar al modelo.
 // NO cambia el texto del prompt, el modelo, la temperatura ni max_tokens.
 // El registro es solo el evento técnico, sin el contenido del mensaje ni
@@ -149,18 +151,31 @@ function v01Normalizar(texto) {
 
 // (A_FUERTE) Marcadores fuertes de premisa previa: afirman un acto anterior
 // concreto (acordar, pactar, confirmar, dar, ofrecer, prometer, decir, hacer,
-// firmar, quedar) o una referencia temporal previa. NO incluye los verbos de
-// continuidad (esos van en A_DEBIL) ni los posesivos «nuestra/o» SUELTOS
-// (demasiado amplios: «nuestra oferta» es una pregunta pública legítima).
-// SÍ incluye posesivo + sustantivo de arreglo previo («nuestro acuerdo»,
-// «nuestra colaboración», «nuestro contrato»...): la combinación afirma un
-// arreglo concreto compartido, no una oferta pública. «confirmar» en
-// presente/infinitivo («confirmar», «confirma», «confirmas», «confirmamos»,
-// «confirman») NO está aquí: es señal DÉBIL (regla 6), porque con objetos
-// genéricos forma preguntas públicas («¿Me pueden confirmar si tienen
-// descuentos?»). Quedan en A_FUERTE las formas pasadas («confirmado»,
+// firmar, quedar, aprobar, asignar, respetar, conceder, trabajar juntos).
+// NO incluye los verbos de continuidad (esos van en A_DEBIL) ni los posesivos
+// «nuestra/o» SUELTOS (demasiado amplios: «nuestra oferta» es una pregunta
+// pública legítima). SÍ incluye posesivo + sustantivo de arreglo previo
+// («nuestro acuerdo», «nuestra colaboración», «nuestro contrato»...): la
+// combinación afirma un arreglo concreto compartido, no una oferta pública.
+// «confirmar» en presente/infinitivo («confirmar», «confirma», «confirmas»,
+// «confirmamos», «confirman») NO está aquí: es señal DÉBIL (regla 6), porque
+// con objetos genéricos forma preguntas públicas («¿Me pueden confirmar si
+// tienen descuentos?»). Quedan en A_FUERTE las formas pasadas («confirmado»,
 // «confirmaste», «confirmaron», «me habia confirmado»...) y «confirmo»
 // (afirmación en primera persona).
+// CORRECCIÓN R3 (2026-11-19): los marcadores TEMPORALES escuetos («ayer»,
+// «la llamada», «el ano pasado»...) salieron de A_FUERTE y pasaron a
+// A_TEMPORAL: solos no afirman un acto comercial previo, solo que algo
+// ocurrió antes; con un objeto genérico forman preguntas públicas (FP1, FP2:
+// «Ayer revisé su página. ¿Tienen descuentos para clientes nuevos?»). La
+// regla 1b los exige combinados con continuidad o con el objeto vinculado
+// («el descuento de ayer»). Los verbos de concesión previa («me aprobaron»,
+// «me asignaron», «me respetaron», «me/nos/le/les + dieron/ofrecieron/...»)
+// entran aquí (FN1–FN4, P1–P3). «negociamos» y «me enviaron» NO entran:
+// «¿Negociamos un descuento?» es prospectivo y «¿Me enviaron el contrato?»
+// pregunta por un envío; solo funcionan dentro de patrones «X que Y»
+// (regla 1c). «trabajamos juntos» entra por H6 #16 («Como ya trabajamos
+// juntos el año pasado...»), que en v3 solo disparaba por el temporal.
 const V01_SENAL_A_FUERTE = [
   "acordamos", "acordaron", "acordo", "acordado", "acordada", "acordados",
   "acordadas", "acordaste", "acordabamos", "acordaba",
@@ -171,11 +186,10 @@ const V01_SENAL_A_FUERTE = [
   "confirmado", "confirmada", "confirmados", "confirmadas", "confirmaste",
   "confirmaron", "confirmo",
   "me habia confirmado", "me habias confirmado", "me habian confirmado",
+  "me han confirmado",
   "hablamos", "hablado", "hablada", "hablados",
   "conversamos", "conversado", "conversada",
-  "llamada", "llamadas", "llamado", "llamados",
-  "ayer", "el ano pasado", "la semana pasada", "el mes pasado",
-  "la vez pasada", "la ultima vez",
+  "trabajamos juntos", "ya trabajamos juntos", "hemos trabajado juntos",
   "quedamos", "quede", "quedaste", "quedaron", "como quedamos",
   "habiamos", "habias",
   "me diste", "me dieron", "me dio", "me ofreciste", "me ofrecieron",
@@ -185,8 +199,23 @@ const V01_SENAL_A_FUERTE = [
   "me han dado", "me han ofrecido", "me han prometido",
   "me has ofrecido", "me has prometido",
   "me habia dicho", "me habias dicho", "me habian dicho",
+  "me has dicho", "me han dicho",
   "me hiciste", "me has dado",
   "me pasaste", "me pasaron", "me cotizaste", "me cotizaron",
+  "me aprobaron", "me aprobo", "me aprobaste", "me han aprobado",
+  "me has aprobado", "nos aprobaron",
+  "me asignaron", "me asigno", "me asignaste", "me han asignado",
+  "nos asignaron",
+  "me respetaron", "me respeto", "me respetaste", "nos respetaron",
+  "me concedieron", "me concedio", "me concediste", "nos concedieron",
+  "nos dieron", "nos dio", "nos ofrecieron", "nos prometieron",
+  "nos dijeron", "nos confirmaron", "nos hicieron", "nos han dado",
+  "nos han ofrecido", "nos pasaron", "nos cotizaron", "nos diste",
+  "nos dijiste", "nos hiciste", "nos pasaste", "nos cotizaste",
+  "le dieron", "les dieron", "le ofrecieron", "les ofrecieron",
+  "le prometieron", "les prometieron", "le confirmaron", "les confirmaron",
+  "le asignaron", "les asignaron", "le aprobaron", "les aprobaron",
+  "le concedieron", "les concedieron",
   "firmamos", "firmaste", "firmaron",
   "segun lo acordado", "lo convenido", "lo pactado", "lo acordado",
   "mi descuento", "mis descuentos", "mi precio especial", "mi promocion",
@@ -197,6 +226,18 @@ const V01_SENAL_A_FUERTE = [
   "nuestros contratos", "nuestro convenio", "nuestros convenios",
   "nuestra colaboracion", "nuestras colaboraciones",
   "nuestro compromiso", "nuestros compromisos",
+];
+
+// (A_TEMPORAL) Marcadores temporales escuetos (corrección R3): afirman solo
+// que algo ocurrió antes, no un acto comercial previo. NO disparan solos
+// con un objeto genérico (FP1, FP2). La regla 1b los exige combinados con
+// continuidad («sigue», «vigente», «todavía», «vale»...) o con el objeto
+// vinculado por «de» («el descuento de ayer», regla 1b). «la vez pasada»
+// y «la ultima vez» siguen además en D_A (regla 3).
+const V01_SENAL_A_TEMPORAL = [
+  "llamada", "llamadas", "llamado", "llamados",
+  "ayer", "el ano pasado", "la semana pasada", "el mes pasado",
+  "la vez pasada", "la ultima vez",
 ];
 
 // (CONFIRMAR_DEBIL) «confirmar» en presente/infinitivo: preguntar si algo
@@ -245,6 +286,7 @@ const V01_SENAL_B = [
   "convenio", "convenios",
   "trato", "tratos",
   "rebaja", "rebajas",
+  "cotizacion", "cotizaciones", "presupuesto", "presupuestos",
   "acordado", "acordada", "acordados", "acordadas",
   "pactado", "pactada", "pactados", "pactadas",
   "convenido", "convenidos", "convenida",
@@ -274,8 +316,8 @@ const V01_SENAL_B = [
 // marcador temporal fuerte («el año pasado») dispararían preguntas públicas
 // como «¿Cuál es el valor del año pasado?»; el patrón «X que Y» solo casa
 // cuando el usuario afirma que X le fue acordado/dicho/dado.
-const V01_SUSTANTIVOS_X_QUE = ["precio", "tarifa", "condicion", "descuento", "oferta", "beneficio", "pago", "costo", "monto", "valor", "cuota", "importe"];
-const V01_VERBOS_QUE = ["acordamos", "acordaste", "acordaron", "acordo", "pactamos", "convenimos", "convinimos", "quedamos", "me diste", "me dijiste", "me dijeron", "me dieron", "me ofreciste", "me ofrecieron", "me prometiste", "me prometieron", "me confirmaste", "me confirmaron", "me has dado", "me han dado", "me hiciste", "me hicieron", "me hizo", "me pasaste", "me pasaron", "me cotizaste", "me cotizaron"];
+const V01_SUSTANTIVOS_X_QUE = ["precio", "tarifa", "condicion", "descuento", "oferta", "beneficio", "pago", "costo", "monto", "valor", "cuota", "importe", "cotizacion", "presupuesto", "trato", "rebaja"];
+const V01_VERBOS_QUE = ["acordamos", "acordaste", "acordaron", "acordo", "pactamos", "convenimos", "convinimos", "quedamos", "me diste", "me dijiste", "me dijeron", "me dieron", "me ofreciste", "me ofrecieron", "me prometiste", "me prometieron", "me confirmaste", "me confirmaron", "me has dado", "me han dado", "me hiciste", "me hicieron", "me hizo", "me pasaste", "me pasaron", "me cotizaste", "me cotizaron", "me aprobaron", "me aprobo", "me aprobaste", "me han aprobado", "me has aprobado", "nos aprobaron", "aprobaron", "me asignaron", "me asigno", "me asignaste", "me han asignado", "nos asignaron", "asignaron", "me respetaron", "me respeto", "me respetaste", "nos respetaron", "respetaron", "negociamos", "negociaste", "negociaron", "negocio", "me enviaron", "me envio", "me enviaste", "me han enviado", "nos enviaron", "enviaron", "me concedieron", "me concedio", "me concediste", "nos concedieron", "concedieron", "nos dieron", "nos dio", "nos ofrecieron", "nos prometieron", "nos dijeron", "nos confirmaron", "nos hicieron", "nos han dado", "nos han ofrecido", "nos pasaron", "nos cotizaron", "nos diste", "nos dijiste", "nos hiciste", "nos pasaste", "nos cotizaste", "le dieron", "les dieron", "le ofrecieron", "les ofrecieron", "le prometieron", "les prometieron", "le confirmaron", "les confirmaron", "le asignaron", "les asignaron", "le aprobaron", "les aprobaron", "le enviaron", "les enviaron", "le concedieron", "les concedieron", "me contaste", "me contaron", "me has dicho", "me han dicho", "me habia dicho", "me habias dicho", "me habian dicho", "me habia confirmado", "me habias confirmado", "me habian confirmado", "me han confirmado"];
 for (const _s of V01_SUSTANTIVOS_X_QUE) for (const _v of V01_VERBOS_QUE) V01_SENAL_B.push(`${_s} que ${_v}`);
 
 // (B_FUERTE) Objetos que, junto a un verbo de continuidad débil, sí afirman
@@ -295,6 +337,7 @@ const V01_SENAL_B_FUERTE = V01_SENAL_B.filter((s) => ![
   "deskuento", "deskuentos", "rebaja", "rebajas",
   "contrato", "contratos", "acuerdo", "acuerdos", "convenio", "convenios",
   "colaboracion", "colaboraciones", "compromiso", "compromisos",
+  "cotizacion", "cotizaciones", "presupuesto", "presupuestos",
 ].includes(s));
 
 // (C_FUERTE) Referencias previas sin objeto comercial que por sí solas
@@ -323,25 +366,34 @@ const V01_SENAL_C_DEBIL = [
   "lo de ayer", "lo del otro dia", "lo de la vez pasada", "lo de la ultima vez",
   "lo de la semana pasada", "lo del mes pasado", "lo del ano pasado",
   "lo hablado", "lo conversado", "lo dicho", "lo prometido", "lo ofrecido",
+  "lo que me dijiste", "lo que me dijeron", "lo que me has dicho",
+  "lo que me han dicho", "lo que me contaste", "lo que me contaron",
 ];
 
 // (CONTINUIDAD) Marcadores de que algo sigue vigente: verbos débiles +
 // «vigente», «en pie», «igual», «todavía», «aún». Usado por la regla 5
 // (multi-turno): ahí la premisa ya disparó, así que un seguimiento vago
 // («¿Todavía?», «¿Igual?») sí se refiere a ella.
-// (CONTINUIDAD_FUERTE) Lo mismo SIN «igual», «todavia» ni «aun»: en la
-// regla 4 (C_DEBIL) esos tres solos no bastan, porque forman preguntas
-// sobre contenido («¿Lo dicho es igual para la Evaluación Pyme?», «¿Lo que
-// hablamos ayer aún está en el informe?»). Con «sigue/vigente/en pie» la
-// regla 4 sí dispara («¿Lo de ayer sigue igual?» dispara por «sigue»).
+// (CONTINUIDAD_FUERTE) Lo mismo SIN «igual», «todavia», «aun», «vale» ni
+// «valen»: en la regla 4 (C_DEBIL) esos solos no bastan, porque forman
+// preguntas sobre contenido («¿Lo dicho es igual para la Evaluación Pyme?»,
+// «¿Lo que hablamos ayer aún está en el informe?», «¿Lo dicho vale para la
+// Evaluación Pyme?»). Con «sigue/vigente/en pie» la regla 4 sí dispara
+// («¿Lo de ayer sigue igual?» dispara por «sigue»). «todavía» + «vale»
+// juntos sí cuentan, pero en la regla 4b, no aquí.
 const V01_SENAL_CONTINUIDAD = [
   "sigue", "siga", "siguen", "sigan", "seguir",
   "mantiene", "mantenga", "mantienen", "mantengan", "mantener",
   "continua", "continue", "continuan", "continuen", "continuar",
   "sige", "sigen",
   "vigente", "vigencia", "en pie", "igual", "todavia", "aun",
+  "vale", "valen",
 ];
-const V01_SENAL_CONTINUIDAD_FUERTE = V01_SENAL_CONTINUIDAD.filter((s) => !["igual", "todavia", "aun"].includes(s));
+const V01_SENAL_CONTINUIDAD_FUERTE = V01_SENAL_CONTINUIDAD.filter((s) => !["igual", "todavia", "aun", "vale", "valen"].includes(s));
+// «vale»/«valen» quedan FUERA de CONTINUIDAD_FUERTE (corrección R3): solos
+// no bastan en la regla 4 («¿Lo dicho vale para la Evaluación Pyme?» es una
+// pregunta sobre contenido y NO debe disparar); solo cuentan junto a
+// «todavía»/«aún» en la regla 4b, o como seguimiento vago en la regla 5.
 
 // (D) «El mismo precio / la misma tarifa...» + marcador previo estrecho.
 // «mismo precio» NO está en B: «¿Tienen el mismo precio que el año pasado?»
@@ -379,26 +431,110 @@ const V01_RE_CONTINUIDAD = v01Patron(V01_SENAL_CONTINUIDAD);
 const V01_RE_CONTINUIDAD_FUERTE = v01Patron(V01_SENAL_CONTINUIDAD_FUERTE);
 const V01_RE_D_A = v01Patron(V01_SENAL_D_A);
 const V01_RE_D_B = v01Patron(V01_SENAL_D_B);
+const V01_RE_A_TEMPORAL = v01Patron(V01_SENAL_A_TEMPORAL);
+// B_FUERTE sin «trato» (corrección R3, FP3/FP4): la regla 6 no debe disparar
+// por «me confirma + trato» («¿Me confirma cuál es el trato con los
+// clientes?» es una pregunta pública). «trato» SIGUE en B_FUERTE para la
+// regla 2 («¿Sigue el trato?» dispara) y en B para la regla 1.
+const V01_SENAL_B_FUERTE_SIN_TRATO = V01_SENAL_B_FUERTE.filter((s) => s !== "trato" && s !== "tratos");
+const V01_RE_B_FUERTE_SIN_TRATO = v01Patron(V01_SENAL_B_FUERTE_SIN_TRATO);
+// Patrones «X que Y» como regex compacta (corrección R3, regla 1c): el
+// producto cartesiano sustantivo × verbo se expresa como
+// (sustantivos) que (verbos), sin enumerar los ~900 patrones. Dispara sola:
+// así los verbos nuevos («negociamos», «me enviaron») funcionan dentro del
+// patrón sin entrar en A_FUERTE, donde serían falsos positivos («¿Negociamos
+// un descuento?» es prospectivo; «¿Me enviaron el contrato?» pregunta por
+// un envío).
+const V01_RE_X_QUE = new RegExp(`\\b(?:${V01_SUSTANTIVOS_X_QUE.join("|")}) que (?:${V01_VERBOS_QUE.join("|")})\\b`);
+// Objeto vinculado al temporal por «de» (corrección R3, regla 1b): «el
+// descuento de ayer», «la tarifa de la semana pasada». Solo sustantivos de
+// CONDICIÓN (descuento, promoción, oferta...), NO de cantidad (precio,
+// valor, costo...): «¿Cuál es el precio del año pasado?» es información
+// pública y NO debe disparar. Incluye «precio/tarifa/condición especial»,
+// que sí son condiciones.
+const V01_OBJETOS_DE_TEMPORAL = ["descuento", "descuentos", "promocion", "promociones", "oferta", "ofertas", "beneficio", "beneficios", "tarifa", "tarifas", "tarifa especial", "tarifas especiales", "condicion", "condiciones", "condicion especial", "condiciones especiales", "trato", "tratos", "rebaja", "rebajas", "contrato", "contratos", "acuerdo", "acuerdos", "convenio", "convenios", "colaboracion", "colaboraciones", "compromiso", "compromisos", "cotizacion", "cotizaciones", "presupuesto", "presupuestos", "precio especial", "precios especiales"];
+const V01_RE_OBJETO_DE_TEMPORAL = new RegExp(`\\b(?:${V01_OBJETOS_DE_TEMPORAL.join("|")})\\s+(?:de ayer|de la semana pasada|del mes pasado|del ano pasado|de la vez pasada|de la ultima vez|de la llamada)\\b`);
+// Sustantivos de cantidad (corrección R3, regla 1b'): «precio», «tarifa»,
+// «costo»... NO están en B (con un marcador verbal dispararían preguntas
+// públicas como «¿Me diste el precio del Diagnóstico Esencial?»), pero con
+// un temporal + continuidad («¿El precio de la semana pasada sigue
+// vigente?») la pregunta presupone un precio pasado que sigue aplicando:
+// eso sí es una condición previa no verificable.
+const V01_SENAL_MONTO = ["precio", "precios", "tarifa", "tarifas", "condicion", "condiciones", "costo", "costos", "monto", "montos", "valor", "valores", "cuota", "cuotas", "importe", "importes"];
+const V01_RE_MONTO = v01Patron(V01_SENAL_MONTO);
+// Regla 1d (corrección R3): «me/nos respetaron el precio» — el verbo
+// «respetar» en pasado con destinatario siempre presupone un precio ya
+// acordado que se honra (no es pedir un precio público: «¿Me dan el precio
+// del Diagnóstico Esencial?» no casa — «dan» no está aquí). Los sustantivos
+// de cantidad (precio, costo...) NO están en B, así que esta regla estrecha
+// es la única vía para la forma escueta; la forma «X que Y» («el precio que
+// me respetaron») la cubre la regla 1c.
+const V01_RE_RESPETAR_MONTO = /\b(?:me|nos) (?:respetaron|respeto|respetaste|han respetado|has respetado) (?:el|la|los|las) (?:precio|tarifa|condicion|costo|monto|valor|cuota|importe)\b/;
+// Regla 4b (corrección R3, L5/P6): referencia vaga previa + «todavía»/«aún»
+// + «vale/valen/válido...». Ni «todavía» solo («¿Lo que hablamos todavía
+// está en el informe?») ni «vale» solo («¿Lo dicho vale para la Evaluación
+// Pyme?») bastan; juntos sí («¿Lo que hablamos todavía vale?»).
+const V01_RE_REF_VAGA_VALE = /(?:lo que hablamos|lo que conversamos|lo de ayer|lo del otro dia|lo de la vez pasada|lo de la ultima vez|lo de la semana pasada|lo del mes pasado|lo del ano pasado|lo hablado|lo conversado|lo dicho|lo prometido|lo ofrecido|lo que me dijiste|lo que me dijeron|lo que me has dicho|lo que me han dicho|lo que me contaste|lo que me contaron|lo acordado|lo acordada|lo acordados|lo acordadas|lo pactado|lo pactada|lo pactados|lo pactadas|lo convenido|lo convenidos|lo convenida)\b/;
+// Regla 7a (corrección R3, L6): «me confirmas/confirma/confirman el X» y
+// nada más (salvo «por favor»): «¿Me confirmas el descuento?» dispara;
+// «¿Me confirmas el descuento para clientes nuevos?» y «¿Me confirmas el
+// precio del Diagnóstico Esencial?» NO (hay más después del objeto). «pago»
+// queda fuera: «¿Me confirmas el pago?» pregunta por un pago, no por un
+// acuerdo. Objetos en singular definido; participio opcional tras el objeto.
+const V01_OBJETOS_CONFIRMA = ["descuento", "precio especial", "precio", "tarifa especial", "tarifa", "condicion especial", "condicion", "oferta", "beneficio", "promocion", "cuota", "monto", "valor", "costo", "importe", "cotizacion", "presupuesto", "contrato", "acuerdo", "convenio", "colaboracion", "compromiso", "trato", "rebaja"];
+const V01_RE_CONFIRMA_DEFINIDO = new RegExp(`\\bme (?:confirmas|confirma|confirman) (?:el|la) (?:${V01_OBJETOS_CONFIRMA.join("|")})(?: (?:acordado|acordada|convenido|convenida|pactado|pactada|aprobado|aprobada|asignado|asignada|negociado|negociada|respetado|respetada|concedido|concedida|ofrecido|ofrecida|prometido|prometida|confirmado|confirmada|dado|dada))?\\s*(?:por favor)?\\s*$`);
+// Regla 7b (corrección R3, L7a/L7b): «sigue + el acuerdo/compromiso/...»
+// y nada más tras el sustantivo: «¿Sigue el acuerdo?» dispara; «¿Sigue el
+// acuerdo de confidencialidad?» y «¿Sigue el contrato de soporte?» NO.
+const V01_SUSTANTIVOS_ACUERDO = ["acuerdo", "acuerdos", "compromiso", "compromisos", "contrato", "contratos", "convenio", "convenios", "colaboracion", "colaboraciones"];
+const V01_RE_SIGUE_ACUERDO_1 = new RegExp(`\\b(?:sigue|siga|siguen|sigan)\\s+(?:vigente\\s+)?(?:el|la|los|las)\\s+(?:${V01_SUSTANTIVOS_ACUERDO.join("|")})(?:\\s+(?:vigente|activo|activa|en pie))?\\s*$`);
+const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUSTANTIVOS_ACUERDO.join("|")})\\s+(?:sigue|siga|siguen|sigan)\\s+(?:vigente|activo|activa|en pie|igual)?\\s*$`);
 
 // Determinista: el mismo mensaje produce siempre el mismo resultado.
-// Reglas (OR):
-//  1. A_FUERTE + B (cualquier objeto, incluido «pago/cliente/oferta»)
+// Reglas (OR) — corrección R3 (2026-11-19, filtro v4):
+//  1. A_FUERTE (verbal) + B (cualquier objeto, incluido «pago/cliente/oferta»)
+//  1b. A_TEMPORAL + B, solo con continuidad («sigue», «vigente», «todavía»,
+//      «vale»...) o con el objeto vinculado por «de» («el descuento de
+//      ayer»). Un temporal escueto + objeto genérico NO dispara (FP1, FP2).
+//  1b'. A_TEMPORAL + continuidad + sustantivo de cantidad («el precio de la
+//      semana pasada sigue vigente?»): el precio pasado que sigue aplicando
+//      es una condición previa; sin continuidad («¿Cuál es el precio del año
+//      pasado?») NO dispara.
+//  1c. Patrón «X que Y» (regla compacta): «el descuento que me aprobaron»,
+//      «la cotización que me enviaron», «el precio que negociamos»...
+//  1d. «me/nos respetaron el precio/costo/...» (forma escueta con verbo
+//      «respetar», que siempre presupone un precio ya acordado)
 //  2. A_DEBIL + B_FUERTE (verbo de continuidad + objeto específico)
 //  3. D_A + D_B («el mismo precio...» + marcador previo estrecho)
 //  4. C_FUERTE, o C_DEBIL + CONTINUIDAD_FUERTE (referencia previa sin objeto)
-//  6. CONFIRMAR_DEBIL + (CONTINUIDAD_FUERTE o B_FUERTE) («confirmar» en
-//     presente/infinitivo con continuidad u objeto específico; solo con un
-//     objeto genérico NO dispara)
+//  4b. Referencia vaga previa + «todavía»/«aún» + «vale/válido...»
+//      («¿Lo que hablamos todavía vale?», «¿Todavía vale lo que hablamos?»)
+//  6. CONFIRMAR_DEBIL + (CONTINUIDAD_FUERTE o B_FUERTE sin «trato»)
+//     («confirmar» en presente/infinitivo con continuidad u objeto
+//     específico; solo con un objeto genérico NO dispara; «trato» fuera
+//     por FP3/FP4)
+//  7a. «me confirmas/confirma/confirman el X» y nada más («¿Me confirmas
+//      el descuento?»; «pago» excluido)
+//  7b. «sigue + el acuerdo/compromiso/contrato/...» y nada más tras el
+//      sustantivo («¿Sigue el acuerdo?»; «¿Sigue el acuerdo de
+//      confidencialidad?» NO)
 function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   const n = v01Normalizar(mensajeUsuario);
   if (!n) return false;
   const aFuerte = V01_RE_A_FUERTE.test(n) || V01_RE_ME_CONTINUIDAD.test(n);
   if (aFuerte && V01_RE_B.test(n)) return true;
+  if (V01_RE_A_TEMPORAL.test(n) && V01_RE_B.test(n) && (V01_RE_CONTINUIDAD.test(n) || V01_RE_OBJETO_DE_TEMPORAL.test(n))) return true;
+  if (V01_RE_A_TEMPORAL.test(n) && V01_RE_CONTINUIDAD.test(n) && V01_RE_MONTO.test(n)) return true;
+  if (V01_RE_X_QUE.test(n)) return true;
+  if (V01_RE_RESPETAR_MONTO.test(n)) return true;
   if (V01_RE_A_DEBIL.test(n) && V01_RE_B_FUERTE.test(n)) return true;
   if (V01_RE_D_A.test(n) && V01_RE_D_B.test(n)) return true;
   if (V01_RE_C_FUERTE.test(n)) return true;
   if (V01_RE_C_DEBIL.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n)) return true;
-  if (V01_RE_CONFIRMAR_DEBIL.test(n) && (V01_RE_CONTINUIDAD_FUERTE.test(n) || V01_RE_B_FUERTE.test(n))) return true;
+  if ((V01_RE_C_DEBIL.test(n) || V01_RE_REF_VAGA_VALE.test(n)) && /\b(todavia|aun)\b/.test(n) && /\b(vale|valen|valido|valida|validos|validas)\b/.test(n)) return true;
+  if (V01_RE_CONFIRMAR_DEBIL.test(n) && (V01_RE_CONTINUIDAD_FUERTE.test(n) || V01_RE_B_FUERTE_SIN_TRATO.test(n))) return true;
+  if (V01_RE_CONFIRMA_DEFINIDO.test(n)) return true;
+  if (V01_RE_SIGUE_ACUERDO_1.test(n) || V01_RE_SIGUE_ACUERDO_2.test(n)) return true;
   return false;
 }
 
@@ -411,11 +547,12 @@ function v01EsContinuidad(mensajeUsuario) {
 }
 
 // Regla 5 (multi-turno): si el último mensaje del usuario es solo continuidad
-// («¿Sigue vigente?») y el mensaje de usuario anterior disparó el filtro,
+// («¿Sigue vigente?») y un mensaje de usuario anterior disparó el filtro,
 // la premisa ya está en la conversación y el seguimiento también dispara.
-// Solo mira los últimos 2 mensajes de usuario: un mensaje legítimo posterior
-// a una premisa («¿Cuánto cuesta la Evaluación Pyme?») NO dispara, porque
-// no es continuidad.
+// Mira los últimos 3 mensajes de usuario (corrección R3: la premisa puede
+// estar a 2 mensajes de distancia, con una pregunta legítima en medio —
+// «¿Cuánto cuesta la Evaluación Pyme?» — que NO dispara porque no es
+// continuidad). Un mensaje legítimo posterior a una premisa NO dispara.
 function v01DisparaEnHistorial(history) {
   const usuarios = (history || []).filter(
     (m) => m && m.role === "user" && typeof m.content === "string"
@@ -423,12 +560,12 @@ function v01DisparaEnHistorial(history) {
   if (usuarios.length === 0) return false;
   const ultimo = usuarios[usuarios.length - 1];
   if (v01EsAfirmacionPreviaNoVerificable(ultimo.content)) return true;
+  if (!v01EsContinuidad(ultimo.content)) return false;
   const penultimo = usuarios[usuarios.length - 2];
-  if (!penultimo) return false;
-  return (
-    v01EsContinuidad(ultimo.content) &&
-    v01EsAfirmacionPreviaNoVerificable(penultimo.content)
-  );
+  if (penultimo && v01EsAfirmacionPreviaNoVerificable(penultimo.content)) return true;
+  const antepenultimo = usuarios[usuarios.length - 3];
+  if (antepenultimo && v01EsAfirmacionPreviaNoVerificable(antepenultimo.content)) return true;
+  return false;
 }
 // FILTRO DETERMINISTA V-01 — FIN
 
