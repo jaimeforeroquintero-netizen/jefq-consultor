@@ -788,7 +788,7 @@ const V01_RE_MONTO = v01Patron(V01_SENAL_MONTO);
 // cola temporal es la misma lista que la regla 1d ya admitía en v6.
 const V01_COLA_ATRIBUCION = "(?:(?:para|de) (?:mi|nuestro|nuestra)(?: (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme))?|para (?:nosotros|nosotras))";
 const V01_COLA_TEMPORAL = "(?:ayer|la semana pasada|el mes pasado|el ano pasado|la vez pasada|la ultima vez|de ayer|de la semana pasada|del mes pasado|del ano pasado|de la vez pasada|de la ultima vez|de la llamada)";
-const V01_VERBOS_CONCESION_MONTO = ["dieron", "dio", "diste", "ofrecieron", "ofreciste", "prometieron", "prometiste", "aprobaron", "aprobaste", "asignaron", "asignaste", "concedieron", "concediste", "negociaron", "negociaste", "confirmaron", "confirmaste", "pasaron", "pasaste", "cotizaron", "cotizaste", "contaron", "contaste", "dijeron", "dijiste", "hicieron", "hiciste", "hizo", "respetaron", "respeto", "respetaste", "han respetado", "has respetado", "han dado", "has dado", "han ofrecido", "has ofrecido", "han prometido", "has prometido", "han aprobado", "has aprobado", "han asignado", "has asignado", "han concedido", "has concedido", "han confirmado", "has confirmado", "acordaron", "pactaron", "convinieron", "concertaron", "fijaron", "establecieron", "cerraron", "aceptaron", "definieron", "autorizaron", "consensuaron", "ratificaron", "homologaron", "han cerrado", "han aceptado", "han definido", "han autorizado", "han consensuado", "han ratificado", "han homologado", "cerro", "acepto", "definio", "autorizo", "consensuo", "ratifico", "homologo", "cerraste", "aceptaste", "definiste", "autorizaste", "consensuaste", "ratificaste", "homologaste"];
+const V01_VERBOS_CONCESION_MONTO = ["dieron", "dio", "diste", "ofrecieron", "ofreciste", "prometieron", "prometiste", "aprobaron", "aprobaste", "asignaron", "asignaste", "concedieron", "concediste", "negociaron", "negociaste", "confirmaron", "confirmaste", "pasaron", "pasaste", "cotizaron", "cotizaste", "contaron", "contaste", "dijeron", "dijiste", "hicieron", "hiciste", "hizo", "respetaron", "respeto", "respetaste", "han respetado", "has respetado", "han dado", "has dado", "han ofrecido", "has ofrecido", "han prometido", "has prometido", "han aprobado", "has aprobado", "han asignado", "has asignado", "han concedido", "has concedido", "han confirmado", "has confirmado", "acordaron", "pactaron", "convinieron", "concertaron", "fijaron", "establecieron", "cerraron", "aceptaron", "definieron", "autorizaron", "consensuaron", "ratificaron", "homologaron", "han cerrado", "han aceptado", "han definido", "han autorizado", "han consensuado", "han ratificado", "han homologado", "cerro", "acepto", "definio", "autorizo", "consensuo", "ratifico", "homologo", "cerraste", "aceptaste", "definiste", "autorizaste", "consensuaste", "ratificaste", "homologaste", "habian dado", "habian ofrecido", "habian prometido", "habian aprobado", "habian asignado", "habian concedido", "habian negociado", "habian confirmado", "habian pasado", "habian cotizado", "habian contado", "habian dicho", "habian hecho", "habian respetado", "habian acordado", "habian pactado", "habian convenido", "habian concertado", "habian fijado", "habian establecido", "habian cerrado", "habian aceptado", "habian definido", "habian autorizado", "habian consensuado", "habian ratificado", "habian homologado", "habias dado", "habias ofrecido", "habias prometido", "habias aprobado", "habias asignado", "habias concedido", "habias negociado", "habias confirmado", "habias pasado", "habias cotizado", "habias contado", "habias dicho", "habias hecho", "habias respetado", "habias acordado", "habias pactado", "habias convenido", "habias concertado", "habias fijado", "habias establecido", "habias cerrado", "habias aceptado", "habias definido", "habias autorizado", "habias consensuado", "habias ratificado", "habias homologado", "habia dado", "habia ofrecido", "habia prometido", "habia aprobado", "habia asignado", "habia concedido", "habia negociado", "habia confirmado", "habia pasado", "habia cotizado", "habia contado", "habia dicho", "habia hecho", "habia respetado", "habia acordado", "habia pactado", "habia convenido", "habia concertado", "habia fijado", "habia establecido", "habia cerrado", "habia aceptado", "habia definido", "habia autorizado", "habia consensuado", "habia ratificado", "habia homologado"];
 const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERBOS_CONCESION_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION})?(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // CORRECCIÓN R5 (lista (e) A, hallazgo determinante de GPT): la regla
 // 1d contempla ahora el destinatario «te» («¿Te dieron el precio?»,
@@ -838,6 +838,33 @@ const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERB
 // disparar: hay más tras el objeto). Los verbos que no son de
 // concesión/cierre no entran («¿Me enviaron el contrato?», «¿Me
 // llamaron ayer?» siguen al modelo).
+// CORRECCIÓN R10 (lista (e) B del cierre del PIR-1 R10 — condición
+// OBLIGADA, no opcional): el patrón compuesto de esta regla era
+// «han/has» + participio; el pluscuamperfecto («habían/habías» +
+// participio) quedaba fuera para TODAS las familias por igual
+// (frontera uniforme de la 1d, declarada como limitación 7 en el
+// informe v10). El PIR-1 R10 aportó los ejemplos verificados por
+// triple ejecución («¿Me habían aceptado una tarifa?», «¿Me habían
+// dado un precio?») y el cierre fijó su destino: condición obligada
+// de esta corrección, con el precedente de la pasiva con «fue»
+// (declarada en v9, condición de la corrección R9). La lista crece
+// con «habian/habias/habia» + el participio de las 27 familias
+// verbales de la regla — las 14 originales (dado, ofrecido,
+// prometido, aprobado, asignado, concedido, negociado, confirmado,
+// pasado, cotizado, contado, dicho, hecho, respetado), las 6 de la
+// 1e-R7 (acordado, pactado, convenido, concertado, fijado,
+// establecido) y las 7 de la 1g (cerrado, aceptado, definido,
+// autorizado, consensuado, ratificado, homologado) —, una entrada
+// por verbo y auxiliar, como la ampliación mecánica que el informe
+// v10 anticipó. Se incluye «habia» (singular del mismo auxiliar:
+// «¿Me había aceptado una tarifa?» es la misma construcción con
+// sujeto singular) para que el patrón quede completo y uniforme;
+// sin pronombre la forma sigue fuera («¿Habían aceptado una
+// tarifa?» no casa: el canal es el pronombre, como en toda la 1d).
+// NO es un rediseño: mismo grupo de pronombres, mismos sustantivos
+// de cantidad, mismas colas y el mismo anclaje a fin de mensaje
+// («¿Me habían dado un precio del Diagnóstico Esencial?» sigue sin
+// disparar: la cola pública rompe el anclaje).
 // Regla 1e (corrección R5, lista (e) E — DEFINICIÓN ADOPTADA para la
 // 3.ª persona plural sin pronombre; REVISADA en la corrección R6,
 // lista (e) C del cierre del PIR-1 R6): verbo de concesión en 3.ª
@@ -1002,6 +1029,25 @@ for (const _p of ["acordado", "pactado", "convenido", "concertado", "negociado",
 }
 const V01_RE_FUE_PASIVA_ATRIBUIDA = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")}) (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 const V01_RE_FUE_PASIVA_INV_ATRIBUIDA = new RegExp(`\\b(?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) (?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+// CORRECCIÓN R10 (lista (e) A del cierre del PIR-1 R10): la 1h
+// cubría dos posiciones de la atribución (tras el participio con el
+// objeto delante, y al final con el objeto tras el participio); el
+// PIR-1 R10 verificó por triple ejecución dos posiciones restantes
+// de la MISMA premisa, no declaradas entre las limitaciones de
+// v10: (i) la atribución ENTRE el participio y el objeto («¿Fue
+// negociado para mi empresa el contrato?») y (ii) la atribución
+// ANTES de «fue» + participio («¿El contrato para mi empresa fue
+// negociado?»). Dos regex nuevas cubren ambos órdenes con las
+// mismas piezas (objetos, participios, la misma cola de atribución
+// obligatoria) y admiten la cola temporal tras el último elemento,
+// como las dos originales la admiten tras la atribución. Guardas
+// intactas: sin atribución o con atribución pública/de terceros
+// («para empresas», «para otra empresa», «para clientes nuevos»)
+// las formas siguen al modelo en los cuatro órdenes, y el
+// participio ajeno sigue sin casar («¿El contrato para mi empresa
+// fue firmado?» no dispara).
+const V01_RE_FUE_PASIVA_ATRIB_ENTRE = new RegExp(`\\b(?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION} (?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_FUE_PASIVA_ATRIB_ANTES = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION} (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // Atribución expresa al visitante (corrección R6, lista (e) D):
 // posesivo o complemento que ata la condición al propio visitante,
 // a su grupo o a su empresa («para nuestro grupo», «para mi
@@ -1120,11 +1166,18 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      ratificaron, homologaron, con singulares y compuestos con
 //      «han» — y el grupo de artículo se unifica con el de la
 //      1e/1f/1g; los 20 verbos de la 1e ya disparaban con «me» por la
-//      propia 1e, solo los 7 de la 1g atravesaban el canal)
+//      propia 1e, solo los 7 de la 1g atravesaban el canal; R10,
+//      lista (e) B: el patrón compuesto se completa con el
+//      pluscuamperfecto «habían/habías/había» + participio para las
+//      27 familias verbales — limitación 7 de v10, condición
+//      obligada del cierre R10)
 //  1h. Pasiva con «fue/fueron» + participio de concesión/acuerdo +
 //      objeto + ATRIBUCIÓN EXPRESA obligatoria + fin de mensaje
 //      («¿El contrato fue negociado para mi empresa?»; R9, lista
-//      (e) B; sin atribución sigue al modelo)
+//      (e) B; sin atribución sigue al modelo; R10, lista (e) A:
+//      la atribución también entre el participio y el objeto y
+//      antes de «fue» — «¿Fue negociado para mi empresa el
+//      contrato?», «¿El contrato para mi empresa fue negociado?»)
 //  2. A_DEBIL + B_FUERTE (verbo de continuidad + objeto específico;
 //      R5: las formas negociado/concedido/preferencial ya NO están en
 //      B_FUERTE: la forma escueta con solo continuidad no dispara)
@@ -1175,7 +1228,7 @@ function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   if (V01_RE_TERCERA_PLURAL_MONTO.test(n)) return true;
   if (V01_RE_SE_IMPERSONAL.test(n)) return true;
   if (V01_RE_ATRIBUIDO_EXCLUIDOS.test(n) || V01_RE_ATRIBUIDO_EXCLUIDOS_SE.test(n) || V01_RE_ATRIBUIDO_CONTRATO_SE.test(n) || V01_RE_ATRIBUIDO_CONTRATO_PLURAL.test(n)) return true;
-  if (V01_RE_FUE_PASIVA_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_INV_ATRIBUIDA.test(n)) return true;
+  if (V01_RE_FUE_PASIVA_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_INV_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_ATRIB_ENTRE.test(n) || V01_RE_FUE_PASIVA_ATRIB_ANTES.test(n)) return true;
   if (V01_RE_A_DEBIL.test(n) && V01_RE_B_FUERTE.test(n)) return true;
   if (V01_RE_OBJETOS_CONFIRMA_NEGOCIADO.test(n) && V01_RE_ATRIBUCION.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n)) return true;
   if (V01_RE_OBJETO_NEGOCIADO_ATRIBUIDO.test(n)) return true;
