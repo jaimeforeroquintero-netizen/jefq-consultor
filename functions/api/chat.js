@@ -984,10 +984,21 @@ const V01_VERBOS_EXCLUIDOS_1E = ["cerraron", "aceptaron", "definieron", "autoriz
 const V01_VERBOS_EXCLUIDOS_1E_SE = ["cerro", "cerraron", "acepto", "aceptaron", "definio", "definieron", "autorizo", "autorizaron", "consensuo", "consensuaron", "ratifico", "ratificaron", "homologo", "homologaron"];
 const V01_OBJETOS_1G = ["precio", "precios", "tarifa", "tarifas", "condicion", "condiciones", "descuento", "descuentos", "oferta", "ofertas", "beneficio", "beneficios", "costo", "costos", "monto", "montos", "valor", "valores", "cuota", "cuotas", "importe", "importes", "contrato", "contratos"];
 const V01_PARTICIPIOS_1G = "(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?";
+// CORRECCIÓN R12 (lista (e) A del cierre del PIR-1 R12): las vías
+// de «contrato/pago» unifican sus verbos con los de la 1g en las
+// tres posiciones — la vía con «se» admite también las formas de
+// los verbos excluidos de la 1e («se autorizó el pago») y la vía
+// activa admite también esos verbos en 3.ª plural («aceptaron el
+// pago») — para que la posición de la atribución no cambie el
+// resultado dentro del mismo canal. El cambio solo añade disparos
+// con la atribución expresa obligatoria de siempre; las formas
+// escuetas y las de terceros siguen al modelo.
+const V01_VERBOS_SE_CONTRATO_1G = [...V01_SE_CONCESION_FINITO, ...V01_VERBOS_EXCLUIDOS_1E_SE];
+const V01_VERBOS_PLURAL_CONTRATO_1G = [...V01_VERBOS_TERCERA_PLURAL_MONTO, ...V01_VERBOS_EXCLUIDOS_1E];
 const V01_RE_ATRIBUIDO_EXCLUIDOS = new RegExp(`\\b(?:${V01_VERBOS_EXCLUIDOS_1E.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_1G.join("|")})${V01_PARTICIPIOS_1G} ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 const V01_RE_ATRIBUIDO_EXCLUIDOS_SE = new RegExp(`\\bse (?:${V01_VERBOS_EXCLUIDOS_1E_SE.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_1G.join("|")})${V01_PARTICIPIOS_1G} ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
-const V01_RE_ATRIBUIDO_CONTRATO_SE = new RegExp(`\\bse (?:(?:${V01_SE_CONCESION_FINITO.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:contrato|contratos|pago|pagos) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
-const V01_RE_ATRIBUIDO_CONTRATO_PLURAL = new RegExp(`\\b(?:${V01_VERBOS_TERCERA_PLURAL_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:contrato|contratos|pago|pagos) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_ATRIBUIDO_CONTRATO_SE = new RegExp(`\\bse (?:(?:${V01_VERBOS_SE_CONTRATO_1G.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:contrato|contratos|pago|pagos) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_ATRIBUIDO_CONTRATO_PLURAL = new RegExp(`\\b(?:${V01_VERBOS_PLURAL_CONTRATO_1G.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:contrato|contratos|pago|pagos) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // Regla 1h (corrección R9, lista (e) B del cierre del PIR-1 R9):
 // pasiva con «fue/fueron» + participio de concesión/acuerdo + objeto
 // + ATRIBUCIÓN EXPRESA obligatoria + fin de mensaje, en los dos
@@ -1027,8 +1038,8 @@ for (const _p of ["acordado", "pactado", "convenido", "concertado", "negociado",
   const _f = _p.slice(0, -1) + "a";
   V01_PARTICIPIOS_FUE.push(_p, _f, _p + "s", _f + "s");
 }
-const V01_RE_FUE_PASIVA_ATRIBUIDA = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")}) (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
-const V01_RE_FUE_PASIVA_INV_ATRIBUIDA = new RegExp(`\\b(?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) (?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_FUE_PASIVA_ATRIBUIDA = new RegExp(`\\b(?:el|la|los|las|un|una|unos|unas) (?:${V01_OBJETOS_FUE.join("|")}) (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_FUE_PASIVA_INV_ATRIBUIDA = new RegExp(`\\b(?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) (?:el|la|los|las|un|una|unos|unas) (?:${V01_OBJETOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // CORRECCIÓN R10 (lista (e) A del cierre del PIR-1 R10): la 1h
 // cubría dos posiciones de la atribución (tras el participio con el
 // objeto delante, y al final con el objeto tras el participio); el
@@ -1046,8 +1057,8 @@ const V01_RE_FUE_PASIVA_INV_ATRIBUIDA = new RegExp(`\\b(?:fue|fueron) (?:${V01_P
 // las formas siguen al modelo en los cuatro órdenes, y el
 // participio ajeno sigue sin casar («¿El contrato para mi empresa
 // fue firmado?» no dispara).
-const V01_RE_FUE_PASIVA_ATRIB_ENTRE = new RegExp(`\\b(?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION} (?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
-const V01_RE_FUE_PASIVA_ATRIB_ANTES = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION} (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_FUE_PASIVA_ATRIB_ENTRE = new RegExp(`\\b(?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION} (?:el|la|los|las|un|una|unos|unas) (?:${V01_OBJETOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_FUE_PASIVA_ATRIB_ANTES = new RegExp(`\\b(?:el|la|los|las|un|una|unos|unas) (?:${V01_OBJETOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION} (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // CORRECCIÓN R11 (lista (e) A del cierre del PIR-1 R11): la 1h
 // cubría cuatro posiciones de la atribución (tras el participio,
 // al final, entre el participio y el objeto, y antes de «fue»);
@@ -1070,8 +1081,111 @@ const V01_RE_FUE_PASIVA_ATRIB_ANTES = new RegExp(`\\b(?:el|la|los|las) (?:${V01_
 // las formas siguen al modelo en las seis posiciones, y el
 // participio ajeno sigue sin casar («¿Para mi empresa fue
 // firmado el contrato?» no dispara).
-const V01_RE_FUE_PASIVA_ATRIB_PRE_FUE = new RegExp(`^(?:${V01_COLA_ATRIBUCION}) (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) (?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
-const V01_RE_FUE_PASIVA_ATRIB_PRE_OBJ = new RegExp(`^(?:${V01_COLA_ATRIBUCION}) (?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")}) (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+// CORRECCIÓN R12 (lista (e) C y D del cierre del PIR-1 R12):
+// (C) Limitación 10 — las dos regex antepuestas dejan el ancla «^»
+// por «\b» (candidato de Claude, verificado por ejecución en este
+// ciclo, no adoptado a ciegas): la atribución antepuesta también
+// dispara tras una muletilla o cláusula inicial («Oye, ¿para mi
+// empresa fue negociado el contrato?», «Quería saber si para mi
+// empresa el contrato fue negociado?»). La guarda no depende del
+// ancla sino de la cola de atribución cerrada y del resto del
+// patrón (participio de concesión + objeto): «para empresas»,
+// «para otra empresa», «para clientes nuevos» y «fue firmado»
+// siguen en falso, verificado contra el corpus y la sonda. La
+// asimetría que Claude señaló queda resuelta: las cuatro regex
+// originales de la 1h nunca anclaron a la izquierda.
+// (D) Limitación 7 — el grupo de artículo del objeto en las SEIS
+// regex de la 1h admite también el indefinido («un/una/unos/
+// unas»): «¿Para mi empresa fue negociado un contrato?», «¿Fue
+// negociada una tarifa para mi empresa?», «¿Una tarifa para mi
+// empresa fue negociada?», «¿Fue negociado para mi empresa un
+// contrato?» disparan. DECISIÓN de este ciclo: CUBRIR (la
+// condición del cierre pedía cubrir o excluir con argumento). La
+// señal que discrimina la premisa nunca fue el artículo — en la
+// familia B1 del PIR-1 R7 las formas con indefinido en la 1d ya
+// disparaban y se juzgaron correctas — sino la atribución expresa
+// obligatoria, que se mantiene intacta: sin ella («¿Fue negociado
+// un contrato?», «¿Una tarifa fue negociada?») o con atribución
+// pública («¿Fue negociada una tarifa para empresas?») las formas
+// siguen yendo al modelo en las seis posiciones, verificado.
+const V01_RE_FUE_PASIVA_ATRIB_PRE_FUE = new RegExp(`\\b(?:${V01_COLA_ATRIBUCION}) (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) (?:el|la|los|las|un|una|unos|unas) (?:${V01_OBJETOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_FUE_PASIVA_ATRIB_PRE_OBJ = new RegExp(`\\b(?:${V01_COLA_ATRIBUCION}) (?:el|la|los|las|un|una|unos|unas) (?:${V01_OBJETOS_FUE.join("|")}) (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+// Reglas 1i/1j (corrección R12, lista (e) A y B del cierre del
+// PIR-1 R12 — familia FUNDANTE del NO-GO y condición obligada):
+// en v12 los canales de concesión CON atribución obligatoria
+// (1g y «contrato/pago») solo disparaban con la atribución AL
+// FINAL del mensaje, tras el objeto. La misma premisa atribuida
+// con la atribución ANTEPUESTA («¿Para mi empresa cerraron una
+// tarifa?») o ENTRE el verbo y el objeto («¿Cerraron para mi
+// empresa una tarifa?», «¿Se negoció para mi empresa el
+// contrato?») atravesaba el filtro, ejecutado y verificado por
+// triple concordancia en el PIR-1 R12. RECTIFICACIÓN (punto E
+// de la lista): el §7.3 del paquete del PIR-1 R12 afirmaba que
+// las formas 1g «con atribución, sí disparan», sin distinguir
+// posición; era INEXACTO para v12 — solo disparaban con la
+// atribución al final — y este comentario deja constancia de lo
+// que el código hacía y de lo que hace desde esta corrección.
+// Las regex nuevas cubren las dos posiciones con las mismas
+// piezas de cada canal:
+//  1i-activa: atribución + verbo, o verbo + atribución, +
+//     objeto + fin de mensaje, con la unión de verbos de la 1e
+//     y la 1g. La unión es coherencia de la misma clase,
+//     demostrada en el diagnóstico previo de este ciclo: la
+//     posición ENTRE también rompía la 1e y la 1f para los
+//     sustantivos de cantidad («¿Negociaron para mi empresa una
+//     tarifa?», «¿Se ofreció para mi empresa una tarifa?» no
+//     disparaban en v12), mientras la ANTEPUESTA no las rompía
+//     (sus regex no anclan al inicio y la atribución queda como
+//     prefijo fuera del patrón: «¿Para mi empresa negociaron
+//     una tarifa?» ya disparaba en v12 y queda como control).
+//  1i-«se»: las mismas dos posiciones para la vía impersonal,
+//     con la unión de los verbos con «se» de la 1f y la 1g (y
+//     la forma «había/habían» + participio de la 1f).
+//  1i-1d: la posición ENTRE en el canal del pronombre («¿Me
+//     aceptaron para mi empresa una tarifa?»), con las mismas
+//     piezas de la 1d (pronombres, verbos, sustantivos de
+//     cantidad, participios) y la atribución en el hueco entre
+//     el verbo y el objeto; la ANTEPUESTA no rompía la 1d (el
+//     pronombre ancla el patrón en cualquier punto del mensaje
+//     y la regex original lo cubre).
+//  1j: «le/les» + verbo de concesión en pasado + objeto +
+//     «a mi empresa / a nuestro grupo / a nosotros» + fin de
+//     mensaje (punto B, condición obligada): la atribución
+//     indirecta no estaba en la lista de atribuciones, que solo
+//     admitía «para/de». Guardas de la 1j: el destinatario debe
+//     ser el propio visitante con posesivo de 1.ª persona —
+//     «a otra empresa», «a su empresa» y «a la empresa» NO
+//     casan y siguen al modelo («a su empresa» es ambiguo entre
+//     la empresa del visitante en trato de usted y la de un
+//     tercero; ante la ambigüedad no se dispara, el mismo
+//     criterio de la distinción escueta/atribuida de la 1g) —
+//     y el objeto debe cerrar la frase (salvo la cola temporal),
+//     como en la 1d. Las formas de la 1j con objeto de la lista
+//     B («¿Le dieron un descuento a mi empresa?») ya disparaban
+//     en v12 por la regla 1 («le dieron» está en A_FUERTE); la
+//     regex nueva cubre los sustantivos de cantidad, que no
+//     están en B.
+// Guardas de la 1i (todas las posiciones): la atribución sigue
+// siendo la cola CERRADA de siempre — terceros («para otra
+// empresa») y público («para empresas», «para clientes
+// nuevos») no casan en ninguna posición —; las formas ESCUETAS
+// de la 1g siguen yendo al modelo (la distinción escueta/
+// atribuida sigue en vigor: sin atribución ninguna regex nueva
+// dispara por sí sola); y la frase de control que Claude probó
+// contra su regla general («Me dijeron que visite la web;
+// ¿cuál es el precio para mi empresa?») sigue en falso: tras
+// la atribución estas regex exigen verbo de concesión +
+// objeto, no una pregunta de precio.
+const V01_OBJETOS_R12 = [...V01_OBJETOS_FUE, "descuento", "descuentos", "oferta", "ofertas", "beneficio", "beneficios"];
+const V01_VERBOS_ACTIVA_R12 = [...V01_VERBOS_TERCERA_PLURAL_MONTO, ...V01_VERBOS_EXCLUIDOS_1E];
+const V01_VERBOS_SE_R12 = [...V01_SE_CONCESION_FINITO, ...V01_VERBOS_EXCLUIDOS_1E_SE];
+const V01_RE_ATRIB_PRE_ACTIVA = new RegExp(`\\b(?:${V01_COLA_ATRIBUCION}) (?:${V01_VERBOS_ACTIVA_R12.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_R12.join("|")})${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_ATRIB_ENTRE_ACTIVA = new RegExp(`\\b(?:${V01_VERBOS_ACTIVA_R12.join("|")}) (?:${V01_COLA_ATRIBUCION}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_R12.join("|")})${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_ATRIB_PRE_SE = new RegExp(`\\b(?:${V01_COLA_ATRIBUCION}) se (?:(?:${V01_VERBOS_SE_R12.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_R12.join("|")})${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_ATRIB_ENTRE_SE = new RegExp(`\\bse (?:(?:${V01_VERBOS_SE_R12.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:${V01_COLA_ATRIBUCION}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_R12.join("|")})${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_ATRIB_ENTRE_1D = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERBOS_CONCESION_MONTO.join("|")}) (?:${V01_COLA_ATRIBUCION}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_SENAL_MONTO.join("|")})${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_VERBOS_LE_R12 = ["dieron", "dio", "aprobaron", "aprobo", "cerraron", "cerro", "definieron", "definio", "autorizaron", "autorizo", "concedieron", "concedio", "negociaron", "negocio", "ofrecieron", "ofrecio", "prometieron", "prometio", "confirmaron", "confirmo", "cotizaron", "cotizo", "pasaron", "paso", "asignaron", "asigno", "respetaron", "respeto", "acordaron", "acordo", "pactaron", "pacto", "convinieron", "concertaron", "fijaron", "establecieron", "consensuaron", "consensuo", "ratificaron", "ratifico", "homologaron", "homologo"];
+const V01_RE_LE_A_ATRIBUIDO = new RegExp(`\\b(?:le|les) (?:${V01_VERBOS_LE_R12.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_R12.join("|")})${V01_PARTICIPIOS_1G} a (?:(?:mi|nuestro|nuestra)(?: (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme))?|nosotros|nosotras)(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // Atribución expresa al visitante (corrección R6, lista (e) D):
 // posesivo o complemento que ata la condición al propio visitante,
 // a su grupo o a su empresa («para nuestro grupo», «para mi
@@ -1201,7 +1315,22 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      (e) B; sin atribución sigue al modelo; R10, lista (e) A:
 //      la atribución también entre el participio y el objeto y
 //      antes de «fue» — «¿Fue negociado para mi empresa el
-//      contrato?», «¿El contrato para mi empresa fue negociado?»)
+//      contrato?», «¿El contrato para mi empresa fue negociado?»;
+//      R12, lista (e) C y D: las dos regex antepuestas anclan con
+//      «\b» en vez de «^» — la atribución tras muletilla inicial
+//      también dispara — y las seis regex admiten el artículo
+//      indefinido en el objeto)
+//  1i. Atribución ANTEPUESTA o ENTRE el verbo y el objeto en los
+//      canales de concesión atribuida (1g, «contrato/pago», 1e,
+//      «se», 1d-entre) («¿Para mi empresa cerraron una tarifa?»,
+//      «¿Cerraron para mi empresa una tarifa?», «¿Se negoció
+//      para mi empresa el contrato?»; R12, lista (e) A: en v12
+//      esos canales solo disparaban con la atribución al final;
+//      las formas escuetas siguen yendo al modelo)
+//  1j. «le/les» + verbo de concesión + objeto + «a mi empresa /
+//      a nuestro grupo / a nosotros» («¿Le dieron una tarifa a
+//      mi empresa?»; R12, lista (e) B, condición obligada; «a
+//      otra empresa» y «a su empresa» NO disparan)
 //  2. A_DEBIL + B_FUERTE (verbo de continuidad + objeto específico;
 //      R5: las formas negociado/concedido/preferencial ya NO están en
 //      B_FUERTE: la forma escueta con solo continuidad no dispara)
@@ -1252,6 +1381,7 @@ function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   if (V01_RE_TERCERA_PLURAL_MONTO.test(n)) return true;
   if (V01_RE_SE_IMPERSONAL.test(n)) return true;
   if (V01_RE_ATRIBUIDO_EXCLUIDOS.test(n) || V01_RE_ATRIBUIDO_EXCLUIDOS_SE.test(n) || V01_RE_ATRIBUIDO_CONTRATO_SE.test(n) || V01_RE_ATRIBUIDO_CONTRATO_PLURAL.test(n)) return true;
+  if (V01_RE_ATRIB_PRE_ACTIVA.test(n) || V01_RE_ATRIB_ENTRE_ACTIVA.test(n) || V01_RE_ATRIB_PRE_SE.test(n) || V01_RE_ATRIB_ENTRE_SE.test(n) || V01_RE_ATRIB_ENTRE_1D.test(n) || V01_RE_LE_A_ATRIBUIDO.test(n)) return true;
   if (V01_RE_FUE_PASIVA_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_INV_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_ATRIB_ENTRE.test(n) || V01_RE_FUE_PASIVA_ATRIB_ANTES.test(n) || V01_RE_FUE_PASIVA_ATRIB_PRE_FUE.test(n) || V01_RE_FUE_PASIVA_ATRIB_PRE_OBJ.test(n)) return true;
   if (V01_RE_A_DEBIL.test(n) && V01_RE_B_FUERTE.test(n)) return true;
   if (V01_RE_OBJETOS_CONFIRMA_NEGOCIADO.test(n) && V01_RE_ATRIBUCION.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n)) return true;
