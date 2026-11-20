@@ -1048,6 +1048,30 @@ const V01_RE_FUE_PASIVA_INV_ATRIBUIDA = new RegExp(`\\b(?:fue|fueron) (?:${V01_P
 // fue firmado?» no dispara).
 const V01_RE_FUE_PASIVA_ATRIB_ENTRE = new RegExp(`\\b(?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION} (?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 const V01_RE_FUE_PASIVA_ATRIB_ANTES = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")}) ${V01_COLA_ATRIBUCION} (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+// CORRECCIÓN R11 (lista (e) A del cierre del PIR-1 R11): la 1h
+// cubría cuatro posiciones de la atribución (tras el participio,
+// al final, entre el participio y el objeto, y antes de «fue»);
+// el PIR-1 R11 verificó por triple ejecución una QUINTA posición
+// de la MISMA premisa, no declarada entre las limitaciones de
+// v11: la atribución ANTEPUESTA, al inicio de la frase («¿Para mi
+// empresa fue negociado el contrato?», «¿Para mi empresa el
+// contrato fue negociado?», «¿Para mi empresa, fue negociado el
+// contrato?»). Dos regex nuevas cubren ambos órdenes con las
+// mismas piezas (objetos, participios, la misma cola de
+// atribución obligatoria), ancladas al inicio del mensaje
+// normalizado — la posición antepuesta es por definición la
+// inicial — y admiten la cola temporal tras el último elemento,
+// como las demás. La forma con coma y la forma sin coma colapsan
+// a la misma cadena tras la normalización (la puntuación pasa a
+// espacios), así que una sola regex por orden cubre ambas.
+// Guardas intactas: la atribución sigue siendo la misma cola
+// cerrada — sin atribución, con atribución pública o de terceros
+// («para empresas», «para otra empresa», «para clientes nuevos»)
+// las formas siguen al modelo en las seis posiciones, y el
+// participio ajeno sigue sin casar («¿Para mi empresa fue
+// firmado el contrato?» no dispara).
+const V01_RE_FUE_PASIVA_ATRIB_PRE_FUE = new RegExp(`^(?:${V01_COLA_ATRIBUCION}) (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) (?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_FUE_PASIVA_ATRIB_PRE_OBJ = new RegExp(`^(?:${V01_COLA_ATRIBUCION}) (?:el|la|los|las) (?:${V01_OBJETOS_FUE.join("|")}) (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // Atribución expresa al visitante (corrección R6, lista (e) D):
 // posesivo o complemento que ata la condición al propio visitante,
 // a su grupo o a su empresa («para nuestro grupo», «para mi
@@ -1228,7 +1252,7 @@ function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   if (V01_RE_TERCERA_PLURAL_MONTO.test(n)) return true;
   if (V01_RE_SE_IMPERSONAL.test(n)) return true;
   if (V01_RE_ATRIBUIDO_EXCLUIDOS.test(n) || V01_RE_ATRIBUIDO_EXCLUIDOS_SE.test(n) || V01_RE_ATRIBUIDO_CONTRATO_SE.test(n) || V01_RE_ATRIBUIDO_CONTRATO_PLURAL.test(n)) return true;
-  if (V01_RE_FUE_PASIVA_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_INV_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_ATRIB_ENTRE.test(n) || V01_RE_FUE_PASIVA_ATRIB_ANTES.test(n)) return true;
+  if (V01_RE_FUE_PASIVA_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_INV_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_ATRIB_ENTRE.test(n) || V01_RE_FUE_PASIVA_ATRIB_ANTES.test(n) || V01_RE_FUE_PASIVA_ATRIB_PRE_FUE.test(n) || V01_RE_FUE_PASIVA_ATRIB_PRE_OBJ.test(n)) return true;
   if (V01_RE_A_DEBIL.test(n) && V01_RE_B_FUERTE.test(n)) return true;
   if (V01_RE_OBJETOS_CONFIRMA_NEGOCIADO.test(n) && V01_RE_ATRIBUCION.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n)) return true;
   if (V01_RE_OBJETO_NEGOCIADO_ATRIBUIDO.test(n)) return true;
