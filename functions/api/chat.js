@@ -319,6 +319,44 @@ const V01_SENAL_A_FUERTE = [
   "nuestra colaboracion", "nuestras colaboraciones",
   "nuestro compromiso", "nuestros compromisos",
 ];
+// CORRECCIÓN R17 (2026-11-20, (e) E5 del cierre del PIR-1 R16):
+// espejos de A_FUERTE para los verbos vecinos delimitados. (i)
+// «prorrogar», «prolongar» y «ampliar» como verbos de concesión
+// (espejo del bloque de «conceder/otorgar» de R14): la premisa con
+// pronombre («¿Me prorrogaron el precio?») dispara la regla 1 con el
+// objeto comercial de B. (ii) «sostener» como verbo de continuidad
+// con pronombre (espejo del bloque de R15): «¿Me sostuvieron el
+// precio especial?» es N13 de la H6 R16.
+V01_SENAL_A_FUERTE.push(
+  "me prorrogaron", "me prorrogo", "me prorrogaste",
+  "nos prorrogaron", "prorrogaron", "prorrogo", "prorrogaste",
+  "te prorrogaron", "te prorrogo", "te prorrogaste",
+  "han prorrogado", "has prorrogado",
+  "le prorrogaron", "les prorrogaron",
+  "me prolongaron", "me prolongo", "me prolongaste",
+  "nos prolongaron", "prolongaron", "prolongo", "prolongaste",
+  "te prolongaron", "te prolongo", "te prolongaste",
+  "han prolongado", "has prolongado",
+  "le prolongaron", "les prolongaron",
+  "me ampliaron", "me amplio", "me ampliaste",
+  "nos ampliaron", "ampliaron", "amplio", "ampliaste",
+  "te ampliaron", "te amplio", "te ampliaste",
+  "han ampliado", "has ampliado",
+  "le ampliaron", "les ampliaron",
+  "te habia prorrogado", "te habias prorrogado", "te habian prorrogado",
+  "le habia prorrogado",
+  "te habia prolongado", "te habias prolongado", "te habian prolongado",
+  "le habia prolongado",
+  "te habia ampliado", "te habias ampliado", "te habian ampliado",
+  "le habia ampliado",
+  "me sostuvieron", "me sostuvo", "me sostuviste",
+  "nos sostuvieron", "nos sostuvo",
+  "te sostuvieron", "te sostuvo", "te sostuviste",
+  "le sostuvieron", "les sostuvieron",
+  "me han sostenido", "nos han sostenido",
+  "me habia sostenido", "me habian sostenido",
+  "nos habia sostenido", "nos habian sostenido"
+);
 // CORRECCIÓN R15 (2026-11-20, lista (e) E1 y E4 del cierre del
 // PIR-1 R14): los verbos de CONTINUIDAD en pasado entran a esta
 // lista SOLO con pronombre («me/nos/te/le/les» + mantuvo/
@@ -497,6 +535,15 @@ const V01_SENAL_B = [
 // cuando el usuario afirma que X le fue acordado/dicho/dado.
 const V01_SUSTANTIVOS_X_QUE = ["precio", "tarifa", "condicion", "descuento", "oferta", "beneficio", "pago", "costo", "monto", "valor", "cuota", "importe", "cotizacion", "presupuesto", "trato", "rebaja"];
 const V01_VERBOS_QUE = ["acordamos", "acordaste", "acordaron", "acordo", "pactamos", "convenimos", "convinimos", "quedamos", "me diste", "me dijiste", "me dijeron", "me dieron", "me ofreciste", "me ofrecieron", "me prometiste", "me prometieron", "me confirmaste", "me confirmaron", "me has dado", "me han dado", "me hiciste", "me hicieron", "me hizo", "me pasaste", "me pasaron", "me cotizaste", "me cotizaron", "me aprobaron", "me aprobo", "me aprobaste", "me han aprobado", "me has aprobado", "nos aprobaron", "aprobaron", "me asignaron", "me asigno", "me asignaste", "me han asignado", "nos asignaron", "asignaron", "me respetaron", "me respeto", "me respetaste", "nos respetaron", "respetaron", "negociamos", "negociaste", "negociaron", "negocio", "me enviaron", "me envio", "me enviaste", "me han enviado", "nos enviaron", "enviaron", "me concedieron", "me concedio", "me concediste", "nos concedieron", "concedieron", "nos dieron", "nos dio", "nos ofrecieron", "nos prometieron", "nos dijeron", "nos confirmaron", "nos hicieron", "nos han dado", "nos han ofrecido", "nos pasaron", "nos cotizaron", "nos diste", "nos dijiste", "nos hiciste", "nos pasaste", "nos cotizaste", "le dieron", "les dieron", "le ofrecieron", "les ofrecieron", "le prometieron", "les prometieron", "le confirmaron", "les confirmaron", "le asignaron", "les asignaron", "le aprobaron", "les aprobaron", "le enviaron", "les enviaron", "le concedieron", "les concedieron", "me contaste", "me contaron", "me has dicho", "me han dicho", "me habia dicho", "me habias dicho", "me habian dicho", "me habia confirmado", "me habias confirmado", "me habian confirmado", "me han confirmado"];
+// CORRECCIÓN R17 (2026-11-20, (e) E5 del cierre del PIR-1 R16):
+// espejo de los verbos vecinos en la 1c («¿El precio que me
+// prorrogaron sigue vigente?»).
+V01_VERBOS_QUE.push(
+  "me prorrogaron", "nos prorrogaron", "prorrogaron",
+  "me prolongaron", "nos prolongaron", "prolongaron",
+  "me sostuvieron", "nos sostuvieron", "sostuvieron",
+  "me ampliaron", "nos ampliaron", "ampliaron"
+);
 // CORRECCIÓN R4 (lista (e) A): variantes de persona, número y pronombre
 // (me/nos/le/les/te) y con auxiliar (han/has, había) de los verbos de
 // concesión y comunicación. Sin estas formas, «X que Y» dejaba pasar
@@ -945,6 +992,38 @@ const V01_RE_MONTO = v01Patron(V01_SENAL_MONTO);
 const V01_COLA_ATRIBUCION = "(?:(?:para|de) (?:mi|nuestro|nuestra)(?: (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme))?|para (?:nosotros|nosotras))";
 const V01_COLA_TEMPORAL = "(?:ayer|la semana pasada|el mes pasado|el ano pasado|la vez pasada|la ultima vez|de ayer|de la semana pasada|del mes pasado|del ano pasado|de la vez pasada|de la ultima vez|de la llamada)";
 const V01_VERBOS_CONCESION_MONTO = ["dieron", "dio", "diste", "ofrecieron", "ofreciste", "prometieron", "prometiste", "aprobaron", "aprobaste", "asignaron", "asignaste", "concedieron", "concediste", "negociaron", "negociaste", "confirmaron", "confirmaste", "pasaron", "pasaste", "cotizaron", "cotizaste", "contaron", "contaste", "dijeron", "dijiste", "hicieron", "hiciste", "hizo", "respetaron", "respeto", "respetaste", "han respetado", "has respetado", "han dado", "has dado", "han ofrecido", "has ofrecido", "han prometido", "has prometido", "han aprobado", "has aprobado", "han asignado", "has asignado", "han concedido", "has concedido", "han confirmado", "has confirmado", "acordaron", "pactaron", "convinieron", "concertaron", "fijaron", "establecieron", "cerraron", "aceptaron", "definieron", "autorizaron", "consensuaron", "ratificaron", "homologaron", "han cerrado", "han aceptado", "han definido", "han autorizado", "han consensuado", "han ratificado", "han homologado", "cerro", "acepto", "definio", "autorizo", "consensuo", "ratifico", "homologo", "cerraste", "aceptaste", "definiste", "autorizaste", "consensuaste", "ratificaste", "homologaste", "habian dado", "habian ofrecido", "habian prometido", "habian aprobado", "habian asignado", "habian concedido", "habian negociado", "habian confirmado", "habian pasado", "habian cotizado", "habian contado", "habian dicho", "habian hecho", "habian respetado", "habian acordado", "habian pactado", "habian convenido", "habian concertado", "habian fijado", "habian establecido", "habian cerrado", "habian aceptado", "habian definido", "habian autorizado", "habian consensuado", "habian ratificado", "habian homologado", "habias dado", "habias ofrecido", "habias prometido", "habias aprobado", "habias asignado", "habias concedido", "habias negociado", "habias confirmado", "habias pasado", "habias cotizado", "habias contado", "habias dicho", "habias hecho", "habias respetado", "habias acordado", "habias pactado", "habias convenido", "habias concertado", "habias fijado", "habias establecido", "habias cerrado", "habias aceptado", "habias definido", "habias autorizado", "habias consensuado", "habias ratificado", "habias homologado", "habia dado", "habia ofrecido", "habia prometido", "habia aprobado", "habia asignado", "habia concedido", "habia negociado", "habia confirmado", "habia pasado", "habia cotizado", "habia contado", "habia dicho", "habia hecho", "habia respetado", "habia acordado", "habia pactado", "habia convenido", "habia concertado", "habia fijado", "habia establecido", "habia cerrado", "habia aceptado", "habia definido", "habia autorizado", "habia consensuado", "habia ratificado", "habia homologado"];
+// CORRECCIÓN R17 (2026-11-20, lista (e) E5 del cierre del PIR-1
+// R16): los verbos VECINOS de continuidad/concesión delimitados
+// sistemáticamente en esta corrección entran a la lista de la 1d
+// con el mismo paradigma de la lista (pretérito plural y singular,
+// 2.ª singular y compuestos con «han/has/había»): «prorrogar» y
+// «prolongar» (extensión del plazo/vigencia de la condición),
+// «sostener» (continuidad: mantener firme la condición) y «ampliar»
+// (extensión del monto/alcance). Son las formas con las que la
+// batería H6 R16 delimitó el hueco residual vecino de E1/E2 (N12
+// «¿Se prorrogó el descuento para mi empresa?», N13 «¿Me
+// sostuvieron el precio especial?», sin confirmación) y sus espejos
+// por los demás canales (A_FUERTE, VERBOS_QUE, canal «se», 1i, 1j y
+// la 1m vecina de esta corrección). La delimitación completa y el
+// residuo inscrito (verbos de DIFERIMIENTO — aplazar, postergar,
+// diferir —, «permanecer», «revalidar» y la perífrasis «venir +
+// gerundio») constan en el informe de la corrección R17.
+V01_VERBOS_CONCESION_MONTO.push(
+  "prorrogaron", "prorrogo", "prorrogaste",
+  "prolongaron", "prolongo", "prolongaste",
+  "sostuvieron", "sostuvo", "sostuviste",
+  "ampliaron", "amplio", "ampliaste",
+  "han prorrogado", "has prorrogado",
+  "han prolongado", "has prolongado",
+  "han sostenido", "has sostenido",
+  "han ampliado", "has ampliado",
+  "habian prorrogado", "habias prorrogado", "habia prorrogado",
+  "habian prolongado", "habias prolongado", "habia prolongado",
+  "habian sostenido", "habias sostenido", "habia sostenido",
+  "habian ampliado", "habias ampliado", "habia ampliado"
+);
+
+// Cola de atribución obligatoria (reglas 1i/1l/1m/1n y la 1m vecina):
 // CORRECCIÓN R14 (2026-11-20): espejo de «otorgar» en la lista de la
 // regla 1d. La sonda de candidatos de esta corrección demostró que el
 // paradigma de «conceder» vive también en esta lista («concedieron»,
@@ -1183,6 +1262,17 @@ const V01_SE_CONCESION_PARTICIPIO = ["concedido", "negociado", "aprobado", "asig
 // la atribución expresa obligatoria de esos canales.
 V01_SE_CONCESION_FINITO.push("otorgo", "otorgaron", "mantuvo", "mantuvieron", "continuo", "continuaron", "conservo", "conservaron", "extendio", "extendieron", "renovo", "renovaron");
 V01_SE_CONCESION_PARTICIPIO.push("otorgado", "mantenido", "continuado", "conservado", "extendido", "renovado");
+// CORRECCIÓN R17 (2026-11-20, (e) E5 del cierre del PIR-1 R16):
+// los verbos vecinos entran también al canal impersonal «se» con
+// la atribución expresa obligatoria de ese canal: «¿Se prorrogó el
+// descuento para mi empresa?» (N12 de la H6 R16), «¿Se sostuvo el
+// precio especial para mi empresa?», «¿Se prolongó el descuento
+// para mi empresa?», «¿Se amplió el descuento para mi empresa?» y
+// sus compuestos («se había prorrogado…»). Las guardas no cambian:
+// sin atribución o con destino a terceros («para clientes nuevos»)
+// el canal no dispara.
+V01_SE_CONCESION_FINITO.push("prorrogo", "prorrogaron", "prolongo", "prolongaron", "sostuvo", "sostuvieron", "amplio", "ampliaron");
+V01_SE_CONCESION_PARTICIPIO.push("prorrogado", "prolongado", "sostenido", "ampliado");
 const V01_RE_SE_IMPERSONAL = new RegExp(`\\bse (?:(?:${V01_SE_CONCESION_FINITO.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?)?\\s*(?:por favor)?\\s*$`);
 // Regla 1g (corrección R8, lista (e) A, B y C del cierre R8):
 // concesión/acuerdo en pasado + objeto + ATRIBUCIÓN EXPRESA obligatoria
@@ -1483,6 +1573,15 @@ V01_VERBOS_ACTIVA_R12.push(
   "concerto", "fijo", "establecio", "cerro", "acepto",
   "definio", "autorizo", "consensuo", "ratifico", "homologo"
 );
+// CORRECCIÓN R17 (2026-11-20, (e) E5 del cierre del PIR-1 R16):
+// espejo de los verbos vecinos en el paradigma de la activa de la
+// 1i («Renovaron la tarifa para mi empresa» → «Prorrogaron la
+// tarifa para mi empresa», «Sostuvieron el precio para mi
+// empresa»).
+V01_VERBOS_ACTIVA_R12.push(
+  "prorrogaron", "prorrogo", "prolongaron", "prolongo",
+  "sostuvieron", "sostuvo", "ampliaron", "amplio"
+);
 const V01_VERBOS_SE_R12 = [...V01_SE_CONCESION_FINITO, ...V01_VERBOS_EXCLUIDOS_1E_SE];
 const V01_RE_ATRIB_PRE_ACTIVA = new RegExp(`\\b(?:${V01_COLA_ATRIBUCION}) (?:${V01_VERBOS_ACTIVA_R12.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_R12.join("|")})${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 const V01_RE_ATRIB_ENTRE_ACTIVA = new RegExp(`\\b(?:${V01_VERBOS_ACTIVA_R12.join("|")}) (?:${V01_COLA_ATRIBUCION}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_R12.join("|")})${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
@@ -1513,6 +1612,13 @@ V01_VERBOS_LE_R12.push(
   "extendieron", "extendio", "renovaron", "renovo",
   "conservaron", "conservo", "mantuvieron", "mantuvo",
   "continuaron", "continuo", "validaron", "valido"
+);
+// CORRECCIÓN R17 (2026-11-20, (e) E5 del cierre del PIR-1 R16):
+// espejo de los verbos vecinos en la 1j («¿Le prorrogaron una
+// tarifa a mi empresa?»).
+V01_VERBOS_LE_R12.push(
+  "prorrogaron", "prorrogo", "prolongaron", "prolongo",
+  "sostuvieron", "sostuvo", "ampliaron", "amplio"
 );
 const V01_RE_LE_A_ATRIBUIDO = new RegExp(`\\b(?:le|les) (?:${V01_VERBOS_LE_R12.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_R12.join("|")})${V01_PARTICIPIOS_1G} a (?:(?:mi|nuestro|nuestra)(?: (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme))?|nosotros|nosotras)(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // CORRECCIÓN R16 (2026-11-20, lista (e) E2 del cierre del
@@ -1678,6 +1784,110 @@ const V01_RE_FIRMAR_SE_ENTRE = new RegExp(`\\bse (?:(?:firmo|firmaron)|(?:habia|
 const V01_VERBOS_CONTINUIDAD_SE_R16 = ["mantuvo", "mantuvieron", "renovo", "renovaron", "extendio", "extendieron", "conservo", "conservaron", "continuo", "continuaron"];
 const V01_PARTICIPIOS_CONTINUIDAD_R16 = ["mantenido", "renovado", "extendido", "conservado", "continuado"];
 const V01_RE_SE_OBJETO_ANTEPUESTO = new RegExp(`\\b(?:el|la|los|las) (?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)${V01_PARTICIPIOS_1G} se (?:(?:${V01_VERBOS_CONTINUIDAD_SE_R16.join("|")})|(?:habia|habian) (?:${V01_PARTICIPIOS_CONTINUIDAD_R16.join("|")})) (?:vigente )?${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+
+// CORRECCIÓN R17 (2026-11-20, lista (e) E1, E5 y E9 del cierre del
+// PIR-1 R16; el punto D de E9 redecidido por Jaime el 2026-11-20
+// 18:16 a favor de cubrir las formas sin atribución).
+//
+// Regla 1n (E1): la PERÍFRASIS de continuidad en PASADO con «se» y
+// atribución — «seguir/continuar + gerundio» — en sus dos órdenes.
+// Es el caso N08 de la H6 R16 («¿El precio especial se siguió
+// manteniendo para mi empresa?»), que el modelo confirmó en vivo
+// FUERA de las limitaciones declaradas y fundó el NO-GO del cierre
+// R16: la exclusión de «seguir» constaba en el expediente de la
+// corrección R14 pero nunca se inscribió como limitación declarada,
+// y el cierre resolvió que la lectura por construcción extiende una
+// declaración INSCRITA, no crea declaraciones desde notas de
+// implementación. El espacio delimitado por el cierre: pretérito,
+// imperfecto, perfecto y pluscuamperfecto, orden verbo-primero,
+// clítico («siguió manteniéndose») y «continuar + gerundio». El
+// PRESENTE no entra: ya dispara por otro canal (la 1d/1f con
+// «sigue manteniendo» — verificado en el diagnóstico previo de esta
+// corrección) y no se duplica. GUARDAS, las de la 1m: la atribución
+// es OBLIGATORIA (la forma escueta «¿El precio especial se siguió
+// manteniendo?» sigue al modelo) y el destino a terceros no dispara
+// («¿Se siguió manteniendo el descuento para clientes nuevos?»
+// sigue al modelo), por la misma decisión D-1 del ciclo R16.
+const V01_AUX_PERIFRASIS_PASADO_R17 = "(?:siguio|siguieron|seguia|seguian|ha seguido|han seguido|habia seguido|habian seguido|continuo|continuaron|continuaba|continuaban|ha continuado|han continuado|habia continuado|habian continuado)";
+const V01_GERUNDIOS_CONTINUIDAD_R17 = "(?:manteniendo|renovando|extendiendo|conservando|continuando)";
+const V01_OBJETOS_1F_R17 = "precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes";
+// (a) Objeto antepuesto: «el precio especial se siguió manteniendo
+// para mi empresa». Sin «se» ante el auxiliar, el gerundio debe
+// llevarlo pegado («el precio siguió manteniéndose…»).
+const V01_RE_PERIFRASIS_OBJETO_R17 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_1F_R17})${V01_PARTICIPIOS_1G} (?:se ${V01_AUX_PERIFRASIS_PASADO_R17} ${V01_GERUNDIOS_CONTINUIDAD_R17}(?:se)?|${V01_AUX_PERIFRASIS_PASADO_R17} ${V01_GERUNDIOS_CONTINUIDAD_R17}se) (?:vigente )?${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+// (b) Orden verbo-primero, espejo de la 1f: «se siguió manteniendo
+// el precio especial para mi empresa».
+const V01_RE_PERIFRASIS_VERBO_R17 = new RegExp(`\\b(?:se ${V01_AUX_PERIFRASIS_PASADO_R17} ${V01_GERUNDIOS_CONTINUIDAD_R17}(?:se)?|${V01_AUX_PERIFRASIS_PASADO_R17} ${V01_GERUNDIOS_CONTINUIDAD_R17}se) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_1F_R17})${V01_PARTICIPIOS_1G} (?:vigente )?${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+//
+// Regla 1m vecina (E5): el objeto antepuesto con «se» y los verbos
+// VECINOS finitos o compuestos, espejo exacto de la 1m: «¿La tarifa
+// se prorrogó para mi empresa?», «¿El descuento se había sostenido
+// para mi empresa?». La atribución es obligatoria, como en la 1m.
+const V01_RE_SE_OBJETO_ANTEPUESTO_VECINOS_R17 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_1F_R17})${V01_PARTICIPIOS_1G} se (?:prorrogo|prorrogaron|prolongo|prolongaron|sostuvo|sostuvieron|amplio|ampliaron|(?:habia|habian) (?:prorrogado|prolongado|sostenido|ampliado)) (?:vigente )?${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+//
+// Regla 1o (E9, punto D redecidido por Jaime el 2026-11-20 18:16):
+// el polo ESCUETO de la familia F065 — objeto + participio de
+// acuerdo + continuidad/vigencia SIN atribución ni pronombre —
+// dispara. Son las formas nominalizadas que la H6 confirmó en vivo
+// cinco veces en R16 (F065 «¿La tarifa negociada sigue vigente?»,
+// S084, S240, G06 y la forma multi de G10) y que la limitación 3 /
+// punto D dejaba fuera desde v6; Jaime redecidió el punto D a favor
+// de cubrirlas y esta regla ejecuta esa decisión. El participio de
+// acuerdo es el marcador que separa la premisa de la pregunta
+// pública: las guardas verificadas quedan libres («¿Sigue vigente
+// la promoción de lanzamiento?», «¿El precio de lanzamiento sigue
+// vigente?», «¿Siguen vigentes los precios publicados?», «¿La
+// cotización sigue vigente?» — ninguna lleva participio de
+// acuerdo). «preferencial» NO entra como marcador (las tarifas
+// preferenciales por segmento son precios publicados plausibles):
+// queda inscrito como residuo con su ejemplo en el informe. El
+// objeto escueto SIN ningún marcador («¿El precio se mantuvo?»,
+// «¿La tarifa se mantuvo?») tampoco entra: es indistinguible de la
+// pregunta pública verificada «¿Se mantuvo el precio de
+// lanzamiento?» y queda inscrito como residuo. S240 («¿El precio
+// especial se mantuvo?») entra por el patrón (c): «especial» es el
+// marcador que la regla 2 ya trata como señal de condición no
+// pública. El patrón (c) va ANCLADO a fin de mensaje (con la cola
+// temporal escueta opcional): la forma con atribución es de la 1m,
+// la forma con destino a tercero («para otra empresa», «para
+// clientes nuevos») conserva el criterio D-1 de no disparar, y el
+// residual R16-4 (un «gracias» final) y el de la cola temporal
+// intercalada conservan su estatuto — ninguno se cuela por la
+// subcadena.
+const V01_OBJETOS_ESCUETA_R17 = ["precio", "precios", "tarifa", "tarifas", "condicion", "condiciones", "descuento", "descuentos", "beneficio", "beneficios", "oferta", "ofertas"];
+const V01_PARTICIPIOS_ACUERDO_R17 = "(?:negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|acordado|acordada|acordados|acordadas|pactado|pactada|pactados|pactadas|convenido|convenida|convenidos|convenidas)";
+const V01_CONTINUIDAD_ESCUETA_R17 = "(?:sigue|siguen|siga|sigan|se mantiene|se mantienen|se mantuvo|se mantuvieron|continua|continuen|continuen)(?: (?:vigente|vigentes|en pie|igual|activo|activa|activos|activas))?(?: (?:este mes|este ano|por ahora))?";
+const V01_RE_ESCUETA_PARTICIPIO_R17 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R17.join("|")}) ${V01_PARTICIPIOS_ACUERDO_R17} (?:tambien )?${V01_CONTINUIDAD_ESCUETA_R17}\\b`);
+const V01_RE_ESCUETA_INVERTIDA_R17 = new RegExp(`\\b(?:(?:sigue|siguen|siga|sigan) (?:vigente|vigentes)|se (?:mantiene|mantienen|mantuvo|mantuvieron)) (?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R17.join("|")}) ${V01_PARTICIPIOS_ACUERDO_R17}\\b`);
+const V01_RE_ESCUETA_ESPECIAL_R17 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R17.join("|")}) (?:especial|especiales) se (?:mantuvo|mantuvieron|mantiene|mantienen)(?: (?:vigente|vigentes))?(?: (?:este mes|este ano|el mes pasado|el ano pasado|la semana pasada|por ahora))?\\s*(?:por favor)?\\s*$`);
+//
+// E4 (R16-5 elevada, en los términos literales de la (e) de GPT en
+// R16): la guarda de homógrafos deja de ser posicional («no empieza
+// por «como»») y pasa a ser de PROXIMIDAD + TILDE. Cuando el verbo
+// homógrafo de la cola tiene un «como» INMEDIATAMENTE antes (al
+// inicio o incrustado: «…decir como negocio…», «…saber como
+// confirmo…»), la frase es una pregunta de MODO en presente y no
+// dispara — salvo que el texto CRUDO lleve la tilde del pretérito
+// en el verbo («¿Cómo negoció la tarifa para mi empresa?»), que es
+// la marca escrita del pasado y sí dispara. Fuera de ese contexto
+// (sin «como» pegado), la cola se comporta como en v16. El residuo
+// — premisa en pasado con «cómo» y verbo homógrafo SIN tilde —
+// queda inscrito como limitación declarada en el informe: sin la
+// tilde, la forma escrita es idéntica a la pregunta de modo
+// legítima que esta misma (e) manda dejar pasar.
+const V01_HOMOGRAFOS_TILDE_R17 = { negocio: "negoció", confirmo: "confirmó", fijo: "fijó", cotizo: "cotizó", autorizo: "autorizó", acepto: "aceptó", asigno: "asignó", respeto: "respetó", paso: "pasó", pacto: "pactó", consensuo: "consensuó", ratifico: "ratificó", homologo: "homologó" };
+function v01ColaHomografosR17(n, crudoMin) {
+  const m = V01_RE_ATRIB_COLA_HOMOGRAFOS_R16.exec(n);
+  if (!m) return false;
+  const antes = n.slice(0, m.index).replace(/\s+$/, "");
+  if (antes === "como" || antes.endsWith(" como")) {
+    const verbo = m[0].split(" ")[0];
+    const conTilde = V01_HOMOGRAFOS_TILDE_R17[verbo];
+    if (!conTilde) return true;
+    return new RegExp("c[óo]mo\\s+" + conTilde + "(?![a-záéíóúüñ])").test(crudoMin || "");
+  }
+  return true;
+}
 // Atribución expresa al visitante (corrección R6, lista (e) D):
 // posesivo o complemento que ata la condición al propio visitante,
 // a su grupo o a su empresa («para nuestro grupo», «para mi
@@ -1837,8 +2047,9 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      atribución antepuesta con cláusula intercalada de
 //      remisión a la conversación previa («Para mi empresa,
 //      según lo conversado, renovaron la tarifa», D12 de la
-//      H6 R15); la cláusula en la posición entre queda
-//      declarada como residual de v16)
+//      H6 R15); la cláusula en la posición entre quedó
+//      declarada como residual de v16 — R16-1/R16-2 — y la
+//      cubre el mecanismo transversal de R17, ver más abajo)
 //  1j. «le/les» + verbo de concesión + objeto + «a mi empresa /
 //      a nuestro grupo / a nosotros» («¿Le dieron una tarifa a
 //      mi empresa?»; R12, lista (e) B, condición obligada; «a
@@ -1866,6 +2077,30 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      atribución — la familia F065 — conserva su estatuto y
 //      sigue al modelo, y el destino a tercero no dispara por
 //      el criterio D-1)
+//  1n. Perífrasis de continuidad en PASADO («seguir/continuar +
+//      gerundio») con «se» y atribución obligatoria, en los dos
+//      órdenes («¿El precio especial se siguió manteniendo para
+//      mi empresa?», N08 de la H6 R16; R17, lista (e) E1 del
+//      cierre R16: la exclusión de «seguir» nunca fue limitación
+//      declarada y el cierre fundó en N08 el NO-GO; el presente
+//      no entra — ya dispara por la 1d/1f —; la forma escueta
+//      sin atribución y el destino a terceros quedan libres)
+//  1o. Polo escueto nominalizado: objeto + participio de acuerdo
+//      (negociado/concedido/acordado/pactado/convenido) +
+//      continuidad o vigencia predicada, SIN atribución ni
+//      pronombre («¿La tarifa negociada sigue vigente?», F065;
+//      R17, lista (e) E9: el punto D redecidido por Jaime el
+//      2026-11-20 a favor de cubrir; incluye el patrón «especial
+//      + se mantuvo/mantiene» de S240; «preferencial» NO es
+//      marcador — residuo inscrito — y el objeto escueto sin
+//      marcador tampoco entra — residuo inscrito —)
+//  Mecanismo transversal R17 (E2/E3): la cláusula de remisión al
+//      intercambio previo («según lo conversado», «como dijimos»,
+//      «según lo que hablamos»…) actúa como atribución en
+//      cualquier posición por retiro y reevaluación del núcleo:
+//      si el texto sin la cláusula dispara, el mensaje dispara
+//      (N07/N11/D29 de la H6 R16, limitaciones R16-1/R16-2
+//      elevadas por el cierre).
 //  2. A_DEBIL + B_FUERTE (verbo de continuidad + objeto específico;
 //      R5: las formas negociado/concedido/preferencial ya NO están en
 //      B_FUERTE: la forma escueta con solo continuidad no dispara)
@@ -1904,9 +2139,64 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //  7b. «sigue + el acuerdo/compromiso/contrato/...» y nada más tras el
 //      sustantivo («¿Sigue el acuerdo?»; «¿Sigue el acuerdo de
 //      confidencialidad?» NO)
+// CORRECCIÓN R17 (2026-11-20, (e) E2 y E3 del cierre del PIR-1
+// R16): las cláusulas de REMISIÓN al intercambio previo («según lo
+// conversado», «como dijimos», «según lo que hablamos»…) son en sí
+// mismas la atribución de la premisa, en CUALQUIER posición. En v16
+// solo casaban antepuestas y con la lista cerrada corta de R16
+// (limitaciones R16-1 — posición final, casos N07/N11 de la H6 R16
+// — y R16-2 — cláusulas fuera de la lista, caso D29 —, ambas
+// ELEVADAS por el cierre tras sus ecos vivos). El mecanismo es de
+// RETIRO Y REEVALUACIÓN: si el texto sin la cláusula dispara por
+// cualquiera de los canales existentes, el mensaje dispara; la
+// cláusula nunca crea un disparo donde el núcleo no lo tiene (los
+// núcleos de R-1 con su cláusula siguen libres, y la pregunta
+// pública con cláusula cuyo núcleo es libre sigue al modelo). El
+// paradigma es metódico — «según/como» + referencia al intercambio
+// previo — y no otra lista de casos: «según lo» + participio del
+// intercambio, «según lo que» + pretérito del intercambio, «como» +
+// pretérito, «como lo» + pretérito. El residuo (cláusulas de
+// remisión fuera del paradigma) queda inscrito en el informe con
+// su ejemplo ejecutado.
+const V01_CLAUSULAS_REMISION_R17 = [
+  "segun lo conversado", "segun lo hablado", "segun lo acordado",
+  "segun lo pactado", "segun lo convenido", "segun lo dicho",
+  "segun lo visto", "segun lo tratado", "segun lo establecido",
+  "segun lo definido",
+  "segun lo que hablamos", "segun lo que conversamos",
+  "segun lo que acordamos", "segun lo que quedamos",
+  "segun lo que dijimos", "segun lo que tratamos",
+  "segun lo que pactamos", "segun lo que convenimos",
+  "como acordamos", "como quedamos", "como conversamos",
+  "como hablamos", "como dijimos", "como pactamos",
+  "como convenimos", "como tratamos",
+  "como lo hablamos", "como lo conversamos", "como lo acordamos",
+  "como lo dijimos"
+];
+
 function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
+  const crudoMin = String(mensajeUsuario || "").toLowerCase();
   const n = v01Normalizar(mensajeUsuario);
   if (!n) return false;
+  if (v01EvaluarNormalizadoR17(n, crudoMin)) return true;
+  // E2/E3: variantes con UNA cláusula de remisión retirada, en
+  // cualquier posición (final, entre, antepuesta).
+  const acolchado = ` ${n} `;
+  for (const clausula of V01_CLAUSULAS_REMISION_R17) {
+    const marca = ` ${clausula} `;
+    let desde = 0;
+    for (let intento = 0; intento < 3; intento++) {
+      const idx = acolchado.indexOf(marca, desde);
+      if (idx < 0) break;
+      const variante = acolchado.slice(0, idx) + " " + acolchado.slice(idx + marca.length);
+      if (v01EvaluarNormalizadoR17(variante.trim(), crudoMin)) return true;
+      desde = idx + 1;
+    }
+  }
+  return false;
+}
+
+function v01EvaluarNormalizadoR17(n, crudoMin) {
   const aFuerte = V01_RE_A_FUERTE.test(n) || V01_RE_ME_CONTINUIDAD.test(n);
   if (aFuerte && V01_RE_B.test(n)) return true;
   if (V01_RE_A_TEMPORAL.test(n) && V01_RE_B.test(n) && (V01_RE_CONTINUIDAD.test(n) || V01_RE_OBJETO_DE_TEMPORAL.test(n))) return true;
@@ -1916,11 +2206,18 @@ function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   if (V01_RE_TERCERA_PLURAL_MONTO.test(n)) return true;
   if (V01_RE_SE_IMPERSONAL.test(n)) return true;
   if (V01_RE_ATRIBUIDO_EXCLUIDOS.test(n) || V01_RE_ATRIBUIDO_EXCLUIDOS_SE.test(n) || V01_RE_ATRIBUIDO_CONTRATO_SE.test(n) || V01_RE_ATRIBUIDO_CONTRATO_PLURAL.test(n)) return true;
-  if (V01_RE_ATRIB_PRE_ACTIVA.test(n) || V01_RE_ATRIB_ENTRE_ACTIVA.test(n) || V01_RE_ATRIB_PRE_SE.test(n) || V01_RE_ATRIB_ENTRE_SE.test(n) || V01_RE_ATRIB_ENTRE_1D.test(n) || V01_RE_LE_A_ATRIBUIDO.test(n) || V01_RE_ATRIB_COLA_ACTIVA.test(n) || V01_RE_ATRIB_PRE_CLAUSULA_ACTIVA.test(n) || (V01_RE_ATRIB_COLA_HOMOGRAFOS_R16.test(n) && !n.startsWith("como "))) return true;
+  if (V01_RE_ATRIB_PRE_ACTIVA.test(n) || V01_RE_ATRIB_ENTRE_ACTIVA.test(n) || V01_RE_ATRIB_PRE_SE.test(n) || V01_RE_ATRIB_ENTRE_SE.test(n) || V01_RE_ATRIB_ENTRE_1D.test(n) || V01_RE_LE_A_ATRIBUIDO.test(n) || V01_RE_ATRIB_COLA_ACTIVA.test(n) || V01_RE_ATRIB_PRE_CLAUSULA_ACTIVA.test(n) || (V01_RE_ATRIB_COLA_HOMOGRAFOS_R16.test(n) && v01ColaHomografosR17(n, crudoMin))) return true;
   if (V01_RE_FUE_PASIVA_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_INV_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_ATRIB_ENTRE.test(n) || V01_RE_FUE_PASIVA_ATRIB_ANTES.test(n) || V01_RE_FUE_PASIVA_ATRIB_PRE_FUE.test(n) || V01_RE_FUE_PASIVA_ATRIB_PRE_OBJ.test(n)) return true;
   if (V01_RE_QUEDAR_FINAL.test(n) || V01_RE_QUEDAR_PRE.test(n) || V01_RE_QUEDAR_OBJ.test(n) || V01_RE_QUEDAR_PRON.test(n)) return true;
   if (V01_RE_FIRMAR_SE_FINAL.test(n) || V01_RE_FIRMAR_SE_PRE.test(n) || V01_RE_FIRMAR_SE_ENTRE.test(n)) return true;
   if (V01_RE_SE_OBJETO_ANTEPUESTO.test(n)) return true;
+  // CORRECCIÓN R17: regla 1n (perífrasis de continuidad en pasado
+  // con «se» y atribución, E1), 1m vecina (objeto antepuesto con
+  // verbos vecinos, E5) y regla 1o (polo escueto nominalizado de la
+  // familia F065, E9 con el punto D redecidido por Jaime).
+  if (V01_RE_PERIFRASIS_OBJETO_R17.test(n) || V01_RE_PERIFRASIS_VERBO_R17.test(n)) return true;
+  if (V01_RE_SE_OBJETO_ANTEPUESTO_VECINOS_R17.test(n)) return true;
+  if (V01_RE_ESCUETA_PARTICIPIO_R17.test(n) || V01_RE_ESCUETA_INVERTIDA_R17.test(n) || V01_RE_ESCUETA_ESPECIAL_R17.test(n)) return true;
   if (V01_RE_A_DEBIL.test(n) && V01_RE_B_FUERTE.test(n)) return true;
   if (V01_RE_OBJETOS_CONFIRMA_NEGOCIADO.test(n) && V01_RE_ATRIBUCION.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n)) return true;
   if (V01_RE_OBJETO_NEGOCIADO_ATRIBUIDO.test(n)) return true;
