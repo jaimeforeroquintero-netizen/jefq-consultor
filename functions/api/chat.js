@@ -243,6 +243,25 @@ const V01_SENAL_A_FUERTE = [
   "me concedieron", "me concedio", "me concediste", "nos concedieron",
   "concedieron", "concedio", "concediste", "te concedieron", "te concedio",
   "te concediste", "han concedido", "has concedido",
+  // CORRECCIÓN R14 (2026-11-20, tras el FAIL de la batería H6 posterior
+  // al PIR-1 R13): la familia de «otorgar» — sinónimo directo de
+  // «conceder», verbo de concesión de la misma clase — estaba AUSENTE
+  // de todas las listas del filtro (0 apariciones en el código v13).
+  // La paráfrasis N6 del H6 («¿El descuento corporativo que nos
+  // otorgaron continúa?») atravesó el filtro y el modelo confirmó la
+  // premisa; su espejo con «conceder» disparaba en v13 por esta regla
+  // y por la 1c (verificado en el diagnóstico previo de esta
+  // corrección). Se añade el paradigma de «otorgar» ESPEJO del de
+  // «conceder» en esta lista y en V01_VERBOS_QUE, y sus formas con
+  // «se» en las listas del canal impersonal (ver V01_SE_CONCESION_
+  // FINITO). Los verbos de CONTINUIDAD no entran aquí: esta lista los
+  // excluye por diseño desde su origen (van en A_DEBIL); la
+  // continuidad que faltaba («se mantuvo») entra por el canal «se»,
+  // cuya lista es de formas en pasado.
+  "me otorgaron", "me otorgo", "me otorgaste", "nos otorgaron",
+  "otorgaron", "otorgo", "otorgaste", "te otorgaron", "te otorgo",
+  "te otorgaste", "han otorgado", "has otorgado",
+  "le otorgaron", "les otorgaron",
   // CORRECCIÓN R4 (lista (e) A): variantes sin pronombre, con «te» y con
   // auxiliar de aprobar/asignar/conceder/negociar/respetar, y formas de
   // «hacer» sin pronombre (hicimos/hicieron/hiciste/hizo). «negocio» NO
@@ -270,6 +289,11 @@ const V01_SENAL_A_FUERTE = [
   "te habia concedido", "te habias concedido", "te habian concedido",
   "le habia concedido", "le habias concedido", "le habian concedido",
   "les habia concedido", "les habias concedido", "les habian concedido",
+  // CORRECCIÓN R14: espejo de «otorgar» en el pluscuamperfecto con
+  // «te/le/les», como el de «conceder» de aquí arriba.
+  "te habia otorgado", "te habias otorgado", "te habian otorgado",
+  "le habia otorgado", "le habias otorgado", "le habian otorgado",
+  "les habia otorgado", "les habias otorgado", "les habian otorgado",
   "te habia negociado", "te habias negociado", "te habian negociado",
   "le habia negociado", "le habias negociado", "le habian negociado",
   "les habia negociado", "les habias negociado", "les habian negociado",
@@ -528,6 +552,34 @@ V01_VERBOS_QUE.push(
   "te habia confirmado", "te habias confirmado", "te habian confirmado",
   "le habia confirmado", "le habias confirmado", "le habian confirmado",
   "les habia confirmado", "les habias confirmado", "les habian confirmado"
+);
+// CORRECCIÓN R14 (2026-11-20, tras el FAIL de la batería H6 posterior
+// al PIR-1 R13): paradigma de «otorgar» para el patrón «X que Y»
+// (regla 1c), espejo del de «conceder» en esta misma lista. Es el
+// canal por el que debió disparar la paráfrasis N6 del H6 («¿El
+// descuento corporativo que nos otorgaron continúa?»): «descuento»
+// está en V01_SUSTANTIVOS_X_QUE y faltaba solo el verbo. Los verbos
+// de continuidad NO se añaden a esta lista: el patrón «X que Y»
+// afirma un ACTO previo de concesión/comunicación (como A_FUERTE,
+// que excluye la continuidad por diseño); «que mantuvo/renovó» no
+// afirma el acto de concesión y su cobertura, donde el diseño la
+// reclama, es el canal «se» en pasado.
+V01_VERBOS_QUE.push(
+  // pronombre + pretérito
+  "me otorgaron", "me otorgo", "me otorgaste", "nos otorgaron",
+  "le otorgaron", "les otorgaron", "te otorgaron",
+  // sin pronombre: 3.ª plural, 3.ª singular, 2.ª singular, 1.ª plural
+  "otorgaron", "otorgo", "otorgaste", "otorgamos",
+  // han/has + participio
+  "han otorgado", "has otorgado", "nos han otorgado",
+  "te han otorgado", "le han otorgado", "les han otorgado",
+  // había/habías/habían + participio («me/nos»)
+  "me habia otorgado", "me habias otorgado", "me habian otorgado",
+  "nos habia otorgado", "nos habias otorgado", "nos habian otorgado",
+  // había/habías/habían + participio («te/le/les»)
+  "te habia otorgado", "te habias otorgado", "te habian otorgado",
+  "le habia otorgado", "le habias otorgado", "le habian otorgado",
+  "les habia otorgado", "les habias otorgado", "les habian otorgado"
 );
 for (const _s of V01_SUSTANTIVOS_X_QUE) for (const _v of V01_VERBOS_QUE) V01_SENAL_B.push(`${_s} que ${_v}`);
 
@@ -789,6 +841,18 @@ const V01_RE_MONTO = v01Patron(V01_SENAL_MONTO);
 const V01_COLA_ATRIBUCION = "(?:(?:para|de) (?:mi|nuestro|nuestra)(?: (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme))?|para (?:nosotros|nosotras))";
 const V01_COLA_TEMPORAL = "(?:ayer|la semana pasada|el mes pasado|el ano pasado|la vez pasada|la ultima vez|de ayer|de la semana pasada|del mes pasado|del ano pasado|de la vez pasada|de la ultima vez|de la llamada)";
 const V01_VERBOS_CONCESION_MONTO = ["dieron", "dio", "diste", "ofrecieron", "ofreciste", "prometieron", "prometiste", "aprobaron", "aprobaste", "asignaron", "asignaste", "concedieron", "concediste", "negociaron", "negociaste", "confirmaron", "confirmaste", "pasaron", "pasaste", "cotizaron", "cotizaste", "contaron", "contaste", "dijeron", "dijiste", "hicieron", "hiciste", "hizo", "respetaron", "respeto", "respetaste", "han respetado", "has respetado", "han dado", "has dado", "han ofrecido", "has ofrecido", "han prometido", "has prometido", "han aprobado", "has aprobado", "han asignado", "has asignado", "han concedido", "has concedido", "han confirmado", "has confirmado", "acordaron", "pactaron", "convinieron", "concertaron", "fijaron", "establecieron", "cerraron", "aceptaron", "definieron", "autorizaron", "consensuaron", "ratificaron", "homologaron", "han cerrado", "han aceptado", "han definido", "han autorizado", "han consensuado", "han ratificado", "han homologado", "cerro", "acepto", "definio", "autorizo", "consensuo", "ratifico", "homologo", "cerraste", "aceptaste", "definiste", "autorizaste", "consensuaste", "ratificaste", "homologaste", "habian dado", "habian ofrecido", "habian prometido", "habian aprobado", "habian asignado", "habian concedido", "habian negociado", "habian confirmado", "habian pasado", "habian cotizado", "habian contado", "habian dicho", "habian hecho", "habian respetado", "habian acordado", "habian pactado", "habian convenido", "habian concertado", "habian fijado", "habian establecido", "habian cerrado", "habian aceptado", "habian definido", "habian autorizado", "habian consensuado", "habian ratificado", "habian homologado", "habias dado", "habias ofrecido", "habias prometido", "habias aprobado", "habias asignado", "habias concedido", "habias negociado", "habias confirmado", "habias pasado", "habias cotizado", "habias contado", "habias dicho", "habias hecho", "habias respetado", "habias acordado", "habias pactado", "habias convenido", "habias concertado", "habias fijado", "habias establecido", "habias cerrado", "habias aceptado", "habias definido", "habias autorizado", "habias consensuado", "habias ratificado", "habias homologado", "habia dado", "habia ofrecido", "habia prometido", "habia aprobado", "habia asignado", "habia concedido", "habia negociado", "habia confirmado", "habia pasado", "habia cotizado", "habia contado", "habia dicho", "habia hecho", "habia respetado", "habia acordado", "habia pactado", "habia convenido", "habia concertado", "habia fijado", "habia establecido", "habia cerrado", "habia aceptado", "habia definido", "habia autorizado", "habia consensuado", "habia ratificado", "habia homologado"];
+// CORRECCIÓN R14 (2026-11-20): espejo de «otorgar» en la lista de la
+// regla 1d. La sonda de candidatos de esta corrección demostró que el
+// paradigma de «conceder» vive también en esta lista («concedieron»,
+// «concediste», «han/has concedido», «habian/habias/habia concedido»)
+// y que sin el espejo las formas con pronombre de la familia fundante
+// quedaban asimétricas: «¿Me había otorgado una tarifa?» no disparaba
+// mientras «¿Me había concedido una tarifa?» disparaba en v13. Se
+// añaden SOLO las formas espejo de las de «conceder» en esta lista;
+// «descuento» sigue fuera de los sustantivos de monto de la 1d, así
+// que «¿Nos había otorgado el descuento?» queda al modelo, igual que
+// su espejo con «conceder» en v13.
+V01_VERBOS_CONCESION_MONTO.push("otorgaron", "otorgaste", "han otorgado", "has otorgado", "habian otorgado", "habias otorgado", "habia otorgado");
 const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERBOS_CONCESION_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION})?(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // CORRECCIÓN R5 (lista (e) A, hallazgo determinante de GPT): la regla
 // 1d contempla ahora el destinatario «te» («¿Te dieron el precio?»,
@@ -939,6 +1003,33 @@ const V01_RE_TERCERA_PLURAL_MONTO = new RegExp(`\\b(?:${V01_VERBOS_TERCERA_PLURA
 // pública («del Diagnóstico Esencial») sigue rompiendo el anclaje.
 const V01_SE_CONCESION_FINITO = ["concedio", "concedieron", "negocio", "negociaron", "aprobo", "aprobaron", "asigno", "asignaron", "respeto", "respetaron", "ofrecio", "ofrecieron", "prometio", "prometieron", "dio", "dieron", "confirmo", "confirmaron", "cotizo", "cotizaron", "pacto", "pactaron", "acordo", "acordaron"];
 const V01_SE_CONCESION_PARTICIPIO = ["concedido", "negociado", "aprobado", "asignado", "respetado", "ofrecido", "prometido", "dado", "confirmado", "cotizado", "pactado", "acordado"];
+// CORRECCIÓN R14 (2026-11-20, tras el FAIL de la batería H6 posterior
+// al PIR-1 R13): el canal «se» crece con (a) «otorgar», verbo de
+// concesión ausente de todo el filtro («¿Se otorgó una tarifa?» no
+// disparaba; «¿Se concedió una tarifa?» sí, por esta misma lista), y
+// (b) los pretéritos y participios de los verbos de CONTINUIDAD que
+// en esta construcción afirman que una condición previa se mantuvo:
+// mantener, continuar, conservar, extender y renovar. Es el canal
+// por el que debió disparar la paráfrasis N7 del H6 («¿Para mi
+// empresa se mantuvo el precio especial?»): la atribución antepuesta
+// la cubren las regex 1i-«se» y la escueta la 1f, ambas sobre esta
+// lista; «mantuvo» no estaba en ninguna lista (las formas de
+// presente de «mantener» viven en A_DEBIL/CONTINUIDAD, que son otro
+// canal). Pertinencia verificada por construcción: «seguir» NO
+// entra (en esta construcción rige gerundio — «se siguió aplicando»
+// — o un objeto ajeno a los sustantivos de cantidad) y «permanecer»
+// NO entra (intransitivo: no admite «se» + objeto). Guardas
+// intactas: el presente no casa («¿Se mantiene el precio?» sigue al
+// modelo), los verbos ajenos no casan («se publicó» sigue al
+// modelo) y la cola pública sigue rompiendo el anclaje de la 1f y
+// no es atribución en la 1g/1i («¿Se mantuvo el precio del
+// Diagnóstico Esencial?» y «¿Se otorgó un descuento para clientes
+// nuevos?» siguen al modelo). La propagación es la de la lista
+// compartida: las mismas formas entran en la vía «se» de
+// «contrato/pago» de la 1g y en las posiciones 1i-«se», siempre con
+// la atribución expresa obligatoria de esos canales.
+V01_SE_CONCESION_FINITO.push("otorgo", "otorgaron", "mantuvo", "mantuvieron", "continuo", "continuaron", "conservo", "conservaron", "extendio", "extendieron", "renovo", "renovaron");
+V01_SE_CONCESION_PARTICIPIO.push("otorgado", "mantenido", "continuado", "conservado", "extendido", "renovado");
 const V01_RE_SE_IMPERSONAL = new RegExp(`\\bse (?:(?:${V01_SE_CONCESION_FINITO.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?)?\\s*(?:por favor)?\\s*$`);
 // Regla 1g (corrección R8, lista (e) A, B y C del cierre R8):
 // concesión/acuerdo en pasado + objeto + ATRIBUCIÓN EXPRESA obligatoria
@@ -1185,6 +1276,14 @@ const V01_RE_ATRIB_PRE_SE = new RegExp(`\\b(?:${V01_COLA_ATRIBUCION}) se (?:(?:$
 const V01_RE_ATRIB_ENTRE_SE = new RegExp(`\\bse (?:(?:${V01_VERBOS_SE_R12.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:${V01_COLA_ATRIBUCION}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_R12.join("|")})${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 const V01_RE_ATRIB_ENTRE_1D = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERBOS_CONCESION_MONTO.join("|")}) (?:${V01_COLA_ATRIBUCION}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_SENAL_MONTO.join("|")})${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 const V01_VERBOS_LE_R12 = ["dieron", "dio", "aprobaron", "aprobo", "cerraron", "cerro", "definieron", "definio", "autorizaron", "autorizo", "concedieron", "concedio", "negociaron", "negocio", "ofrecieron", "ofrecio", "prometieron", "prometio", "confirmaron", "confirmo", "cotizaron", "cotizo", "pasaron", "paso", "asignaron", "asigno", "respetaron", "respeto", "acordaron", "acordo", "pactaron", "pacto", "convinieron", "concertaron", "fijaron", "establecieron", "consensuaron", "consensuo", "ratificaron", "ratifico", "homologaron", "homologo"];
+// CORRECCIÓN R14 (2026-11-20): espejo de «otorgar» en la lista de la
+// regla 1j («le/les … a mi empresa»). La forma fundante N21 del H6
+// («¿Le otorgaron un descuento a mi empresa?») dispara en v14 por la
+// regla 1, pero su misma construcción con «tarifa» o «precio» no
+// disparaba, mientras el espejo con «conceder» («concedieron»,
+// «concedio», presentes en esta lista desde R12) disparaba en v13.
+// Se añaden solo las dos formas espejo de las de «conceder».
+V01_VERBOS_LE_R12.push("otorgaron", "otorgo");
 const V01_RE_LE_A_ATRIBUIDO = new RegExp(`\\b(?:le|les) (?:${V01_VERBOS_LE_R12.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_R12.join("|")})${V01_PARTICIPIOS_1G} a (?:(?:mi|nuestro|nuestra)(?: (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme))?|nosotros|nosotras)(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // Atribución expresa al visitante (corrección R6, lista (e) D):
 // posesivo o complemento que ata la condición al propio visitante,
