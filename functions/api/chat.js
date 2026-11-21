@@ -1784,6 +1784,17 @@ const V01_RE_FIRMAR_SE_ENTRE = new RegExp(`\\bse (?:(?:firmo|firmaron)|(?:habia|
 const V01_VERBOS_CONTINUIDAD_SE_R16 = ["mantuvo", "mantuvieron", "renovo", "renovaron", "extendio", "extendieron", "conservo", "conservaron", "continuo", "continuaron"];
 const V01_PARTICIPIOS_CONTINUIDAD_R16 = ["mantenido", "renovado", "extendido", "conservado", "continuado"];
 const V01_RE_SE_OBJETO_ANTEPUESTO = new RegExp(`\\b(?:el|la|los|las) (?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)${V01_PARTICIPIOS_1G} se (?:(?:${V01_VERBOS_CONTINUIDAD_SE_R16.join("|")})|(?:habia|habian) (?:${V01_PARTICIPIOS_CONTINUIDAD_R16.join("|")})) (?:vigente )?${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+// CORRECCIÓN R18 (2026-11-20, lista (e) E1 del cierre del PIR-1
+// R17): la posición INTERCALADA de la atribución en la 1m —
+// objeto + atribución + «se» + continuidad finita —, el primer
+// fundamento del NO-GO de R17 (hallazgo 1 de GPT, delimitado por
+// el cierre también en la forma finita: «¿El precio especial
+// para mi empresa se mantuvo?»). Espejo de la posición que la 1h
+// cubre desde R10 («¿El contrato para mi empresa fue
+// negociado?»). Las guardas son las de la 1m: la escueta sin
+// atribución sigue libre y el destino a tercero intercalado
+// («…para otra empresa se mantuvo») tampoco dispara (D-1).
+const V01_RE_SE_OBJETO_INTERCALADA_R18 = new RegExp(`\\b(?:el|la|los|las) (?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)${V01_PARTICIPIOS_1G} ${V01_COLA_ATRIBUCION} se (?:(?:${V01_VERBOS_CONTINUIDAD_SE_R16.join("|")})|(?:habia|habian) (?:${V01_PARTICIPIOS_CONTINUIDAD_R16.join("|")}))(?: vigente)?(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 
 // CORRECCIÓN R17 (2026-11-20, lista (e) E1, E5 y E9 del cierre del
 // PIR-1 R16; el punto D de E9 redecidido por Jaime el 2026-11-20
@@ -1818,12 +1829,33 @@ const V01_RE_PERIFRASIS_OBJETO_R17 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_O
 // (b) Orden verbo-primero, espejo de la 1f: «se siguió manteniendo
 // el precio especial para mi empresa».
 const V01_RE_PERIFRASIS_VERBO_R17 = new RegExp(`\\b(?:se ${V01_AUX_PERIFRASIS_PASADO_R17} ${V01_GERUNDIOS_CONTINUIDAD_R17}(?:se)?|${V01_AUX_PERIFRASIS_PASADO_R17} ${V01_GERUNDIOS_CONTINUIDAD_R17}se) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_1F_R17})${V01_PARTICIPIOS_1G} (?:vigente )?${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+// CORRECCIÓN R18 (2026-11-20, lista (e) E1 del cierre del PIR-1
+// R17): la posición INTERCALADA de la atribución en la 1n, en sus
+// dos órdenes — objeto + atribución + «se» + perífrasis («¿El
+// precio especial para mi empresa se siguió manteniendo?», la
+// verbatim del hallazgo 1 de GPT) y perífrasis + atribución +
+// objeto («¿Se siguió manteniendo para mi empresa el precio
+// especial?», delimitada por ejecución en esta corrección: en
+// v17 también atravesaba; el orden verbo-primero de la 1f sí
+// cubre su posición entre desde antes). Guardas, las de la 1n:
+// la escueta sin atribución sigue libre (R17-7, que conserva su
+// estatuto con la regla futura del cierre R17) y el destino a
+// tercero intercalado no dispara (D-1).
+const V01_RE_PERIFRASIS_INTERCALADA_R18 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_1F_R17})${V01_PARTICIPIOS_1G} ${V01_COLA_ATRIBUCION} (?:se ${V01_AUX_PERIFRASIS_PASADO_R17} ${V01_GERUNDIOS_CONTINUIDAD_R17}(?:se)?|${V01_AUX_PERIFRASIS_PASADO_R17} ${V01_GERUNDIOS_CONTINUIDAD_R17}se)(?: vigente)?(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_PERIFRASIS_VERBO_INTERCALADA_R18 = new RegExp(`\\b(?:se ${V01_AUX_PERIFRASIS_PASADO_R17} ${V01_GERUNDIOS_CONTINUIDAD_R17}(?:se)?|${V01_AUX_PERIFRASIS_PASADO_R17} ${V01_GERUNDIOS_CONTINUIDAD_R17}se) ${V01_COLA_ATRIBUCION} (?:(?:el|la|los|las|un|una|unos|unas) )?(?:${V01_OBJETOS_1F_R17})${V01_PARTICIPIOS_1G}(?: vigente)?(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 //
 // Regla 1m vecina (E5): el objeto antepuesto con «se» y los verbos
 // VECINOS finitos o compuestos, espejo exacto de la 1m: «¿La tarifa
 // se prorrogó para mi empresa?», «¿El descuento se había sostenido
 // para mi empresa?». La atribución es obligatoria, como en la 1m.
 const V01_RE_SE_OBJETO_ANTEPUESTO_VECINOS_R17 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_1F_R17})${V01_PARTICIPIOS_1G} se (?:prorrogo|prorrogaron|prolongo|prolongaron|sostuvo|sostuvieron|amplio|ampliaron|(?:habia|habian) (?:prorrogado|prolongado|sostenido|ampliado)) (?:vigente )?${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+// CORRECCIÓN R18 (2026-11-20, lista (e) E1): la posición
+// intercalada también en la 1m vecina — es el espejo exacto de
+// la 1m y la compleción de E1 lo alcanza («¿La tarifa para mi
+// empresa se prorrogó?» atravesaba en v17, delimitado por
+// ejecución en esta corrección). Se declara aquí como compleción
+// del espejo, no como elemento separado de la (e).
+const V01_RE_SE_OBJETO_INTERCALADA_VECINOS_R18 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_1F_R17})${V01_PARTICIPIOS_1G} ${V01_COLA_ATRIBUCION} se (?:prorrogo|prorrogaron|prolongo|prolongaron|sostuvo|sostuvieron|amplio|ampliaron|(?:habia|habian) (?:prorrogado|prolongado|sostenido|ampliado))(?: vigente)?(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 //
 // Regla 1o (E9, punto D redecidido por Jaime el 2026-11-20 18:16):
 // el polo ESCUETO de la familia F065 — objeto + participio de
@@ -1854,12 +1886,50 @@ const V01_RE_SE_OBJETO_ANTEPUESTO_VECINOS_R17 = new RegExp(`\\b(?:el|la|los|las)
 // residual R16-4 (un «gracias» final) y el de la cola temporal
 // intercalada conservan su estatuto — ninguno se cuela por la
 // subcadena.
-const V01_OBJETOS_ESCUETA_R17 = ["precio", "precios", "tarifa", "tarifas", "condicion", "condiciones", "descuento", "descuentos", "beneficio", "beneficios", "oferta", "ofertas"];
+// CORRECCIÓN R18 (2026-11-20, lista (e) E3, E4, E6 y E7 del
+// cierre del PIR-1 R17):
+// E4 — la lista de objetos de la 1o se extiende al conjunto
+// comercial delimitado por el cierre: los 13 objetos ejecutados
+// fuera de la lista de v17 en la construcción exacta (cuota,
+// mensualidad, abono, anticipo, monto, valor, costo, importe,
+// contrato, acuerdo, convenio, compromiso, plan, con sus
+// plurales). Se elige la LISTA extendida y no una construcción
+// genérica: el coste de la vía genérica quedó ejecutado por el
+// cierre (un patrón de sustantivo genérico capturaría «¿La
+// fecha acordada se mantiene?»); con la lista, los objetos no
+// comerciales quedan fuera por construcción.
+// E3 — los patrones (a) y (b) reciben la exclusión de destinos
+// que el patrón (c) ya aplicaba por su ancla: el destino a
+// tercero («para otra empresa») y el segmento público («para
+// clientes nuevos», «para empresas») NO disparan, por paridad
+// con (c) y por el criterio D-1. En (a) la exclusión es una
+// mirada negativa tras el predicado de continuidad que incluye
+// los adjuntos opcionales del propio predicado, para que el
+// retroceso de la regex no la eluda acortando el predicado; en
+// (b) va tras el participio.
+// E6/E7 — el patrón (c) se generaliza a la construcción de
+// MARCADOR: «especial» y «preferencial» (R17-6 elevada por el
+// cierre: D45 y D46 confirmaron en vivo) con el paradigma
+// finito de continuidad COMPLETO de la 1m (R17-5 elevada en su
+// construcción confirmada: D44 «se renovó», y «se extendió»,
+// «se conservó» y «¿El descuento especial se renovó?»,
+// ejecutados por el cierre), en dos patrones anclados: con «se»
+// + verbo finito o pluscuamperfecto, y con «sigue/siguen» +
+// vigencia predicada. El ancla conserva las guardas del (c): el
+// destino a tercero y el segmento público la rompen y quedan
+// libres, y las gemelas públicas sin marcador («¿Se renovó el
+// precio de lanzamiento?») no casan.
+const V01_OBJETOS_ESCUETA_R18 = ["precio", "precios", "tarifa", "tarifas", "condicion", "condiciones", "descuento", "descuentos", "beneficio", "beneficios", "oferta", "ofertas", "costo", "costos", "monto", "montos", "valor", "valores", "cuota", "cuotas", "importe", "importes", "mensualidad", "mensualidades", "abono", "abonos", "anticipo", "anticipos", "contrato", "contratos", "acuerdo", "acuerdos", "convenio", "convenios", "compromiso", "compromisos", "plan", "planes"];
 const V01_PARTICIPIOS_ACUERDO_R17 = "(?:negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|acordado|acordada|acordados|acordadas|pactado|pactada|pactados|pactadas|convenido|convenida|convenidos|convenidas)";
 const V01_CONTINUIDAD_ESCUETA_R17 = "(?:sigue|siguen|siga|sigan|se mantiene|se mantienen|se mantuvo|se mantuvieron|continua|continuen|continuen)(?: (?:vigente|vigentes|en pie|igual|activo|activa|activos|activas))?(?: (?:este mes|este ano|por ahora))?";
-const V01_RE_ESCUETA_PARTICIPIO_R17 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R17.join("|")}) ${V01_PARTICIPIOS_ACUERDO_R17} (?:tambien )?${V01_CONTINUIDAD_ESCUETA_R17}\\b`);
-const V01_RE_ESCUETA_INVERTIDA_R17 = new RegExp(`\\b(?:(?:sigue|siguen|siga|sigan) (?:vigente|vigentes)|se (?:mantiene|mantienen|mantuvo|mantuvieron)) (?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R17.join("|")}) ${V01_PARTICIPIOS_ACUERDO_R17}\\b`);
-const V01_RE_ESCUETA_ESPECIAL_R17 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R17.join("|")}) (?:especial|especiales) se (?:mantuvo|mantuvieron|mantiene|mantienen)(?: (?:vigente|vigentes))?(?: (?:este mes|este ano|el mes pasado|el ano pasado|la semana pasada|por ahora))?\\s*(?:por favor)?\\s*$`);
+const V01_DESTINO_EXCLUIDO_1O_R18 = "(?:para (?:otra|otras|otro|otros) (?:empresa|empresas|compania|companias|organizacion|organizaciones|grupo|grupos|persona|personas|negocio|negocios|pyme|pymes|cliente|clientes|sociedad|sociedades|institucion|instituciones)|para terceros|para (?:clientes|empresas|grupos|companias|negocios|pymes|personas|usuarios|visitantes|emprendedores|independientes|estudiantes|particulares|socios|afiliados|miembros)|para (?:nuevos|nuevas) (?:clientes|empresas|usuarios)|para (?:el|al) publico|para todo el publico)";
+const V01_RE_ESCUETA_PARTICIPIO_R17 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R18.join("|")}) ${V01_PARTICIPIOS_ACUERDO_R17} (?:tambien )?${V01_CONTINUIDAD_ESCUETA_R17}(?![a-z])(?!(?: (?:vigente|vigentes|en pie|igual|activo|activa|activos|activas))?(?: (?:este mes|este ano|por ahora))? ${V01_DESTINO_EXCLUIDO_1O_R18}\\b)`);
+const V01_RE_ESCUETA_INVERTIDA_R17 = new RegExp(`\\b(?:(?:sigue|siguen|siga|sigan) (?:vigente|vigentes)|se (?:mantiene|mantienen|mantuvo|mantuvieron)) (?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R18.join("|")}) ${V01_PARTICIPIOS_ACUERDO_R17}(?![a-z])(?!(?: (?:este mes|este ano|por ahora))? ${V01_DESTINO_EXCLUIDO_1O_R18}\\b)`);
+const V01_FINITOS_MARCADOR_R18 = "(?:mantuvo|mantuvieron|mantiene|mantienen|renovo|renovaron|extendio|extendieron|conservo|conservaron|continuo|continuaron)";
+const V01_PARTICIPIOS_MARCADOR_R18 = "(?:mantenido|renovado|extendido|conservado|continuado)";
+const V01_COLA_MARCADOR_R18 = "(?: (?:este mes|este ano|el mes pasado|el ano pasado|la semana pasada|por ahora))?\\s*(?:por favor)?\\s*$";
+const V01_RE_ESCUETA_MARCADOR_R18 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R18.join("|")}) (?:especial|especiales|preferencial|preferenciales) se (?:${V01_FINITOS_MARCADOR_R18}|(?:habia|habian) ${V01_PARTICIPIOS_MARCADOR_R18})(?: (?:vigente|vigentes))?${V01_COLA_MARCADOR_R18}`);
+const V01_RE_ESCUETA_MARCADOR_SIGUE_R18 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R18.join("|")}) (?:especial|especiales|preferencial|preferenciales) (?:sigue|siguen|siga|sigan)(?: (?:vigente|vigentes|en pie|igual))?${V01_COLA_MARCADOR_R18}`);
 //
 // E4 (R16-5 elevada, en los términos literales de la (e) de GPT en
 // R16): la guarda de homógrafos deja de ser posicional («no empieza
@@ -1929,9 +1999,9 @@ const V01_RE_OBJETO_NEGOCIADO_ATRIBUIDO = new RegExp(`^(?:(?:el|la|los|las) )?(?
 const V01_OBJETOS_2D = ["precio", "precios", "tarifa", "tarifas", "condicion", "condiciones", "descuento", "descuentos", "promocion", "promociones", "oferta", "ofertas", "beneficio", "beneficios", "pago", "pagos"];
 const V01_PARTICIPIOS_2D = ["acordado", "acordada", "acordados", "acordadas", "pactado", "pactada", "pactados", "pactadas", "convenido", "convenida", "convenidos", "convenidas"];
 const V01_CONTINUIDAD_2D = "(?:se (?:mantiene|mantienen)|sigue|siga|siguen|sigan|mantiene|mantienen|continua|continue|continuan|continuen)";
-const V01_RE_OBJETO_PARTICIPIO_CONTINUIDAD = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_2D.join("|")}) (?:${V01_PARTICIPIOS_2D.join("|")}) ${V01_CONTINUIDAD_2D}(?: (?:vigente|en pie|igual|activo|activa))?\\b`);
-const V01_RE_CONTINUIDAD_OBJETO_PARTICIPIO = new RegExp(`\\b${V01_CONTINUIDAD_2D} (?:el|la|los|las) (?:${V01_OBJETOS_2D.join("|")}) (?:${V01_PARTICIPIOS_2D.join("|")})\\b`);
-const V01_RE_SIGUE_VIGENTE_OBJETO_PARTICIPIO = new RegExp(`\\b(?:sigue|siga|siguen|sigan) vigente (?:el|la|los|las) (?:${V01_OBJETOS_2D.join("|")}) (?:${V01_PARTICIPIOS_2D.join("|")})\\b`);
+const V01_RE_OBJETO_PARTICIPIO_CONTINUIDAD = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_2D.join("|")}) (?:${V01_PARTICIPIOS_2D.join("|")}) ${V01_CONTINUIDAD_2D}(?: (?:vigente|en pie|igual|activo|activa))?(?![a-z])(?! (?:(?:vigente|en pie|igual|activo|activa) )?${V01_DESTINO_EXCLUIDO_1O_R18}\\b)`);
+const V01_RE_CONTINUIDAD_OBJETO_PARTICIPIO = new RegExp(`\\b${V01_CONTINUIDAD_2D} (?:el|la|los|las) (?:${V01_OBJETOS_2D.join("|")}) (?:${V01_PARTICIPIOS_2D.join("|")})(?![a-z])(?! ${V01_DESTINO_EXCLUIDO_1O_R18}\\b)`);
+const V01_RE_SIGUE_VIGENTE_OBJETO_PARTICIPIO = new RegExp(`\\b(?:sigue|siga|siguen|sigan) vigente (?:el|la|los|las) (?:${V01_OBJETOS_2D.join("|")}) (?:${V01_PARTICIPIOS_2D.join("|")})(?![a-z])(?! ${V01_DESTINO_EXCLUIDO_1O_R18}\\b)`);
 // Regla 4, excepción documento (corrección R4, lista (e) D, L3): «¿Lo que
 // me dijiste sigue en el informe?» pregunta por el contenido de un
 // documento, no por una condición comercial. La continuidad seguida de
@@ -2076,7 +2146,9 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      el orden verbo-primero ya lo cubría la 1f; sin
 //      atribución — la familia F065 — conserva su estatuto y
 //      sigue al modelo, y el destino a tercero no dispara por
-//      el criterio D-1)
+//      el criterio D-1; R18, lista (e) E1 del cierre R17: + la
+//      posición INTERCALADA de la atribución, también en la
+//      1m vecina)
 //  1n. Perífrasis de continuidad en PASADO («seguir/continuar +
 //      gerundio») con «se» y atribución obligatoria, en los dos
 //      órdenes («¿El precio especial se siguió manteniendo para
@@ -2084,7 +2156,9 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      cierre R16: la exclusión de «seguir» nunca fue limitación
 //      declarada y el cierre fundó en N08 el NO-GO; el presente
 //      no entra — ya dispara por la 1d/1f —; la forma escueta
-//      sin atribución y el destino a terceros quedan libres)
+//      sin atribución y el destino a terceros quedan libres;
+//      R18, lista (e) E1 del cierre R17: + la posición
+//      INTERCALADA de la atribución en los dos órdenes)
 //  1o. Polo escueto nominalizado: objeto + participio de acuerdo
 //      (negociado/concedido/acordado/pactado/convenido) +
 //      continuidad o vigencia predicada, SIN atribución ni
@@ -2093,14 +2167,24 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 //      2026-11-20 a favor de cubrir; incluye el patrón «especial
 //      + se mantuvo/mantiene» de S240; «preferencial» NO es
 //      marcador — residuo inscrito — y el objeto escueto sin
-//      marcador tampoco entra — residuo inscrito —)
+//      marcador tampoco entra — residuo inscrito —; R18, lista
+//      (e) del cierre R17: la lista de objetos se extiende al
+//      conjunto comercial delimitado (E4: cuota, contrato,
+//      acuerdo, plan…), los patrones (a)/(b) excluyen el
+//      destino a tercero y el segmento público como el (c)
+//      (E3), y «preferencial» pasa a ser marcador tras su
+//      elevación, con el paradigma finito de continuidad
+//      completo en el patrón de marcador (E6/E7))
 //  Mecanismo transversal R17 (E2/E3): la cláusula de remisión al
 //      intercambio previo («según lo conversado», «como dijimos»,
 //      «según lo que hablamos»…) actúa como atribución en
 //      cualquier posición por retiro y reevaluación del núcleo:
 //      si el texto sin la cláusula dispara, el mensaje dispara
 //      (N07/N11/D29 de la H6 R16, limitaciones R16-1/R16-2
-//      elevadas por el cierre).
+//      elevadas por el cierre). R18 (E2/E5 del cierre R17): el
+//      retiro es ACUMULATIVO (la composición de cláusulas ya no
+//      lo derrota) y el paradigma se completa con comentar,
+//      charlar y prometer.
 //  2. A_DEBIL + B_FUERTE (verbo de continuidad + objeto específico;
 //      R5: las formas negociado/concedido/preferencial ya NO están en
 //      B_FUERTE: la forma escueta con solo continuidad no dispara)
@@ -2158,45 +2242,136 @@ const V01_RE_SIGUE_ACUERDO_2 = new RegExp(`\\b(?:el|la|los|las)\\s+(?:${V01_SUST
 // pretérito, «como lo» + pretérito. El residuo (cláusulas de
 // remisión fuera del paradigma) queda inscrito en el informe con
 // su ejemplo ejecutado.
-const V01_CLAUSULAS_REMISION_R17 = [
+// CORRECCIÓN R18 (2026-11-20, (e) E2 y E5 del cierre del PIR-1
+// R17): dos compleciones del mecanismo. E2 — el retiro pasa a ser
+// ACUMULATIVO: el mecanismo de v17 retiraba UNA cláusula por
+// variante y la composición de dos o más cláusulas del propio
+// paradigma lo derrotaba (segundo fundamento del NO-GO de R17:
+// la verbatim de GPT, la misma cláusula repetida y tres
+// cláusulas atravesaban). Ahora se evalúa el texto completo,
+// cada variante de un retiro (comportamiento de v17, conservado)
+// y la cadena de retiros sucesivos hasta agotar las cláusulas,
+// evaluando tras cada retiro: si algún estado dispara, el
+// mensaje dispara; la cadena nunca crea un disparo que el núcleo
+// sin cláusulas no tenga, porque el último estado ES el núcleo.
+// E5 — el paradigma se completa con los verbos del intercambio
+// que confirmaron en vivo fuera de él (R17-3 ELEVADA: comentar,
+// charlar y prometer — S260, D38 y D39, los ejemplos verbatim
+// del registro —) y se cierra el producto de las cuatro
+// construcciones sobre el conjunto delimitado de verbos del
+// intercambio: hablar, conversar, comentar, charlar, decir,
+// acordar, quedar, pactar, convenir, prometer, ver, tratar,
+// establecer y definir. El residuo fuera del conjunto delimitado
+// («según lo indicado», «según lo mencionado», «como se
+// acordó», «según acordamos») queda inscrito en el informe con
+// sus ejemplos ejecutados.
+const V01_CLAUSULAS_REMISION_R18 = [
   "segun lo conversado", "segun lo hablado", "segun lo acordado",
   "segun lo pactado", "segun lo convenido", "segun lo dicho",
   "segun lo visto", "segun lo tratado", "segun lo establecido",
-  "segun lo definido",
+  "segun lo definido", "segun lo comentado", "segun lo charlado",
+  "segun lo prometido",
   "segun lo que hablamos", "segun lo que conversamos",
   "segun lo que acordamos", "segun lo que quedamos",
   "segun lo que dijimos", "segun lo que tratamos",
   "segun lo que pactamos", "segun lo que convenimos",
+  "segun lo que comentamos", "segun lo que charlamos",
+  "segun lo que prometimos", "segun lo que vimos",
+  "segun lo que establecimos", "segun lo que definimos",
   "como acordamos", "como quedamos", "como conversamos",
   "como hablamos", "como dijimos", "como pactamos",
-  "como convenimos", "como tratamos",
+  "como convenimos", "como tratamos", "como comentamos",
+  "como charlamos", "como prometimos", "como vimos",
+  "como establecimos", "como definimos",
   "como lo hablamos", "como lo conversamos", "como lo acordamos",
-  "como lo dijimos"
+  "como lo dijimos", "como lo comentamos", "como lo charlamos",
+  "como lo prometimos", "como lo tratamos", "como lo pactamos",
+  "como lo convenimos", "como lo quedamos"
 ];
 
 function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   const crudoMin = String(mensajeUsuario || "").toLowerCase();
   const n = v01Normalizar(mensajeUsuario);
   if (!n) return false;
-  if (v01EvaluarNormalizadoR17(n, crudoMin)) return true;
-  // E2/E3: variantes con UNA cláusula de remisión retirada, en
-  // cualquier posición (final, entre, antepuesta).
+  if (v01EvaluarNormalizadoR18(n, crudoMin)) return true;
+  // E2/E3 de R17 + E2 de R18: variantes con cláusulas de remisión
+  // retiradas, en cualquier posición (final, entre, antepuesta).
+  // Primero, cada variante de UN retiro (el comportamiento de
+  // v17); después, la cadena ACUMULATIVA de retiros sucesivos
+  // hasta que no quede ninguna cláusula, evaluando tras cada
+  // retiro (el estado final es el núcleo sin cláusulas).
   const acolchado = ` ${n} `;
-  for (const clausula of V01_CLAUSULAS_REMISION_R17) {
+  for (const clausula of V01_CLAUSULAS_REMISION_R18) {
     const marca = ` ${clausula} `;
     let desde = 0;
     for (let intento = 0; intento < 3; intento++) {
       const idx = acolchado.indexOf(marca, desde);
       if (idx < 0) break;
       const variante = acolchado.slice(0, idx) + " " + acolchado.slice(idx + marca.length);
-      if (v01EvaluarNormalizadoR17(variante.trim(), crudoMin)) return true;
+      if (v01EvaluarNormalizadoR18(variante.trim(), crudoMin)) return true;
       desde = idx + 1;
+    }
+  }
+  // Cadena ACUMULATIVA (E2 de R18): retira las cláusulas en
+  // orden de aparición en el texto, una por estado, limpiando la
+  // conjunción residual («y»/«e») que unía la cláusula retirada,
+  // y reevalúa tras cada retiro hasta el núcleo sin cláusulas.
+  let cadena = acolchado;
+  let huboRetiro = false;
+  for (;;) {
+    let mejorIdx = -1;
+    let mejorMarca = null;
+    for (const clausula of V01_CLAUSULAS_REMISION_R18) {
+      const marca = ` ${clausula} `;
+      const idx = cadena.indexOf(marca);
+      if (idx >= 0 && (mejorIdx < 0 || idx < mejorIdx)) {
+        mejorIdx = idx;
+        mejorMarca = marca;
+      }
+    }
+    if (mejorIdx < 0) break;
+    cadena = cadena.slice(0, mejorIdx) + " " + cadena.slice(mejorIdx + mejorMarca.length);
+    // Limpieza de conjunciones residuales, iterada hasta punto
+    // fijo: colapsa las dobles («y y» al retirar la cláusula del
+    // medio de una enumeración «A y B y C») y retira las que
+    // queden colgando al principio o al final de la cadena.
+    let antesLimpieza;
+    do {
+      antesLimpieza = cadena;
+      cadena = cadena
+        .replace(/\s+(?:y|e)\s+(?:y|e)\s+/g, " y ")
+        .replace(/^\s+(?:y|e)\s+/, " ")
+        .replace(/\s+(?:y|e)\s*$/, " ");
+    } while (cadena !== antesLimpieza);
+    huboRetiro = true;
+    if (v01EvaluarNormalizadoR18(cadena.trim(), crudoMin)) return true;
+  }
+  // Cierre del mecanismo (E2 de R18, delimitación del cierre
+  // R17 §2/§4.2: «las cláusulas son ellas mismas la
+  // atribución»): hay núcleos anclados cuyo canal EXIGE la cola
+  // de atribución (familias 1i/1g) y que por tanto no disparan
+  // ni con el núcleo desnudo ni con una sola cláusula, aunque la
+  // forma atribuida sí dispara («Renovaron la tarifa para mi
+  // empresa» dispara; «Renovaron la tarifa, según lo conversado
+  // y como acordamos» debe disparar por la misma doctrina que ya
+  // hace disparar la regla 1 cuando la cláusula aporta la
+  // señal). Si el mensaje traía cláusula(s) del paradigma y el
+  // núcleo desnudo no disparó, se evalúa UNA variante más: el
+  // núcleo con la atribución canónica hecha explícita al final.
+  // La variante no crea disparos sobre núcleos públicos: el
+  // núcleo público con la atribución explícita sigue sin
+  // disparar (ejecutado: «¿Cuánto cuesta el Diagnóstico
+  // Esencial, según lo conversado y como acordamos?» libre).
+  if (huboRetiro) {
+    const nucleo = cadena.trim();
+    if (nucleo && nucleo !== n && !V01_RE_ATRIBUCION.test(nucleo)) {
+      if (v01EvaluarNormalizadoR18(`${nucleo} para mi empresa`, crudoMin)) return true;
     }
   }
   return false;
 }
 
-function v01EvaluarNormalizadoR17(n, crudoMin) {
+function v01EvaluarNormalizadoR18(n, crudoMin) {
   const aFuerte = V01_RE_A_FUERTE.test(n) || V01_RE_ME_CONTINUIDAD.test(n);
   if (aFuerte && V01_RE_B.test(n)) return true;
   if (V01_RE_A_TEMPORAL.test(n) && V01_RE_B.test(n) && (V01_RE_CONTINUIDAD.test(n) || V01_RE_OBJETO_DE_TEMPORAL.test(n))) return true;
@@ -2210,14 +2385,19 @@ function v01EvaluarNormalizadoR17(n, crudoMin) {
   if (V01_RE_FUE_PASIVA_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_INV_ATRIBUIDA.test(n) || V01_RE_FUE_PASIVA_ATRIB_ENTRE.test(n) || V01_RE_FUE_PASIVA_ATRIB_ANTES.test(n) || V01_RE_FUE_PASIVA_ATRIB_PRE_FUE.test(n) || V01_RE_FUE_PASIVA_ATRIB_PRE_OBJ.test(n)) return true;
   if (V01_RE_QUEDAR_FINAL.test(n) || V01_RE_QUEDAR_PRE.test(n) || V01_RE_QUEDAR_OBJ.test(n) || V01_RE_QUEDAR_PRON.test(n)) return true;
   if (V01_RE_FIRMAR_SE_FINAL.test(n) || V01_RE_FIRMAR_SE_PRE.test(n) || V01_RE_FIRMAR_SE_ENTRE.test(n)) return true;
-  if (V01_RE_SE_OBJETO_ANTEPUESTO.test(n)) return true;
+  if (V01_RE_SE_OBJETO_ANTEPUESTO.test(n) || V01_RE_SE_OBJETO_INTERCALADA_R18.test(n)) return true;
   // CORRECCIÓN R17: regla 1n (perífrasis de continuidad en pasado
   // con «se» y atribución, E1), 1m vecina (objeto antepuesto con
   // verbos vecinos, E5) y regla 1o (polo escueto nominalizado de la
   // familia F065, E9 con el punto D redecidido por Jaime).
-  if (V01_RE_PERIFRASIS_OBJETO_R17.test(n) || V01_RE_PERIFRASIS_VERBO_R17.test(n)) return true;
-  if (V01_RE_SE_OBJETO_ANTEPUESTO_VECINOS_R17.test(n)) return true;
-  if (V01_RE_ESCUETA_PARTICIPIO_R17.test(n) || V01_RE_ESCUETA_INVERTIDA_R17.test(n) || V01_RE_ESCUETA_ESPECIAL_R17.test(n)) return true;
+  // CORRECCIÓN R18: las posiciones intercaladas de la 1n y de la
+  // 1m vecina (E1); en la 1o, la exclusión de destinos de los
+  // patrones (a)/(b) (E3), la lista de objetos extendida (E4) y
+  // los patrones de marcador «especial»/«preferencial» con el
+  // paradigma finito completo (E6/E7).
+  if (V01_RE_PERIFRASIS_OBJETO_R17.test(n) || V01_RE_PERIFRASIS_VERBO_R17.test(n) || V01_RE_PERIFRASIS_INTERCALADA_R18.test(n) || V01_RE_PERIFRASIS_VERBO_INTERCALADA_R18.test(n)) return true;
+  if (V01_RE_SE_OBJETO_ANTEPUESTO_VECINOS_R17.test(n) || V01_RE_SE_OBJETO_INTERCALADA_VECINOS_R18.test(n)) return true;
+  if (V01_RE_ESCUETA_PARTICIPIO_R17.test(n) || V01_RE_ESCUETA_INVERTIDA_R17.test(n) || V01_RE_ESCUETA_MARCADOR_R18.test(n) || V01_RE_ESCUETA_MARCADOR_SIGUE_R18.test(n)) return true;
   if (V01_RE_A_DEBIL.test(n) && V01_RE_B_FUERTE.test(n)) return true;
   if (V01_RE_OBJETOS_CONFIRMA_NEGOCIADO.test(n) && V01_RE_ATRIBUCION.test(n) && V01_RE_CONTINUIDAD_FUERTE.test(n)) return true;
   if (V01_RE_OBJETO_NEGOCIADO_ATRIBUIDO.test(n)) return true;
