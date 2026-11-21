@@ -583,6 +583,23 @@ const V01_SENAL_B = [
 // como «¿Cuál es el valor del año pasado?»; el patrón «X que Y» solo casa
 // cuando el usuario afirma que X le fue acordado/dicho/dado.
 const V01_SUSTANTIVOS_X_QUE = ["precio", "tarifa", "condicion", "descuento", "oferta", "beneficio", "pago", "costo", "monto", "valor", "cuota", "importe", "cotizacion", "presupuesto", "trato", "rebaja"];
+// CORRECCIÓN R20 (2026-11-21, (e) E5 del cierre del PIR-1 R19):
+// la clase de objetos financieros/comerciales pertinentes de la
+// delimitación de R19-7 entra en la construcción relativa: la
+// invertida de la 1o ya disparaba para estos objetos por la
+// construcción genérica, pero su relativo («¿Sigue vigente el
+// préstamo que acordamos?», el caso N12 de la H6 R19 en su
+// segunda forma) quedaba fuera porque la lista de la 1c era la
+// de v6. «factura» NO entra, inscrito en el informe de esta
+// corrección: es sustantivo de documento y su relativo con
+// verbos de entrega denota el documento emitido («la factura
+// que me dieron»), referencia legítima; su forma con «que
+// acordamos» queda como residuo inscrito de R19-7.
+V01_SUSTANTIVOS_X_QUE.push(
+  "prestamo", "prestamos", "credito", "creditos",
+  "suscripcion", "suscripciones", "poliza", "polizas",
+  "saldo", "saldos", "deuda", "deudas", "plan", "planes"
+);
 const V01_VERBOS_QUE = ["acordamos", "acordaste", "acordaron", "acordo", "pactamos", "convenimos", "convinimos", "quedamos", "me diste", "me dijiste", "me dijeron", "me dieron", "me ofreciste", "me ofrecieron", "me prometiste", "me prometieron", "me confirmaste", "me confirmaron", "me has dado", "me han dado", "me hiciste", "me hicieron", "me hizo", "me pasaste", "me pasaron", "me cotizaste", "me cotizaron", "me aprobaron", "me aprobo", "me aprobaste", "me han aprobado", "me has aprobado", "nos aprobaron", "aprobaron", "me asignaron", "me asigno", "me asignaste", "me han asignado", "nos asignaron", "asignaron", "me respetaron", "me respeto", "me respetaste", "nos respetaron", "respetaron", "negociamos", "negociaste", "negociaron", "negocio", "me enviaron", "me envio", "me enviaste", "me han enviado", "nos enviaron", "enviaron", "me concedieron", "me concedio", "me concediste", "nos concedieron", "concedieron", "nos dieron", "nos dio", "nos ofrecieron", "nos prometieron", "nos dijeron", "nos confirmaron", "nos hicieron", "nos han dado", "nos han ofrecido", "nos pasaron", "nos cotizaron", "nos diste", "nos dijiste", "nos hiciste", "nos pasaste", "nos cotizaste", "le dieron", "les dieron", "le ofrecieron", "les ofrecieron", "le prometieron", "les prometieron", "le confirmaron", "les confirmaron", "le asignaron", "les asignaron", "le aprobaron", "les aprobaron", "le enviaron", "les enviaron", "le concedieron", "les concedieron", "me contaste", "me contaron", "me has dicho", "me han dicho", "me habia dicho", "me habias dicho", "me habian dicho", "me habia confirmado", "me habias confirmado", "me habian confirmado", "me han confirmado"];
 // CORRECCIÓN R19 (2026-11-20, (e) E1 del cierre del PIR-1 R18):
 // espejo de «garantizar», «asegurar» y «reservar» en la 1c, con
@@ -592,6 +609,23 @@ V01_VERBOS_QUE.push(
   "me garantizaron", "garantizo", "me garantizaste", "nos garantizaron", "garantizaron", "le garantizaron", "les garantizaron",
   "me aseguraron", "aseguro", "me aseguraste", "nos aseguraron", "aseguraron", "le aseguraron", "les aseguraron",
   "me reservaron", "reservo", "me reservaste", "nos reservaron", "reservaron", "le reservaron", "les reservaron"
+);
+// CORRECCIÓN R20 (2026-11-21, (e) E2 y E3 del cierre del PIR-1
+// R19): «comprometer» entra en la 1c con sus formas de clítico:
+// la construcción relativa con cabeza comercial («¿La tarifa
+// que me comprometieron sigue vigente?», S316 de la H6 R19)
+// confirmó PLENA en vivo sobre el ejemplo verbatim de la
+// exclusión deliberada de R19 y el cierre la ELEVÓ a condición
+// obligada. La exclusión de R19 se refería al participio (en la
+// pasiva «fue» sin atribución y en el conjunto de acuerdo de la
+// 1o: ver el bloque R20); la relativa con clítico es la
+// construcción que el modelo confirmó y no comparte la lectura
+// de riesgo (el clítico atribuye el compromiso al visitante).
+// «revalidar» entra como espejo de «validar» (E3: R17-2
+// elevada; «¿El precio que me revalidaron sigue vigente?»).
+V01_VERBOS_QUE.push(
+  "me comprometieron", "comprometio", "me comprometio", "me comprometiste", "nos comprometieron", "comprometieron", "le comprometieron", "les comprometieron", "te comprometieron",
+  "me revalidaron", "revalido", "me revalido", "me revalidaste", "nos revalidaron", "revalidaron", "le revalidaron", "les revalidaron"
 );
 // CORRECCIÓN R17 (2026-11-20, (e) E5 del cierre del PIR-1 R16):
 // espejo de los verbos vecinos en la 1c («¿El precio que me
@@ -1150,6 +1184,15 @@ V01_VERBOS_CONCESION_MONTO.push(
   "habias continuado", "habia continuado",
   "validaron", "valido", "validaste"
 );
+// CORRECCIÓN R20 (2026-11-21, (e) E3 del cierre del PIR-1 R19):
+// «revalidar» entra en la 1d con la delimitación que «validar»
+// recibió en R15 — SOLO los pretéritos finitos; los compuestos
+// quedan fuera e inscritos — y en la 1e vía el push junto a su
+// lista («¿Revalidaron el precio para mi empresa?», forma D35
+// de la H6 R19, familia R17-2 elevada por el cierre).
+V01_VERBOS_CONCESION_MONTO.push(
+  "revalidaron", "revalido", "revalidaste"
+);
 const V01_RE_CONCESION_MONTO = new RegExp(`\\b(?:me|te|nos|le|les) (?:${V01_VERBOS_CONCESION_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: (?:un|una|dos|tres|cuatro|cinco|seis) (?:mes|meses|ano|anos|semana|semanas) mas)?(?: ${V01_COLA_ATRIBUCION})?(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
 // CORRECCIÓN R15 (2026-11-20, lista (e) E4 del cierre del
 // PIR-1 R14): la regex de la 1d admite una cola de DURACIÓN
@@ -1302,6 +1345,10 @@ const V01_VERBOS_TERCERA_PLURAL_MONTO = ["dieron", "dijeron", "ofrecieron", "pro
 V01_VERBOS_TERCERA_PLURAL_MONTO.push(
   "garantizaron", "aseguraron", "reservaron", "otorgaron", "comprometieron"
 );
+// CORRECCIÓN R20 (2026-11-21, (e) E3 del cierre del PIR-1 R19):
+// «revalidaron» en la 1e (forma D35 de la H6 R19: «¿Revalidaron
+// el precio para mi empresa?»), espejo de su entrada a la 1d.
+V01_VERBOS_TERCERA_PLURAL_MONTO.push("revalidaron");
 const V01_RE_TERCERA_PLURAL_MONTO = new RegExp(`\\b(?:${V01_VERBOS_TERCERA_PLURAL_MONTO.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?(?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes)(?: (?:acordado|acordada|acordados|acordadas|convenido|convenida|convenidos|convenidas|pactado|pactada|pactados|pactadas|negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|aprobado|aprobada|aprobados|aprobadas|asignado|asignada|asignados|asignadas|especial|especiales))?(?: ${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?)?\\s*(?:por favor)?\\s*$`);
 // Regla 1f (corrección R6, lista (e) A — impersonales con «se»):
 // «se» + verbo de concesión en pasado (3.ª singular o plural, o
@@ -1490,7 +1537,23 @@ const V01_RE_ATRIBUIDO_CONTRATO_PLURAL = new RegExp(`\\b(?:${V01_VERBOS_PLURAL_C
 // adjetivo, con participio y atribución presentes.
 const V01_OBJETOS_FUE = [...V01_OBJETOS_1G, "pago", "pagos", "cotizacion", "cotizaciones"];
 const V01_PARTICIPIOS_FUE = [];
-for (const _p of ["acordado", "pactado", "convenido", "concertado", "negociado", "concedido", "aprobado", "asignado", "respetado", "ofrecido", "prometido", "confirmado", "cotizado", "fijado", "establecido", "dado", "cerrado", "aceptado", "definido", "autorizado", "consensuado", "ratificado", "homologado", "otorgado", "extendido", "renovado", "mantenido", "continuado", "conservado", "garantizado", "asegurado", "reservado"]) {
+// CORRECCIÓN R20 (2026-11-21, (e) E2 del cierre del PIR-1 R19):
+// «comprometido» entra en esta lista — y con ella en la 1k,
+// cuyos patrones comparten la lista —. La exclusión deliberada
+// de R19 se delimita así: TODOS los patrones que consumen esta
+// lista exigen atribución expresa al visitante (la cola de la
+// 1h/1k o el pronombre de la 1k), y con cabeza comercial +
+// atribución la lectura de «comprometido» es la de compromiso
+// asumido, no la de riesgo (la de riesgo exige un agente/causa
+// —«por el ataque», «en el incidente»— que rompe el ancla de
+// estos patrones, y sus objetos típicos —seguridad, sistema,
+// cuenta, servidor— no están en V01_OBJETOS_FUE: guardas
+// ejecutadas en el corpus). La pasiva SIN atribución sigue
+// libre (ningún patrón de la lista la admite sin cola) y el
+// participio escueto de la 1o sigue fuera: ambos quedan
+// inscritos como residuo de R19-2 en el informe de esta
+// corrección, con sus ejemplos ejecutados.
+for (const _p of ["acordado", "pactado", "convenido", "concertado", "negociado", "concedido", "aprobado", "asignado", "respetado", "ofrecido", "prometido", "confirmado", "cotizado", "fijado", "establecido", "dado", "cerrado", "aceptado", "definido", "autorizado", "consensuado", "ratificado", "homologado", "otorgado", "extendido", "renovado", "mantenido", "continuado", "conservado", "garantizado", "asegurado", "reservado", "comprometido"]) {
   const _f = _p.slice(0, -1) + "a";
   V01_PARTICIPIOS_FUE.push(_p, _f, _p + "s", _f + "s");
 }
@@ -2040,10 +2103,21 @@ const V01_OBJETOS_ESCUETA_R18 = ["precio", "precios", "tarifa", "tarifas", "cond
 // inscrita: su lectura dominante es «puesto en riesgo», no
 // «comprometido» como acuerdo (ver el bloque R19).
 const V01_PARTICIPIOS_ACUERDO_R17 = "(?:negociado|negociada|negociados|negociadas|concedido|concedida|concedidos|concedidas|acordado|acordada|acordados|acordadas|pactado|pactada|pactados|pactadas|convenido|convenida|convenidos|convenidas|prometido|prometida|prometidos|prometidas|garantizado|garantizada|garantizados|garantizadas|asegurado|asegurada|asegurados|aseguradas|reservado|reservada|reservados|reservadas|otorgado|otorgada|otorgados|otorgadas)";
-const V01_CONTINUIDAD_ESCUETA_R17 = "(?:sigue|siguen|siga|sigan|se mantiene|se mantienen|se mantuvo|se mantuvieron|continua|continuen|continuen)(?: (?:vigente|vigentes|en pie|igual|activo|activa|activos|activas))?(?: (?:este mes|este ano|por ahora))?";
+const V01_CONTINUIDAD_ESCUETA_R17 = "(?:sigue|siguen|siga|sigan|se mantiene|se mantienen|se mantuvo|se mantuvieron|continua|continuen|continuen|permanece|permanecen)(?: (?:vigente|vigentes|en pie|igual|activo|activa|activos|activas))?(?: (?:este mes|este ano|por ahora))?";
 const V01_DESTINO_EXCLUIDO_1O_R18 = "(?:para (?:otra|otras|otro|otros) (?:empresa|empresas|compania|companias|organizacion|organizaciones|grupo|grupos|persona|personas|negocio|negocios|pyme|pymes|cliente|clientes|sociedad|sociedades|institucion|instituciones)|para terceros|para (?:clientes|empresas|grupos|companias|negocios|pymes|personas|usuarios|visitantes|emprendedores|independientes|estudiantes|particulares|socios|afiliados|miembros)|para (?:nuevos|nuevas) (?:clientes|empresas|usuarios)|para (?:el|al) publico|para todo el publico)";
 const V01_RE_ESCUETA_PARTICIPIO_R17 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R18.join("|")}) ${V01_PARTICIPIOS_ACUERDO_R17} (?:tambien )?${V01_CONTINUIDAD_ESCUETA_R17}(?![a-z])(?!(?: (?:vigente|vigentes|en pie|igual|activo|activa|activos|activas))?(?: (?:este mes|este ano|por ahora))? ${V01_DESTINO_EXCLUIDO_1O_R18}\\b)`);
-const V01_RE_ESCUETA_INVERTIDA_R17 = new RegExp(`\\b(?:(?:sigue|siguen|siga|sigan) (?:vigente|vigentes)|se (?:mantiene|mantienen|mantuvo|mantuvieron)) (?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R18.join("|")}) ${V01_PARTICIPIOS_ACUERDO_R17}(?![a-z])(?!(?: (?:este mes|este ano|por ahora))? ${V01_DESTINO_EXCLUIDO_1O_R18}\\b)`);
+const V01_RE_ESCUETA_INVERTIDA_R17 = new RegExp(`\\b(?:(?:sigue|siguen|siga|sigan|continua|continuen|continuen|permanece|permanecen) (?:vigente|vigentes)|se (?:mantiene|mantienen|mantuvo|mantuvieron)) (?:el|la|los|las) (?:${V01_OBJETOS_ESCUETA_R18.join("|")}) ${V01_PARTICIPIOS_ACUERDO_R17}(?![a-z])(?!(?: (?:este mes|este ano|por ahora))? ${V01_DESTINO_EXCLUIDO_1O_R18}\\b)`);
+// CORRECCIÓN R20 (2026-11-21, (e) E5 del cierre del PIR-1 R19):
+// la invertida de arriba y la genérica B de abajo reciben
+// «continúa vigente» y «permanece vigente»: la delimitación de
+// R19-7 ejecutó que la invertida solo casaba con «sigue» y «se
+// mantiene» — «¿Continúa vigente el préstamo acordado?» (N12 de
+// la H6 R19) atravesaba para TODO objeto, no por el objeto
+// sino por el verbo de continuidad —. La directa ya admitía
+// «continúa» desde R17; «permanece» entra en ambos órdenes como
+// el presente de la familia de R17-2 dentro del polo
+// nominalizado (el participio porta la premisa: sin participio
+// no hay disparo, ejecutado en el corpus).
 const V01_FINITOS_MARCADOR_R18 = "(?:mantuvo|mantuvieron|mantiene|mantienen|renovo|renovaron|extendio|extendieron|conservo|conservaron|continuo|continuaron)";
 const V01_PARTICIPIOS_MARCADOR_R18 = "(?:mantenido|renovado|extendido|conservado|continuado)";
 const V01_COLA_MARCADOR_R18 = "(?: (?:este mes|este ano|el mes pasado|el ano pasado|la semana pasada|por ahora))?\\s*(?:por favor)?\\s*$";
@@ -2588,7 +2662,7 @@ const V01_OBJETOS_EXCLUIDOS_1O_R19 = ["fecha", "fechas", "cita", "citas", "horar
 // participio («¿La cotización sigue vigente?», «¿Me preparan
 // una cotización?») quedan libres, ejecutado en el corpus.
 const V01_RE_1O_GENERICA_A_R19 = new RegExp(`\\b(?:el|la|los|las) ([a-z]+)(?: ([a-z]+))? ${V01_PARTICIPIOS_ACUERDO_R17} (?:tambien )?${V01_CONTINUIDAD_ESCUETA_R17}(?![a-z])`, "g");
-const V01_RE_1O_GENERICA_B_R19 = new RegExp(`\\b(?:(?:sigue|siguen|siga|sigan) (?:vigente|vigentes)|se (?:mantiene|mantienen|mantuvo|mantuvieron)) (?:el|la|los|las) ([a-z]+)(?: ([a-z]+))? ${V01_PARTICIPIOS_ACUERDO_R17}(?![a-z])`, "g");
+const V01_RE_1O_GENERICA_B_R19 = new RegExp(`\\b(?:(?:sigue|siguen|siga|sigan|continua|continuen|continuen|permanece|permanecen) (?:vigente|vigentes)|se (?:mantiene|mantienen|mantuvo|mantuvieron)) (?:el|la|los|las) ([a-z]+)(?: ([a-z]+))? ${V01_PARTICIPIOS_ACUERDO_R17}(?![a-z])`, "g");
 const V01_RE_1O_GENERICA_C_R19 = new RegExp(`\\b(?:el|la|los|las) ([a-z]+)(?: ([a-z]+))? (?:especial|especiales|preferencial|preferenciales) se (?:${V01_FINITOS_MARCADOR_R18}|(?:habia|habian) ${V01_PARTICIPIOS_MARCADOR_R18})(?: (?:vigente|vigentes))?${V01_COLA_MARCADOR_R18}`, "g");
 const V01_RE_1O_GENERICA_C_SIGUE_R19 = new RegExp(`\\b(?:el|la|los|las) ([a-z]+)(?: ([a-z]+))? (?:especial|especiales|preferencial|preferenciales) (?:sigue|siguen|siga|sigan)(?: (?:vigente|vigentes|en pie|igual))?${V01_COLA_MARCADOR_R18}`, "g");
 // Versiones globales de los patrones con lista de la 1o y de la
@@ -2761,6 +2835,161 @@ function v01EsSeguimientoVagoR19(mensajeUsuario) {
   return true;
 }
 
+// ══════════════════════════════════════════════════════════════
+// CORRECCIÓN R20 (2026-11-21, lista (e) §7 del cierre del PIR-1
+// R19; la bifurcación E8 la resolvió Jaime el 2026-11-21 a favor
+// de la rama (α-f): el criterio aplicado en v19 — la clase
+// semi-pública con participio de acuerdo + continuidad DISPARA
+// y sin participio queda libre — queda AUTORIZADO y se inscribe
+// como criterio decidido, no como desviación ni como residuo;
+// esta corrección no cambia ese comportamiento, solo el
+// registro). Elementos de este bloque:
+//   E1 — regla 1p: el MARCO DEL COMPLEMENTO INDIRECTO explícito
+//        sin clítico como POSICIÓN de atribución (fundamento
+//        del NO-GO de R19: el hallazgo ejecutado de GPT,
+//        delimitado por el cierre como celda posicional
+//        uniforme, no como lista de verbos).
+//   E3 — la familia de «permanecer» (R17-2 ELEVADA por
+//        confirmación plena atribuida en la H6 R19, D36):
+//        pretérito con atribución, la celda con marcador sin
+//        atribución y las perífrasis «sigue permaneciendo» y
+//        «venir + gerundio».
+// (E2 va en las listas: la relativa en V01_VERBOS_QUE y el
+// participio atribuido en V01_PARTICIPIOS_FUE; E5 va en los
+// conjuntos de continuidad de la 1o y en V01_SUSTANTIVOS_X_QUE.)
+// ══════════════════════════════════════════════════════════════
+
+// E1 — regla 1p. La celda que atraviesa en v19: verbo de los
+// canales de monto/concesión + «a mi empresa» / «a nuestra
+// empresa» (antepuesto o pospuesto) + objeto comercial escueto.
+// Ningún canal reconocía el sintagma «a + posesivo + empresa»
+// como atribución: la cola compartida solo admite «para/de» y
+// los canales con clítico exigen «le/les» o «me/nos». La regla
+// cubre la POSICIÓN: el espacio verbal es la unión de los
+// inventarios pretéritos de esos canales (1d completa, 1e y los
+// excluidos de la 1g, que ya viven en la 1d) más «firmar» en sus
+// pretéritos finitos — decisión registrada: «firmar» es la
+// familia del contrato y su celda con CI («¿Firmaron a mi
+// empresa un contrato?») no tiene lectura pública posible; su
+// canal propio (1l) solo cubre la forma con «se» —.
+// «comprometer» entra al marco por la unión (vive en las listas
+// transitivas 1d/1e desde R19): la exclusión inscrita de R19
+// gobernaba la LISTA de la 1j — que no se toca —, no la posición
+// del CI; la forma con «le» + CI («¿Le comprometieron una tarifa
+// a mi empresa?») dispara por este marco, y el delta lo registra
+// como flip justificado por E1+E2. «contratar»
+// NO entra (no vive en ningún canal del filtro; su celda queda
+// inscrita en el informe). El CI admite el mismo conjunto
+// nominal de la cola compartida y «a nosotros/nosotras» (la
+// cola ya atribuye con «para nosotros»). «a su empresa» NO
+// entra: conserva la limitación heredada 10 (ambigüedad del
+// posesivo de 3.ª persona), re-inscrita para este marco en el
+// informe; «a la empresa» NO entra: sin posesivo no hay
+// atribución al visitante — es la misma familia que la
+// consecuencia inscrita de E6 («para la empresa», D45) —.
+// Objetos: el espacio de la 1e/1f más «contrato» (1g) y «pago»
+// (1h/2d); «cotización»/«presupuesto» quedan fuera (cabezas
+// semi-públicas: su familia es la 1o y la 1h; la celda queda
+// inscrita en el informe). Guardas: el presente no entra (los
+// inventarios son de pasado), el CI a tercero no casa (D-1) y
+// el ancla de fin de mensaje es la de los canales hermanos.
+const V01_CI_R20 = "a (?:(?:mi|nuestro|nuestra) (?:grupo|empresa|compania|negocio|equipo|organizacion|pyme)|nosotros|nosotras)";
+const V01_OBJETOS_CI_R20 = "(?:precio|precios|tarifa|tarifas|condicion|condiciones|descuento|descuentos|oferta|ofertas|beneficio|beneficios|costo|costos|monto|montos|valor|valores|cuota|cuotas|importe|importes|contrato|contratos|pago|pagos)";
+// Los pretéritos de 3.ª singular de los verbos regulares en
+// -ar/-ir son HOMÓGRAFOS de la 1.ª persona del presente
+// («garantizo» = garantizó / yo garantizo): la delimitación de
+// esta corrección los separa en su propia pareja de patrones
+// con la guarda de proximidad + tilde de la corrección R17
+// (la pregunta de modo en presente —«¿Cómo negocio una tarifa
+// a mi empresa?»— no dispara salvo que el texto crudo lleve la
+// tilde del pretérito, que es su marca escrita). Los demás
+// singulares (dio, hizo, prometió, concedió, ofreció, mantuvo,
+// sostuvo, extendió, renovó, cerró) no son homógrafos y van en
+// la lista principal.
+const V01_HOMOGRAFOS_CI_R20 = ["garantizo", "aseguro", "reservo", "otorgo", "negocio", "aprobo", "asigno", "confirmo", "cotizo", "respeto", "paso", "pacto", "fijo", "autorizo", "acepto", "consensuo", "ratifico", "homologo", "valido", "revalido", "prorrogo", "prolongo", "conservo", "firmo", "amplio", "definio", "continuo"];
+const V01_HOMOGRAFOS_CI_TILDE_R20 = { garantizo: "garantizó", aseguro: "aseguró", reservo: "reservó", otorgo: "otorgó", negocio: "negoció", aprobo: "aprobó", asigno: "asignó", confirmo: "confirmó", cotizo: "cotizó", respeto: "respetó", paso: "pasó", pacto: "pactó", fijo: "fijó", autorizo: "autorizó", acepto: "aceptó", consensuo: "consensuó", ratifico: "ratificó", homologo: "homologó", valido: "validó", revalido: "revalidó", prorrogo: "prorrogó", prolongo: "prolongó", conservo: "conservó", firmo: "firmó", amplio: "amplió", definio: "definió", continuo: "continuó" };
+// Los verbos de NARRACIÓN («decir», «contar») quedan FUERA del
+// marco: la guarda documentada de R12 ((e) B, cat. 69 del
+// corpus: «¿Le contaron una tarifa a mi empresa?» no dispara)
+// los excluyó de los canales de atribución organizacional (la
+// lista de la 1j no los contiene) porque narrar una tarifa no
+// es concederla; viven solo en la 1d con clítico de 1.ª/2.ª
+// persona. El delta ejecutado v19→v20 lo confirmó: sin esta
+// exclusión, la posición pospuesta del CI alcanzaba «contaron»
+// por subcadena y rompía la guarda. Sus celdas en el marco
+// quedan inscritas en el informe con esta razón.
+const V01_NARRACION_CI_R20 = ["dijeron", "dijiste", "contaron", "contaste", "han dicho", "has dicho", "han contado", "has contado", "habian dicho", "habias dicho", "habia dicho", "habian contado", "habias contado", "habia contado"];
+const V01_VERBOS_CI_R20 = [...new Set([...V01_VERBOS_CONCESION_MONTO, ...V01_VERBOS_TERCERA_PLURAL_MONTO, ...V01_VERBOS_EXCLUIDOS_1E, "firmaron", "firmaste", "habian firmado", "habia firmado", "prometio", "concedio", "ofrecio", "sostuvo"])].filter((v) => !V01_HOMOGRAFOS_CI_R20.includes(v) && !V01_NARRACION_CI_R20.includes(v));
+const V01_RE_CI_ANTE_R20 = new RegExp(`\\b(?:${V01_VERBOS_CI_R20.join("|")}) (?:${V01_CI_R20}) (?:(?:el|la|los|las|un|una|unos|unas) )?${V01_OBJETOS_CI_R20}${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_CI_POS_R20 = new RegExp(`\\b(?:${V01_VERBOS_CI_R20.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?${V01_OBJETOS_CI_R20}${V01_PARTICIPIOS_1G} (?:${V01_CI_R20})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_CI_ANTE_HOMOGRAFOS_R20 = new RegExp(`\\b(?:${V01_HOMOGRAFOS_CI_R20.join("|")}) (?:${V01_CI_R20}) (?:(?:el|la|los|las|un|una|unos|unas) )?${V01_OBJETOS_CI_R20}${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_CI_POS_HOMOGRAFOS_R20 = new RegExp(`\\b(?:${V01_HOMOGRAFOS_CI_R20.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?${V01_OBJETOS_CI_R20}${V01_PARTICIPIOS_1G} (?:${V01_CI_R20})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+// La posición del CI antepuesta al verbo («¿A mi empresa
+// renovaron la tarifa?»): en v19 solo disparaba para los verbos
+// con entrada plena en A_FUERTE (garantizar) y quedaba libre
+// para el resto del marco; se cubre por uniformidad posicional
+// (compleción ejecutada de la delimitación, como las
+// intercaladas de R18). Con clítico («le») ya disparaba.
+const V01_RE_CI_PRE_R20 = new RegExp(`\\b(?:${V01_CI_R20}) (?:${V01_VERBOS_CI_R20.join("|")}) (?:(?:el|la|los|las|un|una|unos|unas) )?${V01_OBJETOS_CI_R20}${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_CI_PRE_HOMOGRAFOS_R20 = new RegExp(`\\b(?:${V01_CI_R20}) ((?:${V01_HOMOGRAFOS_CI_R20.join("|")})) (?:(?:el|la|los|las|un|una|unos|unas) )?${V01_OBJETOS_CI_R20}${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+function v01CIHomografosR20(n, crudoMin, regex, verboEnGrupo) {
+  const m = regex.exec(n);
+  if (!m) return false;
+  const antes = n.slice(0, m.index).replace(/\s+$/, "");
+  if (antes === "como" || antes.endsWith(" como")) {
+    const verbo = verboEnGrupo ? m[1] : m[0].split(" ")[0];
+    const conTilde = V01_HOMOGRAFOS_CI_TILDE_R20[verbo];
+    if (!conTilde) return true;
+    return new RegExp("c[óo]mo\\s+" + conTilde + "(?![a-záéíóúüñ])").test(crudoMin || "");
+  }
+  return true;
+}
+const V01_RE_CI_SE_ANTE_R20 = new RegExp(`\\bse (?:(?:${V01_VERBOS_SE_R12.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:${V01_CI_R20}) (?:(?:el|la|los|las|un|una|unos|unas) )?${V01_OBJETOS_CI_R20}${V01_PARTICIPIOS_1G}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_CI_SE_POS_R20 = new RegExp(`\\bse (?:(?:${V01_VERBOS_SE_R12.join("|")})|(?:habia|habian) (?:${V01_SE_CONCESION_PARTICIPIO.join("|")})) (?:(?:el|la|los|las|un|una|unos|unas) )?${V01_OBJETOS_CI_R20}${V01_PARTICIPIOS_1G} (?:${V01_CI_R20})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+// La pasiva «fue» con el CI en la posición de la cola (espejos
+// de las posiciones final, invertida y entre de la 1h).
+const V01_RE_FUE_CI_FINAL_R20 = new RegExp(`\\b(?:el|la|los|las|un|una|unos|unas) (?:${V01_OBJETOS_FUE.join("|")})${V01_SUF_OBJ_1H} (?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) (?:${V01_CI_R20})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_FUE_CI_INV_R20 = new RegExp(`\\b(?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) (?:el|la|los|las|un|una|unos|unas) (?:${V01_OBJETOS_FUE.join("|")})${V01_SUF_OBJ_1H} (?:${V01_CI_R20})(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_FUE_CI_ENTRE_R20 = new RegExp(`\\b(?:fue|fueron) (?:${V01_PARTICIPIOS_FUE.join("|")}) (?:${V01_CI_R20}) (?:el|la|los|las|un|una|unos|unas) (?:${V01_OBJETOS_FUE.join("|")})${V01_SUF_OBJ_1H}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+
+// E3 — «permanecer» y sus perífrasis. La construcción confirmada
+// (D36) es la de vigencia con sujeto comercial antepuesto, sin
+// «se» (permanecer es intransitivo: la 1m, que exige «se» +
+// verbo de continuidad, no la alcanza). Objetos: los de la 1f
+// más los de acuerdo/contrato de la guarda M044 (contrato,
+// acuerdo, convenio) y «plan». La celda SIN atribución y SIN
+// marcador («¿La tarifa permaneció vigente?») NO se cubre: es
+// el polo escueto de R-1/R17-7 (continuidad escueta sin
+// atribución ni participio), cuyo estatuto conservan las
+// rondas; queda re-inscrita en el informe con su ejemplo. La
+// celda sin atribución CON marcador («especial»/
+// «preferencial») SÍ se cubre, por la doctrina de la familia
+// (c) de la 1o (el marcador separa la condición no pública de
+// la pregunta pública, como en «se mantuvo»). El presente de
+// «permanecer» no entra: conserva su estatuto (guarda de la
+// (e)).
+const V01_OBJETOS_PERMANECER_R20 = `(?:${V01_OBJETOS_1F_R17}|contrato|contratos|acuerdo|acuerdos|convenio|convenios|plan|planes)`;
+const V01_PERMANECER_PASADO_R20 = "(?:permanecio|permanecieron|permanecia|permanecian|permaneciste|ha permanecido|han permanecido|habia permanecido|habian permanecido|habias permanecido)";
+const V01_RE_PERMANECER_ATRIB_R20 = new RegExp(`\\b(?:el|la|los|las) ${V01_OBJETOS_PERMANECER_R20}${V01_PARTICIPIOS_1G} ${V01_PERMANECER_PASADO_R20} (?:vigente |vigentes )?${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_PERMANECER_MARCADOR_R20 = new RegExp(`\\b(?:el|la|los|las) (?:${V01_OBJETOS_1F_R17}) (?:especial|especiales|preferencial|preferenciales) (?:permanecio|permanecieron)(?: (?:vigente|vigentes))?${V01_COLA_MARCADOR_R18}`);
+const V01_RE_SIGUE_PERMANECIENDO_R20 = new RegExp(`\\b(?:el|la|los|las) ${V01_OBJETOS_PERMANECER_R20}${V01_PARTICIPIOS_1G} (?:sigue|siguen|siga|sigan) permaneciendo (?:vigente |vigentes )?${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_GERUNDIOS_VENIR_R20 = "(?:manteniendo|renovando|conservando|extendiendo|continuando|permaneciendo)";
+const V01_RE_VENIR_OBJETO_R20 = new RegExp(`\\b(?:el|la|los|las) ${V01_OBJETOS_PERMANECER_R20}${V01_PARTICIPIOS_1G} (?:se viene ${V01_GERUNDIOS_VENIR_R20}|viene ${V01_GERUNDIOS_VENIR_R20}se) (?:vigente |vigentes )?${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+const V01_RE_VENIR_VERBO_R20 = new RegExp(`\\b(?:se viene ${V01_GERUNDIOS_VENIR_R20}|viene ${V01_GERUNDIOS_VENIR_R20}se) (?:(?:el|la|los|las|un|una|unos|unas) )?${V01_OBJETOS_PERMANECER_R20}${V01_PARTICIPIOS_1G} (?:vigente |vigentes )?${V01_COLA_ATRIBUCION}(?: ${V01_COLA_TEMPORAL})?\\s*(?:por favor)?\\s*$`);
+
+function v01ReglasR20(n, crudoMin) {
+  if (V01_RE_CI_ANTE_R20.test(n) || V01_RE_CI_POS_R20.test(n) || V01_RE_CI_PRE_R20.test(n)) return true;
+  if (v01CIHomografosR20(n, crudoMin, V01_RE_CI_ANTE_HOMOGRAFOS_R20)) return true;
+  if (v01CIHomografosR20(n, crudoMin, V01_RE_CI_POS_HOMOGRAFOS_R20)) return true;
+  if (v01CIHomografosR20(n, crudoMin, V01_RE_CI_PRE_HOMOGRAFOS_R20, true)) return true;
+  if (V01_RE_CI_SE_ANTE_R20.test(n) || V01_RE_CI_SE_POS_R20.test(n)) return true;
+  if (V01_RE_FUE_CI_FINAL_R20.test(n) || V01_RE_FUE_CI_INV_R20.test(n) || V01_RE_FUE_CI_ENTRE_R20.test(n)) return true;
+  if (V01_RE_PERMANECER_ATRIB_R20.test(n) || V01_RE_PERMANECER_MARCADOR_R20.test(n)) return true;
+  if (V01_RE_SIGUE_PERMANECIENDO_R20.test(n)) return true;
+  if (V01_RE_VENIR_OBJETO_R20.test(n) || V01_RE_VENIR_VERBO_R20.test(n)) return true;
+  return false;
+}
+
 function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   const crudoMin = String(mensajeUsuario || "").toLowerCase();
   const n = v01Normalizar(mensajeUsuario);
@@ -2771,6 +3000,9 @@ function v01EsAfirmacionPreviaNoVerificable(mensajeUsuario) {
   // variantes sin el adjunto interno tras la cláusula (E4).
   if (v01ClausulasGenericasR19(n, crudoMin)) return true;
   if (v01VariantesAdjuntoR19(n, crudoMin)) return true;
+  // CORRECCIÓN R20: regla 1p (marco del complemento indirecto,
+  // E1), pasiva «fue» con CI y la familia de «permanecer» (E3).
+  if (v01ReglasR20(n, crudoMin)) return true;
   return false;
 }
 
