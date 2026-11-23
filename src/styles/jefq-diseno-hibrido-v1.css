@@ -12,7 +12,7 @@ h1{font-size:clamp(2.25rem, 5vw, 3.75rem);line-height:1.08}
 h2{font-size:clamp(1.75rem, 3.5vw, 2.5rem);line-height:1.18}
 h3{font-size:clamp(1.25rem, 2vw, 1.5rem);line-height:1.3}
 button, .button, input, select, textarea{min-height:48px}
-:focus-visible{outline:3px solid var(--jefq-commercial);outline-offset:3px}
+/* Foco visible: regla global única en parches-consolidados.css (tarjeta, 2026-11-23); aquí se retira la competidora ámbar. */
 /* Ritmo hibrido. Hero, contacto y footer permanecen oscuros. */
 main>section:not(.landing-hero):not(.dark-section):nth-of-type(even), main>.section:not(.landing-hero):not(.dark-section):nth-of-type(even){color:var(--jefq-text-dark)}
 main>section:not(.landing-hero):not(.dark-section):nth-of-type(odd), main>.section:not(.landing-hero):not(.dark-section):nth-of-type(odd){color:var(--jefq-text-dark)}

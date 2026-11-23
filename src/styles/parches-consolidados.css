@@ -1096,3 +1096,14 @@ main .growth-card a{color:#67f2ae !important}
 
 /* Cierre-final (Misión 80) — condición de contraste de Copilot: tras el reorden, la etiqueta CONTACTO (#0b6e66) queda en 4,48:1 sobre #cfdfeb. Solo esta etiqueta; las otras superficies 4,48:1 (tira de evidencia) no se tocan. Precedente: .report-hero-v4 .section-label #095e55 (5,62:1). Medido efectivo: #095e55 sobre #cfdfeb = 5,62:1. */
 #contacto .label{color:#095e55 !important}
+
+/* Foco visible unificado (tarjeta «APIs para ARQ-F», 2026-11-23): UNA sola
+   regla global, a plena opacidad, cargada de última para mandar en la
+   cascada. Sustituye a las dos reglas competidoras retiradas de
+   global.css (cyan al 55 %) y de jefq-diseno-hibrido-v1.css (ámbar
+   --jefq-commercial). Los focos de componente deliberados y al menos
+   igual de visibles se respetan: .service-discover-link (anula el
+   contorno pero cambia fondo/borde/sombra), .skip (se revela) y el
+   input del asistente (borde cyan al enfocar). En tema claro,
+   tema-claro.css oscurece el color del contorno por legibilidad. */
+:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}

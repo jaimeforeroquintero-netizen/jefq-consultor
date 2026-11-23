@@ -147,7 +147,7 @@ button, input, select, textarea{font:inherit}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
 .contact-form label{display:block;margin-bottom:14px;color:#d1deea;font-size:.83rem;font-weight:700}
 .contact-form input, .contact-form select, .contact-form textarea{width:100%;margin-top:6px;padding:13px;color:#fff;background:#061421;border:1px solid rgba(125,181,225,.24);border-radius:10px;outline:0}
-.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(35,215,255,.08)}
+.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(35,215,255,.22)}
 .contact-form option{background:#061421}
 .consent{display:flex !important;align-items:flex-start;gap:10px}
 .consent input{width:18px;margin:4px 0 0}
@@ -306,8 +306,7 @@ button, input, select, textarea{font:inherit}
 @media (max-width:900px){.local-grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:620px){.local-grid{grid-template-columns:1fr}}
 /* ===== JEFQ Premium v2 (2026-10-10): pulimento visual ===== */
-/* Foco visible consistente */
-:focus-visible{outline:3px solid rgba(35,215,255,.55);outline-offset:3px;border-radius:6px}
+/* Foco visible: la regla global única vive al final de parches-consolidados.css (tarjeta, 2026-11-23). Aquí no se redefine. */
 /* Tarjetas de precio: elevación en hover para las 3 */
 .price-card{transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
 .price-card:hover{transform:translateY(-6px);border-color:rgba(35,215,255,.5);box-shadow:0 22px 60px rgba(0,174,232,.14)}

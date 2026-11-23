@@ -22,7 +22,7 @@ body{color:var(--text);background:radial-gradient(circle at 8% 0%, rgba(76,141,2
 .dark-section{background:radial-gradient(circle at 90% 20%, rgba(45,212,255,.08), transparent 25rem),
     linear-gradient(180deg, rgba(13,31,51,.7), rgba(8,21,38,.92))}
 input, select, textarea, .contact-form input, .contact-form select, .contact-form textarea{background:#0c2036;border-color:rgba(132,199,240,.34);color:#f8fbff}
-input:focus, select:focus, textarea:focus, .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus{border-color:#ffc263;box-shadow:0 0 0 4px rgba(255,184,77,.13)}
+input:focus, select:focus, textarea:focus, .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(35,215,255,.22)}
 .footer{background:linear-gradient(180deg, #07131f, #030912);border-top-color:rgba(113,190,234,.28)}
 .whatsapp{color:#06150d;background:linear-gradient(135deg, #63f2aa, #37db90);box-shadow:0 14px 36px rgba(55,219,144,.24)}
 /* Mejora de lectura: WCAG AA como objetivo visual */
