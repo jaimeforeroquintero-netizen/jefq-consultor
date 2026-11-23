@@ -23,10 +23,10 @@ const { candidato = false } = Astro.props;
     <h3>Así se ve el informe que recibe</h3>
     <p>Fragmento del informe demostrativo: portada y tabla de hallazgos con prioridades. El informe completo explica cada hallazgo con situación observada, impacto, evidencia redactada, acción recomendada y beneficio esperado.</p>
     <dl class="muestra-metricas">
-      <div><dt>Nivel general</dt><dd>{NIVEL_GENERAL_DEMO}</dd></div>
-      <div><dt>Hallazgos</dt><dd>{findings.length}</dd></div>
-      <div><dt>Prioridad alta</dt><dd>{counts.high}</dd></div>
-      <div><dt>Acciones</dt><dd>{totalActions}</dd></div>
+      <div><dt>Nivel general</dt><dd class="font-datos">{NIVEL_GENERAL_DEMO}</dd></div>
+      <div><dt>Hallazgos</dt><dd class="font-datos">{findings.length}</dd></div>
+      <div><dt>Prioridad alta</dt><dd class="font-datos">{counts.high}</dd></div>
+      <div><dt>Acciones</dt><dd class="font-datos">{totalActions}</dd></div>
     </dl>
   </header>
   <div class="muestra-tabla-wrap">

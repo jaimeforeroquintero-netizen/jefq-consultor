@@ -24,7 +24,7 @@ const { candidato = false, steps = CANONICAL_STEPS } = Astro.props;
   <ol class="diagram-steps">
     {steps.map(([n, t, d]) => (
       <li>
-        <span class="diagram-num" aria-hidden="true">{n}</span>
+        <span class="diagram-num font-datos" aria-hidden="true">{n}</span>
         <h3>{t}</h3>
         <p>{d}</p>
       </li>

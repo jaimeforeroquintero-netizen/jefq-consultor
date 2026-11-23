@@ -16,7 +16,7 @@ const { compact = false } = Astro.props;
   <ol class="timeline-steps">
     {remediationRoute.map((fase, i) => (
       <li>
-        <span class="timeline-num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+        <span class="timeline-num font-datos" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
         <p class="timeline-phase">{fase.fase} · {fase.dias}</p>
         <h3>{fase.titulo}</h3>
         {!compact && <p class="timeline-desc">{fase.descripcion}</p>}

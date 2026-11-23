@@ -36,7 +36,7 @@ const campos = [
   <ol class="anatomia-campos">
     {campos.map(([etiqueta, texto], i) => (
       <li>
-        <span class="anatomia-num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+        <span class="anatomia-num font-datos" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
         <h4>{etiqueta}</h4>
         <p>{texto}</p>
       </li>

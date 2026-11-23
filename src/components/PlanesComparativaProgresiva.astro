@@ -154,7 +154,7 @@ const PLACEHOLDERS = DIMENSIONES.flatMap((d, i) =>
     {planes.map((p, j) => (
       <article class="comparativa-progresiva-plan">
         <h4>{p.nombre}</h4>
-        <p class="comparativa-progresiva-precio">Desde {formatearCOP(precioDe(p.id))}</p>
+        <p class="comparativa-progresiva-precio font-datos">Desde {formatearCOP(precioDe(p.id))}</p>
         <dl>
           {DIMENSIONES.map((d) => (
             <div>

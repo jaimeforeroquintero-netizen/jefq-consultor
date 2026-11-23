@@ -1,5 +1,7 @@
-:root{--bg:#030814;--text:#f4f8ff;--muted:#9eb3ca;--cyan:#23d7ff;--green:#5ef0b4;--line:rgba(125,181,225,.2);--shadow:0 24px 80px rgba(0,0,0,.42);--radius:22px;--max:1180px;--ok:#0f766e;--ok-bg:#173a35;--warn:#9a6206;--warn-bg:#3d3010;--bad:#a92c22;--bad-bg:#3d201b;--info:#1d4f7a;--info-bg:#1d3045}
+:root{--bg:#030814;--text:#f4f8ff;--muted:#9eb3ca;--cyan:#23d7ff;--green:#5ef0b4;--line:rgba(125,181,225,.2);--shadow:0 24px 80px rgba(0,0,0,.42);--radius:22px;--max:1180px;--ok:#0f766e;--ok-bg:#173a35;--warn:#9a6206;--warn-bg:#3d3010;--bad:#a92c22;--bad-bg:#3d201b;--info:#1d4f7a;--info-bg:#1d3045;--font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 /* Tokens semánticos de estado (tarjeta «APIs para ARQ-F», 2026-11-23): --ok/--warn/--bad/--info con sus fondos -bg del esquema oscuro de la tarjeta. En el tema claro, tema-claro.css redefine solo los -bg con los valores claros de la tarjeta (#e0f2ef/#fdf0d3/#fbe7e3/#e3eef7). Sobre los -bg oscuros el texto va en los tonos claros de la tarjeta (#3ec9b8/#e8b44a/#f08a7d/#7db8e8); sobre los -bg claros, en el token base. */
+/* Fuente de datos (tarjeta, 2026-11-23): IBM Plex Mono solo para precios, cifras y etiquetas técnicas vía .font-datos. Nunca para texto corrido. */
+.font-datos{font-family:var(--font-mono)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:110px}
 body{margin:0;color:var(--text);background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;text-rendering:optimizeLegibility}
