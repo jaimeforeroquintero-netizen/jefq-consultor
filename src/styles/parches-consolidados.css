@@ -1107,3 +1107,26 @@ main .growth-card a{color:#67f2ae !important}
    input del asistente (borde cyan al enfocar). En tema claro,
    tema-claro.css oscurece el color del contorno por legibilidad. */
 :focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+
+/* Insignias de estado con punto (tarjeta «APIs para ARQ-F», 2026-11-23).
+   Componente .badge + modificadores semánticos con los tokens del
+   punto 1. La base conserva el aspecto efectivo actual de la insignia
+   del plan destacado (gradiente ámbar de marketing-conversion.css,
+   texto #141006) y le suma el punto de estado en --warn. Los
+   modificadores usan el fondo -bg del token y, en oscuro, el tono
+   claro de la tarjeta para texto y punto; tema-claro.css los pasa al
+   token base sobre el -bg claro. La regla de spans claros de
+   jefq-diseno-hibrido-v1.css ya excluye .badge, y esta capa carga
+   después de global.css y marketing-conversion.css: el componente
+   manda. La posición de la insignia en .price-card (absoluta, arriba)
+   sigue rigiéndose por global.css y no se toca. */
+.badge{display:inline-flex;align-items:center;gap:7px;margin-bottom:12px;padding:6px 10px;color:#141006;background:linear-gradient(135deg,#ffd27a,#ffab2f);border-radius:999px;font-size:.66rem;font-weight:950}
+.badge::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--warn)}
+.badge--ok{background:var(--ok-bg);color:#3ec9b8}
+.badge--ok::before{background:#3ec9b8}
+.badge--warn{background:var(--warn-bg);color:#e8b44a}
+.badge--warn::before{background:#e8b44a}
+.badge--bad{background:var(--bad-bg);color:#f08a7d}
+.badge--bad::before{background:#f08a7d}
+.badge--info{background:var(--info-bg);color:#7db8e8}
+.badge--info::before{background:#7db8e8}
