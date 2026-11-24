@@ -1069,10 +1069,28 @@ function v01ExtraerValor(texto) {
 // Opera sobre la respuesta completa, ya generada (ESP §6: sin streaming).
 // Piezas independientes entre sí y de H1 (ESP §4.1): S1 (V1+V2), S3 (V3),
 // S4 (chequeo relacional). Cada pieza devuelve {sustituiria, regla, clase}.
+// H-D1 (delta 1 R22): el punto como separador de miles («1.930.500») no es
+// frontera de oración. ESP §4.4 R-a juzga objeto+vigencia «en la misma
+// oración», y una cifra no son dos oraciones: el segmentador partía la
+// cifra y R-a nunca se cumplía. Se protege el punto antes de partir y se
+// restaura en cada fragmento, para que v01NumerosEnOracion siga viendo la
+// cifra intacta en crudo. Solo se protege dígito + punto + 3 dígitos no
+// seguidos de dígito: un punto final tras cifra («$421.500. Gracias.»)
+// sigue partiendo, como antes. El carácter de protección es de uso privado
+// (U+E000) y no aparece en texto real.
+const V01_MILES = "\uE000";
 function v01OracionesRespuesta(texto) {
+  const restaurar = (s) => s.split(V01_MILES).join(".");
   return String(texto || "")
+    // Lookbehind/lookahead sin consumo: los puntos de «1.930.500» se
+    // solapan por el dígito compartido («930» sirve a los dos puntos) y un
+    // replace con grupos se comería el segundo. La guarda es: punto
+    // precedido de dígito y seguido de exactamente 3 dígitos no seguidos
+    // de dígito (separador de miles); un punto final tras cifra no cumple
+    // la guarda y sigue partiendo.
+    .replace(/(?<=\d)\.(?=\d{3}(?!\d))/g, V01_MILES)
     .split(/(?:[.!?…]+|\n)+/)
-    .map((o) => ({ crudo: o.trim(), n: v01Normalizar(o) }))
+    .map((o) => { const crudo = restaurar(o.trim()); return { crudo, n: v01Normalizar(crudo) }; })
     .filter((o) => o.n.length > 0);
 }
 // Números con formato monetario/cantidad en una oración de la respuesta.
@@ -1185,6 +1203,14 @@ function v01PiezaS3(oraciones) {
   return { sustituiria: false, regla: null, clase: null };
 }
 // S4: chequeo relacional pretensión–respuesta (ESP §4.4).
+// H-D2 (delta 1 R22): reformulaciones anafóricas de la pretensión en la
+// propia respuesta («lo que acordamos», «lo acordado», …). Inscripción de
+// miembros nuevos de la clase ya definida en R-a (la lista «eso / ello /
+// lo mismo / lo anterior»): la respuesta que confirma «lo que acordamos»
+// menciona la pretensión anafórica igual que «eso». Solo decide junto a
+// vigencia en la misma oración y con pretensión activa; no es regla nueva.
+// Se compara sobre la oración normalizada (sin tildes ni mayúsculas).
+const V01_ANAFORAS_RESPUESTA = ["lo que acordamos", "lo que hemos acordado", "lo que se acordo", "lo acordado", "lo que hablamos", "lo que hemos hablado", "lo hablado", "lo que convenimos", "lo que hemos convenido", "lo convenido", "lo que pactamos", "lo que hemos pactado", "lo que se pacto", "lo pactado", "lo que definimos", "lo que hemos definido", "lo definido", "lo que conversamos", "lo que hemos conversado", "lo conversado"];
 function v01PiezaS4(oraciones, claims, respuesta) {
   const activas = claims.filter((c) => c.estado === "activa" && c.beneficiario === "visitante");
   const negadas = claims.filter((c) => c.estado === "activa" && c.modalidad === "negada");
@@ -1205,7 +1231,7 @@ function v01PiezaS4(oraciones, claims, respuesta) {
     if (/\?$/.test(o.crudo.trim())) continue;
     for (const c of activas) {
       const objTxt = c.objeto;
-      const mencionaObj = objTxt && tokens.some((t) => t === objTxt || v01EsNucleo(t) === objTxt) || tokens.some((t) => ["eso", "ello", "lo mismo", "lo anterior"].indexOf(t) >= 0);
+      const mencionaObj = objTxt && tokens.some((t) => t === objTxt || v01EsNucleo(t) === objTxt) || tokens.some((t) => ["eso", "ello", "lo mismo", "lo anterior"].indexOf(t) >= 0) || V01_ANAFORAS_RESPUESTA.some((f) => o.n.indexOf(f) >= 0);
       const vigencia = tokens.some((t) => ["sigu", "mantien", "manten", "continu", "vigent", "aplic", "qued", "conserv", "renuev", "sigue", "mantiene", "continua"].some((r) => t.indexOf(r) === 0));
       const pctReclamo = c.valor && c.valor.tipo === "porcentaje" && new RegExp(c.valor.valor + "\\s*%").test(o.crudo);
       if ((mencionaObj && vigencia) || pctReclamo) return { sustituiria: true, regla: "R-a-confirmacion", clase: "confirmacion-pretension", detalle: "pretension: " + (objTxt || "anafora") };
