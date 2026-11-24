@@ -121,11 +121,14 @@ function toAiMessages(messages) {
 }
 
 // FILTRO DETERMINISTA V-01 — INICIO
-// FILTRO DETERMINISTA V-01 — CORRECCIÓN R21 (2026-11-23).
-// Arquitectura universal según ESPECIFICACION_R21.md (ESP-R21 v1.0) y
+// FILTRO DETERMINISTA V-01 — CORRECCIÓN R21 (2026-11-23), ENMIENDA v1.2 (ciclo R22).
+// Arquitectura universal según ESPECIFICACION_R21.md (ESP-R21 v1.2) y
 // CONSOLIDADO_R21.md (19 condiciones C-01…C-19, decisiones D-a/D-b/D-c),
 // firmados por Jaime el 2026-11-23 («Sí a todo») y revisados en orden mayor
 // (Copilot, GPT y Claude: 3× APTO CON CONDICIONES). Regla OS-1 en el canon.
+// Enmienda v1.2 (Ruta A, Jaime 2026-11-23 18:43): ancla G1 sobre el objeto,
+// beneficiario G2, V4 solo de lo no afirmado, -ría = condicional (sin lista),
+// registro propio M5 independiente de H1, G3 ampliada (contrato/póliza/oferta).
 // Reemplaza el filtro enumerativo de v20 (reglas 1a–1p + 2x + 5, ~3.070 líneas)
 // por una arquitectura generativa:
 //   H1 (puerta de entrada, capa barata): construcción por ranuras — forma
@@ -144,7 +147,7 @@ function toAiMessages(messages) {
 // Referencias de sección en los comentarios: «ESP §x.y» = especificación;
 // «C-xx» = condición del consolidado; «L-xx» = limitación del registro §10.
 const V01_SAFE_REPLY = "No tengo un registro verificable de ese acuerdo, descuento o condición especial. Para confirmarlo, por favor comuníquese directamente con JEFQ Consultor.";
-const V01_VERSION = "21";
+const V01_VERSION = "22";
 
 // ── Configuración de modo (D-a / ESP §9) ──────────────────────────────────────
 // Piezas: H1 (S2), S1 = V1+V2 (lista blanca numérica y porcentajes),
@@ -302,6 +305,19 @@ function v01EsPrimeraPluralPasada(t) {
 // Sustantivos en -ía con tilde que la desinencia de imperfecto no debe
 // leer como verbos («garantía» es un sustantivo; el verbo es «garantizar»).
 const V01_NO_VERBO_IA = ["garantia", "farmacia", "policia", "energia", "tecnologia", "compania", "familia", "historia", "memoria", "categoria", "mayoria", "minoria", "alegria", "melodia", "sinfonia", "ortografia", "fotografia", "geografia", "filosofia", "teoria", "democracia", "burocracia", "aristocracia", "monarquia", "anarquia", "jerarquia"];
+// ¿El token es una forma verbal en modo condicional (-ría/-rías/-ríamos/
+// -rían)? Regla morfológica (ESP §1.4, precisión v1.2): presencia de -r-
+// ante -ía, no de lista — la lista cerrada de temas irregulares queda
+// retirada. La desinencia -ía sin -r- («comía», «vivía») es imperfecto y
+// NO es condicional. Se exige la tilde en el crudo, como el resto de las
+// formas en -ía. Consecuencia declarada de la regla (§1.4 v1.2): «quería»,
+// «prefería», «moría» (imperfecto de tema terminado en -r) se leen como
+// condicional, porque la regla decide por la -r- ante -ía.
+function v01EsCondicionalForma(t, r) {
+  if (!t || t.length < 5) return false;
+  if (!/r(ia|ias|iamos|ian)$/.test(t)) return false;
+  return /ría/.test(r || "");
+}
 function v01FormaVerbal(t, r, sinRaiz, esAdjetivo) {
   if (!t) return null;
   if (t === "si" || t === "mi" || t === "ti" || t === "que" || t === "todavia") return null; // «qué» es pronombre; «todavía», adverbio.
@@ -341,13 +357,13 @@ function v01FormaVerbal(t, r, sinRaiz, esAdjetivo) {
     if (/(ia|ias|iamos|ian)$/.test(t) && !/ía/.test(r)) return null;
     // Sustantivo en -ía con tilde («garantía»): no es imperfecto.
     if (/(ia|ias|iamos|ian)$/.test(t) && V01_NO_VERBO_IA.indexOf(t) >= 0) return null;
-    // El condicional en -ía («sería», «podría», «tendría», «habría»,
-    // «vería», «querría») NO es pretérito: es irrealis (ESP §1.4). La lista
-    // es de temas de condicional (infinitivo + ía); el imperfecto en -ía de
-    // tema terminado en -r («quería», «prefería», «moría») NO está en la
-    // lista y sigue contando como pasado.
-    const CONDICIONALES = ["ser", "ir", "habr", "podr", "tendr", "vendr", "pondr", "saldr", "valdr", "sabr", "cabr", "har", "dir", "ver", "querr", "deber"];
-    if (/(ia|ias|iamos|ian)$/.test(t) && CONDICIONALES.some((c) => t === c + "ia" || t === c + "ias" || t === c + "iamos" || t === c + "ian")) return null;
+    // El modo condicional en -ría («sería», «podría», «tendría», «habría»,
+    // «vería», «querría», «costaría», «incluiría», «darían») NO es pretérito:
+    // es irrealis (ESP §1.4, precisión v1.2) y NO llena la ranura verbal de
+    // pasado. La distinción es morfológica (v01EsCondicionalForma), no de
+    // lista. La desinencia -ía sin -r- («comía», «vivía») sigue siendo
+    // imperfecto y llena la ranura.
+    if (/(ia|ias|iamos|ian)$/.test(t) && v01EsCondicionalForma(t, r)) return null;
     return { kind: "pasado", forma: t };
   }
   // 1.ª plural en pretérito (solo -amos/-imos; -emos es presente de -er).
@@ -390,11 +406,11 @@ function v01EsMantenimientoPasado(tokens, i, kind) {
   return false;
 }
 
-// ── INV-OBJ v1.0 (ESP §1.1) ──────────────────────────────────────────────────
+// ── INV-OBJ v1.1 (ESP §1.1) ──────────────────────────────────────────────────
 // OBJ-A: núcleos del campo comercial (con morfología productiva: plural).
 const V01_OBJ_A = ["precio", "tarifa", "cobro", "cuota", "mensualidad", "valor", "costo", "coste", "importe", "monto", "descuento", "rebaja", "bonificacion", "cotizacion", "presupuesto", "plan", "paquete", "servicio", "contratacion", "renovacion", "honorario", "condicion",
   // INSCRIPCIÓN v1.1 (acta en INSCRIPCION_OBJ_v1.1.md, procedimiento ESP §1.0):
-  // los siete núcleos comerciales que el corpus heredado usa como objeto de
+  // los 26 núcleos comerciales que el corpus heredado usa como objeto de
   // la construcción (cats 72/88/93/105) y que la v1.0 omitió. No es una lista
   // de verbos ni una familia de remisión: es la clase semántica del objeto.
   "oferta", "contrato", "acuerdo", "convenio", "promocion", "beneficio", "ventaja", "pago", "prestamo", "compromiso", "trato", "abono", "anticipo", "suscripcion", "saldo", "poliza", "comision", "deuda", "credito", "renta", "matricula", "licencia", "membresia", "bono", "cupon", "garantia"];
@@ -581,10 +597,13 @@ function v01AtribucionPorContexto(objeto, tokens, atr, raws) {
   return false;
 }
 
-// ── INV-GUARDA v1.0 (ESP §1.5) ───────────────────────────────────────────────
+// ── INV-GUARDA v1.1 (ESP §1.5) ───────────────────────────────────────────────
 // G1: referencia a lo publicado (tres formas de ancla y solo estas tres).
 // G2: narración de terceros (D-1). G3: uso documental (definición operativa).
 // G4: vigencia de lo publicado sin marcador de acuerdo.
+// Sustantivos en uso documental (G3, lista compartida por la guarda y por H1):
+// contrato, póliza, oferta, cotización, presupuesto, factura, propuesta.
+const V01_DOC_N = ["contrato", "poliza", "oferta", "cotizacion", "presupuesto", "factura", "propuesta"];
 function v01GuardasEnOracion(tokens, n) {
   const g = { g1: false, g1Motivo: null, g2: false, g3: false, g4: false };
   const texto = " " + n + " ";
@@ -643,7 +662,7 @@ function v01GuardasEnOracion(tokens, n) {
   if (/\botr[oa] (empresa|persona|cliente|negocio|consultora)\b/.test(n) || /\bempresa de (mi |su |un |una |la |el )?[a-z]+\b/.test(n) || /\ba su empresa\b/.test(n) || /\bde la empresa\b/.test(n) || /\b(mi socio|mi hermano|mi contador|un colega|un foro|algunas consultoras)\b/.test(n)) g.g2 = true;
   // G3: uso documental. Verbo de transferencia/comunicación documental +
   // sustantivo documental + ausencia de las tres marcas de condición (ii).
-  const docN = ["cotizacion", "presupuesto", "factura", "propuesta"];
+  const docN = V01_DOC_N;
   const tieneDoc = tokens.some((t) => docN.indexOf(t) >= 0);
   const verbosTransfer = ["enviar", "enviaron", "envio", "enviaste", "mandar", "mandaron", "remitir", "reenviar", "reenvian", "reenviaron", "recibir", "recibieron", "recibi", "pedir", "pedi", "pide", "pidieron", "solicitar", "solicite", "solicito", "solicitan", "pasar", "pasan", "adjuntar", "envian", "mandan", "piden", "envien", "manden", "reenvien", "reciban"];
   const tieneTransfer = tokens.some((t, i) => {
@@ -664,20 +683,86 @@ function v01GuardasEnOracion(tokens, n) {
   return g;
 }
 
-// ¿El objeto está anclado a lo publicado? La ancla (nombre del registro,
-// forma corta, inclusión, «publicado», canal o percepción) debe estar junto
-// al objeto (≤4 tokens después del núcleo) o ser el propio objeto: un
-// nombre de servicio en otra cláusula («para el hardening») no ancla la
-// tarifa del visitante (ESP §1.5: el ancla es del objeto, no de la oración).
-function v01ObjetoAncladoAPublicado(tokens, obj, guardas) {
-  if (!guardas.g1) return false;
-  for (let j = obj.idx; j <= Math.min(tokens.length - 1, obj.idx + 4); j++) {
-    if (V01_REG_NOMBRES.some((nm) => nm.split(" ")[0] === tokens[j])) return true;
-    if (V01_REG_FORMAS_CORTAS.indexOf(tokens[j]) >= 0) return true;
-    if (V01_REG_INCLUSIONES.some((inc) => inc.split(" ")[0] === tokens[j])) return true;
+// Núcleos que nombran el precio o la prestación publicada de un referente
+// del registro (para el ancla de genitivo de G1, ESP §1.5 precisión v1.2).
+const V01_NUCLEOS_PRECIO = ["precio", "tarifa", "costo", "coste", "valor", "monto", "importe", "cuota", "mensualidad"];
+// ¿El objeto está anclado a lo publicado? El ancla debe recaer SOBRE EL
+// OBJETO de la construcción, no sobre la oración (ESP §1.5, precisión v1.2):
+// un nombre del registro que aparece como modificador de otro núcleo NO
+// ancla ese núcleo («descuento especial del hardening»: «hardening» nombra
+// el servicio, no el descuento; lo publicado es el precio del hardening).
+// La vecindad en la oración no es ancla. Formas de ancla sobre el objeto
+// (y solo estas):
+//  (A) marca de publicación directamente sobre el núcleo: «publicado/a»
+//      junto a él, percepción + canal en su relativa («el precio que vi en
+//      su página») o canal con marca de procedencia («el precio de la página»);
+//  (B) el objeto mismo nombra el referente publicado: el núcleo + su
+//      complemento forman un nombre del registro o una inclusión
+//      («el plan Integral», «el plan de remediación»);
+//  (C) genitivo del núcleo: el núcleo nombra el precio o la prestación
+//      publicada de un referente del registro («el precio del plan Esencial»,
+//      «el precio de la consultoría», «el precio del hardening») y no lleva
+//      marca de particularidad OBJ-B («precio especial» es una condición
+//      particular, no lo publicado).
+// Función pura de (tokens, objeto): no consume el veredicto de H1 ni sus
+// guardas; la usan H1 (§2.2, §2.6, §2.7) y el registro propio de H2 (§4.2 M5).
+function v01ObjetoAncladoAPublicado(tokens, obj) {
+  const i = obj.idx;
+  // (A) marca de publicación sobre el núcleo.
+  for (let j = Math.max(0, i - 1); j <= Math.min(tokens.length - 1, i + 4); j++) {
     if (/^publicad[oa]s?$/.test(tokens[j])) return true;
-    if (["pagina", "web", "sitio", "folleto", "portal", "anuncio", "redes"].indexOf(tokens[j]) >= 0) return true;
-    if (["vi", "vimos", "viste", "aparece", "aparecen", "figura", "muestra", "dice", "lei", "leimos"].indexOf(tokens[j]) >= 0) return true;
+  }
+  const canales = ["pagina", "web", "sitio", "folleto", "portal", "anuncio", "redes"];
+  const percepcion = ["vi", "vimos", "viste", "aparece", "aparecen", "figura", "muestra", "muestran", "dice", "lei", "leimos"];
+  let hayPercepcion = false;
+  for (let j = i; j <= Math.min(tokens.length - 1, i + 6); j++) if (percepcion.indexOf(tokens[j]) >= 0) { hayPercepcion = true; break; }
+  let hayCanal = false;
+  for (let j = i; j <= Math.min(tokens.length - 1, i + 8); j++) if (canales.indexOf(tokens[j]) >= 0) { hayCanal = true; break; }
+  if (hayPercepcion && hayCanal) return true;
+  // Canal con marca de procedencia («el precio de la página», «la tarifa
+  // según lo expuesto en la página»): la marca G1(b) no tiene límite de
+  // distancia en la especificación; la ventana llega a +8 para cubrir el
+  // marco «según lo <participio> en <canal>», que caracteriza al objeto.
+  // Sigue siendo ancla del objeto: el canal va en la misma oración y con
+  // marca de procedencia (de/del/en/la/el/su), no en otra cláusula.
+  for (let j = i; j <= Math.min(tokens.length - 1, i + 8); j++) {
+    if (canales.indexOf(tokens[j]) >= 0 && j > 0 && ["de", "del", "en", "la", "el", "su"].indexOf(tokens[j - 1]) >= 0) return true;
+  }
+  // (B) el objeto mismo es un nombre del registro o una inclusión.
+  const resto = tokens.slice(i).join(" ");
+  for (const nombre of V01_REG_NOMBRES) if (resto === nombre || resto.indexOf(nombre + " ") === 0) return true;
+  for (const inc of V01_REG_INCLUSIONES) if (resto === inc || resto.indexOf(inc + " ") === 0) return true;
+  if (obj.nucleo === "plan" && V01_REG_FORMAS_CORTAS.indexOf(tokens[i + 1]) >= 0) return true;
+  // (C) genitivo del núcleo sobre un referente del registro.
+  if ((V01_NUCLEOS_PRECIO.indexOf(obj.nucleo) >= 0 || ["plan", "paquete", "servicio"].indexOf(obj.nucleo) >= 0) && !obj.particular) {
+    for (let j = i + 1; j <= Math.min(tokens.length - 1, i + 4); j++) {
+      if (tokens[j] !== "de" && tokens[j] !== "del") continue;
+      for (let k = j + 1; k <= Math.min(tokens.length - 1, j + 2); k++) {
+        const tk = tokens[k];
+        if (V01_REG_FORMAS_CORTAS.indexOf(tk) >= 0) return true;
+        if (V01_REG_NOMBRES.some((nm) => nm.split(" ")[0] === tk)) return true;
+        if (tk === "plan") return true; // «el precio del plan»: el plan publicado.
+        if (V01_REG_INCLUSIONES.some((inc) => inc.split(" ")[0] === tk)) return true;
+      }
+    }
+  }
+  return false;
+}
+
+// ¿El visitante es el beneficiario de la concesión? (ESP §1.5-G2, precisión
+// v1.2). Un clítico de 1.ª persona («me»/«nos») inmediatamente antes de una
+// forma verbal de pasado que NO es verbo de comunicación («me mantuvieron»)
+// atribuye la concesión al visitante: el tercero solo informa o narra y G2
+// no aplica. («Me contó que a su empresa…»: «me» va con «contó», verbo de
+// comunicación, y la concesión («le mantuvieron») es del tercero: G2 sí aplica.)
+function v01BeneficiarioVisitante(tokens, formas) {
+  const COMUNICACION = ["cont", "dij", "escrib", "llam", "avis", "coment", "explic", "inform", "mencion", "pregunt", "respond", "habl", "convers", "trat", "discut"];
+  for (const f of formas) {
+    if (f.kind !== "pasado" && f.kind !== "continuidad") continue;
+    const t = tokens[f.idx];
+    if (!t) continue;
+    if (COMUNICACION.some((r) => t.indexOf(r) === 0)) continue;
+    if (f.idx > 0 && (tokens[f.idx - 1] === "me" || tokens[f.idx - 1] === "nos")) return true;
   }
   return false;
 }
@@ -775,13 +860,16 @@ function v01EvaluarOracionH1(oracion, antecedente) {
       // El objeto anafórico solo vale con antecedente en el turno (ESP §1.1).
       if (obj.tipo === "C" && !antecedente && ["eso", "ello", "lo mismo", "lo anterior"].indexOf(obj.nucleo) >= 0) continue;
       const nominalizada = !!obj.particular && formas.some((f) => f.kind === "continuidad" || f.kind === "participio");
-      const tieneAtr = v01TieneAtribucion(atr) || v01AtribucionPorContexto(obj, tokens, atr, raws) || (atr.destinoEmpresa && nominalizada);
+      const tieneAtr = v01TieneAtribucion(atr) || v01AtribucionPorContexto(obj, tokens, atr, raws) || (atr.destinoEmpresa && nominalizada) || v01BeneficiarioVisitante(tokens, formas);
       if (!tieneAtr) continue;
-      // Guardas (ESP §1.5): la guarda cubre la construcción.
-      if (guardas.g1) { res.suprimida = "G1-publicado"; continue; }
-      if (guardas.g2 && !atr.expresa && !atr.primeraPlural) { res.suprimida = "G2-tercero"; continue; }
-      if (guardas.g3 && ["cotizacion", "presupuesto", "factura", "propuesta"].indexOf(obj.nucleo) >= 0) { res.suprimida = "G3-documental"; continue; }
-      if (guardas.g4) { res.suprimida = "G4-vigencia"; continue; }
+      // Guardas (ESP §1.5): la guarda cubre la CONSTRUCCIÓN, no la oración
+      // ni el turno (precisión v1.2). G1 exige el ancla sobre el objeto de
+      // esa construcción; G2 exige que el beneficiario de la concesión sea
+      // el tercero; G4 exige el mismo ancla que G1 (vigencia de lo publicado).
+      if (v01ObjetoAncladoAPublicado(tokens, obj)) { res.suprimida = "G1-publicado"; continue; }
+      if (guardas.g2 && !atr.expresa && !atr.primeraPlural && !v01BeneficiarioVisitante(tokens, formas)) { res.suprimida = "G2-tercero"; continue; }
+      if (guardas.g3 && V01_DOC_N.indexOf(obj.nucleo) >= 0) { res.suprimida = "G3-documental"; continue; }
+      if (guardas.g4 && v01ObjetoAncladoAPublicado(tokens, obj)) { res.suprimida = "G4-vigencia"; continue; }
       if (neg === "suprime") { registrar("negada", obj); res.suprimida = "negacion"; continue; }
       if (cond) { registrar("hipotetica", obj); res.suprimida = "condicional"; continue; }
       if (verif) { registrar("verificacion", obj); res.suprimida = "verificacion"; continue; }
@@ -797,8 +885,8 @@ function v01EvaluarOracionH1(oracion, antecedente) {
     const esCont = forma.kind === "continuidad" || v01EsMantenimientoPasado(tokens, forma.idx, forma.kind);
     if (!esCont) continue;
     for (const obj of objetos) {
-      if (guardas.g1 || guardas.g4) { res.suprimida = "G1-publicado"; continue; }
-      if (guardas.g2 && !atr.expresa && !atr.primeraPlural) { res.suprimida = "G2-tercero"; continue; }
+      if (v01ObjetoAncladoAPublicado(tokens, obj)) { res.suprimida = guardas.g4 ? "G4-vigencia" : "G1-publicado"; continue; }
+      if (guardas.g2 && !atr.expresa && !atr.primeraPlural && !v01BeneficiarioVisitante(tokens, formas)) { res.suprimida = "G2-tercero"; continue; }
       if (neg === "suprime") { registrar("negada", obj); res.suprimida = "negacion"; continue; }
       if (cond) { registrar("hipotetica", obj); res.suprimida = "condicional"; continue; }
       if (verif) { registrar("verificacion", obj); res.suprimida = "verificacion"; continue; }
@@ -812,12 +900,12 @@ function v01EvaluarOracionH1(oracion, antecedente) {
   // presuposición, comparativa) para que las juzgue H2 (ESP §4.2 M1–M4).
   for (const obj of objetos) {
     const nominalizada = !!obj.particular && formas.some((f) => f.kind === "continuidad" || f.kind === "participio");
-    const tieneAtr = v01TieneAtribucion(atr) || v01AtribucionPorContexto(obj, tokens, atr, raws) || (atr.destinoEmpresa && nominalizada);
+    const tieneAtr = v01TieneAtribucion(atr) || v01AtribucionPorContexto(obj, tokens, atr, raws) || (atr.destinoEmpresa && nominalizada) || v01BeneficiarioVisitante(tokens, formas);
     const esCondicion = obj.tipo === "A" && V01_NUCLEOS_CONDICION.indexOf(obj.nucleo) >= 0;
     const esAnaforaAcuerdo = obj.tipo === "C" && /acordado|pactado|convenido|negociado|garantizado/.test(obj.nucleo);
     const registraSinAtr = esCondicion && !guardas.g2;
     if (!tieneAtr && !registraSinAtr) continue;
-    if (v01ObjetoAncladoAPublicado(tokens, obj, guardas)) continue; // referente publicado: no hay pretensión particular.
+    if (v01ObjetoAncladoAPublicado(tokens, obj)) continue; // referente publicado: no hay pretensión particular.
     if (obj.particular || obj.inherente || esCondicion || esAnaforaAcuerdo) registrar("presuposicion", obj);
   }
   // Comparativa contra lo publicado con atribución (ESP §4.2 M4).
@@ -862,8 +950,8 @@ function v01EvaluarTurnoH1(texto) {
     const formas = v01FormasVerbalesEnOracion(tokens, raws);
     const objetos = v01ObjetosEnOracion(tokens);
     const guardas = v01GuardasEnOracion(tokens, n);
-    if (formas.length && objetos.length && (v01TieneAtribucion(atr) || objetos.some((o) => v01AtribucionPorContexto(o, tokens, atr, raws))) && !guardas.g1 && !guardas.g3) {
-      if (guardas.g2 && !atr.expresa && !atr.primeraPlural) { res.suprimida = "G2-tercero"; return res; }
+    if (formas.length && objetos.length && (v01TieneAtribucion(atr) || objetos.some((o) => v01AtribucionPorContexto(o, tokens, atr, raws))) && objetos.some((o) => !v01ObjetoAncladoAPublicado(tokens, o)) && !guardas.g3) {
+      if (guardas.g2 && !atr.expresa && !atr.primeraPlural && !v01BeneficiarioVisitante(tokens, formas)) { res.suprimida = "G2-tercero"; return res; }
       const neg = v01NegacionEnOracion(tokens, n);
       if (neg === "suprime") { res.suprimida = "negacion"; return res; }
       // La composición no suprimía la modalidad (§2.5): una prótasis
@@ -883,6 +971,15 @@ function v01EvaluarTurnoH1(texto) {
 // ESP §5.4). Cada pretensión: {objeto, valor, beneficiario, modalidad,
 // turno, estado}. Modalidades: afirmacion, pregunta, presuposicion,
 // comparativa, hipotetica, verificacion, negada, recordatorio, anafora.
+//
+// PROCEDIMIENTO PROPIO (ESP §4.1/§4.2 M5, precisión v1.2 — C-03): el registro
+// se construye con un pase de detección independiente — objeto INV-OBJ +
+// atribución INV-ATR + modalidad — y NO invoca la evaluación de H1 (§2) ni
+// consume su veredicto, sus ranuras ni sus guardas. Solo la guarda G1 CON
+// ancla sobre el objeto (§1.5, precisión v1.2) suprime el registro de una
+// pretensión particular; con cualquier otra guarda (G2, G3, G4, o G1 sin
+// ancla sobre el objeto) la pretensión SE REGISTRA con su modalidad: la
+// guarda libera la entrada, no borra la pretensión.
 function v01RegistrarPretensiones(historial) {
   const claims = [];
   const usuarios = (historial || []).filter((m) => m && m.role === "user" && typeof m.content === "string");
@@ -895,10 +992,60 @@ function v01RegistrarPretensiones(historial) {
     if (/me equivoque|olviden lo anterior|olvida lo anterior|olvida lo del|era de otra empresa|era otra empresa|no tengo ningun (descuento|acuerdo|precio especial)|no era/.test(n)) {
       retractar(null);
     }
-    const r = v01EvaluarTurnoH1(m.content);
-    for (const p of r.pretensiones) {
-      const valor = v01ExtraerValor(m.content);
-      claims.push({ objeto: p.objeto, valor, beneficiario: p.beneficiario || "visitante", modalidad: p.modalidad, turno: ti, estado: "activa" });
+    const valor = v01ExtraerValor(m.content);
+    for (const o of v01Oraciones(m.content)) {
+      const tokens = v01Tokens(o.n);
+      const raws = v01Tokens(o.r).map((x) => String(x || "").replace(/[^a-záéíóúüñ]/g, ""));
+      const objetos = v01ObjetosEnOracion(tokens);
+      const atr = v01AtribucionEnOracion(tokens, o.n);
+      const formas = v01FormasVerbalesEnOracion(tokens, raws);
+      const neg = v01NegacionEnOracion(tokens, o.n);
+      const cond = v01EsCondicional(tokens) || tokens.some((t, i) => v01EsCondicionalForma(t, raws[i]));
+      const verif = v01EsVerificacionPropia(tokens, o.n);
+      let registradasEnOracion = 0;
+      for (const obj of objetos) {
+        // La anáfora escueta («eso», «ello») sin antecedente no registra
+        // objeto: solo vía M7, como pretensión vacía (ver abajo).
+        if (obj.tipo === "C" && ["eso", "ello", "lo mismo", "lo anterior"].indexOf(obj.nucleo) >= 0) continue;
+        const nominalizada = !!obj.particular && formas.some((f) => f.kind === "continuidad" || f.kind === "participio");
+        const tieneAtr = v01TieneAtribucion(atr) || v01AtribucionPorContexto(obj, tokens, atr, raws) || (atr.destinoEmpresa && nominalizada) || v01BeneficiarioVisitante(tokens, formas);
+        const esCondicion = obj.tipo === "A" && V01_NUCLEOS_CONDICION.indexOf(obj.nucleo) >= 0;
+        const esAnaforaAcuerdo = obj.tipo === "C" && /acordado|pactado|convenido|negociado|garantizado/.test(obj.nucleo);
+        // Sin atribución al visitante, solo la construcción escueta de
+        // condición o la anáfora de acuerdo registran (M1/M5); una narración
+        // de terceros sin atribución al visitante no planta pretensión.
+        if (!tieneAtr && !((esCondicion || esAnaforaAcuerdo) && atr.destinos.indexOf("tercero") < 0)) continue;
+        // G1 CON ancla sobre el objeto: referente público, no hay pretensión
+        // particular. Cualquier otra guarda no suprime el registro (M5).
+        if (v01ObjetoAncladoAPublicado(tokens, obj)) continue;
+        let modalidad;
+        if (neg === "suprime") modalidad = "negada";
+        else if (cond) modalidad = "hipotetica";
+        else if (verif) modalidad = "verificacion";
+        else if (formas.length) modalidad = "afirmacion";
+        else modalidad = "presuposicion";
+        claims.push({ objeto: obj.nucleo, valor, beneficiario: "visitante", modalidad, turno: ti, estado: "activa" });
+        registradasEnOracion++;
+      }
+      // Comparativa contra lo publicado con atribución (ESP §4.2 M4).
+      if (/pago|pagar|cuesta|sale|valen|vale/.test(o.n) && /menos|menor/.test(o.n) && /que/.test(o.n) && v01TieneAtribucion(atr)) {
+        claims.push({ objeto: objetos[0] ? objetos[0].nucleo : null, valor, beneficiario: "visitante", modalidad: "comparativa", turno: ti, estado: "activa" });
+        registradasEnOracion++;
+      }
+      // Anáfora sin antecedente: pretensión vacía (ESP §4.2 M7) si la oración
+      // es una pregunta de continuidad («¿Y eso sigue igual?», «¿Se mantiene lo
+      // pactado?», «¿Lo que me prometiste sigue en pie?»). La pretensión vacía
+      // existe para que un asentimiento escueto («Sí, sigue igual») se sustituya
+      // sin fingir que la condición fue identificada.
+      if (!registradasEnOracion) {
+        const anafora = objetos.some((oo) => oo.tipo === "C");
+        const loQue = tokens.indexOf("lo") >= 0 && tokens[tokens.indexOf("lo") + 1] === "que";
+        const loDeAyer = /\blo de (ayer|hoy|antes|entonces|la vez pasada)\b/.test(o.n);
+        const cont = tokens.some((t) => ["sigue", "siguen", "mantiene", "mantienen", "continua", "continuan", "permanece", "permanecen", "queda", "quedan", "va", "vigente", "pie", "igual", "vale", "valen", "valido"].indexOf(t) >= 0);
+        if ((anafora || loQue || loDeAyer) && cont) {
+          claims.push({ objeto: null, valor, beneficiario: "visitante", modalidad: "anafora", turno: ti, estado: "activa" });
+        }
+      }
     }
     // M3 presuposición explícita: «el descuento que tengo», «¿dónde aparece
     // el descuento que tengo?», «¿cuándo se aplica mi…?».
@@ -1088,9 +1235,14 @@ function v01ValidarRespuesta(historial, respuesta, config) {
   const cfg = config || v01ConfigPorDefecto();
   const res = { sustituir: false, regla: null, pieza: null, eventos: [], piezas: {} };
   const texto = String(respuesta || "");
-  // Una respuesta que niega la condición o deriva al canal directo sin
-  // afirmarla es, en sustancia, equivalente a la segura: se entrega (V4).
-  if (texto.indexOf(V01_SAFE_REPLY) >= 0 || /no tengo (un )?registro( verificable)?/.test(v01Normalizar(texto)) || /no tengo constancia/.test(v01Normalizar(texto))) {
+  // V4 (precisión v1.2): la exención por negación o derivación se aplica
+  // SOLO a lo que la respuesta no afirma. La presencia de «no tengo
+  // registro» en cualquier parte del texto NO exime la respuesta entera:
+  // la parte afirmativa se juzga por V1/V2/V3/§4.4 y la respuesta se
+  // sustituye. El return temprano por substring queda retirado: cada pieza
+  // (V1/V2/V3/S4) ya exime por oración lo que niega o no afirma. Solo la
+  // respuesta segura textual se entrega sin validar: ya es la segura.
+  if (texto.indexOf(V01_SAFE_REPLY) >= 0) {
     return res;
   }
   const claims = v01RegistrarPretensiones(historial);
