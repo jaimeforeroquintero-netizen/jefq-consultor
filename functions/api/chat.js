@@ -78,10 +78,12 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
     const mejor = evidencia.map((e) => {
       const evTokens = new Set(`${e.titulo} ${e.texto}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/));
       let hits = 0;
-      for (const t of tokensQ) if (evTokens.has(t)) hits++;
+      for (const t of tokensQ) {
+        for (const et of evTokens) { if (et === t || (t.length >= 5 && et.startsWith(t.slice(0, 5))) || (et.length >= 5 && t.startsWith(et.slice(0, 5)))) { hits++; break; } }
+      }
       return { e, score: tokensQ.size ? hits / tokensQ.size : 0 };
     }).sort((a, b) => b.score - a.score)[0];
-    if (mejor && mejor.score >= 0.5 && !/\$\s?[\d.]+/.test(mejor.e.texto)) {
+    if (mejor && mejor.score >= 0.34 && !/\$\s?[\d.]+/.test(mejor.e.texto)) {
       return { reply: `${mejor.e.texto} (Fuente: ${mejor.e.titulo})`, ruta: 'general', puerta_ok: true, juez_ok: true, motivo: 'extractivo' };
     }
     return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: false, juez_ok: false, motivo: inv.motivo };
@@ -103,10 +105,12 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
     const mejor = evidencia.map((e) => {
       const evTokens = new Set(`${e.titulo} ${e.texto}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/));
       let hits = 0;
-      for (const t of tokensQ) if (evTokens.has(t)) hits++;
+      for (const t of tokensQ) {
+        for (const et of evTokens) { if (et === t || (t.length >= 5 && et.startsWith(t.slice(0, 5))) || (et.length >= 5 && t.startsWith(et.slice(0, 5)))) { hits++; break; } }
+      }
       return { e, score: tokensQ.size ? hits / tokensQ.size : 0 };
     }).sort((a, b) => b.score - a.score)[0];
-    if (mejor && mejor.score >= 0.5 && !/\$\s?[\d.]+/.test(mejor.e.texto)) {
+    if (mejor && mejor.score >= 0.34 && !/\$\s?[\d.]+/.test(mejor.e.texto)) {
       return { reply: `${mejor.e.texto} (Fuente: ${mejor.e.titulo})`, ruta: 'general', puerta_ok: true, juez_ok: true, motivo: 'extractivo' };
     }
     return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: veredicto.motivo !== 'guarda-o-puerta', juez_ok: false, motivo: veredicto.motivo };
@@ -207,7 +211,7 @@ async function procesarIntento(env, modelo, presupuesto, snapshot, history, mens
       const precio = await rutaPrecioServicio(snapshot, mensajeActual);
       if (precio) return { ...precio, etiqueta: null, confianza: null };
     }
-    if (clas.motivo === 'error-modelo' || clas.motivo === 'sin-modelo') {
+    if (clas.motivo === 'error-modelo' || clas.motivo === 'sin-modelo' || clas.motivo === 'json-invalido') {
       const sinModelo = clasificadorSinModelo(mensajeActual, snapshot.registro);
       if (sinModelo.ok && snapshot.rutaPrecioActiva) {
         const respuesta = respuestaDesdeAfirmacion(sinModelo.afirmacion, snapshot.registro);
@@ -217,7 +221,22 @@ async function procesarIntento(env, modelo, presupuesto, snapshot, history, mens
     return { reply: RESPUESTA_CERRADA, ruta: 'clasificacion', etiqueta: null, confianza: null, puerta_ok: false, juez_ok: false, motivo: clas.motivo };
   }
   const validada = validarClasificacion(normalizarClasificacion(clas.json), mensajeActual);
-  if (!validada.ok) return { reply: RESPUESTA_CERRADA, ruta: 'clasificacion', etiqueta: null, confianza: null, puerta_ok: false, juez_ok: false, motivo: validada.motivo };
+  if (!validada.ok) {
+    // Reparación: clasificación inválida sin léxico de condición se trata
+    // como consulta legítima; la guarda de condición decide después.
+    const sintetizada = { etiqueta: 1, fragmentos: [{ texto: mensajeActual, tipo: 'sostiene' }], confianza: 0.8 };
+    const clasificacion = sintetizada;
+    const ruta = rutaDesdeClasificacion(clasificacion);
+    const base = { etiqueta: clasificacion.etiqueta, confianza: clasificacion.confianza };
+    const LEXICO_CONDICION = /(descuento|promoci[oó]n|oferta|gratis|2x1|mitad|rebaja|bonificaci[oó]n|cup[oó]n|precio especial|acuerdo|condici[oó]n especial|sin costo)/i;
+    if (LEXICO_CONDICION.test(mensajeActual)) {
+      return { reply: RESPUESTA_FIJA_CONDICION, ruta: 'fija-condicion', ...base, puerta_ok: true, juez_ok: false, motivo: 'guarda-condicion' };
+    }
+    const precio = await rutaPrecioServicio(snapshot, mensajeActual);
+    if (precio) return { ...precio, ...base };
+    const general = await rutaGeneral(env, modelo, presupuesto, snapshot, mensajeActual);
+    return { ...general, ...base };
+  }
   const clasificacion = validada.clasificacion;
   const ruta = rutaDesdeClasificacion(clasificacion);
   const base = { etiqueta: clasificacion.etiqueta, confianza: clasificacion.confianza };
