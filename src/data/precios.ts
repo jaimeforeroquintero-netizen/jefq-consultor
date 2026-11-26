@@ -37,15 +37,15 @@ export const PRECIOS: Precio[] = [
     nombreOferta: "Plan Esencial",
     precioDesdeCOP: 400425,
     unidad: "proyecto",
-    descripcion: "Diagnóstico de ciberseguridad para pymes en Colombia.",
+    descripcion: "Diagnóstico de ciberseguridad para PYMES en Colombia.",
     texto: "Punto de partida para profesionales y microempresas.",
     incluye: ["Reunión remota", "Hasta 3 equipos", "Riesgos prioritarios", "Informe ejecutivo", "Sesión de resultados"],
   },
   {
     id: "pyme",
     producto: "pyme",
-    nombre: "Evaluación Pyme",
-    nombreOferta: "Plan Pyme",
+    nombre: "Evaluación PYME",
+    nombreOferta: "Plan PYME",
     precioDesdeCOP: 912475,
     unidad: "proyecto",
     destacado: true,
@@ -127,7 +127,7 @@ export function lineasParaChat(): string {
   const f = (id: string) => `${PRECIOS.find((x) => x.id === id)!.nombre}: desde ${formatearCOP(precioDe(id))}`;
   return [
     `- ${f("esencial")}.`,
-    `- ${f("pyme")} (el recomendado para pymes).`,
+    `- ${f("pyme")} (el recomendado para PYMES).`,
     `- ${f("integral")}.`,
     `- Servicios puntuales: consultoría remota desde ${formatearCOP(precioDe("consultoria-hora"))}/hora; hardening de sistemas desde ${formatearCOP(precioDe("hardening"))}.`,
   ].join("\n");

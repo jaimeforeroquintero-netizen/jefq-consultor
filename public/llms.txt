@@ -1,7 +1,7 @@
 # JEFQ Consultor
 
 > NOTA DE MANTENIMIENTO: los precios de este archivo se sincronizan a mano desde src/data/precios.ts; verificar con node scripts/verificar-precios.mjs.
-> JEFQ Consultor es una consultoría de ciberseguridad para pymes en Colombia, liderada por Jaime Forero.
+> JEFQ Consultor es una consultoría de ciberseguridad para PYMES en Colombia, liderada por Jaime Forero.
 > Ofrece diagnóstico de seguridad, pruebas autorizadas, hardening e informes ejecutivos que la gerencia sí entiende.
 > Atiende en Bogotá y toda Colombia, con atención remota. Todas las pruebas se hacen únicamente con autorización escrita.
 
@@ -9,29 +9,29 @@
 
 - [Inicio](https://jefq-consultor.pages.dev/): qué es JEFQ Consultor, servicios, metodología y planes con precios en COP.
 - [Valoración en línea](https://jefq-consultor.pages.dev/valoracion): valoración inicial orientativa para saber qué servicio se ajusta a su organización, sin compromiso.
-- [Diagnóstico de seguridad](https://jefq-consultor.pages.dev/servicios/diagnostico-seguridad): diagnóstico de ciberseguridad para pymes en Bogotá y Colombia, con revisión priorizada, informe ejecutivo y plan de mejora. Incluye consultoría remota por horas.
-- [Quién soy](https://jefq-consultor.pages.dev/quien-soy): Jaime Forero, consultor en ciberseguridad para pymes en Colombia: trayectoria y principios de trabajo.
+- [Diagnóstico de seguridad](https://jefq-consultor.pages.dev/servicios/diagnostico-seguridad): diagnóstico de ciberseguridad para PYMES en Bogotá y Colombia, con revisión priorizada, informe ejecutivo y plan de mejora. Incluye consultoría remota por horas.
+- [Quién soy](https://jefq-consultor.pages.dev/quien-soy): Jaime Forero, consultor en ciberseguridad para PYMES en Colombia: trayectoria y principios de trabajo.
 - [Preguntas frecuentes](https://jefq-consultor.pages.dev/preguntas-frecuentes): respuestas sobre alcance, autorización, entregables, precios y proceso.
 - [Servicios](https://jefq-consultor.pages.dev/servicios): catálogo de servicios: diagnóstico, hardening, pruebas autorizadas e informes técnicos.
 - [Blog](https://jefq-consultor.pages.dev/blog): artículos sobre ciberseguridad práctica para organizaciones colombianas.
 
 ## Planes y precios (COP)
 
-- Plan Esencial: desde $400.425 COP. Diagnóstico de ciberseguridad para pymes.
-- Plan Pyme: desde $912.475 COP. Diagnóstico ampliado con priorización y acompañamiento.
+- Plan Esencial: desde $400.425 COP. Diagnóstico de ciberseguridad para PYMES.
+- Plan PYME: desde $912.475 COP. Diagnóstico ampliado con priorización y acompañamiento.
 - Plan Integral: desde $1.833.975 COP. Cobertura integral: diagnóstico, pruebas autorizadas, hardening e informes.
 - Los importes publicados son orientativos; la propuesta confirma el precio final y los impuestos aplicables.
 
 ## Preguntas frecuentes
 
 ### ¿Qué es JEFQ Consultor?
-Una consultoría de ciberseguridad para pymes en Colombia. Diagnóstico, pruebas autorizadas, hardening e informes accionables.
+Una consultoría de ciberseguridad para PYMES en Colombia. Diagnóstico, pruebas autorizadas, hardening e informes accionables.
 
 ### ¿Para quién es el servicio?
-Para pymes y organizaciones colombianas que necesitan saber dónde están expuestas y cómo corregirlo con prioridades claras.
+Para PYMES y organizaciones colombianas que necesitan saber dónde están expuestas y cómo corregirlo con prioridades claras.
 
 ### ¿Cuánto cuesta?
-Plan Esencial desde $400.425 COP, Plan Pyme desde $912.475 COP y Plan Integral desde $1.833.975 COP. La propuesta confirma el precio final.
+Plan Esencial desde $400.425 COP, Plan PYME desde $912.475 COP y Plan Integral desde $1.833.975 COP. La propuesta confirma el precio final.
 
 ### ¿Cómo se contrata?
 Primero una valoración inicial (en línea o por WhatsApp), luego una propuesta con alcance documentado. Nada inicia sin autorización.

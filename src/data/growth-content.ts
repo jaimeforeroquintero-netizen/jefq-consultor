@@ -26,7 +26,7 @@ export const blogPosts: BlogPost[] = [
     slug: "como-proteger-pyme-colombia",
     title: "Cómo fortalecer la ciberseguridad de una pyme en Colombia",
     description: "Cómo fortalecer la ciberseguridad de una pyme en Colombia: prioridades prácticas para proteger cuentas, equipos, información y continuidad operativa.",
-    category: "Pymes",
+    category: "PYMES",
     readingTime: "6 min",
     intro: "Una pyme no necesita empezar por herramientas costosas. El mayor avance suele venir de ordenar activos, accesos, copias y responsabilidades.",
     sections: [
@@ -50,8 +50,8 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "seguridad-microsoft-365-pyme",
-    title: "Seguridad básica de Microsoft 365 para pymes",
-    description: "Seguridad básica de Microsoft 365 para pymes: controles iniciales para fortalecer identidades, correo electrónico y colaboración en su organización.",
+    title: "Seguridad básica de Microsoft 365 para PYMES",
+    description: "Seguridad básica de Microsoft 365 para PYMES: controles iniciales para fortalecer identidades, correo electrónico y colaboración en su organización.",
     category: "Microsoft 365",
     readingTime: "6 min",
     intro: "Las identidades y el correo suelen concentrar buena parte del riesgo. Una revisión ordenada permite priorizar cuentas, permisos y mecanismos de recuperación.",

@@ -9,9 +9,9 @@ export const RESPUESTA_SIN_VERIFICAR = 'No tengo información verificable en el 
 export const RESPUESTA_PRECIO_DESACTIVADA = 'En este momento no puedo confirmar precios por este medio. Para cotizar, por favor comuníquese directamente con JEFQ Consultor por WhatsApp con el botón del sitio.';
 
 export const REGISTRO_V210 = {
-  version: 3,
+  version: 4,
   fuente: 'src/data/precios.ts',
-  fuente_hash: '6bea7a666c07271fd1ddfa8afb551f29c8782e7b511b35fafc29a29ec5fa298c',
+  fuente_hash: '52351df3d41fca8bf7e7158dd42cafadaf259cd0de367eb3e7f0ab6fbd6693b6',
   moneda: 'COP',
   descuentos: [],
   acuerdos: 'ninguno',
@@ -77,13 +77,13 @@ export const REGISTRO_V210 = {
       id: 'prod-diagnostico-esencial', tipo: 'producto', nombre: 'Diagnóstico Esencial', servicio_asociado: 'svc-diagnostico', servicios: ['svc-diagnostico', 'svc-informes'],
       alias: ['Diagnóstico Esencial', 'Plan Esencial', 'Esencial'],
       precio: 400425, tipo_precio: 'desde', unidad: 'servicio', moneda: 'COP',
-      descripcion: 'Diagnóstico de ciberseguridad para pymes en Colombia.',
+      descripcion: 'Diagnóstico de ciberseguridad para PYMES en Colombia.',
       cobertura: ['Reunión remota', 'Hasta 3 equipos', 'Riesgos prioritarios', 'Informe ejecutivo', 'Sesión de resultados'],
       exclusiones: [], vigencia: 'vigente',
     },
     {
-      id: 'prod-evaluacion-pyme', tipo: 'producto', nombre: 'Evaluación Pyme', servicio_asociado: 'svc-diagnostico', servicios: ['svc-diagnostico', 'svc-informes', 'svc-acompanamiento'],
-      alias: ['Evaluación Pyme', 'Plan Pyme', 'Pyme'],
+      id: 'prod-evaluacion-pyme', tipo: 'producto', nombre: 'Evaluación PYME', servicio_asociado: 'svc-diagnostico', servicios: ['svc-diagnostico', 'svc-informes', 'svc-acompanamiento'],
+      alias: ['Evaluación PYME', 'Plan PYME', 'PYME'],
       precio: 912475, tipo_precio: 'fijo', unidad: 'servicio', moneda: 'COP',
       descripcion: 'Diagnóstico ampliado con priorización y acompañamiento.',
       cobertura: ['Alcance autorizado', 'Hasta 10 equipos', 'Revisión de configuraciones', 'Informe técnico y ejecutivo', 'Plan de remediación', 'Acompañamiento'],
@@ -301,5 +301,5 @@ export function respuestaDesdeAfirmacion(afirmacion, registro) {
 }
 
 export function aclaracionDiagnostico() {
-  return 'Para darle el precio exacto, ¿se refiere al Diagnóstico Esencial, la Evaluación Pyme o la Seguridad Integral?';
+  return 'Para darle el precio exacto, ¿se refiere al Diagnóstico Esencial, la Evaluación PYME o la Seguridad Integral?';
 }

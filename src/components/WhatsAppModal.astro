@@ -13,7 +13,7 @@ const DEFAULT_MSG = "Hola Jaime, quiero información sobre los servicios de JEFQ
 
   function go(message) {
     var text = (message || DEFAULT_MSG).slice(0, 600);
-    window.location.href = '/api/whatsapp?text=' + encodeURIComponent(text);
+    window.location.href = 'https://wa.me/JaimeByte?text=' + encodeURIComponent(text);
   }
 
   document.addEventListener('click', function (e) {
