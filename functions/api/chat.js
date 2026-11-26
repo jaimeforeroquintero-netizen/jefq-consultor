@@ -296,8 +296,10 @@ async function handler(context) {
   const LEXICO_CONDICION_FINAL = /(descuento|promoci[oó]n|oferta|gratis|2x1|mitad|rebaja|bonificaci[oó]n|cup[oó]n|precio especial|acuerdo|condici[oó]n especial|sin costo)/i;
   if (resultado.reply === RESPUESTA_CERRADA && !['fija-condicion', 'mixta', 'frescura'].includes(resultado.ruta) && !LEXICO_CONDICION_FINAL.test(mensajeActual)) {
     const evidencia = await buscarEvidencia(env, mensajeActual, 4);
-    const mejor = (evidencia || []).slice().sort((a, b) => (b.score ?? 0) - (a.score ?? 0))[0];
-    if (mejor && (mejor.score ?? 0) >= 0.55 && !/\$\s?[\d.]+/.test(mejor.texto)) {
+    const ordenada = (evidencia || []).slice().sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+    const mejor = ordenada[0];
+    const margen = mejor && ordenada[1] ? (mejor.score ?? 0) - (ordenada[1].score ?? 0) : 1;
+    if (mejor && (mejor.score ?? 0) >= 0.45 && margen >= 0.03 && !/\$\s?[\d.]+/.test(mejor.texto)) {
       resultado = { reply: `${mejor.texto} (Fuente: ${mejor.titulo})`, ruta: 'general', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: true, juez_ok: true, motivo: 'extractivo-final' };
     }
   }
