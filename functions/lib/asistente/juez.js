@@ -45,9 +45,18 @@ export function validarInventario(obj, evidencia = []) {
       // Reparación determinista: la referencia se asigna solo si el texto de
       // la afirmación aparece en exactamente una evidencia.
       const textoNorm = normalizarTexto(norm.texto);
-      const candidatas = (evidencia || []).filter((e) => textoNorm.length > 0 && normalizarTexto(e.texto).includes(textoNorm));
-      if (candidatas.length !== 1) return { ok: false, motivo: 'referencia-vacia' };
-      norm.referencia = candidatas[0].id;
+      const tokens = new Set(textoNorm.split(' ').filter((t) => t.length > 2));
+      const puntuadas = (evidencia || []).map((e) => {
+        const evNorm = normalizarTexto(e.texto);
+        if (textoNorm.length > 0 && evNorm.includes(textoNorm)) return { id: e.id, score: 1 };
+        if (tokens.size === 0) return { id: e.id, score: 0 };
+        const evTokens = new Set(evNorm.split(' '));
+        let hits = 0;
+        for (const t of tokens) if (evTokens.has(t)) hits++;
+        return { id: e.id, score: hits / tokens.size };
+      }).sort((a, b) => b.score - a.score);
+      if (!puntuadas[0] || puntuadas[0].score < 0.8 || (puntuadas[1] && puntuadas[1].score >= puntuadas[0].score)) return { ok: false, motivo: 'referencia-vacia' };
+      norm.referencia = puntuadas[0].id;
     }
     afirmaciones.push(norm);
   }

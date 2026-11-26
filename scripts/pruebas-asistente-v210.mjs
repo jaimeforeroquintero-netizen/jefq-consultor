@@ -158,5 +158,9 @@ const verReubicado = validarVeredictoJuez(
 );
 prueba('veredicto con id en respaldo se reubica', verReubicado.ok === true);
 
+const selPyme = seleccionarAfirmacion('¿Qué incluye la Evaluación PYME?', registro);
+const respPyme = respuestaDesdeAfirmacion(selPyme.afirmacion, registro);
+prueba('cobertura de producto renderiza sin falsa no-atomicidad', respPyme.ok === true);
+
 console.log(`\nTOTAL: ${total} casos, ${total - fallos} PASA, ${fallos} FALLA.`);
 process.exit(fallos === 0 ? 0 : 1);

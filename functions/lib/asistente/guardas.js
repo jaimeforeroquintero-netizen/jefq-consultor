@@ -213,6 +213,8 @@ export function validarTextoComercial(texto, registro, opciones = {}) {
   const guardas = analizarGuardas(texto, opciones);
   const puerta = puertaNumerica(texto, registro, opciones.afirmacion || null);
   const motivos = [...puerta.motivos];
-  if (!guardas.atomica) motivos.push('no-atomica');
+  // La cobertura renderizada desde el registro es una lista por diseño; la
+  // atomicidad no aplica a ese campo (la puerta numérica sí).
+  if (!guardas.atomica && opciones.afirmacion?.campo !== 'cobertura') motivos.push('no-atomica');
   return { ok: motivos.length === 0, guardas, puerta, motivos };
 }
