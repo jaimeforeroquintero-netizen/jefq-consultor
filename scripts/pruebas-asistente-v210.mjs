@@ -165,5 +165,11 @@ prueba('cobertura de producto renderiza sin falsa no-atomicidad', respPyme.ok ==
 const invIds = validarInventario({ afirmaciones: [{ id: '1', texto: 'El método tiene cuatro pasos.', referencia: 'metodo' }, { id: 'x', texto: 'Atiende en toda Colombia.', referencia: 'cobertura-pais' }] }, evMetodo);
 prueba('ids del modelo se reasignan c1..cn', invIds.ok === true && invIds.afirmaciones[0].id === 'c1' && invIds.afirmaciones[1].id === 'c2');
 
+// Consistencia: el catálogo de pagos usa los mismos precios que el registro.
+const pagosSrc = readFileSync(new URL('../functions/api/pagos/crear.js', import.meta.url), 'utf8');
+const centavosPagos = [...pagosSrc.matchAll(/centavos:\s*(\d+)/g)].map((m) => Number(m[1]) / 100).sort((a, b) => a - b);
+const preciosRegistro = registro.entradas.filter((e) => Number.isInteger(e.precio)).map((e) => e.precio);
+prueba('pagos coincide con el registro', centavosPagos.every((c) => preciosRegistro.includes(c)));
+
 console.log(`\nTOTAL: ${total} casos, ${total - fallos} PASA, ${fallos} FALLA.`);
 process.exit(fallos === 0 ? 0 : 1);

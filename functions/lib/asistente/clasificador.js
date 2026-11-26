@@ -72,7 +72,8 @@ export function validarClasificacion(obj, mensajeActual) {
     const tipos = obj.fragmentos.map((f) => f.tipo).sort().join(',');
     if (obj.fragmentos.length !== 2 || tipos !== 'falsa,legitima') {
       // Reparación: mixta sin dos fragmentos válidos se trata como legítima
-      // con un fragmento «sostiene» (la guarda de condición protege aparte).
+      // solo si ningún fragmento es «falsa» (la guarda de condición protege aparte).
+      if (obj.fragmentos.some((f) => f && f.tipo === 'falsa')) return { ok: false, motivo: 'mixta-sin-dos-fragmentos' };
       const primero = obj.fragmentos.find((f) => f && typeof f.texto === 'string' && f.texto.trim().length > 0);
       if (!primero) return { ok: false, motivo: 'mixta-sin-dos-fragmentos' };
       obj = { ...obj, etiqueta: 1, fragmentos: [{ texto: primero.texto, tipo: 'sostiene' }] };

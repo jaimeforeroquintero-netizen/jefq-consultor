@@ -12,7 +12,7 @@
 import { withSentry } from '../_sentry.js';
 import { contar, ipCliente } from '../lib/redis.js';
 import { ESQUEMA_CLASIFICADOR_V210, PROMPT_CLASIFICADOR, clasificadorSinModelo, normalizarClasificacion, rutaDesdeClasificacion, validarClasificacion } from '../lib/asistente/clasificador.js';
-import { validarTextoComercial } from '../lib/asistente/guardas.js';
+import { extraerMontos, validarTextoComercial } from '../lib/asistente/guardas.js';
 import { ESQUEMA_GENERADOR_V210, ESQUEMA_JUEZ_V210, PROMPT_GENERADOR, PROMPT_JUEZ, ensamblarRespuesta, validarInventario, validarVeredictoJuez } from '../lib/asistente/juez.js';
 import { crearPresupuestoLlamadas, llamarModeloJSON } from '../lib/asistente/modelo.js';
 import { buscarEvidencia } from '../lib/asistente/rag.js';
@@ -59,6 +59,17 @@ function textoHistorial(history) {
   return history.map((m) => `${m.role === 'assistant' ? 'Asistente' : 'Visitante'}: ${m.content}`).join('\n');
 }
 
+
+const LEXICO_CONDICION_TEXTO = /(descuento|promoci[oó]n|oferta|gratis|2x1|mitad|rebaja|bonificaci[oó]n|cup[oó]n|precio especial|acuerdo|condici[oó]n especial|sin costo)/i;
+
+// Un texto extractivo solo se entrega si pasa la puerta numérica y las
+// guardas, no trae montos ni léxico de condición y cita su fuente.
+function extractivoSeguro(texto, registro) {
+  if (extraerMontos(texto).length > 0) return false;
+  if (LEXICO_CONDICION_TEXTO.test(texto)) return false;
+  return validarTextoComercial(texto, registro, { permitirNoAtomica: true }).ok;
+}
+
 async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, contextoExtra = '') {
   const evidencia = await buscarEvidencia(env, consulta, 4);
   if (evidencia.length === 0) return { reply: RESPUESTA_SIN_VERIFICAR, ruta: 'general-sin-evidencia', puerta_ok: true, juez_ok: false, motivo: 'sin-evidencia' };
@@ -83,8 +94,8 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
       }
       return { e, score: tokensQ.size ? hits / tokensQ.size : 0 };
     }).sort((a, b) => b.score - a.score)[0];
-    if (mejor && mejor.score >= 0.34 && !/\$\s?[\d.]+/.test(mejor.e.texto)) {
-      return { reply: `${mejor.e.texto} (Fuente: ${mejor.e.titulo})`, ruta: 'general', puerta_ok: true, juez_ok: true, motivo: 'extractivo' };
+    if (mejor && mejor.score >= 0.34 && extractivoSeguro(mejor.e.texto, snapshot.registro)) {
+      return { reply: `${mejor.e.texto} (Fuente: ${mejor.e.titulo})`, ruta: 'general', puerta_ok: true, juez_ok: false, motivo: 'extractivo' };
     }
     return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: false, juez_ok: false, motivo: inv.motivo };
   }
@@ -110,8 +121,8 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
       }
       return { e, score: tokensQ.size ? hits / tokensQ.size : 0 };
     }).sort((a, b) => b.score - a.score)[0];
-    if (mejor && mejor.score >= 0.34 && !/\$\s?[\d.]+/.test(mejor.e.texto)) {
-      return { reply: `${mejor.e.texto} (Fuente: ${mejor.e.titulo})`, ruta: 'general', puerta_ok: true, juez_ok: true, motivo: 'extractivo' };
+    if (mejor && mejor.score >= 0.34 && extractivoSeguro(mejor.e.texto, snapshot.registro)) {
+      return { reply: `${mejor.e.texto} (Fuente: ${mejor.e.titulo})`, ruta: 'general', puerta_ok: true, juez_ok: false, motivo: 'extractivo' };
     }
     return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: veredicto.motivo !== 'guarda-o-puerta', juez_ok: false, motivo: veredicto.motivo };
   }
@@ -287,7 +298,7 @@ async function handler(context) {
   let resultado = await procesarIntento(env, modelo, presupuesto, snapshot, history, mensajeActual);
 
   // Reintento único de la ruta general ante fallos de validación del modelo.
-  if (resultado.ruta === 'general' && !resultado.juez_ok && resultado.motivo !== 'sin-evidencia' && presupuesto.intento < presupuesto.maxIntentos) {
+  if (resultado.ruta === 'general' && !resultado.juez_ok && resultado.motivo !== 'sin-evidencia' && resultado.motivo !== 'extractivo' && resultado.motivo !== 'extractivo-final' && presupuesto.intento < presupuesto.maxIntentos) {
     presupuesto.nuevoIntento();
     resultado = await procesarIntento(env, modelo, presupuesto, snapshot, history, mensajeActual);
   }
@@ -308,8 +319,8 @@ async function handler(context) {
       for (const et of evTokens) { let cp = 0; while (cp < t.length && cp < et.length && t[cp] === et[cp]) cp++; if (et === t || (cp >= 4) || (cp >= 3 && Math.abs(t.length - et.length) <= 3 && t.length >= 5 && et.length >= 5)) { hits++; break; } }
     }
     const solape = tokensQ.size ? hits / tokensQ.size : 0;
-    if (mejor && (mejor.score ?? 0) >= 0.45 && margen >= 0.03 && solape >= 0.34 && !/\$\s?[\d.]+/.test(mejor.texto)) {
-      resultado = { reply: `${mejor.texto} (Fuente: ${mejor.titulo})`, ruta: 'general', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: true, juez_ok: true, motivo: 'extractivo-final' };
+    if (mejor && (mejor.score ?? 0) >= 0.45 && margen >= 0.03 && solape >= 0.34 && extractivoSeguro(mejor.texto, snapshot.registro)) {
+      resultado = { reply: `${mejor.texto} (Fuente: ${mejor.titulo})`, ruta: 'general', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: true, juez_ok: false, motivo: 'extractivo-final' };
     }
   }
 

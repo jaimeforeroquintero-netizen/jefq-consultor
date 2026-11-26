@@ -157,7 +157,9 @@ export function validarVeredictoJuez(obj, inventario, evidencia, registro, opcio
     if (v.respaldo === 'cita' && extraerMontos(inv.texto).length > 0) return { ok: false, aprobado: false, motivo: 'precio-con-cita' };
     if (v.respaldo === 'cita' && !evidenciaPorId(evidencia, v.referencia)) return { ok: false, aprobado: false, motivo: 'cita-inexistente' };
     if (v.respaldo === 'lista' && !entradaPorId(registro, v.referencia) && v.referencia !== 'registro') return { ok: false, aprobado: false, motivo: 'lista-inexistente' };
-    const validacion = validarTextoComercial(inv.texto, registro, { aliasServicio: aliasDelRegistro(registro), permitirNoAtomica: v.respaldo === 'cita' });
+    const evCita = v.respaldo === 'cita' ? evidenciaPorId(evidencia, refResuelta) : null;
+    const esCitaTextual = Boolean(evCita && normalizarTexto(evCita.texto).includes(normalizarTexto(inv.texto)));
+    const validacion = validarTextoComercial(inv.texto, registro, { aliasServicio: aliasDelRegistro(registro), permitirNoAtomica: esCitaTextual });
     if (!validacion.ok) return { ok: false, aprobado: false, motivo: 'guarda-o-puerta', validacion };
   }
   if (vistos.size !== invPorId.size) return { ok: false, aprobado: false, motivo: 'conjunto-distinto' };
