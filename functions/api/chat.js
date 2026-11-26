@@ -291,6 +291,17 @@ async function handler(context) {
     resultado = await procesarIntento(env, modelo, presupuesto, snapshot, history, mensajeActual);
   }
 
+  // Respaldo extractivo final: si el resultado quedó cerrado sin ser rechazo
+  // de condición, se entrega el texto publicado más cercano con su fuente.
+  const LEXICO_CONDICION_FINAL = /(descuento|promoci[oó]n|oferta|gratis|2x1|mitad|rebaja|bonificaci[oó]n|cup[oó]n|precio especial|acuerdo|condici[oó]n especial|sin costo)/i;
+  if (resultado.reply === RESPUESTA_CERRADA && !['fija-condicion', 'mixta', 'frescura'].includes(resultado.ruta) && !LEXICO_CONDICION_FINAL.test(mensajeActual)) {
+    const evidencia = await buscarEvidencia(env, mensajeActual, 4);
+    const mejor = (evidencia || []).slice().sort((a, b) => (b.score ?? 0) - (a.score ?? 0))[0];
+    if (mejor && (mejor.score ?? 0) >= 0.55 && !/\$\s?[\d.]+/.test(mejor.texto)) {
+      resultado = { reply: `${mejor.texto} (Fuente: ${mejor.titulo})`, ruta: 'general', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: true, juez_ok: true, motivo: 'extractivo-final' };
+    }
+  }
+
   // Linealización: si la época cambió antes del envío, se reprocesa una vez.
   let epochAntes = snapshot.epoch;
   try {
