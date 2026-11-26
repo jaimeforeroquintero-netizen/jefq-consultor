@@ -54,30 +54,49 @@ const { candidato = false } = Astro.props;
 </article>
 
 <style>
-.informe-muestra{background:#fff;border:1px solid #d7e2ea;border-radius:20px;box-shadow:0 24px 60px rgba(13,40,64,.12);overflow:hidden;text-align:left}
+.informe-muestra{background:var(--paper);border:1px solid #10141B;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,.12);overflow:hidden;text-align:left}
 .muestra-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:18px 26px 0}
-.muestra-sello{display:inline-flex;padding:7px 12px;border:1px solid rgba(176,120,0,.5);border-radius:999px;color:#7a5200;background:#fff4d6;font-size:.72rem;font-weight:900;letter-spacing:.07em}
-.muestra-candidato{display:inline-flex;padding:7px 12px;border:1px dashed #b3261e;border-radius:999px;color:#b3261e;background:#fff;font-size:.72rem;font-weight:900;letter-spacing:.07em}
+.muestra-sello{display:inline-flex;padding:7px 12px;border:1px solid rgba(216,162,74,.5);border-radius:999px;color:#8A5A12;background:var(--paper);font-size:.72rem;font-weight:900;letter-spacing:.07em}
+.muestra-candidato{display:inline-flex;padding:7px 12px;border:1px dashed #E06C5B;border-radius:999px;color:#E06C5B;background:var(--paper);font-size:.72rem;font-weight:900;letter-spacing:.07em}
 .muestra-portada{padding:22px 26px 8px}
-.muestra-portada h3{margin:10px 0 8px;font-size:clamp(1.5rem,3.4vw,2.1rem);color:#0d2840}
-.muestra-portada p{margin:0;color:#40566b;max-width:62ch}
+.muestra-portada h3{margin:10px 0 8px;font-size:clamp(1.5rem,3.4vw,2.1rem);color:#C9C2B4}
+.muestra-portada p{margin:0;color:#C9C2B4;max-width:62ch}
 .muestra-metricas{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 6px}
-.muestra-metricas div{padding:14px 16px;background:#f3f7fa;border:1px solid #d7e2ea;border-radius:14px}
-.muestra-metricas dt{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#40566b}
-.muestra-metricas dd{margin:6px 0 0;font-size:1.5rem;font-weight:900;color:#0b6e66}
+.muestra-metricas div{padding:14px 16px;background:var(--paper);border:1px solid #10141B;border-radius:14px}
+.muestra-metricas dt{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#C9C2B4}
+.muestra-metricas dd{margin:6px 0 0;font-size:1.5rem;font-weight:900;color:#57C7A3}
 .muestra-tabla-wrap{overflow-x:auto;padding:12px 26px 6px}
 .muestra-tabla{width:100%;border-collapse:collapse;min-width:560px}
-.muestra-tabla caption{text-align:left;padding:10px 0;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#40566b}
-.muestra-tabla th,.muestra-tabla td{padding:12px 10px;border-top:1px solid #d7e2ea;vertical-align:top;text-align:left;font-size:.95rem;color:#22394d}
-.muestra-tabla thead th{border-top:0;color:#0d2840;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
-.muestra-id{font-weight:900;white-space:nowrap;color:#0d2840}
+.muestra-tabla caption{text-align:left;padding:10px 0;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#C9C2B4}
+.muestra-tabla th,.muestra-tabla td{padding:12px 10px;border-top:1px solid #10141B;vertical-align:top;text-align:left;font-size:.95rem;color:#C9C2B4}
+.muestra-tabla thead th{border-top:0;color:#C9C2B4;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.muestra-id{font-weight:900;white-space:nowrap;color:#C9C2B4}
 .muestra-chip{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.78rem;white-space:nowrap}
-.muestra-chip.alta{color:#2b1a00;background:#ffc166}
-.muestra-chip.media{color:#00271f;background:#65e7cc}
-.muestra-chip.baja{color:#08283a;background:#a8d8ef}
-.muestra-pie{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:18px 26px 24px;border-top:1px solid #d7e2ea;margin-top:10px}
-/* El pie es un <footer>: la regla global footer (hibrido:19) le impone fondo azul marino #0b1b2e dentro de la tarjeta blanca; la nota va en texto claro. Causa real del NO PASA de 1b97967 (verificación visual 2026-11-05 10:25–10:32): la declaración sin !important nunca se aplicó — parches:98 `main p,main li{color:#40566b !important}` vence a cualquier declaración normal, y el <strong> lo pinta hibrido:27 `strong{color:var(--fg-title)}` = #14202e (1,05:1). Por eso el !important es obligatorio en ambas: el <p> gana a `main p` por especificidad de ámbito (0,2,1)>(0,0,2), y el <strong> necesita su propia regla con !important porque su color directo no hereda. #f4f8ff = 16,29:1 sobre #0b1b2e. */
-.muestra-pie p{margin:0;max-width:58ch;color:#f4f8ff !important;font-size:.92rem}
-.muestra-pie p strong{color:#f4f8ff !important}
+.muestra-chip.alta{color:#14100A;background:#D8A24A}
+.muestra-chip.media{color:#14100A;background:#57C7A3}
+.muestra-chip.baja{color:#14100A;background:#57C7A3}
+.muestra-pie{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:18px 26px 24px;border-top:1px solid #10141B;margin-top:10px}
+
+.muestra-pie p{margin:0;max-width:58ch;color:#F3EDE2 !important;font-size:.92rem}
+.muestra-pie p strong{color:#F3EDE2 !important}
 @media(max-width:700px){.muestra-metricas{grid-template-columns:repeat(2,1fr)}.muestra-top,.muestra-portada,.muestra-tabla-wrap,.muestra-pie{padding-left:18px;padding-right:18px}}
+
+.hallazgo-anatomia,.informe-muestra{background:var(--paper);color:var(--paper-ink);border:1px solid rgba(23,19,14,.2)}
+.anatomia-head h3,.muestra-portada h3,.anatomia-ficha dd,.muestra-id,.muestra-tabla thead th{color:var(--paper-ink)}
+.anatomia-head p,.anatomia-campos p,.anatomia-pie p,.muestra-portada p,.muestra-tabla caption,.anatomia-ficha dt{color:var(--paper-muted)}
+.anatomia-ficha div,.muestra-metricas div{background:transparent;border:1px solid rgba(23,19,14,.2)}
+.anatomia-campos li,.muestra-tabla th,.muestra-tabla td,.muestra-pie{border-color:rgba(23,19,14,.18)}
+.muestra-tabla th,.muestra-tabla td{color:var(--paper-ink)}
+.muestra-metricas dd{color:var(--copper)}
+.anatomia-sello,.muestra-sello{color:var(--copper);background:rgba(216,162,74,.18);border-color:var(--gold)}
+.anatomia-id{background:var(--paper-ink);color:var(--paper)}
+.muestra-candidato{color:var(--paper-ink);background:var(--paper);border-color:var(--risk)}
+.anatomia-chip.alta,.muestra-chip.alta{background:var(--gold);color:var(--on-gold)}
+.anatomia-chip.media,.muestra-chip.media{background:var(--emerald);color:var(--on-gold)}
+.anatomia-chip.baja,.muestra-chip.baja{background:var(--raised);color:var(--bone)}
+.anatomia-num{background:var(--copper);color:var(--paper)}
+.anatomia-campos li:nth-child(3) .anatomia-num{background:var(--paper-ink);color:var(--paper)}
+.anatomia-campos li:nth-child(5) .anatomia-num{background:var(--gold);color:var(--on-gold)}
+.muestra-pie p{color:var(--paper-muted) !important}
+.muestra-pie p strong{color:var(--paper-ink) !important}
 </style>

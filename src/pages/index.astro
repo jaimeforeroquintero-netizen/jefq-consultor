@@ -18,9 +18,9 @@ import ScanTerminal from "../components/ScanTerminal.astro";
 import VideoPromo from "../components/VideoPromo.astro";
 ---
 <Layout title="JEFQ Consultor | Ciberseguridad para empresas en Colombia" description="Diagnóstico, hardening, pruebas autorizadas e informes de ciberseguridad para pymes y empresas en Bogotá y toda Colombia.">
-<section class="hero"><div class="grid-bg"></div><div class="orb orb-a"></div><div class="orb orb-b"></div><div class="container hero-grid">
+<section class="hero"><div class="container hero-grid">
   <div class="hero-copy" data-reveal><div class="eyebrow"><i></i>Ciberseguridad práctica para Colombia</div><h1>Diagnóstico de ciberseguridad <span>para pymes en Colombia</span></h1><p>Sepa exactamente dónde está expuesto antes de que un incidente lo descubra por usted. <a class="inline-link" href="/servicios/diagnostico-seguridad">Evaluación autorizada</a>, informe ejecutivo que su gerencia sí entiende y ruta de remediación priorizada — desde {formatearCOP(precioDe("esencial"))}, con atención directa del consultor.</p><div class="hero-actions"><a class="button primary" href="/valoracion">Solicitar valoración</a><a class="button secondary" href="#servicios">Explorar servicios</a><a class="button secondary" href="/api/whatsapp?text=Hola%20Jaime%2C%20quiero%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20JEFQ%20Consultor.">Prefiero escribir por WhatsApp</a></div><div class="hero-trust"><span>Autorización previa</span><span>Alcance controlado</span><span>Informes accionables</span></div></div>
-  <div class="visual" data-reveal><div class="radar"><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="cross x"></div><div class="cross y"></div><div class="sweep"></div><div class="core">J</div><i class="dot d1"></i><i class="dot d2"></i><i class="dot d3"></i></div><div class="visual-steps"><div><b>01</b><span>Diagnosticar</span></div><div><b>02</b><span>Priorizar</span></div><div><b>03</b><span>Fortalecer</span></div></div><ScanTerminal /></div>
+  <div class="visual" data-reveal><div class="visual-steps"><div><b>01</b><span>Diagnosticar</span></div><div><b>02</b><span>Priorizar</span></div><div><b>03</b><span>Fortalecer</span></div></div><ScanTerminal /></div>
 </div></section>
 <VideoPromo />
 <section class="proof"><div class="container proof-grid"><article><b>Autorizado</b><span>Pruebas con alcance escrito</span></article><article><b>Comprensible</b><span>Informe técnico y ejecutivo</span></article><article><b>Nacional</b><span>Atención remota en Colombia</span></article><article><b>Accionable</b><span>Prioridades y ruta de mejora</span></article></div></section>
@@ -86,46 +86,3 @@ var mx=Math.max(day,DIAG);document.getElementById('calc-fill-loss').style.width=
 btn.addEventListener('click',calc);inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();calc();}});})();
 </script>
 </Layout>
-<style>
-.hero-alt{display:inline-block;margin-top:20px;color:var(--cyan);font-size:.93rem;font-weight:700}
-.hero-alt:hover{text-decoration:underline}
-.hero-alt b{margin-left:4px}
-.section-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;margin-top:46px;padding:28px 24px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(9,31,54,.5);text-align:center}
-.section-cta span{color:var(--muted);font-size:1.02rem}
-@media(max-width:680px){.section-cta{flex-direction:column}}
-.inline-link{color:var(--cyan);font-weight:700;text-decoration:underline;text-underline-offset:3px}
-.inline-link:hover{color:var(--green)}
-/* R1 (2026-11-07): #confianza consolidada a 6 tarjetas -> rejilla 3x2 deliberada
-   (4+1fr dejaba 2 huecos visuales en la segunda fila; sin tarjetas nuevas). */
-.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
-@media(max-width:1020px){.trust-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.trust-grid{grid-template-columns:1fr}}
-.trust-card{display:flex;flex-direction:column;gap:10px;padding:22px 20px;border:1px solid rgba(13,40,64,.14);border-radius:var(--radius);background:#f3f7fa}
-#confianza .trust-num{font-size:.78rem;font-weight:800;letter-spacing:.14em;color:#0b6e66}
-.trust-card h3{margin:0;font-size:1.05rem;line-height:1.3;color:#14202e}
-.trust-card p{margin:0;font-size:.95rem;line-height:1.55;color:#405466}
-.trust-links{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:auto;padding-top:6px}
-#confianza .trust-link{font-weight:700;color:#0b6e66;text-decoration:underline;text-underline-offset:3px}
-#confianza .trust-link:hover{color:#095e56}
-.trust-no{margin-top:38px;padding-top:26px;border-top:1px solid rgba(13,40,64,.14)}
-.trust-no h3{margin:0 0 14px;font-size:1.05rem;color:#14202e}
-.trust-no ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px 28px}
-@media(max-width:640px){.trust-no ul{grid-template-columns:1fr}}
-.trust-no li{font-size:.95rem;line-height:1.5;color:#405466}
-#confianza .trust-no li::before{content:"— ";color:#0b6e66;font-weight:700}
-.trust-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 20px;margin-top:38px;text-align:center}
-#confianza .trust-cta p{margin:0;font-size:1.02rem;font-weight:700;color:#14202e}
-/* L2 (2026-11-07): tarjeta 07 huérfana — 7 tarjetas en 3 columnas dejan
-   3+3+1 con 802,7 px (68 %) de vacío a la derecha de la 07 en desktop.
-   Sin octava tarjeta, sin reordenar y sin tocar móvil: la última tarjeta
-   se centra en la tercera fila (columna 2). El vacío queda simétrico y
-   la 07 se lee como cierre deliberado, no como resto. Límite inferior
-   721 px (NO 681): el híbrido impone 1 columna hasta 720 px y
-   grid-column:2 ahí crearía una columna implícita (verificado: a 700 px
-   la rejilla se partía en 2 columnas desiguales). A ≤720 px la rejilla
-   es 1 columna y la regla no aplica. */
-@media(min-width:721px){#servicios .service-grid .service-card:last-child{grid-column:2}}
-.price-card{display:flex;flex-direction:column}
-.price-card ul{flex:1}
-.price-card .price{font-size:clamp(1.5rem,2.8vw,1.9rem);white-space:nowrap}
-</style>

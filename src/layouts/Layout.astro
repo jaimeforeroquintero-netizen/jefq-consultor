@@ -3,15 +3,7 @@ import "../styles/global.css";
 import { offersJSONLD } from "../data/precios";
 import AsistenteIA from "../components/AsistenteIA.astro";
 import WhatsAppModal from "../components/WhatsAppModal.astro";
-import "../styles/seo-authority.css";
-import "../styles/service-premium-v2.css";
-import "../styles/conversion-evidence.css";
-import "../styles/authority-premium-v3.css";
-import "../styles/trust-commercial.css";
 
-import "../styles/service-links.css";
-import "../styles/services-premium.css";
-import "../styles/marketing-conversion.css";
 interface Props { title:string; description:string; canonicalPath?:string; noindex?:boolean; }
 const { title, description, canonicalPath = Astro.url.pathname, noindex = false } = Astro.props;
 const baseUrl = "https://jefq-consultor.pages.dev";
@@ -64,22 +56,14 @@ const schema = {
     }
   ]
 };
-import "../styles/audit-v2-fixes.css";
-import "../styles/authority-real-v1.css";
 
-import "../styles/commercial-v1.css";
-import "../styles/jefq-diseno-hibrido-v1.css";
-/* Parches consolidados (fusión de color-fix-v1.css + rediseno-claro-muestra.css): hoja de anulación, cargada la última. Solo diseño. */
-import "../styles/parches-consolidados.css";
-/* Tema claro (tarjeta, 2026-11-23): SOLO overrides @media (prefers-color-scheme: light); se importa después de parches para mandar en ese esquema. En oscuro no aplica nada. */
-import "../styles/tema-claro.css";
 ---
 <!doctype html>
 <html lang="es-CO">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#050b16" />
+  <meta name="theme-color" content="#07090D" />
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow,max-image-preview:large"} />
@@ -87,7 +71,7 @@ import "../styles/tema-claro.css";
   <link rel="icon" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_CO" />
   <meta property="og:site_name" content="JEFQ Consultor" />

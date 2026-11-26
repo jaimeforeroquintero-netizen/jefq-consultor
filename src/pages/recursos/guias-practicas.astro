@@ -60,12 +60,19 @@ const resources = [
 </Layout>
 
 <style>
-  .resource-notice { margin-top: .75rem; color: #526b7c; font-size: .85rem; line-height: 1.5; }
-  .checklist-interactive { margin: 2.5rem 0; padding: 2rem; background: #f8fbfd; border: 1px solid #cfe0ea; border-radius: 20px; }
-  .checklist-interactive h2 { margin: .5rem 0 .75rem; font-size: clamp(1.4rem, 3vw, 1.9rem); color: #0d2840; }
-  .checklist-interactive > p { color: #455f70; max-width: 760px; }
-  .checklist-interactive .checklist { display: grid; gap: .6rem; margin-top: 1.25rem; }
-  .checklist-interactive .checklist label { display: flex; gap: .75rem; align-items: flex-start; padding: .8rem 1rem; background: #fff; border: 1px solid #cfe0ea; border-radius: 12px; cursor: pointer; color: #23485b; }
-  .checklist-interactive .checklist input { margin-top: .2rem; accent-color: #0b6e66; width: 1.1rem; height: 1.1rem; }
-  .checklist-interactive .data-safety-note { margin-top: 1.25rem; color: #526b7c; font-size: .9rem; }
+  .resource-notice { margin-top:.75rem; color:#C9C2B4; font-size:.85rem; line-height:1.5; }
+  .checklist-interactive { margin:2.5rem 0; padding:2rem; background:#10141B; border:1px solid #10141B; border-radius:20px; }
+  .checklist-interactive h2 { margin:.5rem 0 .75rem; font-size:clamp(1.4rem, 3vw, 1.9rem); color:#C9C2B4; }
+  .checklist-interactive > p { color:#C9C2B4; max-width:760px; }
+  .checklist-interactive .checklist { display:grid; gap:.6rem; margin-top:1.25rem; }
+  .checklist-interactive .checklist label { display:flex; gap:.75rem; align-items:flex-start; padding:.8rem 1rem; background:#10141B; border:1px solid #10141B; border-radius:12px; cursor:pointer; color:#C9C2B4; }
+  .checklist-interactive .checklist input { margin-top:.2rem; accent-color:#57C7A3; width:1.1rem; height:1.1rem; }
+  .checklist-interactive .data-safety-note { margin-top:1.25rem; color:#C9C2B4; font-size:.9rem; }
+
+.resource-notice{color:var(--muted)}
+.checklist-interactive{background:var(--surface);border-color:var(--line)}
+.checklist-interactive h2{color:var(--bone)}
+.checklist-interactive>p,.checklist-interactive .data-safety-note{color:var(--muted)}
+.checklist-interactive .checklist label{background:var(--raised);border-color:var(--line);color:var(--bone)}
+.checklist-interactive .checklist input{accent-color:var(--emerald)}
 </style>

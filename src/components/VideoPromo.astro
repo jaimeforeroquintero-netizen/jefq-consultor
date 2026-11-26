@@ -21,37 +21,38 @@
 </section>
 <style>
   .video-grid {
-    display: grid;
-    grid-template-columns: minmax(240px, 340px) 1fr;
-    gap: clamp(1.5rem, 4vw, 3.5rem);
-    align-items: center;
+    display:grid;
+    grid-template-columns:minmax(240px, 340px) 1fr;
+    gap:clamp(1.5rem, 4vw, 3.5rem);
+    align-items:center;
   }
   .video-frame {
-    display: flex;
-    justify-content: center;
+    display:flex;
+    justify-content:center;
   }
   .video-frame video {
-    width: 100%;
-    max-width: 340px;
-    max-height: 70vh;
-    aspect-ratio: 9 / 16;
-    border-radius: 18px;
-    border: 1px solid rgba(120, 160, 220, 0.25);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-    background: #0b1220;
+    width:100%;
+    max-width:340px;
+    max-height:70vh;
+    aspect-ratio:9 / 16;
+    border-radius:18px;
+    border:1px solid rgba(42,51,66,0.25);
+    box-shadow:0 24px 60px rgba(0,0,0,0.45);
+    background:#07090D;
   }
   .video-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 1.25rem;
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.75rem;
+    margin-top:1.25rem;
   }
   @media (max-width: 760px) {
     .video-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns:1fr;
     }
     .video-frame video {
-      max-width: 300px;
+      max-width:300px;
     }
   }
+.video-frame video{border-color:var(--line);background:var(--night)}
 </style>

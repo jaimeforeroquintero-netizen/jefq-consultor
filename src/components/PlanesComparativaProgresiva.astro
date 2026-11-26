@@ -170,32 +170,40 @@ const PLACEHOLDERS = DIMENSIONES.flatMap((d, i) =>
 </div>
 
 <style>
-.planes-comparativa-progresiva{margin-top:34px;padding:28px;border:1px solid #d7e2ea;border-radius:20px;background:#fff;text-align:left}
-.comparativa-progresiva-head h3{margin:10px 0 8px;font-size:clamp(1.4rem,3vw,1.9rem);color:#0d2840}
-.comparativa-progresiva-head p{margin:0;color:#40566b;max-width:62ch}
+.planes-comparativa-progresiva{margin-top:34px;padding:28px;border:1px solid #10141B;border-radius:20px;background:#10141B;text-align:left}
+.comparativa-progresiva-head h3{margin:10px 0 8px;font-size:clamp(1.4rem,3vw,1.9rem);color:#C9C2B4}
+.comparativa-progresiva-head p{margin:0;color:#C9C2B4;max-width:62ch}
 .comparativa-progresiva-tabla-wrap{overflow-x:auto;margin-top:18px}
 .comparativa-progresiva-tabla{width:100%;border-collapse:collapse;min-width:560px}
-.comparativa-progresiva-tabla caption{text-align:left;padding:10px 0;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#40566b}
-.comparativa-progresiva-tabla th,.comparativa-progresiva-tabla td{padding:11px 10px;border-top:1px solid #d7e2ea;vertical-align:top;text-align:left;font-size:.95rem;color:#22394d}
-.comparativa-progresiva-tabla thead th{border-top:0;color:#0d2840;font-size:.95rem}
-.comparativa-progresiva-tabla thead th span{display:block;margin-top:4px;font-size:.82rem;font-weight:700;color:#0b6e66}
+.comparativa-progresiva-tabla caption{text-align:left;padding:10px 0;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#C9C2B4}
+.comparativa-progresiva-tabla th,.comparativa-progresiva-tabla td{padding:11px 10px;border-top:1px solid #10141B;vertical-align:top;text-align:left;font-size:.95rem;color:#C9C2B4}
+.comparativa-progresiva-tabla thead th{border-top:0;color:#C9C2B4;font-size:.95rem}
+.comparativa-progresiva-tabla thead th span{display:block;margin-top:4px;font-size:.82rem;font-weight:700;color:#57C7A3}
 .comparativa-progresiva-tabla tbody th{font-weight:700}
 .comparativa-progresiva-tabla tbody th:first-child{width:22%}
-/* Placeholder interno: visible SOLO si el componente se renderiza en un
-   entorno de revisión; marca el dato sin resolver, no un hecho. */
-.celda-placeholder{color:#8a6d00 !important;font-style:italic;background:#fdf6e0}
+
+.celda-placeholder{color:#D8A24A !important;font-style:italic;background:#10141B}
 .comparativa-progresiva-apilado{display:none}
-.comparativa-progresiva-nota{margin:18px 0 0;color:#40566b;font-size:.92rem}
+.comparativa-progresiva-nota{margin:18px 0 0;color:#C9C2B4;font-size:.92rem}
 @media(max-width:800px){
   .comparativa-progresiva-tabla-wrap{display:none}
   .comparativa-progresiva-apilado{display:grid;gap:14px;margin-top:18px}
-  .comparativa-progresiva-plan{padding:20px;border:1px solid #d7e2ea;border-radius:16px;background:#f8fbfd}
-  .comparativa-progresiva-plan h4{margin:0;color:#0d2840;font-size:1.15rem}
-  .comparativa-progresiva-precio{margin:6px 0 12px;color:#0b6e66;font-weight:800}
+  .comparativa-progresiva-plan{padding:20px;border:1px solid #10141B;border-radius:16px;background:#10141B}
+  .comparativa-progresiva-plan h4{margin:0;color:#C9C2B4;font-size:1.15rem}
+  .comparativa-progresiva-precio{margin:6px 0 12px;color:#57C7A3;font-weight:800}
   .comparativa-progresiva-plan dl{margin:0;display:grid;gap:10px}
   .comparativa-progresiva-plan dl div{display:grid;gap:2px}
-  .comparativa-progresiva-plan dt{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#40566b}
-  .comparativa-progresiva-plan dd{margin:0;color:#22394d;font-size:.95rem}
+  .comparativa-progresiva-plan dt{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#C9C2B4}
+  .comparativa-progresiva-plan dd{margin:0;color:#C9C2B4;font-size:.95rem}
   .planes-comparativa-progresiva{padding:20px}
 }
+
+.planes-comparativa-progresiva{background:var(--surface);border-color:var(--line)}
+.comparativa-progresiva-head h3,.comparativa-progresiva-tabla thead th,.comparativa-progresiva-plan h4{color:var(--bone)}
+.comparativa-progresiva-head p,.comparativa-progresiva-nota,.comparativa-progresiva-tabla caption,.comparativa-progresiva-plan dt{color:var(--muted)}
+.comparativa-progresiva-tabla th,.comparativa-progresiva-tabla td,.comparativa-progresiva-plan dd{color:var(--bone)}
+.comparativa-progresiva-tabla th,.comparativa-progresiva-tabla td{border-color:var(--line)}
+.comparativa-progresiva-tabla thead th span,.comparativa-progresiva-precio{color:var(--gold)}
+.comparativa-progresiva-plan{background:var(--raised);border-color:var(--line)}
+.celda-placeholder{color:var(--gold) !important;background:rgba(216,162,74,.12)}
 </style>

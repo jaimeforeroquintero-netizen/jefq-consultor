@@ -48,29 +48,48 @@ const campos = [
 </article>
 
 <style>
-.hallazgo-anatomia{background:#fff;border:1px solid #d7e2ea;border-radius:20px;box-shadow:0 24px 60px rgba(13,40,64,.12);overflow:hidden;text-align:left}
+.hallazgo-anatomia{background:var(--paper);border:1px solid #10141B;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,.12);overflow:hidden;text-align:left}
 .anatomia-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:18px 26px 0}
-.anatomia-sello{display:inline-flex;padding:7px 12px;border:1px solid rgba(176,120,0,.5);border-radius:999px;color:#7a5200;background:#fff4d6;font-size:.72rem;font-weight:900;letter-spacing:.07em}
-.anatomia-id{display:inline-grid;place-items:center;min-width:52px;padding:7px 12px;border-radius:999px;background:#0d2840;color:#fff;font-size:.85rem;font-weight:900;letter-spacing:.04em}
+.anatomia-sello{display:inline-flex;padding:7px 12px;border:1px solid rgba(216,162,74,.5);border-radius:999px;color:#8A5A12;background:var(--paper);font-size:.72rem;font-weight:900;letter-spacing:.07em}
+.anatomia-id{display:inline-grid;place-items:center;min-width:52px;padding:7px 12px;border-radius:999px;background:var(--paper);color:#F3EDE2;font-size:.85rem;font-weight:900;letter-spacing:.04em}
 .anatomia-head{padding:20px 26px 4px}
-.anatomia-head h3{margin:10px 0 8px;font-size:clamp(1.5rem,3.4vw,2.1rem);color:#0d2840}
-.anatomia-head p{margin:0;color:#40566b;max-width:62ch}
+.anatomia-head h3{margin:10px 0 8px;font-size:clamp(1.5rem,3.4vw,2.1rem);color:#C9C2B4}
+.anatomia-head p{margin:0;color:#C9C2B4;max-width:62ch}
 .anatomia-ficha{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 26px 6px;padding:0}
-.anatomia-ficha div{padding:14px 16px;background:#f3f7fa;border:1px solid #d7e2ea;border-radius:14px}
-.anatomia-ficha dt{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#40566b}
-.anatomia-ficha dd{margin:6px 0 0;font-size:1.1rem;font-weight:800;color:#0d2840}
+.anatomia-ficha div{padding:14px 16px;background:var(--paper);border:1px solid #10141B;border-radius:14px}
+.anatomia-ficha dt{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#C9C2B4}
+.anatomia-ficha dd{margin:6px 0 0;font-size:1.1rem;font-weight:800;color:#C9C2B4}
 .anatomia-chip{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.85rem}
-.anatomia-chip.alta{color:#2b1a00;background:#ffc166}
-.anatomia-chip.media{color:#00271f;background:#65e7cc}
-.anatomia-chip.baja{color:#08283a;background:#a8d8ef}
+.anatomia-chip.alta{color:#14100A;background:#D8A24A}
+.anatomia-chip.media{color:#14100A;background:#57C7A3}
+.anatomia-chip.baja{color:#14100A;background:#57C7A3}
 .anatomia-campos{list-style:none;margin:14px 0 0;padding:6px 26px 10px;display:grid;grid-template-columns:1fr;gap:0}
-.anatomia-campos li{position:relative;padding:18px 0 18px 52px;border-top:1px solid #d7e2ea}
-.anatomia-num{position:absolute;top:18px;left:0;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#0b6e66;color:#fff;font-size:.82rem;font-weight:900}
-.anatomia-campos li:nth-child(3) .anatomia-num{background:#0d2840}
-.anatomia-campos li:nth-child(5) .anatomia-num{background:#7a5200}
-.anatomia-campos h4{margin:0 0 6px;font-size:.82rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em;color:#0d2840}
-.anatomia-campos p{margin:0;color:#40566b;max-width:68ch}
-.anatomia-pie{padding:18px 26px 24px;border-top:1px solid #d7e2ea}
-.anatomia-pie p{margin:0;max-width:68ch;color:#40566b;font-size:.92rem}
+.anatomia-campos li{position:relative;padding:18px 0 18px 52px;border-top:1px solid #10141B}
+.anatomia-num{position:absolute;top:18px;left:0;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#57C7A3;color:#F3EDE2;font-size:.82rem;font-weight:900}
+.anatomia-campos li:nth-child(3) .anatomia-num{background:#10141B}
+.anatomia-campos li:nth-child(5) .anatomia-num{background:#8A5A12}
+.anatomia-campos h4{margin:0 0 6px;font-size:.82rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em;color:#C9C2B4}
+.anatomia-campos p{margin:0;color:#C9C2B4;max-width:68ch}
+.anatomia-pie{padding:18px 26px 24px;border-top:1px solid #10141B}
+.anatomia-pie p{margin:0;max-width:68ch;color:#C9C2B4;font-size:.92rem}
 @media(max-width:700px){.anatomia-top,.anatomia-head,.anatomia-campos,.anatomia-pie{padding-left:18px;padding-right:18px}.anatomia-ficha{grid-template-columns:1fr;margin-left:18px;margin-right:18px}}
+
+.hallazgo-anatomia,.informe-muestra{background:var(--paper);color:var(--paper-ink);border:1px solid rgba(23,19,14,.2)}
+.anatomia-head h3,.muestra-portada h3,.anatomia-ficha dd,.muestra-id,.muestra-tabla thead th{color:var(--paper-ink)}
+.anatomia-head p,.anatomia-campos p,.anatomia-pie p,.muestra-portada p,.muestra-tabla caption,.anatomia-ficha dt{color:var(--paper-muted)}
+.anatomia-ficha div,.muestra-metricas div{background:transparent;border:1px solid rgba(23,19,14,.2)}
+.anatomia-campos li,.muestra-tabla th,.muestra-tabla td,.muestra-pie{border-color:rgba(23,19,14,.18)}
+.muestra-tabla th,.muestra-tabla td{color:var(--paper-ink)}
+.muestra-metricas dd{color:var(--copper)}
+.anatomia-sello,.muestra-sello{color:var(--copper);background:rgba(216,162,74,.18);border-color:var(--gold)}
+.anatomia-id{background:var(--paper-ink);color:var(--paper)}
+.muestra-candidato{color:var(--paper-ink);background:var(--paper);border-color:var(--risk)}
+.anatomia-chip.alta,.muestra-chip.alta{background:var(--gold);color:var(--on-gold)}
+.anatomia-chip.media,.muestra-chip.media{background:var(--emerald);color:var(--on-gold)}
+.anatomia-chip.baja,.muestra-chip.baja{background:var(--raised);color:var(--bone)}
+.anatomia-num{background:var(--copper);color:var(--paper)}
+.anatomia-campos li:nth-child(3) .anatomia-num{background:var(--paper-ink);color:var(--paper)}
+.anatomia-campos li:nth-child(5) .anatomia-num{background:var(--gold);color:var(--on-gold)}
+.muestra-pie p{color:var(--paper-muted) !important}
+.muestra-pie p strong{color:var(--paper-ink) !important}
 </style>

@@ -34,17 +34,17 @@ const { candidato = false, steps = CANONICAL_STEPS } = Astro.props;
 
 <style>
 .process-diagram{margin-top:8px}
-.diagram-candidato{display:inline-block;margin:0 0 14px;padding:6px 12px;border:1px dashed #b3261e;border-radius:999px;color:#b3261e;background:#fff;font-size:.72rem;font-weight:900;letter-spacing:.07em}
+.diagram-candidato{display:inline-block;margin:0 0 14px;padding:6px 12px;border:1px dashed #E06C5B;border-radius:999px;color:#E06C5B;background:#10141B;font-size:.72rem;font-weight:900;letter-spacing:.07em}
 .diagram-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
 .diagram-steps li{position:relative;padding:34px 18px 0}
-.diagram-steps li::before{content:"";position:absolute;top:15px;left:0;right:0;height:2px;background:#c8d8e2}
+.diagram-steps li::before{content:"";position:absolute;top:15px;left:0;right:0;height:2px;background:#10141B}
 .diagram-steps li:first-child::before{left:18px}
 .diagram-steps li:last-child::before{right:calc(100% - 18px)}
-.diagram-steps li::after{content:"›";position:absolute;top:4px;right:-4px;font-size:1.3rem;font-weight:900;color:#0b6e66}
+.diagram-steps li::after{content:"›";position:absolute;top:4px;right:-4px;font-size:1.3rem;font-weight:900;color:#57C7A3}
 .diagram-steps li:last-child::after{display:none}
-.diagram-num{position:absolute;top:0;left:18px;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#0b6e66;color:#fff !important;font-size:.82rem;font-weight:900;letter-spacing:.02em}
-.diagram-steps h3{margin:0 0 6px;font-size:1.08rem;color:#0d2840}
-.diagram-steps p{margin:0;color:#40566b;font-size:.95rem}
+.diagram-num{position:absolute;top:0;left:18px;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#57C7A3;color:#F3EDE2 !important;font-size:.82rem;font-weight:900;letter-spacing:.02em}
+.diagram-steps h3{margin:0 0 6px;font-size:1.08rem;color:#C9C2B4}
+.diagram-steps p{margin:0;color:#C9C2B4;font-size:.95rem}
 @media(max-width:800px){
   .diagram-steps{grid-template-columns:1fr}
   .diagram-steps li{padding:0 0 26px 52px}
@@ -55,4 +55,15 @@ const { candidato = false, steps = CANONICAL_STEPS } = Astro.props;
   .diagram-steps li:last-child::after{display:none}
   .diagram-num{left:0;top:0}
 }
+
+.diagram-steps li::before,.timeline-steps li::before{background:var(--line)}
+.diagram-steps li::after,.timeline-steps li::after{color:var(--emerald)}
+.diagram-num,.timeline-num{background:var(--gold);color:var(--on-gold) !important}
+.timeline-steps li:nth-child(2) .timeline-num{background:var(--emerald);color:var(--on-gold)}
+.timeline-steps li:nth-child(3) .timeline-num{background:var(--raised);color:var(--bone)}
+.diagram-steps h3,.timeline-steps h3{color:var(--bone)}
+.diagram-steps p,.timeline-desc{color:var(--muted)}
+.timeline-phase{color:var(--emerald)}
+.diagram-candidato{color:var(--bone);background:var(--surface);border-color:var(--risk)}
+.timeline-seal{color:var(--gold);background:rgba(216,162,74,.12);border-color:var(--gold)}
 </style>
