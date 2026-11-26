@@ -2,10 +2,22 @@
 # Declara el binding Workers AI (variable AI) para las Pages Functions.
 # El binding también puede configurarse en el dashboard (Workers & Pages →
 # proyecto → Settings → Bindings → Add → Workers AI → Variable name "AI").
-# Sin este binding, functions/api/chat.js responde 503 (fallback a WhatsApp).
+# Sin este binding, el asistente V2.10 usa solo la ruta sin modelo de lista blanca.
 name = "jefq-consultor"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-10-19"
 
 [ai]
 binding = "AI"
+
+# Asistente V2.10: configurar en el despliegue de prueba antes de publicar.
+# D1 guarda el registro canónico y la auditoría técnica; Vectorize guarda el
+# corpus del sitio para la ruta general. Sin D1, la ruta de precio se cierra.
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "jefq-asistente"
+# database_id = "<id-de-d1>"
+#
+# [[vectorize]]
+# binding = "VECTORIZE"
+# index_name = "jefq-sitio"

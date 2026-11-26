@@ -136,10 +136,11 @@ if (!existsSync(dist)) {
 }
 
 console.log("== E. Espejos (fases C/D preparadas) ==");
-for (const rel of ["functions/api/chat.js", "api/chat.js"]) {
+for (const rel of ["functions/lib/asistente/registro.js", "api/chat.js"]) {
   const t = leer(rel);
   const faltan = Object.values(ESPERADOS).filter((n) => !contienePrecio(t, n));
-  // El chat solo lista algunos precios en prosa; exige al menos los 3 planes + IA.
+  // V2.10: el espejo de Cloudflare es el registro canónico; api/chat.js sigue
+  // siendo el espejo de Vercel. Ambos deben llevar las cifras S1.
   check(`${rel} con precios S1`, [421500, 960500, 1930500, 130500, 313500].every((n) => contienePrecio(t, n)), faltan.length ? `faltan: ${faltan.join(", ")}` : "");
 }
 for (const rel of ["functions/api/pagos/crear.js", "api/pagos/crear.js"]) {
