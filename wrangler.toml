@@ -10,11 +10,14 @@ compatibility_date = "2026-10-19"
 [ai]
 binding = "AI"
 
-# Solo despliegue de prueba (rama asistente-v210): registro empaquetado y
-# corpus local mientras D1/Vectorize no existen. Retirar antes de publicar.
-[vars]
-ASSISTANT_ALLOW_BUNDLED_REGISTER = "1"
-ASSISTANT_LOCAL_CORPUS = "1"
+[[d1_databases]]
+binding = "DB"
+database_name = "jefq-asistente-prueba"
+database_id = "f1604c89-7c72-41a7-8119-7a34fb13108f"
+
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "jefq-sitio-prueba"
 
 # Asistente V2.10: configurar en el despliegue de prueba antes de publicar.
 # D1 guarda el registro canónico y la auditoría técnica; Vectorize guarda el
