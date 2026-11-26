@@ -2,7 +2,7 @@
 
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
-import { analizarGuardas, puertaNumerica } from '../functions/lib/asistente/guardas.js';
+import { analizarGuardas, puertaNumerica, validarTextoComercial } from '../functions/lib/asistente/guardas.js';
 import {
   REGISTRO_V210,
   aclaracionDiagnostico,
@@ -167,9 +167,17 @@ prueba('ids del modelo se reasignan c1..cn', invIds.ok === true && invIds.afirma
 
 // Consistencia: el catálogo de pagos usa los mismos precios que el registro.
 const pagosSrc = readFileSync(new URL('../functions/api/pagos/crear.js', import.meta.url), 'utf8');
-const centavosPagos = [...pagosSrc.matchAll(/centavos:\s*(\d+)/g)].map((m) => Number(m[1]) / 100).sort((a, b) => a - b);
-const preciosRegistro = registro.entradas.filter((e) => Number.isInteger(e.precio)).map((e) => e.precio);
-prueba('pagos coincide con el registro', centavosPagos.every((c) => preciosRegistro.includes(c)));
+const mapaPagos = { esencial: 'prod-diagnostico-esencial', pyme: 'prod-evaluacion-pyme', integral: 'prod-seguridad-integral' };
+const entradasPagos = [...pagosSrc.matchAll(/(\w+):\s*\{[^}]*centavos:\s*(\d+)/g)];
+prueba('pagos coincide con el registro por producto', entradasPagos.length > 0 && entradasPagos.every((m) => {
+  const entrada = registro.entradas.find((e) => e.id === mapaPagos[m[1]]);
+  return entrada && entrada.precio === Number(m[2]) / 100;
+}));
+// Cableado de cobertura: la ruta de precio pasa la afirmación y la guarda
+// rechaza una lista de cobertura alterada.
+const selCob = seleccionarAfirmacion('¿Qué incluye la Evaluación PYME?', registro);
+const textoCob = respuestaDesdeAfirmacion(selCob.afirmacion, registro).texto;
+prueba('cobertura alterada se rechaza', validarTextoComercial(textoCob.replace('Acompañamiento', 'Soporte inventado'), registro, { afirmacion: selCob.afirmacion }).ok === false);
 
 console.log(`\nTOTAL: ${total} casos, ${total - fallos} PASA, ${fallos} FALLA.`);
 process.exit(fallos === 0 ? 0 : 1);

@@ -60,14 +60,14 @@ function textoHistorial(history) {
 }
 
 
-const LEXICO_CONDICION_TEXTO = /(descuento|promoci[oó]n|oferta|gratis|2x1|mitad|rebaja|bonificaci[oó]n|cup[oó]n|precio especial|acuerdo|condici[oó]n especial|sin costo)/i;
+const LEXICO_CONDICION_TEXTO = /(descuento|promoci[oó]n|promo|oferta|gratis|2x1|mitad|rebaja|bonificaci[oó]n|cup[oó]n|precio especial|tarifa preferencial|acuerdo|condici[oó]n especial|sin costo|sin cargo)/i;
 
 // Un texto extractivo solo se entrega si pasa la puerta numérica y las
 // guardas, no trae montos ni léxico de condición y cita su fuente.
 function extractivoSeguro(texto, registro) {
   if (extraerMontos(texto).length > 0) return false;
   if (LEXICO_CONDICION_TEXTO.test(texto)) return false;
-  return validarTextoComercial(texto, registro, { permitirNoAtomica: true }).ok;
+  return validarTextoComercial(texto, registro, { permitirNoAtomica: true, aliasServicio: aliasDelRegistro(registro) }).ok;
 }
 
 async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, contextoExtra = '') {
@@ -240,7 +240,7 @@ async function procesarIntento(env, modelo, presupuesto, snapshot, history, mens
     const clasificacion = sintetizada;
     const ruta = rutaDesdeClasificacion(clasificacion);
     const base = { etiqueta: clasificacion.etiqueta, confianza: clasificacion.confianza };
-    const LEXICO_CONDICION = /(descuento|promoci[oó]n|oferta|gratis|2x1|mitad|rebaja|bonificaci[oó]n|cup[oó]n|precio especial|acuerdo|condici[oó]n especial|sin costo)/i;
+    const LEXICO_CONDICION = LEXICO_CONDICION_TEXTO;
     if (LEXICO_CONDICION.test(mensajeActual)) {
       return { reply: RESPUESTA_FIJA_CONDICION, ruta: 'fija-condicion', ...base, puerta_ok: true, juez_ok: false, motivo: 'guarda-condicion' };
     }
@@ -305,8 +305,8 @@ async function handler(context) {
 
   // Respaldo extractivo final: si el resultado quedó cerrado sin ser rechazo
   // de condición, se entrega el texto publicado más cercano con su fuente.
-  const LEXICO_CONDICION_FINAL = /(descuento|promoci[oó]n|oferta|gratis|2x1|mitad|rebaja|bonificaci[oó]n|cup[oó]n|precio especial|acuerdo|condici[oó]n especial|sin costo)/i;
-  if (resultado.reply === RESPUESTA_CERRADA && !['fija-condicion', 'mixta', 'frescura'].includes(resultado.ruta) && !LEXICO_CONDICION_FINAL.test(mensajeActual)) {
+  const LEXICO_CONDICION_FINAL = LEXICO_CONDICION_TEXTO;
+  if (resultado.reply === RESPUESTA_CERRADA && !['fija-condicion', 'mixta', 'frescura', 'precio-servicio', 'aclaracion'].includes(resultado.ruta) && !LEXICO_CONDICION_FINAL.test(mensajeActual)) {
     const evidencia = await buscarEvidencia(env, mensajeActual, 4);
     const ordenada = (evidencia || []).slice().sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
     const mejor = ordenada[0];
