@@ -44,7 +44,7 @@ export function parsearJSONModelo(texto) {
   }
 }
 
-export async function llamarModeloJSON(env, { modelo, sistema, usuario, presupuesto, maxTokens = 1024 }) {
+export async function llamarModeloJSON(env, { modelo, sistema, usuario, presupuesto, maxTokens = 1024, esquema = null }) {
   if (!env?.AI) return { ok: false, motivo: 'sin-modelo' };
   if (presupuesto && !presupuesto.consumir()) return { ok: false, motivo: 'presupuesto-agotado' };
   try {
@@ -55,6 +55,7 @@ export async function llamarModeloJSON(env, { modelo, sistema, usuario, presupue
       ],
       temperature: 0,
       max_tokens: maxTokens,
+      ...(esquema ? { response_format: { type: 'json_schema', json_schema: esquema } } : {}),
     });
     const texto = extraerTextoModelo(out).trim();
     const json = parsearJSONModelo(texto);

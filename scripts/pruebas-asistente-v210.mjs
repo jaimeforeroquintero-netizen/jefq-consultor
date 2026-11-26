@@ -12,7 +12,7 @@ import {
   validarAfirmacion,
   validarRegistro,
 } from '../functions/lib/asistente/registro.js';
-import { clasificadorSinModelo, validarClasificacion } from '../functions/lib/asistente/clasificador.js';
+import { clasificadorSinModelo, normalizarClasificacion, validarClasificacion } from '../functions/lib/asistente/clasificador.js';
 import { validarInventario, validarVeredictoJuez } from '../functions/lib/asistente/juez.js';
 import { crearPresupuestoLlamadas } from '../functions/lib/asistente/modelo.js';
 import { buscarCorpusLocal, buscarEvidencia } from '../functions/lib/asistente/rag.js';
@@ -86,6 +86,7 @@ const mixta = validarClasificacion({
 }, '¿Cuánto cuesta el Hardening? Tengo descuento de cliente antiguo.');
 prueba('mixta con dos fragmentos es válida', mixta.ok, mixta.motivo || '');
 prueba('mixta con fragmentos solapados se rechaza', validarClasificacion({ etiqueta: 4, fragmentos: [{ texto: 'cuanto cuesta el hardening', tipo: 'legitima' }, { texto: 'el hardening', tipo: 'falsa' }], confianza: 0.9 }, '¿Cuánto cuesta el Hardening?').ok === false);
+prueba('salida real del modelo con fragmento sin tipo se normaliza', validarClasificacion(normalizarClasificacion({ etiqueta: 1, fragmentos: [{ texto: '¿Cuánto cuesta el Hardening?' }, { texto: 'Hardening', tipo: 'sostiene' }], confianza: 0.95 }), '¿Cuánto cuesta el Hardening?').ok === true);
 prueba('fragmento fuera del mensaje se rechaza', validarClasificacion({ etiqueta: 1, fragmentos: [{ texto: 'precio del informe', tipo: 'sostiene' }], confianza: 0.9 }, '¿Cuánto cuesta el Hardening?').ok === false);
 prueba('etiqueta 1 con dos fragmentos se rechaza', validarClasificacion({ etiqueta: 1, fragmentos: [{ texto: 'cuanto cuesta', tipo: 'legitima' }, { texto: 'hardening', tipo: 'falsa' }], confianza: 0.9 }, '¿Cuánto cuesta el Hardening?').ok === false);
 

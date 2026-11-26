@@ -11,7 +11,7 @@
 
 import { withSentry } from '../_sentry.js';
 import { contar, ipCliente } from '../lib/redis.js';
-import { PROMPT_CLASIFICADOR, clasificadorSinModelo, rutaDesdeClasificacion, validarClasificacion } from '../lib/asistente/clasificador.js';
+import { ESQUEMA_CLASIFICADOR_V210, PROMPT_CLASIFICADOR, clasificadorSinModelo, normalizarClasificacion, rutaDesdeClasificacion, validarClasificacion } from '../lib/asistente/clasificador.js';
 import { validarTextoComercial } from '../lib/asistente/guardas.js';
 import { PROMPT_GENERADOR, PROMPT_JUEZ, ensamblarRespuesta, validarInventario, validarVeredictoJuez } from '../lib/asistente/juez.js';
 import { crearPresupuestoLlamadas, llamarModeloJSON } from '../lib/asistente/modelo.js';
@@ -172,6 +172,7 @@ async function procesarIntento(env, modelo, presupuesto, snapshot, history, mens
     usuario: `Historial reciente:\n${textoHistorial(history)}\n\nMensaje actual del visitante:\n${mensajeActual}`,
     presupuesto,
     maxTokens: 512,
+    esquema: ESQUEMA_CLASIFICADOR_V210,
   });
   if (!clas.ok) {
     if (!snapshot.rutaPrecioActiva) {
@@ -187,7 +188,7 @@ async function procesarIntento(env, modelo, presupuesto, snapshot, history, mens
     }
     return { reply: RESPUESTA_CERRADA, ruta: 'clasificacion', etiqueta: null, confianza: null, puerta_ok: false, juez_ok: false, motivo: clas.motivo };
   }
-  const validada = validarClasificacion(clas.json, mensajeActual);
+  const validada = validarClasificacion(normalizarClasificacion(clas.json), mensajeActual);
   if (!validada.ok) return { reply: RESPUESTA_CERRADA, ruta: 'clasificacion', etiqueta: null, confianza: null, puerta_ok: false, juez_ok: false, motivo: validada.motivo };
   const clasificacion = validada.clasificacion;
   const ruta = rutaDesdeClasificacion(clasificacion);

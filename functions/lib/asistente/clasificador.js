@@ -48,6 +48,14 @@ export function fragmentoEnMensaje(fragmento, mensajeActual) {
   return f.length > 0 && m.includes(f);
 }
 
+export function normalizarClasificacion(obj) {
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return obj;
+  if (obj.etiqueta === 4 || !Array.isArray(obj.fragmentos)) return obj;
+  const primero = obj.fragmentos.find((f) => f && typeof f.texto === 'string' && f.texto.trim().length > 0);
+  if (!primero) return obj;
+  return { etiqueta: obj.etiqueta, fragmentos: [{ texto: primero.texto, tipo: 'sostiene' }], confianza: obj.confianza };
+}
+
 export function validarClasificacion(obj, mensajeActual) {
   if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return { ok: false, motivo: 'no-objeto' };
   if (!clavesExactas(obj, ['etiqueta', 'fragmentos', 'confianza'])) return { ok: false, motivo: 'claves-invalidas' };
