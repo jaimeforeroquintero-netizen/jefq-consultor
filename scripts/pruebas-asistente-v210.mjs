@@ -137,5 +137,15 @@ prueba('publicación inserta inactiva', fakeDb.statements.some((s) => s.sql.incl
 await activarVersion(fakeDb, 1);
 prueba('activación incrementa época en registro_estado', fakeDb.statements.some((s) => s.sql.includes('UPDATE registro_estado SET epoch = epoch + 1')));
 
+const invExtra = validarInventario({ afirmaciones: [{ id: 'c1', texto: 'El método tiene cuatro pasos.', referencia: 'metodo', confianza: 0.9 }] });
+prueba('inventario tolera claves extra del modelo', invExtra.ok === true);
+const verExtra = validarVeredictoJuez(
+  { aprobado: true, afirmaciones: [{ id: 'c1', texto: 'El método tiene cuatro pasos.', respaldo: 'cita', referencia: 'metodo', nota: 'ok' }] },
+  invExtra.afirmaciones,
+  [{ id: 'metodo', texto: 'El método de trabajo de JEFQ tiene cuatro pasos: conocer el contexto, definir el alcance, evaluar con control y entregar y acompañar.' }],
+  registro,
+);
+prueba('veredicto tolera claves extra del modelo', verExtra.ok === true);
+
 console.log(`\nTOTAL: ${total} casos, ${total - fallos} PASA, ${fallos} FALLA.`);
 process.exit(fallos === 0 ? 0 : 1);

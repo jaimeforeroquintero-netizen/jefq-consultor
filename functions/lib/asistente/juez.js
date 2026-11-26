@@ -28,14 +28,19 @@ export function validarInventario(obj) {
   if (!Array.isArray(resto.afirmaciones) || resto.afirmaciones.length === 0) return { ok: false, motivo: 'sin-afirmaciones' };
   if (resto.afirmaciones.length > 6) return { ok: false, motivo: 'demasiadas-afirmaciones' };
   const ids = new Set();
+  const afirmaciones = [];
   for (const a of resto.afirmaciones) {
-    if (!a || typeof a !== 'object' || !clavesExactas(a, ['id', 'texto', 'referencia'])) return { ok: false, motivo: 'afirmacion-claves-invalidas' };
-    if (!/^c[1-9][0-9]*$/.test(a.id) || ids.has(a.id)) return { ok: false, motivo: 'id-invalido' };
-    ids.add(a.id);
-    if (typeof a.texto !== 'string' || a.texto.trim().length === 0) return { ok: false, motivo: 'texto-vacio' };
-    if (typeof a.referencia !== 'string' || a.referencia.trim().length === 0) return { ok: false, motivo: 'referencia-vacia' };
+    if (!a || typeof a !== 'object' || Array.isArray(a)) return { ok: false, motivo: 'afirmacion-claves-invalidas' };
+    // Normalización: se conservan solo las claves del contrato; las claves
+    // extra del modelo no invalidan el inventario.
+    const norm = { id: a.id, texto: a.texto, referencia: a.referencia };
+    if (!/^c[1-9][0-9]*$/.test(norm.id) || ids.has(norm.id)) return { ok: false, motivo: 'id-invalido' };
+    ids.add(norm.id);
+    if (typeof norm.texto !== 'string' || norm.texto.trim().length === 0) return { ok: false, motivo: 'texto-vacio' };
+    if (typeof norm.referencia !== 'string' || norm.referencia.trim().length === 0) return { ok: false, motivo: 'referencia-vacia' };
+    afirmaciones.push(norm);
   }
-  return { ok: true, afirmaciones: resto.afirmaciones };
+  return { ok: true, afirmaciones };
 }
 
 export function validarVeredictoJuez(obj, inventario, evidencia, registro, opciones = {}) {
@@ -46,8 +51,10 @@ export function validarVeredictoJuez(obj, inventario, evidencia, registro, opcio
   const invPorId = new Map(inventario.map((a) => [a.id, a]));
   if (obj.afirmaciones.length !== inventario.length) return { ok: false, aprobado: false, motivo: 'conteo-distinto' };
   const vistos = new Set();
-  for (const v of obj.afirmaciones) {
-    if (!v || typeof v !== 'object' || !clavesExactas(v, ['id', 'texto', 'respaldo', 'referencia'])) return { ok: false, aprobado: false, motivo: 'veredicto-claves-invalidas' };
+  for (const v0 of obj.afirmaciones) {
+    if (!v0 || typeof v0 !== 'object' || Array.isArray(v0)) return { ok: false, aprobado: false, motivo: 'veredicto-claves-invalidas' };
+    // Normalización: solo las claves del contrato; las extra no invalidan.
+    const v = { id: v0.id, texto: v0.texto, respaldo: v0.respaldo, referencia: v0.referencia };
     if (vistos.has(v.id) || !invPorId.has(v.id)) return { ok: false, aprobado: false, motivo: 'id-fuera-del-inventario' };
     vistos.add(v.id);
     const inv = invPorId.get(v.id);
