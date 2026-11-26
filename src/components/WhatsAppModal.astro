@@ -1,6 +1,6 @@
 ---
 // Contacto directo por WhatsApp (@JaimeByte).
-// /api/whatsapp redirige a wa.me/JaimeByte; ningún número telefónico
+// Enlace directo a wa.me/JaimeByte (sin salto intermedio); ningún número telefónico
 // interviene ni se expone en el sitio ni en el repo.
 // Uso declarativo: <a href="#" data-wa-modal data-wa-message="Mensaje opcional">…</a>
 // Uso imperativo: window.JEFQ_wa.open("Mensaje opcional")
@@ -13,7 +13,7 @@ const DEFAULT_MSG = "Hola Jaime, quiero información sobre los servicios de JEFQ
 
   function go(message) {
     var text = (message || DEFAULT_MSG).slice(0, 600);
-    window.location.href = '/api/whatsapp?text=' + encodeURIComponent(text);
+    window.location.href = 'https://wa.me/JaimeByte?text=' + encodeURIComponent(text);
   }
 
   document.addEventListener('click', function (e) {

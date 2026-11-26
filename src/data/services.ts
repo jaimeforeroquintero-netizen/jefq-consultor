@@ -32,7 +32,7 @@ export const services: ServicePage[] = [
     deliverables: ["Informe ejecutivo", "Hallazgos priorizados", "Recomendaciones aplicables", "Hoja de ruta inicial"],
     process: [{title:"Descubrimiento",text:"Definimos objetivos, activos y restricciones."},{title:"Evaluación",text:"Revisamos los controles acordados."},{title:"Análisis",text:"Priorizamos por riesgo, impacto y esfuerzo."},{title:"Entrega",text:"Presentamos resultados y próximos pasos."}],
     related: ["hardening", "informes-tecnicos", "acompanamiento-remediacion"],
-    audience: ["Pymes que necesitan conocer su nivel actual de seguridad", "Empresas antes de ampliar su operación digital", "Pymes sin responsable interno de seguridad", "Empresas que necesitan priorizar inversiones y ordenar sus controles"],
+    audience: ["PYMES que necesitan conocer su nivel actual de seguridad", "Empresas antes de ampliar su operación digital", "PYMES sin responsable interno de seguridad", "Empresas que necesitan priorizar inversiones y ordenar sus controles"],
     faq: [
       { question: "¿Puede hacerse de forma remota?", answer: "Sí, cuando el alcance y los accesos autorizados lo permitan." },
       { question: "¿Incluye correcciones?", answer: "La propuesta define si incluye acompañamiento o implementación de mejoras." },
@@ -52,7 +52,7 @@ export const services: ServicePage[] = [
     deliverables: ["Configuración aplicada o recomendada", "Registro de cambios", "Lista de validación", "Plan de mantenimiento"],
     process: [{title:"Línea base",text:"Identificamos el estado actual."},{title:"Priorización",text:"Seleccionamos controles de mayor valor."},{title:"Aplicación",text:"Implementamos cambios acordados."},{title:"Verificación",text:"Comprobamos resultados y documentamos."}],
     related: ["diagnostico-seguridad", "pruebas-autorizadas", "acompanamiento-remediacion"],
-    audience: ["Empresas con equipos sin una línea base común", "Organizaciones que manejan información sensible", "Pymes que quieren reducir configuraciones innecesarias"],
+    audience: ["Empresas con equipos sin una línea base común", "Organizaciones que manejan información sensible", "PYMES que quieren reducir configuraciones innecesarias"],
     faq: [
       { question: "¿Se desinstalan componentes críticos?", answer: "No se eliminan componentes críticos sin justificación, autorización y posibilidad de recuperación." },
       { question: "¿Puede adaptarse por áreas?", answer: "Sí. La línea base puede variar según funciones, aplicaciones y nivel de riesgo." }
@@ -68,7 +68,7 @@ export const services: ServicePage[] = [
     deliverables: ["Informe de hallazgos", "Evidencias disponibles", "Impacto y prioridad", "Recomendaciones de remediación"],
     process: [{title:"Autorización",text:"Validamos titularidad y permiso."},{title:"Alcance",text:"Definimos activos, límites y ventanas."},{title:"Pruebas",text:"Ejecutamos actividades acordadas."},{title:"Cierre",text:"Entregamos resultados y recomendaciones."}],
     related: ["diagnostico-seguridad", "informes-tecnicos", "acompanamiento-remediacion"],
-    audience: ["Empresas que necesitan validar controles", "Organizaciones antes de publicar un servicio", "Pymes que requieren evidencias y prioridades"],
+    audience: ["Empresas que necesitan validar controles", "Organizaciones antes de publicar un servicio", "PYMES que requieren evidencias y prioridades"],
     faq: [
       { question: "¿Se hacen pruebas sin autorización?", answer: "No. Toda prueba requiere autorización escrita y alcance acordado." },
       { question: "¿Puede afectar la operación?", answer: "Las condiciones se diseñan para reducir el impacto, pero cualquier riesgo específico debe quedar acordado antes de iniciar." }

@@ -22,7 +22,7 @@ export const herramientasProbadas: HerramientaProbada[] = [
     paraQuien: [
       "Empresas de software que quieren revisar su aplicación antes de lanzarla",
       "Equipos de TI que necesitan una primera capa de revisión automática y repetible",
-      "Dueños de pyme: no es para operarla usted mismo, es para exigirle a su proveedor de TI que use este tipo de herramientas",
+      "Dueños de PYME: no es para operarla usted mismo, es para exigirle a su proveedor de TI que use este tipo de herramientas",
     ],
     loBueno: [
       "Valida cada hallazgo con una prueba real de explotación, no solo reporta sospechas",
