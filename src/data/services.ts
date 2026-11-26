@@ -37,7 +37,7 @@ export const services: ServicePage[] = [
       { question: "¿Puede hacerse de forma remota?", answer: "Sí, cuando el alcance y los accesos autorizados lo permitan." },
       { question: "¿Incluye correcciones?", answer: "La propuesta define si incluye acompañamiento o implementación de mejoras." },
       { question: "¿La consultoría obliga a comprar productos?", answer: "No. Las recomendaciones deben justificarse por necesidad y riesgo." },
-      { question: "¿Cuánto cuesta?", answer: "Los valores orientativos están publicados en la página de planes, desde $421.500 para el Diagnóstico Esencial." },
+      { question: "¿Cuánto cuesta?", answer: "Los valores orientativos están publicados en la página de planes, desde $400.425 para el Diagnóstico Esencial." },
       { question: "¿Qué recibe la gerencia?", answer: "Un resumen ejecutivo, prioridades y próximos pasos, además del detalle técnico acordado." }
     ]
   },

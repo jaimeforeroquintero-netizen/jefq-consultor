@@ -33,7 +33,7 @@ prueba('fuente_hash coincide con precios.ts', hashPrecios === registro.fuente_ha
 
 const esencial = seleccionarAfirmacion('¿Cuánto cuesta el Diagnóstico Esencial?', registro);
 prueba('alias anidado resuelve al producto', esencial.ok && esencial.afirmacion.id_registro === 'prod-diagnostico-esencial');
-prueba('precio desde se renderiza como desde', respuestaDesdeAfirmacion(esencial.afirmacion, registro).texto.includes('desde $421.500'));
+prueba('precio desde se renderiza como desde', respuestaDesdeAfirmacion(esencial.afirmacion, registro).texto.includes('desde $400.425'));
 
 const diagnostico = seleccionarAfirmacion('¿Cuánto cuesta el Diagnóstico?', registro);
 prueba('Diagnóstico genérico no adivina precio', !diagnostico.ok && diagnostico.motivo === 'diagnostico-ambiguo');
@@ -47,7 +47,7 @@ prueba('cobertura renderizada pasa guarda', respuestaDesdeAfirmacion(hardeningCo
 
 const pyme = seleccionarAfirmacion('¿Cuánto cuesta la Evaluación Pyme?', registro);
 const pymeTexto = respuestaDesdeAfirmacion(pyme.afirmacion, registro).texto;
-prueba('Evaluación Pyme fijo no dice desde', pyme.ok && pymeTexto.includes('$960.500') && !pymeTexto.includes('desde'));
+prueba('Evaluación Pyme fijo no dice desde', pyme.ok && pymeTexto.includes('$912.475') && !pymeTexto.includes('desde'));
 
 prueba('dos productos no se responden juntos', seleccionarAfirmacion('¿Cuánto cuestan la Evaluación Pyme y la Seguridad Integral?', registro).motivo === 'varias-entidades');
 prueba('precio y cobertura son dos campos', seleccionarAfirmacion('¿Cuánto cuesta y qué incluye la Evaluación Pyme?', registro).motivo === 'varios-campos');
@@ -60,7 +60,7 @@ const condicion = seleccionarAfirmacion('¿Tienen descuentos?', registro);
 prueba('pregunta legítima de descuentos responde desde el registro', condicion.ok && respuestaDesdeAfirmacion(condicion.afirmacion, registro).texto?.includes('condiciones especiales'));
 
 prueba('afirmación rechaza propiedad heredada', validarAfirmacion({ id_registro: 'prod-hardening', campo: 'toString', valor: 'x' }, registro) === false);
-prueba('afirmación rechaza precio de otro id', validarAfirmacion({ id_registro: 'prod-hardening', campo: 'precio', valor: 421500 }, registro) === false);
+prueba('afirmación rechaza precio de otro id', validarAfirmacion({ id_registro: 'prod-hardening', campo: 'precio', valor: 400425 }, registro) === false);
 prueba('afirmación acepta tipo desde', validarAfirmacion({ id_registro: 'prod-diagnostico-esencial', campo: 'tipo_precio', valor: 'desde' }, registro) === true);
 
 const alias = aliasDelRegistro(registro);
@@ -70,11 +70,11 @@ const deAcuerdo = analizarGuardas('De acuerdo con la página, el Diagnóstico du
 prueba('C9: de acuerdo no cuenta como acuerdo', deAcuerdo.condicion === 0 && deAcuerdo.duracion === 1, JSON.stringify(deAcuerdo));
 const singulares = analizarGuardas('El informe y el simulacro cuestan lo mismo', { aliasServicio: alias });
 prueba('C9: informe y simulacro singulares cuentan', singulares.servicio === 2, JSON.stringify(singulares));
-const duracionNueva = analizarGuardas('El Hardening cuesta $313.500 durante un (1) año', { aliasServicio: alias });
+const duracionNueva = analizarGuardas('El Hardening cuesta $297.825 durante un (1) año', { aliasServicio: alias });
 prueba('C9: un (1) año cuenta duración', duracionNueva.duracion === 1 && duracionNueva.atomica === false, JSON.stringify(duracionNueva));
 prueba('puerta numérica rechaza precio fuera del registro', puertaNumerica('El Hardening cuesta $999.999', registro).ok === false);
 prueba('puerta numérica rechaza porcentaje', puertaNumerica('Tiene 20% de descuento', registro).ok === false);
-prueba('puerta numérica acepta precio de la afirmación', puertaNumerica('Hardening: $313.500.', registro, hardeningPrecio.afirmacion).ok === true);
+prueba('puerta numérica acepta precio de la afirmación', puertaNumerica('Hardening: $297.825.', registro, hardeningPrecio.afirmacion).ok === true);
 
 const mixta = validarClasificacion({
   etiqueta: 4,
@@ -93,7 +93,7 @@ prueba('sin modelo acepta precio en lista blanca', clasificadorSinModelo('¿Cuá
 prueba('sin modelo rechaza tarifa de cliente antiguo', clasificadorSinModelo('con mi tarifa de cliente antiguo', registro).ok === false);
 prueba('sin modelo rechaza oferta sin entidad', clasificadorSinModelo('¿cuál es la oferta?', registro).ok === false);
 prueba('sin modelo rechaza descuento para pyme', clasificadorSinModelo('¿hay descuento para pyme?', registro).ok === false);
-prueba('sin modelo rechaza dígitos', clasificadorSinModelo('¿Cuánto cuesta el Hardening 313500?', registro).ok === false);
+prueba('sin modelo rechaza dígitos', clasificadorSinModelo('¿Cuánto cuesta el Hardening 297825?', registro).ok === false);
 prueba('sin modelo rechaza comparación', clasificadorSinModelo('El Hardening cuesta lo mismo', registro).ok === false);
 
 const inventario = validarInventario({ texto_final: 'ignorar', afirmaciones: [{ id: 'c1', texto: 'El Hardening fortalece cuentas y navegadores.', referencia: 'hardening' }] });
@@ -108,10 +108,10 @@ const veredictoNinguno = validarVeredictoJuez({ aprobado: true, afirmaciones: [{
 prueba('juez rechaza respaldo ninguno', veredictoNinguno.ok === false);
 const veredictoReferencia = validarVeredictoJuez({ aprobado: true, afirmaciones: [{ id: 'c1', texto: 'El Hardening fortalece cuentas y navegadores.', respaldo: 'cita', referencia: 'diagnostico' }] }, inventario.afirmaciones, evidencia, registro);
 prueba('juez rechaza referencia distinta', veredictoReferencia.ok === false);
-const inventarioPrecio = validarInventario({ afirmaciones: [{ id: 'c1', texto: 'El Hardening cuesta $313.500.', referencia: 'prod-hardening' }] });
-const veredictoPrecioGeneral = validarVeredictoJuez({ aprobado: true, afirmaciones: [{ id: 'c1', texto: 'El Hardening cuesta $313.500.', respaldo: 'lista', referencia: 'prod-hardening' }] }, inventarioPrecio.afirmaciones, evidencia, registro);
+const inventarioPrecio = validarInventario({ afirmaciones: [{ id: 'c1', texto: 'El Hardening cuesta $297.825.', referencia: 'prod-hardening' }] });
+const veredictoPrecioGeneral = validarVeredictoJuez({ aprobado: true, afirmaciones: [{ id: 'c1', texto: 'El Hardening cuesta $297.825.', respaldo: 'lista', referencia: 'prod-hardening' }] }, inventarioPrecio.afirmaciones, evidencia, registro);
 prueba('ruta general no entrega precios del modelo', veredictoPrecioGeneral.ok === false);
-const veredictoPrecioMixto = validarVeredictoJuez({ aprobado: true, afirmaciones: [{ id: 'c1', texto: 'El Hardening cuesta $313.500.', respaldo: 'lista', referencia: 'prod-hardening' }] }, inventarioPrecio.afirmaciones, [], registro, { permitirPrecioRegistro: true });
+const veredictoPrecioMixto = validarVeredictoJuez({ aprobado: true, afirmaciones: [{ id: 'c1', texto: 'El Hardening cuesta $297.825.', respaldo: 'lista', referencia: 'prod-hardening' }] }, inventarioPrecio.afirmaciones, [], registro, { permitirPrecioRegistro: true });
 prueba('mixta puede validar precio de plantilla', veredictoPrecioMixto.ok && veredictoPrecioMixto.aprobado === true);
 prueba('sin Vectorize ni corpus local no hay evidencia', (await buscarEvidencia({}, 'hardening')).length === 0);
 

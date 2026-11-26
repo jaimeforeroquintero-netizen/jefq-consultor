@@ -9,9 +9,9 @@ export const RESPUESTA_SIN_VERIFICAR = 'No tengo información verificable en el 
 export const RESPUESTA_PRECIO_DESACTIVADA = 'En este momento no puedo confirmar precios por este medio. Para cotizar, por favor comuníquese directamente con JEFQ Consultor por WhatsApp con el botón del sitio.';
 
 export const REGISTRO_V210 = {
-  version: 1,
+  version: 2,
   fuente: 'src/data/precios.ts',
-  fuente_hash: '913aec9a10ba59ffd4cae65dc2e2e7ec91f0f2089596e4c166ae7247dfb2eb5b',
+  fuente_hash: '6bea7a666c07271fd1ddfa8afb551f29c8782e7b511b35fafc29a29ec5fa298c',
   moneda: 'COP',
   descuentos: [],
   acuerdos: 'ninguno',
@@ -68,7 +68,7 @@ export const REGISTRO_V210 = {
     {
       id: 'svc-seguridad-ia', tipo: 'servicio', nombre: 'Seguridad para IA',
       alias: ['Seguridad para IA', 'Evaluación de IA', 'Seguridad IA', 'Inteligencia artificial'],
-      precio: 421500, tipo_precio: 'desde', unidad: 'servicio', moneda: 'COP',
+      precio: 400425, tipo_precio: 'desde', unidad: 'servicio', moneda: 'COP',
       descripcion: 'Evaluación del uso de herramientas de IA en su pyme: datos en prompts, aplicaciones sin gobierno, riesgos de suplantación y controles proporcionales.',
       cobertura: ['Inventario de herramientas de IA en uso', 'Revisión de datos compartidos en prompts', 'Evaluación de configuraciones y accesos', 'Política básica de uso de IA', 'Sesión de concienciación para el equipo'],
       exclusiones: [], vigencia: 'vigente',
@@ -76,7 +76,7 @@ export const REGISTRO_V210 = {
     {
       id: 'prod-diagnostico-esencial', tipo: 'producto', nombre: 'Diagnóstico Esencial', servicio_asociado: 'svc-diagnostico',
       alias: ['Diagnóstico Esencial', 'Plan Esencial', 'Esencial'],
-      precio: 421500, tipo_precio: 'desde', unidad: 'servicio', moneda: 'COP',
+      precio: 400425, tipo_precio: 'desde', unidad: 'servicio', moneda: 'COP',
       descripcion: 'Diagnóstico de ciberseguridad para pymes en Colombia.',
       cobertura: ['Reunión remota', 'Hasta 3 equipos', 'Riesgos prioritarios', 'Informe ejecutivo', 'Sesión de resultados'],
       exclusiones: [], vigencia: 'vigente',
@@ -84,7 +84,7 @@ export const REGISTRO_V210 = {
     {
       id: 'prod-evaluacion-pyme', tipo: 'producto', nombre: 'Evaluación Pyme', servicio_asociado: 'svc-diagnostico',
       alias: ['Evaluación Pyme', 'Plan Pyme', 'Pyme'],
-      precio: 960500, tipo_precio: 'fijo', unidad: 'servicio', moneda: 'COP',
+      precio: 912475, tipo_precio: 'fijo', unidad: 'servicio', moneda: 'COP',
       descripcion: 'Diagnóstico ampliado con priorización y acompañamiento.',
       cobertura: ['Alcance autorizado', 'Hasta 10 equipos', 'Revisión de configuraciones', 'Informe técnico y ejecutivo', 'Plan de remediación', 'Acompañamiento'],
       exclusiones: [], vigencia: 'vigente',
@@ -92,7 +92,7 @@ export const REGISTRO_V210 = {
     {
       id: 'prod-seguridad-integral', tipo: 'producto', nombre: 'Seguridad Integral', servicio_asociado: 'svc-diagnostico',
       alias: ['Seguridad Integral', 'Plan Integral', 'Integral'],
-      precio: 1930500, tipo_precio: 'fijo', unidad: 'servicio', moneda: 'COP',
+      precio: 1833975, tipo_precio: 'fijo', unidad: 'servicio', moneda: 'COP',
       descripcion: 'Cobertura integral: diagnóstico, pruebas autorizadas, hardening e informes.',
       cobertura: ['Alcance personalizado', 'Evaluación autorizada', 'Hardening priorizado', 'Evidencias', 'Informe técnico y ejecutivo', 'Plan por etapas', 'Dos seguimientos'],
       exclusiones: [], vigencia: 'vigente',
@@ -100,14 +100,14 @@ export const REGISTRO_V210 = {
     {
       id: 'prod-consultoria-remota', tipo: 'producto', nombre: 'Consultoría remota', servicio_asociado: 'svc-acompanamiento',
       alias: ['Consultoría remota', 'Consultoría por hora', 'Consultoría'],
-      precio: 130500, tipo_precio: 'fijo', unidad: 'hora', moneda: 'COP',
+      precio: 123975, tipo_precio: 'fijo', unidad: 'hora', moneda: 'COP',
       descripcion: 'Consultoría remota por hora.',
       cobertura: [], exclusiones: [], vigencia: 'vigente',
     },
     {
       id: 'prod-hardening', tipo: 'producto', nombre: 'Hardening', servicio_asociado: 'svc-hardening',
       alias: ['Hardening', 'Hardening de sistemas'],
-      precio: 313500, tipo_precio: 'fijo', unidad: 'servicio', moneda: 'COP',
+      precio: 297825, tipo_precio: 'fijo', unidad: 'servicio', moneda: 'COP',
       descripcion: 'Hardening de sistemas.',
       cobertura: [], exclusiones: [], vigencia: 'vigente',
     },

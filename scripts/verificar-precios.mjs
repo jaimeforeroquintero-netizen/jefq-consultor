@@ -51,12 +51,12 @@ function resolver(id, visto = new Set()) {
   return p.cifra;
 }
 const ESPERADOS = {
-  esencial: 421500,
-  pyme: 960500,
-  integral: 1930500,
-  "consultoria-hora": 130500,
-  hardening: 313500,
-  "evaluacion-ia": 421500,
+  esencial: 400425,
+  pyme: 912475,
+  integral: 1833975,
+  "consultoria-hora": 123975,
+  hardening: 297825,
+  "evaluacion-ia": 400425,
 };
 const VIEJOS = [390000, 890000, 1790000, 120000, 290000];
 const fmt = (n) => "$" + n.toLocaleString("es-CO");
@@ -66,7 +66,7 @@ for (const [id, n] of Object.entries(ESPERADOS)) {
   check(`precioDe("${id}") = ${n}`, resolver(id) === n);
 }
 // Cada cifra literal aparece una sola vez como precioDesdeCOP (salvo la derivada).
-for (const n of [421500, 960500, 1930500, 130500, 313500]) {
+for (const n of [400425, 912475, 1833975, 123975, 297825]) {
   const veces = (fuente.match(new RegExp(`precioDesdeCOP:\\s*${n}`, "g")) || []).length;
   check(`cifra ${n} una sola vez en la fuente`, veces === 1, `${veces}x`);
 }
@@ -121,13 +121,13 @@ if (!existsSync(dist)) {
   console.log("  AVISO dist/ no existe — ejecuta `npm run build` y repite este script");
 } else {
   const home = leer("dist/index.html");
-  for (const n of [421500, 960500, 1930500, 130500, 313500]) {
+  for (const n of [400425, 912475, 1833975, 123975, 297825]) {
     check(`home renderiza ${fmt(n)}`, home.includes(fmt(n)));
   }
   check("home sin precios viejos", !contieneViejo(home));
-  check('home JSON-LD "421500"', home.includes('"price": "421500"') || home.includes('"price":"421500"'));
-  check('home JSON-LD "960500"', home.includes('"price": "960500"') || home.includes('"price":"960500"'));
-  check('home JSON-LD "1930500"', home.includes('"price": "1930500"') || home.includes('"price":"1930500"'));
+  check('home JSON-LD "400425"', home.includes('"price": "400425"') || home.includes('"price":"400425"'));
+  check('home JSON-LD "912475"', home.includes('"price": "912475"') || home.includes('"price":"912475"'));
+  check('home JSON-LD "1833975"', home.includes('"price": "1833975"') || home.includes('"price":"1833975"'));
   const bogota = leer("dist/ciberseguridad-bogota/index.html");
   check('Bogotá titular "Siete servicios"', bogota.includes("Siete servicios"));
   check('Bogotá sin "Seis servicios"', !bogota.includes("Seis servicios"));
@@ -141,16 +141,16 @@ for (const rel of ["functions/lib/asistente/registro.js", "api/chat.js"]) {
   const faltan = Object.values(ESPERADOS).filter((n) => !contienePrecio(t, n));
   // V2.10: el espejo de Cloudflare es el registro canónico; api/chat.js sigue
   // siendo el espejo de Vercel. Ambos deben llevar las cifras S1.
-  check(`${rel} con precios S1`, [421500, 960500, 1930500, 130500, 313500].every((n) => contienePrecio(t, n)), faltan.length ? `faltan: ${faltan.join(", ")}` : "");
+  check(`${rel} con precios S1`, [400425, 912475, 1833975, 123975, 297825].every((n) => contienePrecio(t, n)), faltan.length ? `faltan: ${faltan.join(", ")}` : "");
 }
 for (const rel of ["functions/api/pagos/crear.js", "api/pagos/crear.js"]) {
   const t = leer(rel);
-  check(`${rel} centavos correctos`, [42150000, 96050000, 193050000].every((n) => t.includes(String(n))));
+  check(`${rel} centavos correctos`, [40042500, 91247500, 183397500].every((n) => t.includes(String(n))));
 }
 
 console.log("== F. llms.txt ==");
 const llms = leer("public/llms.txt");
-check("llms.txt con los 3 planes", [421500, 960500, 1930500].every((n) => llms.includes(fmt(n))));
+check("llms.txt con los 3 planes", [400425, 912475, 1833975].every((n) => llms.includes(fmt(n))));
 check("llms.txt sin precios viejos", !contieneViejo(llms));
 
 console.log(`\n${checks - failures}/${checks} comprobaciones PASS.`);
