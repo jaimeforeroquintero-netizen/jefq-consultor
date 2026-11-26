@@ -47,6 +47,8 @@ prueba('Evaluación Pyme fijo no dice desde', pyme.ok && pymeTexto.includes('$96
 
 prueba('dos productos no se responden juntos', seleccionarAfirmacion('¿Cuánto cuestan la Evaluación Pyme y la Seguridad Integral?', registro).motivo === 'varias-entidades');
 prueba('precio y cobertura son dos campos', seleccionarAfirmacion('¿Cuánto cuesta y qué incluye la Evaluación Pyme?', registro).motivo === 'varios-campos');
+prueba('precio y duración son dos campos', seleccionarAfirmacion('¿Cuánto cuesta y cuánto dura el Hardening?', registro).motivo === 'varios-campos');
+prueba('qué descuentos existen responde desde el registro', seleccionarAfirmacion('¿Qué descuentos existen?', registro).ok === true);
 const condicion = seleccionarAfirmacion('¿Tienen descuentos?', registro);
 prueba('pregunta legítima de descuentos responde desde el registro', condicion.ok && respuestaDesdeAfirmacion(condicion.afirmacion, registro).texto?.includes('condiciones especiales'));
 
@@ -95,6 +97,13 @@ const veredictoTexto = validarVeredictoJuez({ aprobado: true, afirmaciones: [{ i
 prueba('juez rechaza texto distinto', veredictoTexto.ok === false);
 const veredictoNinguno = validarVeredictoJuez({ aprobado: true, afirmaciones: [{ id: 'c1', texto: 'El Hardening fortalece cuentas y navegadores.', respaldo: 'ninguno', referencia: '' }] }, inventario.afirmaciones, evidencia, registro);
 prueba('juez rechaza respaldo ninguno', veredictoNinguno.ok === false);
+const veredictoReferencia = validarVeredictoJuez({ aprobado: true, afirmaciones: [{ id: 'c1', texto: 'El Hardening fortalece cuentas y navegadores.', respaldo: 'cita', referencia: 'diagnostico' }] }, inventario.afirmaciones, evidencia, registro);
+prueba('juez rechaza referencia distinta', veredictoReferencia.ok === false);
+const inventarioPrecio = validarInventario({ afirmaciones: [{ id: 'c1', texto: 'El Hardening cuesta $313.500.', referencia: 'prod-hardening' }] });
+const veredictoPrecioGeneral = validarVeredictoJuez({ aprobado: true, afirmaciones: [{ id: 'c1', texto: 'El Hardening cuesta $313.500.', respaldo: 'lista', referencia: 'prod-hardening' }] }, inventarioPrecio.afirmaciones, evidencia, registro);
+prueba('ruta general no entrega precios del modelo', veredictoPrecioGeneral.ok === false);
+const veredictoPrecioMixto = validarVeredictoJuez({ aprobado: true, afirmaciones: [{ id: 'c1', texto: 'El Hardening cuesta $313.500.', respaldo: 'lista', referencia: 'prod-hardening' }] }, inventarioPrecio.afirmaciones, [], registro, { permitirPrecioRegistro: true });
+prueba('mixta puede validar precio de plantilla', veredictoPrecioMixto.ok && veredictoPrecioMixto.aprobado === true);
 prueba('sin Vectorize ni corpus local no hay evidencia', (await buscarEvidencia({}, 'hardening')).length === 0);
 
 const presupuesto = crearPresupuestoLlamadas();

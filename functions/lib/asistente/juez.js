@@ -1,7 +1,7 @@
 // Generador por inventario, juez y validación determinista de la ruta general.
 
 import { aliasDelRegistro, entradaPorId } from './registro.js';
-import { validarTextoComercial } from './guardas.js';
+import { extraerMontos, validarTextoComercial } from './guardas.js';
 import { evidenciaPorId } from './rag.js';
 
 export const PROMPT_GENERADOR = `Redacte solo desde la evidencia entregada. No use conocimiento propio. No mencione precios salvo que la evidencia sea el registro y el dato esté en la afirmación.
@@ -38,7 +38,7 @@ export function validarInventario(obj) {
   return { ok: true, afirmaciones: resto.afirmaciones };
 }
 
-export function validarVeredictoJuez(obj, inventario, evidencia, registro) {
+export function validarVeredictoJuez(obj, inventario, evidencia, registro, opciones = {}) {
   if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return { ok: false, aprobado: false, motivo: 'no-objeto' };
   if (!clavesExactas(obj, ['aprobado', 'afirmaciones'])) return { ok: false, aprobado: false, motivo: 'claves-invalidas' };
   if (typeof obj.aprobado !== 'boolean') return { ok: false, aprobado: false, motivo: 'aprobado-no-booleano' };
@@ -55,6 +55,9 @@ export function validarVeredictoJuez(obj, inventario, evidencia, registro) {
     if (!['lista', 'cita', 'ninguno'].includes(v.respaldo)) return { ok: false, aprobado: false, motivo: 'respaldo-invalido' };
     if (typeof v.referencia !== 'string') return { ok: false, aprobado: false, motivo: 'referencia-invalida' };
     if (v.respaldo === 'ninguno') return { ok: false, aprobado: false, motivo: 'sin-respaldo' };
+    if (v.referencia !== inv.referencia) return { ok: false, aprobado: false, motivo: 'referencia-distinta' };
+    if (!opciones.permitirPrecioRegistro && extraerMontos(inv.texto).length > 0) return { ok: false, aprobado: false, motivo: 'precio-en-ruta-general' };
+    if (v.respaldo === 'cita' && extraerMontos(inv.texto).length > 0) return { ok: false, aprobado: false, motivo: 'precio-con-cita' };
     if (v.respaldo === 'cita' && !evidenciaPorId(evidencia, v.referencia)) return { ok: false, aprobado: false, motivo: 'cita-inexistente' };
     if (v.respaldo === 'lista' && !entradaPorId(registro, v.referencia) && v.referencia !== 'registro') return { ok: false, aprobado: false, motivo: 'lista-inexistente' };
     const validacion = validarTextoComercial(inv.texto, registro, { aliasServicio: aliasDelRegistro(registro) });

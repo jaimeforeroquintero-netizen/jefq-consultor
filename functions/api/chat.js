@@ -87,10 +87,13 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
 }
 
 async function rutaPrecioServicio(snapshot, mensaje) {
-  if (!snapshot.rutaPrecioActiva) {
-    return { reply: RESPUESTA_CERRADA, ruta: 'precio-desactivada', puerta_ok: true, juez_ok: false, motivo: snapshot.motivo || 'ruta-precio-desactivada' };
-  }
   const seleccion = seleccionarAfirmacion(mensaje, snapshot.registro);
+  if (!snapshot.rutaPrecioActiva) {
+    if (seleccion.ok || seleccion.motivo === 'diagnostico-ambiguo' || seleccion.campo === 'precio') {
+      return { reply: RESPUESTA_CERRADA, ruta: 'precio-desactivada', puerta_ok: true, juez_ok: false, motivo: snapshot.motivo || 'ruta-precio-desactivada' };
+    }
+    return null;
+  }
   if (seleccion.ok) {
     const respuesta = respuestaDesdeAfirmacion(seleccion.afirmacion, snapshot.registro);
     if (respuesta.ok) return { reply: respuesta.texto, ruta: 'precio-servicio', puerta_ok: true, juez_ok: false, motivo: seleccion.motivo };
@@ -117,7 +120,7 @@ async function rutaMixta(env, modelo, presupuesto, snapshot, clasificacion, mens
       maxTokens: 512,
     });
     if (!juez.ok) return { reply: RESPUESTA_CERRADA, ruta: 'mixta', puerta_ok: false, juez_ok: false, motivo: juez.motivo };
-    const veredicto = validarVeredictoJuez(juez.json, inventario, [], snapshot.registro);
+    const veredicto = validarVeredictoJuez(juez.json, inventario, [], snapshot.registro, { permitirPrecioRegistro: true });
     if (!veredicto.ok || !veredicto.aprobado) return { reply: RESPUESTA_CERRADA, ruta: 'mixta', puerta_ok: true, juez_ok: false, motivo: veredicto.motivo };
     return { reply: `${precio.reply} ${RESPUESTA_FIJA_CONDICION}`, ruta: 'mixta', puerta_ok: true, juez_ok: true, motivo: 'separacion-confirmada' };
   }
@@ -208,6 +211,7 @@ async function handler(context) {
       resultado = await procesarIntento(env, modelo, presupuesto, snapshot, history, mensajeActual);
       epochAntes = await leerEpoch(env, snapshot);
       if (epochAntes !== snapshot.epoch) {
+        epochAntes = snapshot.epoch;
         resultado = { reply: RESPUESTA_CERRADA, ruta: 'frescura', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: false, juez_ok: false, motivo: 'cambio-tras-reproceso' };
       }
     }

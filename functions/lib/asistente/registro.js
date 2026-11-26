@@ -209,18 +209,20 @@ export function resolverEntidades(mensaje, registro) {
 function detectarCampo(norm) {
   const duracion = /\b(?:dura|duran|duracion|plazo|vigencia|cuanto tiempo)\b/.test(norm);
   const cobertura = /\b(?:incluye|incluyen|cobertura|alcance|entregables|que trae|que recibo|que contiene|que incluye)\b/.test(norm);
-  const precio = /\b(?:cuesta|cuestan|precio|precios|valor|vale|valen|tarifa|tarifas|cobra|cobran|inversion|cuanto)\b/.test(norm);
+  const precioFuerte = /\b(?:cuesta|cuestan|precio|precios|valor|vale|valen|tarifa|tarifas|cobra|cobran|inversion)\b/.test(norm);
+  const precioDebil = /\bcuanto\b/.test(norm);
   const campos = [];
   if (duracion) campos.push('duracion');
   if (cobertura) campos.push('cobertura');
-  if (precio && !duracion) campos.push('precio');
+  if (precioFuerte || (precioDebil && !duracion)) campos.push('precio');
   if (campos.length !== 1) return { campo: null, campos };
   return { campo: campos[0], campos };
 }
 
 function esPreguntaDeCondicion(norm) {
   const condicion = /\b(?:descuentos?|acuerdos?|promociones?|ofertas?|tarifas? especiales?|condiciones especiales?)\b/.test(norm);
-  const existencia = /\b(?:hay|tienen|tiene|existen|existe|ofrecen|ofrece|manejan|aplican)\b/.test(norm);
+  const existencia = /\b(?:hay|tienen|tiene|existen|existe|ofrecen|ofrece|manejan|aplican)\b/.test(norm)
+    || norm.startsWith('que ') || /\bcuales\b/.test(norm);
   return condicion && existencia;
 }
 
