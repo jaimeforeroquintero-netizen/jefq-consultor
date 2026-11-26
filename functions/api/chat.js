@@ -15,7 +15,7 @@ import { ESQUEMA_CLASIFICADOR_V210, PROMPT_CLASIFICADOR, clasificadorSinModelo, 
 import { extraerMontos, validarTextoComercial } from '../lib/asistente/guardas.js';
 import { ESQUEMA_GENERADOR_V210, ESQUEMA_JUEZ_V210, PROMPT_GENERADOR, PROMPT_JUEZ, ensamblarRespuesta, validarInventario, validarVeredictoJuez } from '../lib/asistente/juez.js';
 import { crearPresupuestoLlamadas, llamarModeloJSON } from '../lib/asistente/modelo.js';
-import { buscarEvidencia } from '../lib/asistente/rag.js';
+import { buscarCorpusLocal, buscarEvidencia } from '../lib/asistente/rag.js';
 import {
   RESPUESTA_CERRADA,
   RESPUESTA_FIJA_CONDICION,
@@ -307,7 +307,11 @@ async function handler(context) {
   // de condición, se entrega el texto publicado más cercano con su fuente.
   const LEXICO_CONDICION_FINAL = LEXICO_CONDICION_TEXTO;
   if (resultado.reply === RESPUESTA_CERRADA && !['fija-condicion', 'mixta', 'frescura', 'precio-servicio', 'aclaracion'].includes(resultado.ruta) && !LEXICO_CONDICION_FINAL.test(mensajeActual)) {
-    const evidencia = await buscarEvidencia(env, mensajeActual, 4);
+    let evidencia = await buscarEvidencia(env, mensajeActual, 4);
+    // Sin IA disponible (cuota o fallo), el corpus local léxico sostiene el
+    // respaldo extractivo con las mismas guardas.
+    const sinIA = !evidencia || evidencia.length === 0;
+    if (sinIA) evidencia = buscarCorpusLocal(mensajeActual, 4);
     const ordenada = (evidencia || []).slice().sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
     const mejor = ordenada[0];
     const margen = mejor && ordenada[1] ? (mejor.score ?? 0) - (ordenada[1].score ?? 0) : 1;
@@ -319,7 +323,7 @@ async function handler(context) {
       for (const et of evTokens) { let cp = 0; while (cp < t.length && cp < et.length && t[cp] === et[cp]) cp++; if (et === t || (cp >= 4) || (cp >= 3 && Math.abs(t.length - et.length) <= 3 && t.length >= 5 && et.length >= 5)) { hits++; break; } }
     }
     const solape = tokensQ.size ? hits / tokensQ.size : 0;
-    if (mejor && (mejor.score ?? 0) >= 0.45 && margen >= 0.03 && solape >= 0.34 && extractivoSeguro(mejor.texto, snapshot.registro)) {
+    if (mejor && (sinIA || ((mejor.score ?? 0) >= 0.45 && margen >= 0.03)) && solape >= 0.34 && extractivoSeguro(mejor.texto, snapshot.registro)) {
       resultado = { reply: `${mejor.texto} (Fuente: ${mejor.titulo})`, ruta: 'general', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: true, juez_ok: false, motivo: 'extractivo-final' };
     }
   }
