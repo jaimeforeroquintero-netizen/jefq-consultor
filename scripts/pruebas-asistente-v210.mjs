@@ -147,5 +147,16 @@ const verExtra = validarVeredictoJuez(
 );
 prueba('veredicto tolera claves extra del modelo', verExtra.ok === true);
 
+const evMetodo = [{ id: 'metodo', texto: 'El método de trabajo de JEFQ tiene cuatro pasos: conocer el contexto, definir el alcance, evaluar con control y entregar y acompañar.' }];
+const invSinRef = validarInventario({ afirmaciones: [{ id: 'c1', texto: 'El método de trabajo de JEFQ tiene cuatro pasos: conocer el contexto, definir el alcance, evaluar con control y entregar y acompañar.' }] }, evMetodo);
+prueba('inventario sin referencia se asigna por coincidencia única', invSinRef.ok === true && invSinRef.afirmaciones[0].referencia === 'metodo');
+const verReubicado = validarVeredictoJuez(
+  { aprobado: true, afirmaciones: [{ id: 'c1', texto: 'El método de trabajo de JEFQ tiene cuatro pasos: conocer el contexto, definir el alcance, evaluar con control y entregar y acompañar.', respaldo: 'metodo' }] },
+  invSinRef.afirmaciones,
+  evMetodo,
+  registro,
+);
+prueba('veredicto con id en respaldo se reubica', verReubicado.ok === true);
+
 console.log(`\nTOTAL: ${total} casos, ${total - fallos} PASA, ${fallos} FALLA.`);
 process.exit(fallos === 0 ? 0 : 1);

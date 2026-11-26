@@ -20,7 +20,11 @@ function clavesExactas(obj, esperadas) {
   return claves.length === exp.length && claves.every((c, i) => c === exp[i]);
 }
 
-export function validarInventario(obj) {
+function normalizarTexto(t) {
+  return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+export function validarInventario(obj, evidencia = []) {
   if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return { ok: false, motivo: 'no-objeto' };
   // C3(a): cualquier texto_final del modelo se ignora; no forma parte de la respuesta.
   const { texto_final: _ignorado, ...resto } = obj;
@@ -37,7 +41,14 @@ export function validarInventario(obj) {
     if (!/^c[1-9][0-9]*$/.test(norm.id) || ids.has(norm.id)) return { ok: false, motivo: 'id-invalido' };
     ids.add(norm.id);
     if (typeof norm.texto !== 'string' || norm.texto.trim().length === 0) return { ok: false, motivo: 'texto-vacio' };
-    if (typeof norm.referencia !== 'string' || norm.referencia.trim().length === 0) return { ok: false, motivo: 'referencia-vacia' };
+    if (typeof norm.referencia !== 'string' || norm.referencia.trim().length === 0) {
+      // Reparación determinista: la referencia se asigna solo si el texto de
+      // la afirmación aparece en exactamente una evidencia.
+      const textoNorm = normalizarTexto(norm.texto);
+      const candidatas = (evidencia || []).filter((e) => textoNorm.length > 0 && normalizarTexto(e.texto).includes(textoNorm));
+      if (candidatas.length !== 1) return { ok: false, motivo: 'referencia-vacia' };
+      norm.referencia = candidatas[0].id;
+    }
     afirmaciones.push(norm);
   }
   return { ok: true, afirmaciones };
@@ -59,6 +70,16 @@ export function validarVeredictoJuez(obj, inventario, evidencia, registro, opcio
     vistos.add(v.id);
     const inv = invPorId.get(v.id);
     if (v.texto !== inv.texto) return { ok: false, aprobado: false, motivo: 'texto-distinto' };
+    // Reparación determinista: si el juez puso el id de la evidencia en
+    // «respaldo» y omitió «referencia», se reubica sin cambiar su decisión.
+    if (!['lista', 'cita', 'ninguno'].includes(v.respaldo) && typeof v.respaldo === 'string' && (typeof v.referencia !== 'string' || v.referencia.trim().length === 0)) {
+      const esEvidencia = Boolean(evidenciaPorId(evidencia, v.respaldo));
+      const esRegistro = Boolean(entradaPorId(registro, v.respaldo)) || v.respaldo === 'registro';
+      if (esEvidencia || esRegistro) {
+        v.referencia = v.respaldo;
+        v.respaldo = esEvidencia ? 'cita' : 'lista';
+      }
+    }
     if (!['lista', 'cita', 'ninguno'].includes(v.respaldo)) return { ok: false, aprobado: false, motivo: 'respaldo-invalido' };
     if (typeof v.referencia !== 'string') return { ok: false, aprobado: false, motivo: 'referencia-invalida' };
     if (v.respaldo === 'ninguno') return { ok: false, aprobado: false, motivo: 'sin-respaldo' };

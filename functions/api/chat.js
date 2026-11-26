@@ -71,7 +71,7 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
     maxTokens: 1024,
   });
   if (!gen.ok) return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: false, juez_ok: false, motivo: gen.motivo };
-  const inv = validarInventario(gen.json);
+  const inv = validarInventario(gen.json, evidencia);
   if (!inv.ok) return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: false, juez_ok: false, motivo: inv.motivo };
   const juez = await llamarModeloJSON(env, {
     modelo,
