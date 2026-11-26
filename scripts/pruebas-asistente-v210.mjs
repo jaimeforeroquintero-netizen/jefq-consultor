@@ -1,5 +1,7 @@
 // Pruebas locales del asistente V2.10. Uso: node scripts/pruebas-asistente-v210.mjs
 
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { analizarGuardas, puertaNumerica } from '../functions/lib/asistente/guardas.js';
 import {
   REGISTRO_V210,
@@ -26,6 +28,8 @@ function prueba(nombre, condicion, detalle = '') {
 
 const registro = REGISTRO_V210;
 prueba('registro válido', validarRegistro(registro).ok, validarRegistro(registro).motivos.join(','));
+const hashPrecios = createHash('sha256').update(readFileSync(new URL('../src/data/precios.ts', import.meta.url))).digest('hex');
+prueba('fuente_hash coincide con precios.ts', hashPrecios === registro.fuente_hash, hashPrecios);
 
 const esencial = seleccionarAfirmacion('¿Cuánto cuesta el Diagnóstico Esencial?', registro);
 prueba('alias anidado resuelve al producto', esencial.ok && esencial.afirmacion.id_registro === 'prod-diagnostico-esencial');
@@ -49,6 +53,7 @@ prueba('dos productos no se responden juntos', seleccionarAfirmacion('¿Cuánto 
 prueba('precio y cobertura son dos campos', seleccionarAfirmacion('¿Cuánto cuesta y qué incluye la Evaluación Pyme?', registro).motivo === 'varios-campos');
 prueba('precio y duración son dos campos', seleccionarAfirmacion('¿Cuánto cuesta y cuánto dura el Hardening?', registro).motivo === 'varios-campos');
 prueba('qué descuentos existen responde desde el registro', seleccionarAfirmacion('¿Qué descuentos existen?', registro).ok === true);
+prueba('precio con descuento presupuesto no entrega precio', seleccionarAfirmacion('¿Cuánto cuesta el Hardening con el descuento que me ofrecieron?', registro).motivo === 'condicion-no-verificada');
 const condicion = seleccionarAfirmacion('¿Tienen descuentos?', registro);
 prueba('pregunta legítima de descuentos responde desde el registro', condicion.ok && respuestaDesdeAfirmacion(condicion.afirmacion, registro).texto?.includes('condiciones especiales'));
 
@@ -78,6 +83,7 @@ const mixta = validarClasificacion({
   confianza: 0.95,
 }, '¿Cuánto cuesta el Hardening? Tengo descuento de cliente antiguo.');
 prueba('mixta con dos fragmentos es válida', mixta.ok, mixta.motivo || '');
+prueba('mixta con fragmentos solapados se rechaza', validarClasificacion({ etiqueta: 4, fragmentos: [{ texto: 'cuanto cuesta el hardening', tipo: 'legitima' }, { texto: 'el hardening', tipo: 'falsa' }], confianza: 0.9 }, '¿Cuánto cuesta el Hardening?').ok === false);
 prueba('fragmento fuera del mensaje se rechaza', validarClasificacion({ etiqueta: 1, fragmentos: [{ texto: 'precio del informe', tipo: 'sostiene' }], confianza: 0.9 }, '¿Cuánto cuesta el Hardening?').ok === false);
 prueba('etiqueta 1 con dos fragmentos se rechaza', validarClasificacion({ etiqueta: 1, fragmentos: [{ texto: 'cuanto cuesta', tipo: 'legitima' }, { texto: 'hardening', tipo: 'falsa' }], confianza: 0.9 }, '¿Cuánto cuesta el Hardening?').ok === false);
 
@@ -86,6 +92,7 @@ prueba('sin modelo rechaza tarifa de cliente antiguo', clasificadorSinModelo('co
 prueba('sin modelo rechaza oferta sin entidad', clasificadorSinModelo('¿cuál es la oferta?', registro).ok === false);
 prueba('sin modelo rechaza descuento para pyme', clasificadorSinModelo('¿hay descuento para pyme?', registro).ok === false);
 prueba('sin modelo rechaza dígitos', clasificadorSinModelo('¿Cuánto cuesta el Hardening 313500?', registro).ok === false);
+prueba('sin modelo rechaza comparación', clasificadorSinModelo('El Hardening cuesta lo mismo', registro).ok === false);
 
 const inventario = validarInventario({ texto_final: 'ignorar', afirmaciones: [{ id: 'c1', texto: 'El Hardening fortalece cuentas y navegadores.', referencia: 'hardening' }] });
 prueba('inventario ignora texto_final', inventario.ok === true);

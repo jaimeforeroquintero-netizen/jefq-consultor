@@ -63,6 +63,9 @@ export function validarClasificacion(obj, mensajeActual) {
   if (obj.etiqueta === 4) {
     const tipos = obj.fragmentos.map((f) => f.tipo).sort().join(',');
     if (obj.fragmentos.length !== 2 || tipos !== 'falsa,legitima') return { ok: false, motivo: 'mixta-sin-dos-fragmentos' };
+    const legitima = normalizarParaCoincidencia(obj.fragmentos.find((f) => f.tipo === 'legitima').texto);
+    const falsa = normalizarParaCoincidencia(obj.fragmentos.find((f) => f.tipo === 'falsa').texto);
+    if (legitima === falsa || legitima.includes(falsa) || falsa.includes(legitima)) return { ok: false, motivo: 'fragmentos-solapados' };
   } else if (obj.fragmentos.length !== 1 || obj.fragmentos[0].tipo !== 'sostiene') {
     return { ok: false, motivo: 'fragmento-unico-requerido' };
   }
@@ -83,6 +86,9 @@ const MARCADORES_FUERA_DE_BLANCA = [
   'descuento', 'descuentos', 'acuerdo', 'acuerdos', 'promocion', 'oferta', 'antiguo', 'ofrecieron',
   'mitad', 'menos', 'barato', 'autorizo', 'autorizaron', 'ignora', 'sigue', 'mantienen', 'anterior',
   'especial', 'especiales', 'cliente', 'gratis', 'reembolso', 'devolucion', 'anticipo', 'deposito',
+  'mismo', 'misma', 'igual', 'iguales', 'comparado', 'comparada', 'versus', 'vs', 'mas', 'mayor',
+  'menor', 'doble', 'triple', 'equivalente', 'similar', 'condicion', 'condiciones', 'cotizacion',
+  'cotizaciones', 'presupuesto', 'presupuestos',
 ];
 
 export function clasificadorSinModelo(mensaje, registro) {

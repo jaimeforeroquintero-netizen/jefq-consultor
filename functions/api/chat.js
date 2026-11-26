@@ -12,12 +12,14 @@
 import { withSentry } from '../_sentry.js';
 import { contar, ipCliente } from '../lib/redis.js';
 import { PROMPT_CLASIFICADOR, clasificadorSinModelo, rutaDesdeClasificacion, validarClasificacion } from '../lib/asistente/clasificador.js';
+import { validarTextoComercial } from '../lib/asistente/guardas.js';
 import { PROMPT_GENERADOR, PROMPT_JUEZ, ensamblarRespuesta, validarInventario, validarVeredictoJuez } from '../lib/asistente/juez.js';
 import { crearPresupuestoLlamadas, llamarModeloJSON } from '../lib/asistente/modelo.js';
 import { buscarEvidencia } from '../lib/asistente/rag.js';
 import {
   RESPUESTA_CERRADA,
   RESPUESTA_FIJA_CONDICION,
+  RESPUESTA_PRECIO_DESACTIVADA,
   RESPUESTA_SIN_VERIFICAR,
   aclaracionDiagnostico,
   aliasDelRegistro,
@@ -74,7 +76,7 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
   const juez = await llamarModeloJSON(env, {
     modelo,
     sistema: PROMPT_JUEZ,
-    usuario: `Inventario:\n${JSON.stringify(inv.afirmaciones)}\n\nEvidencia:\n${evidenciaTexto}\n\nRegistro comercial resumido:\n${JSON.stringify({ version: snapshot.version, descuentos: snapshot.registro.descuentos, acuerdos: snapshot.registro.acuerdos, entradas: snapshot.registro.entradas.map((e) => ({ id: e.id, nombre: e.nombre, precio: e.precio, tipo_precio: e.tipo_precio, unidad: e.unidad })) })}\n${contextoExtra}`,
+    usuario: `Inventario:\n${JSON.stringify(inv.afirmaciones)}\n\nEvidencia:\n${evidenciaTexto}\n\nRegistro comercial resumido (sin precios; los precios no se entregan en esta ruta):\n${JSON.stringify({ version: snapshot.version, descuentos: snapshot.registro.descuentos, acuerdos: snapshot.registro.acuerdos, entradas: snapshot.registro.entradas.map((e) => ({ id: e.id, nombre: e.nombre, unidad: e.unidad })) })}\n${contextoExtra}`,
     presupuesto,
     maxTokens: 1024,
   });
@@ -88,19 +90,31 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
 
 async function rutaPrecioServicio(snapshot, mensaje) {
   const seleccion = seleccionarAfirmacion(mensaje, snapshot.registro);
+  const campos = seleccion.campos || (seleccion.campo ? [seleccion.campo] : []);
+  const esPrecio = campos.includes('precio') || seleccion.motivo === 'diagnostico-ambiguo';
+  const renderizar = () => {
+    const respuesta = respuestaDesdeAfirmacion(seleccion.afirmacion, snapshot.registro);
+    if (!respuesta.ok) return { reply: RESPUESTA_CERRADA, ruta: 'precio-servicio', puerta_ok: false, juez_ok: false, motivo: respuesta.motivo };
+    const guarda = validarTextoComercial(respuesta.texto, snapshot.registro, { campo: seleccion.afirmacion.campo, afirmacion: seleccion.afirmacion });
+    if (!guarda.ok) return { reply: RESPUESTA_CERRADA, ruta: 'precio-servicio', puerta_ok: false, juez_ok: false, motivo: 'plantilla-no-atomica' };
+    return { reply: respuesta.texto, ruta: 'precio-servicio', puerta_ok: true, juez_ok: false, motivo: seleccion.motivo, afirmacion_id: seleccion.afirmacion.id_registro };
+  };
   if (!snapshot.rutaPrecioActiva) {
-    if (seleccion.ok || seleccion.motivo === 'diagnostico-ambiguo' || seleccion.campo === 'precio') {
-      return { reply: RESPUESTA_CERRADA, ruta: 'precio-desactivada', puerta_ok: true, juez_ok: false, motivo: snapshot.motivo || 'ruta-precio-desactivada' };
+    if (esPrecio) {
+      return { reply: RESPUESTA_PRECIO_DESACTIVADA, ruta: 'precio-desactivada', puerta_ok: true, juez_ok: false, motivo: snapshot.motivo || 'ruta-precio-desactivada' };
     }
+    if (seleccion.ok) return renderizar();
     return null;
   }
-  if (seleccion.ok) {
-    const respuesta = respuestaDesdeAfirmacion(seleccion.afirmacion, snapshot.registro);
-    if (respuesta.ok) return { reply: respuesta.texto, ruta: 'precio-servicio', puerta_ok: true, juez_ok: false, motivo: seleccion.motivo };
-    return { reply: RESPUESTA_CERRADA, ruta: 'precio-servicio', puerta_ok: false, juez_ok: false, motivo: respuesta.motivo };
+  if (seleccion.ok) return renderizar();
+  if (seleccion.motivo === 'condicion-no-verificada') {
+    return { reply: RESPUESTA_FIJA_CONDICION, ruta: 'fija-condicion', puerta_ok: true, juez_ok: false, motivo: seleccion.motivo };
   }
   if (seleccion.motivo === 'diagnostico-ambiguo') {
     return { reply: aclaracionDiagnostico(), ruta: 'aclaracion', puerta_ok: true, juez_ok: false, motivo: seleccion.motivo };
+  }
+  if (esPrecio || campos.includes('cobertura') || seleccion.motivo === 'varios-campos') {
+    return { reply: RESPUESTA_CERRADA, ruta: 'precio-servicio', puerta_ok: true, juez_ok: false, motivo: seleccion.motivo };
   }
   return null;
 }
@@ -110,8 +124,11 @@ async function rutaMixta(env, modelo, presupuesto, snapshot, clasificacion, mens
   const falsa = clasificacion.fragmentos.find((f) => f.tipo === 'falsa')?.texto || '';
   const contexto = `Ruta mixta. Fragmento legítimo: ${JSON.stringify(legitima)}. Fragmento falso: ${JSON.stringify(falsa)}. La respuesta legítima no puede depender de la premisa falsa.`;
   const precio = await rutaPrecioServicio(snapshot, legitima);
+  if (precio && precio.ruta !== 'precio-servicio') {
+    return { reply: RESPUESTA_CERRADA, ruta: 'mixta', puerta_ok: true, juez_ok: false, motivo: precio.motivo };
+  }
   if (precio && precio.ruta === 'precio-servicio') {
-    const inventario = [{ id: 'c1', texto: precio.reply, referencia: 'registro' }];
+    const inventario = [{ id: 'c1', texto: precio.reply, referencia: precio.afirmacion_id }];
     const juez = await llamarModeloJSON(env, {
       modelo,
       sistema: PROMPT_JUEZ,
@@ -122,7 +139,11 @@ async function rutaMixta(env, modelo, presupuesto, snapshot, clasificacion, mens
     if (!juez.ok) return { reply: RESPUESTA_CERRADA, ruta: 'mixta', puerta_ok: false, juez_ok: false, motivo: juez.motivo };
     const veredicto = validarVeredictoJuez(juez.json, inventario, [], snapshot.registro, { permitirPrecioRegistro: true });
     if (!veredicto.ok || !veredicto.aprobado) return { reply: RESPUESTA_CERRADA, ruta: 'mixta', puerta_ok: true, juez_ok: false, motivo: veredicto.motivo };
-    return { reply: `${precio.reply} ${RESPUESTA_FIJA_CONDICION}`, ruta: 'mixta', puerta_ok: true, juez_ok: true, motivo: 'separacion-confirmada' };
+    const combinada = `${precio.reply} ${RESPUESTA_FIJA_CONDICION}`;
+    if (!combinada.startsWith(precio.reply) || !combinada.endsWith(RESPUESTA_FIJA_CONDICION)) {
+      return { reply: RESPUESTA_CERRADA, ruta: 'mixta', puerta_ok: false, juez_ok: false, motivo: 'combinada-invalida' };
+    }
+    return { reply: combinada, ruta: 'mixta', puerta_ok: true, juez_ok: true, motivo: 'separacion-confirmada' };
   }
   const general = await rutaGeneral(env, modelo, presupuesto, snapshot, legitima, contexto);
   if (general.ruta !== 'general' || !general.juez_ok) return { reply: RESPUESTA_CERRADA, ruta: 'mixta', puerta_ok: general.puerta_ok, juez_ok: false, motivo: general.motivo };
@@ -216,26 +237,33 @@ async function handler(context) {
       }
     }
   } catch {
-    resultado = { reply: RESPUESTA_CERRADA, ruta: 'frescura', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: false, juez_ok: false, motivo: 'epoch-no-disponible' };
+    epochAntes = snapshot.epoch;
+    if (['precio-servicio', 'mixta', 'sin-modelo', 'aclaracion'].includes(resultado.ruta)) {
+      resultado = { reply: RESPUESTA_CERRADA, ruta: 'frescura', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: false, juez_ok: false, motivo: 'epoch-no-disponible' };
+    }
   }
 
   const lecturaDespues = await leerEpochConReintento(env, snapshot);
   const epochDespues = lecturaDespues.ok ? lecturaDespues.epoch : null;
   const publicacionDuranteVentana = lecturaDespues.ok ? (epochDespues > epochAntes ? 1 : 0) : 'desconocido';
-  await registrarAuditoria(env, {
-    creado_en: new Date().toISOString(),
-    version_linealizacion: snapshot.version,
-    epoch_antes: epochAntes,
-    epoch_despues: epochDespues,
-    publicacion_durante_ventana: publicacionDuranteVentana,
-    ruta: resultado.ruta,
-    etiqueta: resultado.etiqueta ?? null,
-    confianza: resultado.confianza ?? null,
-    puerta_ok: Boolean(resultado.puerta_ok),
-    juez_ok: Boolean(resultado.juez_ok),
-    motivo: resultado.motivo || null,
-    hash_mensaje: await hashMensaje(mensajeActual, env),
-  });
+  try {
+    await registrarAuditoria(env, {
+      creado_en: new Date().toISOString(),
+      version_linealizacion: snapshot.version,
+      epoch_antes: epochAntes,
+      epoch_despues: epochDespues,
+      publicacion_durante_ventana: publicacionDuranteVentana,
+      ruta: resultado.ruta,
+      etiqueta: resultado.etiqueta ?? null,
+      confianza: resultado.confianza ?? null,
+      puerta_ok: Boolean(resultado.puerta_ok),
+      juez_ok: Boolean(resultado.juez_ok),
+      motivo: resultado.motivo || null,
+      hash_mensaje: await hashMensaje(mensajeActual, env),
+    });
+  } catch {
+    // La auditoría es técnica y de mejor esfuerzo: un fallo suyo no bloquea la respuesta.
+  }
 
   return respuestaJSON(resultado.reply);
 }

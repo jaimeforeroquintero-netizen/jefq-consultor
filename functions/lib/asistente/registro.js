@@ -6,6 +6,7 @@ import { analizarGuardas, normalizarParaCoincidencia, validarTextoComercial } fr
 export const RESPUESTA_FIJA_CONDICION = 'No tengo un registro verificable de ese acuerdo, descuento o condición especial. Para confirmarlo, por favor comuníquese directamente con JEFQ Consultor.';
 export const RESPUESTA_CERRADA = 'No puedo verificar eso con la información publicada. Puede escribir por WhatsApp con el botón del sitio para que Jaime lo revise.';
 export const RESPUESTA_SIN_VERIFICAR = 'No tengo información verificable en el sitio para responder eso. Puede escribir por WhatsApp con el botón del sitio para que Jaime lo revise.';
+export const RESPUESTA_PRECIO_DESACTIVADA = 'En este momento no puedo confirmar precios por este medio. Para cotizar, por favor comuníquese directamente con JEFQ Consultor por WhatsApp con el botón del sitio.';
 
 export const REGISTRO_V210 = {
   version: 1,
@@ -233,6 +234,11 @@ export function seleccionarAfirmacion(mensaje, registro) {
     return { ok: true, afirmacion, motivo: 'condicion-legitima' };
   }
   const { campo, campos } = detectarCampo(norm);
+  const mencionaCondicion = /\b(?:descuentos?|acuerdos?|promociones?|ofertas?|condiciones especiales?)\b/.test(norm);
+  const presuponeCondicion = /\b(?:ofrecieron|ofrecio|acordado|acordada|pactado|pactada|prometieron|prometio|tengo|me dieron|cliente antiguo)\b/.test(norm);
+  if (mencionaCondicion && (campos.includes('precio') || presuponeCondicion)) {
+    return { ok: false, motivo: 'condicion-no-verificada', campo, campos };
+  }
   if (!campo) return { ok: false, motivo: campos.length > 1 ? 'varios-campos' : 'sin-campo', campos };
   const { tramos } = resolverEntidades(mensaje, registro);
   if (tramos.length === 0) return { ok: false, motivo: 'sin-entidad', campo };

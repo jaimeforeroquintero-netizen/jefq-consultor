@@ -90,12 +90,15 @@ export async function insertarVersionInactiva(db, registro, hash) {
 }
 
 export async function activarVersion(db, version) {
+  const existente = await db.prepare(`SELECT version FROM registro_versiones WHERE version = ?;`).bind(version).first();
+  if (!existente) return { ok: false, motivo: 'version-inexistente' };
   const ahora = new Date().toISOString();
   await db.batch([
     db.prepare(`UPDATE registro_versiones SET activo = 0 WHERE activo = 1;`),
     db.prepare(`UPDATE registro_versiones SET activo = 1 WHERE version = ?;`).bind(version),
     db.prepare(`UPDATE registro_estado SET epoch = epoch + 1, actualizado_en = ? WHERE id = 1;`).bind(ahora),
   ]);
+  return { ok: true };
 }
 
 export async function revertirVersion(db, version) {
