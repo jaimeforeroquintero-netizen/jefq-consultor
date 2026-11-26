@@ -197,6 +197,12 @@ async function procesarIntento(env, modelo, presupuesto, snapshot, history, mens
   const clasificacion = validada.clasificacion;
   const ruta = rutaDesdeClasificacion(clasificacion);
   const base = { etiqueta: clasificacion.etiqueta, confianza: clasificacion.confianza };
+  // Guarda determinista de condición: ningún mensaje con léxico de descuento,
+  // acuerdo o condición especial llega a la ruta general o de precio.
+  const LEXICO_CONDICION = /(descuento|promoci[oó]n|oferta|gratis|2x1|mitad|rebaja|bonificaci[oó]n|cup[oó]n|precio especial|acuerdo|condici[oó]n especial|sin costo|primera vez gratis)/i;
+  if (ruta !== 'fija-condicion' && ruta !== 'mixta' && LEXICO_CONDICION.test(mensajeActual)) {
+    return { reply: RESPUESTA_FIJA_CONDICION, ruta: 'fija-condicion', ...base, puerta_ok: true, juez_ok: false, motivo: 'guarda-condicion' };
+  }
   if (ruta === 'cerrada') return { reply: RESPUESTA_CERRADA, ruta: 'cerrada', ...base, puerta_ok: true, juez_ok: false, motivo: 'incertidumbre' };
   if (ruta === 'fija-condicion') return { reply: RESPUESTA_FIJA_CONDICION, ruta: 'fija-condicion', ...base, puerta_ok: true, juez_ok: false, motivo: 'condicion-no-verificada' };
   if (ruta === 'mixta') {
