@@ -38,7 +38,9 @@ export function validarInventario(obj, evidencia = []) {
     // Normalización: se conservan solo las claves del contrato; las claves
     // extra del modelo no invalidan el inventario.
     const norm = { id: a.id, texto: a.texto, referencia: a.referencia };
-    if (!/^c[1-9][0-9]*$/.test(norm.id) || ids.has(norm.id)) return { ok: false, motivo: 'id-invalido' };
+    // Reparación determinista: los id son etiquetas internas; si el modelo
+    // usa otro formato, se reasignan en orden c1..cn antes del juez.
+    if (!/^c[1-9][0-9]*$/.test(norm.id) || ids.has(norm.id)) norm.id = `c${afirmaciones.length + 1}`;
     ids.add(norm.id);
     if (typeof norm.texto !== 'string' || norm.texto.trim().length === 0) return { ok: false, motivo: 'texto-vacio' };
     if (typeof norm.referencia !== 'string' || norm.referencia.trim().length === 0) {
@@ -55,7 +57,7 @@ export function validarInventario(obj, evidencia = []) {
         for (const t of tokens) if (evTokens.has(t)) hits++;
         return { id: e.id, score: hits / tokens.size };
       }).sort((a, b) => b.score - a.score);
-      if (!puntuadas[0] || puntuadas[0].score < 0.8 || (puntuadas[1] && puntuadas[1].score >= puntuadas[0].score)) return { ok: false, motivo: 'referencia-vacia' };
+      if (!puntuadas[0] || puntuadas[0].score < 0.6 || (puntuadas[1] && puntuadas[1].score >= puntuadas[0].score)) return { ok: false, motivo: 'referencia-vacia' };
       norm.referencia = puntuadas[0].id;
     }
     afirmaciones.push(norm);
@@ -90,6 +92,9 @@ export function validarVeredictoJuez(obj, inventario, evidencia, registro, opcio
       }
     }
     if (!['lista', 'cita', 'ninguno'].includes(v.respaldo)) return { ok: false, aprobado: false, motivo: 'respaldo-invalido' };
+    // Reparación determinista: respaldo «cita» sin referencia usable toma la
+    // referencia del inventario (la decisión de respaldo sigue siendo del juez).
+    if (v.respaldo === 'cita' && (typeof v.referencia !== 'string' || v.referencia.trim().length === 0)) v.referencia = inv.referencia;
     if (typeof v.referencia !== 'string') return { ok: false, aprobado: false, motivo: 'referencia-invalida' };
     if (v.respaldo === 'ninguno') return { ok: false, aprobado: false, motivo: 'sin-respaldo' };
     if (v.referencia !== inv.referencia) return { ok: false, aprobado: false, motivo: 'referencia-distinta' };

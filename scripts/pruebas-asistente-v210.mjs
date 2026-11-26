@@ -162,5 +162,8 @@ const selPyme = seleccionarAfirmacion('¿Qué incluye la Evaluación PYME?', reg
 const respPyme = respuestaDesdeAfirmacion(selPyme.afirmacion, registro);
 prueba('cobertura de producto renderiza sin falsa no-atomicidad', respPyme.ok === true);
 
+const invIds = validarInventario({ afirmaciones: [{ id: '1', texto: 'El método tiene cuatro pasos.', referencia: 'metodo' }, { id: 'x', texto: 'Atiende en toda Colombia.', referencia: 'cobertura-pais' }] }, evMetodo);
+prueba('ids del modelo se reasignan c1..cn', invIds.ok === true && invIds.afirmaciones[0].id === 'c1' && invIds.afirmaciones[1].id === 'c2');
+
 console.log(`\nTOTAL: ${total} casos, ${total - fallos} PASA, ${fallos} FALLA.`);
 process.exit(fallos === 0 ? 0 : 1);
