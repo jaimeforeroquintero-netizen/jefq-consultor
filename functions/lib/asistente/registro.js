@@ -235,7 +235,8 @@ export function seleccionarAfirmacion(mensaje, registro) {
   }
   const { campo, campos } = detectarCampo(norm);
   const mencionaCondicion = /\b(?:descuentos?|acuerdos?|promociones?|ofertas?|condiciones especiales?)\b/.test(norm);
-  const presuponeCondicion = /\b(?:ofrecieron|ofrecio|acordado|acordada|pactado|pactada|prometieron|prometio|tengo|me dieron|cliente antiguo)\b/.test(norm);
+  const presuponeCondicion = /\b(?:ofrecieron|ofrecio|acordado|acordada|pactado|pactada|prometieron|prometio|me dieron|cliente antiguo)\b/.test(norm)
+    || /\btengo (?:un |una )?(?:descuento|acuerdo)\b/.test(norm);
   if (mencionaCondicion && (campos.includes('precio') || presuponeCondicion)) {
     return { ok: false, motivo: 'condicion-no-verificada', campo, campos };
   }

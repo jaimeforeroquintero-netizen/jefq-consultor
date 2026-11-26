@@ -54,6 +54,8 @@ prueba('precio y cobertura son dos campos', seleccionarAfirmacion('¿Cuánto cue
 prueba('precio y duración son dos campos', seleccionarAfirmacion('¿Cuánto cuesta y cuánto dura el Hardening?', registro).motivo === 'varios-campos');
 prueba('qué descuentos existen responde desde el registro', seleccionarAfirmacion('¿Qué descuentos existen?', registro).ok === true);
 prueba('precio con descuento presupuesto no entrega precio', seleccionarAfirmacion('¿Cuánto cuesta el Hardening con el descuento que me ofrecieron?', registro).motivo === 'condicion-no-verificada');
+prueba('duda legítima sobre descuentos no se marca presuposición', seleccionarAfirmacion('Tengo una duda sobre los descuentos', registro).motivo !== 'condicion-no-verificada');
+prueba('tengo un descuento sí se marca presuposición', seleccionarAfirmacion('Tengo un descuento, ¿cuánto cuesta el Hardening?', registro).motivo === 'condicion-no-verificada');
 const condicion = seleccionarAfirmacion('¿Tienen descuentos?', registro);
 prueba('pregunta legítima de descuentos responde desde el registro', condicion.ok && respuestaDesdeAfirmacion(condicion.afirmacion, registro).texto?.includes('condiciones especiales'));
 

@@ -76,7 +76,7 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
   const juez = await llamarModeloJSON(env, {
     modelo,
     sistema: PROMPT_JUEZ,
-    usuario: `Inventario:\n${JSON.stringify(inv.afirmaciones)}\n\nEvidencia:\n${evidenciaTexto}\n\nRegistro comercial resumido (sin precios; los precios no se entregan en esta ruta):\n${JSON.stringify({ version: snapshot.version, descuentos: snapshot.registro.descuentos, acuerdos: snapshot.registro.acuerdos, entradas: snapshot.registro.entradas.map((e) => ({ id: e.id, nombre: e.nombre, unidad: e.unidad })) })}\n${contextoExtra}`,
+    usuario: `Inventario:\n${JSON.stringify(inv.afirmaciones)}\n\nEvidencia:\n${evidenciaTexto}\n\nRegistro comercial resumido (sin precios; los precios no se entregan en esta ruta):\n${JSON.stringify({ version: snapshot.version, hay_descuentos: snapshot.registro.descuentos.length > 0, hay_acuerdos: snapshot.registro.acuerdos !== 'ninguno', entradas: snapshot.registro.entradas.map((e) => ({ id: e.id, nombre: e.nombre, unidad: e.unidad })) })}\n${contextoExtra}`,
     presupuesto,
     maxTokens: 1024,
   });
@@ -128,6 +128,7 @@ async function rutaMixta(env, modelo, presupuesto, snapshot, clasificacion, mens
     return { reply: RESPUESTA_CERRADA, ruta: 'mixta', puerta_ok: true, juez_ok: false, motivo: precio.motivo };
   }
   if (precio && precio.ruta === 'precio-servicio') {
+    if (!precio.puerta_ok) return { reply: RESPUESTA_CERRADA, ruta: 'mixta', puerta_ok: false, juez_ok: false, motivo: precio.motivo };
     const inventario = [{ id: 'c1', texto: precio.reply, referencia: precio.afirmacion_id }];
     const juez = await llamarModeloJSON(env, {
       modelo,
@@ -152,7 +153,11 @@ async function rutaMixta(env, modelo, presupuesto, snapshot, clasificacion, mens
 
 async function procesarIntento(env, modelo, presupuesto, snapshot, history, mensajeActual) {
   if (!env.AI) {
-    if (!snapshot.rutaPrecioActiva) return { reply: RESPUESTA_CERRADA, ruta: 'sin-modelo', etiqueta: null, confianza: null, puerta_ok: true, juez_ok: false, motivo: 'ruta-precio-desactivada' };
+    if (!snapshot.rutaPrecioActiva) {
+      const precio = await rutaPrecioServicio(snapshot, mensajeActual);
+      if (precio) return { ...precio, etiqueta: null, confianza: null };
+      return { reply: RESPUESTA_CERRADA, ruta: 'sin-modelo', etiqueta: null, confianza: null, puerta_ok: true, juez_ok: false, motivo: 'ruta-precio-desactivada' };
+    }
     const sinModelo = clasificadorSinModelo(mensajeActual, snapshot.registro);
     if (sinModelo.ok) {
       const respuesta = respuestaDesdeAfirmacion(sinModelo.afirmacion, snapshot.registro);
@@ -169,6 +174,10 @@ async function procesarIntento(env, modelo, presupuesto, snapshot, history, mens
     maxTokens: 512,
   });
   if (!clas.ok) {
+    if (!snapshot.rutaPrecioActiva) {
+      const precio = await rutaPrecioServicio(snapshot, mensajeActual);
+      if (precio) return { ...precio, etiqueta: null, confianza: null };
+    }
     if (clas.motivo === 'error-modelo' || clas.motivo === 'sin-modelo') {
       const sinModelo = clasificadorSinModelo(mensajeActual, snapshot.registro);
       if (sinModelo.ok && snapshot.rutaPrecioActiva) {
@@ -238,7 +247,7 @@ async function handler(context) {
     }
   } catch {
     epochAntes = snapshot.epoch;
-    if (['precio-servicio', 'mixta', 'sin-modelo', 'aclaracion'].includes(resultado.ruta)) {
+    if (['precio-servicio', 'mixta', 'sin-modelo'].includes(resultado.ruta)) {
       resultado = { reply: RESPUESTA_CERRADA, ruta: 'frescura', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: false, juez_ok: false, motivo: 'epoch-no-disponible' };
     }
   }
