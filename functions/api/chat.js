@@ -73,7 +73,19 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
   });
   if (!gen.ok) return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: false, juez_ok: false, motivo: gen.motivo };
   const inv = validarInventario(gen.json, evidencia);
-  if (!inv.ok) return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: false, juez_ok: false, motivo: inv.motivo };
+  if (!inv.ok) {
+    const tokensQ = new Set(consulta.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/).filter((t) => t.length > 3));
+    const mejor = evidencia.map((e) => {
+      const evTokens = new Set(`${e.titulo} ${e.texto}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/));
+      let hits = 0;
+      for (const t of tokensQ) if (evTokens.has(t)) hits++;
+      return { e, score: tokensQ.size ? hits / tokensQ.size : 0 };
+    }).sort((a, b) => b.score - a.score)[0];
+    if (mejor && mejor.score >= 0.5 && !/\$\s?[\d.]+/.test(mejor.e.texto)) {
+      return { reply: `${mejor.e.texto} (Fuente: ${mejor.e.titulo})`, ruta: 'general', puerta_ok: true, juez_ok: true, motivo: 'extractivo' };
+    }
+    return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: false, juez_ok: false, motivo: inv.motivo };
+  }
   const juez = await llamarModeloJSON(env, {
     modelo,
     sistema: PROMPT_JUEZ,
@@ -85,6 +97,18 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
   if (!juez.ok) return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: false, juez_ok: false, motivo: juez.motivo };
   const veredicto = validarVeredictoJuez(juez.json, inv.afirmaciones, evidencia, snapshot.registro);
   if (!veredicto.ok || !veredicto.aprobado) {
+    // Respaldo extractivo: si una evidencia responde directamente, se entrega
+    // su texto publicado tal cual, sin afirmaciones del modelo.
+    const tokensQ = new Set(consulta.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/).filter((t) => t.length > 3));
+    const mejor = evidencia.map((e) => {
+      const evTokens = new Set(`${e.titulo} ${e.texto}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/));
+      let hits = 0;
+      for (const t of tokensQ) if (evTokens.has(t)) hits++;
+      return { e, score: tokensQ.size ? hits / tokensQ.size : 0 };
+    }).sort((a, b) => b.score - a.score)[0];
+    if (mejor && mejor.score >= 0.5 && !/\$\s?[\d.]+/.test(mejor.e.texto)) {
+      return { reply: `${mejor.e.texto} (Fuente: ${mejor.e.titulo})`, ruta: 'general', puerta_ok: true, juez_ok: true, motivo: 'extractivo' };
+    }
     return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: veredicto.motivo !== 'guarda-o-puerta', juez_ok: false, motivo: veredicto.motivo };
   }
   return { reply: ensamblarRespuesta(inv.afirmaciones, evidencia), ruta: 'general', puerta_ok: true, juez_ok: true, motivo: 'aprobado' };

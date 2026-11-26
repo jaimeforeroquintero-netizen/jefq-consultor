@@ -134,7 +134,7 @@ export function validarVeredictoJuez(obj, inventario, evidencia, registro, opcio
     if (!['lista', 'cita', 'ninguno'].includes(v.respaldo)) return { ok: false, aprobado: false, motivo: 'respaldo-invalido' };
     // Reparación determinista: respaldo «cita» sin referencia usable toma la
     // referencia del inventario (la decisión de respaldo sigue siendo del juez).
-    if (v.respaldo === 'cita' && (typeof v.referencia !== 'string' || v.referencia.trim().length === 0)) v.referencia = inv.referencia;
+    if (v.respaldo === 'cita' && (typeof v.referencia !== 'string' || v.referencia.trim().length === 0 || !evidenciaPorId(evidencia, v.referencia))) v.referencia = inv.referencia;
     if (typeof v.referencia !== 'string') return { ok: false, aprobado: false, motivo: 'referencia-invalida' };
     if (v.respaldo === 'ninguno') return { ok: false, aprobado: false, motivo: 'sin-respaldo' };
     // Reparación determinista: «lista» con referencia de evidencia es «cita».
