@@ -79,7 +79,7 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
       const evTokens = new Set(`${e.titulo} ${e.texto}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/));
       let hits = 0;
       for (const t of tokensQ) {
-        for (const et of evTokens) { if (et === t || (t.length >= 5 && et.startsWith(t.slice(0, 5))) || (et.length >= 5 && t.startsWith(et.slice(0, 5)))) { hits++; break; } }
+        for (const et of evTokens) { let cp = 0; while (cp < t.length && cp < et.length && t[cp] === et[cp]) cp++; if (et === t || (cp >= 4) || (cp >= 3 && Math.abs(t.length - et.length) <= 3 && t.length >= 5 && et.length >= 5)) { hits++; break; } }
       }
       return { e, score: tokensQ.size ? hits / tokensQ.size : 0 };
     }).sort((a, b) => b.score - a.score)[0];
@@ -106,7 +106,7 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
       const evTokens = new Set(`${e.titulo} ${e.texto}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/));
       let hits = 0;
       for (const t of tokensQ) {
-        for (const et of evTokens) { if (et === t || (t.length >= 5 && et.startsWith(t.slice(0, 5))) || (et.length >= 5 && t.startsWith(et.slice(0, 5)))) { hits++; break; } }
+        for (const et of evTokens) { let cp = 0; while (cp < t.length && cp < et.length && t[cp] === et[cp]) cp++; if (et === t || (cp >= 4) || (cp >= 3 && Math.abs(t.length - et.length) <= 3 && t.length >= 5 && et.length >= 5)) { hits++; break; } }
       }
       return { e, score: tokensQ.size ? hits / tokensQ.size : 0 };
     }).sort((a, b) => b.score - a.score)[0];
@@ -115,7 +115,8 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
     }
     return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: veredicto.motivo !== 'guarda-o-puerta', juez_ok: false, motivo: veredicto.motivo };
   }
-  return { reply: ensamblarRespuesta(inv.afirmaciones, evidencia), ruta: 'general', puerta_ok: true, juez_ok: true, motivo: 'aprobado' };
+  const afirmacionesResueltas = inv.afirmaciones.map((a) => ({ ...a, referencia: veredicto.referencias?.[a.id] ?? a.referencia }));
+  return { reply: ensamblarRespuesta(afirmacionesResueltas, evidencia), ruta: 'general', puerta_ok: true, juez_ok: true, motivo: 'aprobado' };
 }
 
 async function rutaPrecioServicio(snapshot, mensaje) {
@@ -299,7 +300,15 @@ async function handler(context) {
     const ordenada = (evidencia || []).slice().sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
     const mejor = ordenada[0];
     const margen = mejor && ordenada[1] ? (mejor.score ?? 0) - (ordenada[1].score ?? 0) : 1;
-    if (mejor && (mejor.score ?? 0) >= 0.45 && margen >= 0.03 && !/\$\s?[\d.]+/.test(mejor.texto)) {
+    // Guarda adicional: solape de tokens pregunta↔evidencia ≥0,34.
+    const tokensQ = new Set(mensajeActual.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/).filter((t) => t.length > 3));
+    const evTokens = new Set(mejor ? `${mejor.titulo} ${mejor.texto}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/) : []);
+    let hits = 0;
+    for (const t of tokensQ) {
+      for (const et of evTokens) { let cp = 0; while (cp < t.length && cp < et.length && t[cp] === et[cp]) cp++; if (et === t || (cp >= 4) || (cp >= 3 && Math.abs(t.length - et.length) <= 3 && t.length >= 5 && et.length >= 5)) { hits++; break; } }
+    }
+    const solape = tokensQ.size ? hits / tokensQ.size : 0;
+    if (mejor && (mejor.score ?? 0) >= 0.45 && margen >= 0.03 && solape >= 0.34 && !/\$\s?[\d.]+/.test(mejor.texto)) {
       resultado = { reply: `${mejor.texto} (Fuente: ${mejor.titulo})`, ruta: 'general', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: true, juez_ok: true, motivo: 'extractivo-final' };
     }
   }

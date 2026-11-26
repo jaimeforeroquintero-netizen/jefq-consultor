@@ -216,5 +216,11 @@ export function validarTextoComercial(texto, registro, opciones = {}) {
   // La cobertura renderizada desde el registro es una lista por diseño; la
   // atomicidad no aplica a ese campo (la puerta numérica sí).
   if (!guardas.atomica && opciones.afirmacion?.campo !== 'cobertura' && !opciones.permitirNoAtomica) motivos.push('no-atomica');
+  // Consistencia de cobertura: cada ítem del registro debe constar en el texto.
+  if (opciones.afirmacion?.campo === 'cobertura') {
+    const entrada = (registro?.entradas || []).find((e) => e.id === opciones.afirmacion.id_registro);
+    const norm = normalizar(texto);
+    if (!entrada || !(entrada.cobertura || []).every((item) => norm.includes(normalizar(item)))) motivos.push('cobertura-no-coincide-con-registro');
+  }
   return { ok: motivos.length === 0, guardas, puerta, motivos };
 }

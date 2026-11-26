@@ -27,6 +27,8 @@ export function buscarCorpusLocal(consulta, limite = 4) {
 }
 
 function chunkDesdeMetadata(match) {
+  // score: similitud coseno de Vectorize sobre embeddings bge-m3 (0..1);
+  // valores altos indican mayor cercanía semántica con la consulta.
   const md = match?.metadata || {};
   const id = md.id || match?.id;
   const local = CORPUS_SITIO.find((c) => c.id === id);

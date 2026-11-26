@@ -113,6 +113,7 @@ export function validarVeredictoJuez(obj, inventario, evidencia, registro, opcio
   const invPorId = new Map(inventario.map((a) => [a.id, a]));
   if (obj.afirmaciones.length !== inventario.length) return { ok: false, aprobado: false, motivo: 'conteo-distinto' };
   const vistos = new Set();
+  const referenciasResueltas = {};
   for (const v0 of obj.afirmaciones) {
     if (!v0 || typeof v0 !== 'object' || Array.isArray(v0)) return { ok: false, aprobado: false, motivo: 'veredicto-claves-invalidas' };
     // Normalización: solo las claves del contrato; las extra no invalidan.
@@ -139,16 +140,19 @@ export function validarVeredictoJuez(obj, inventario, evidencia, registro, opcio
     if (v.respaldo === 'ninguno') return { ok: false, aprobado: false, motivo: 'sin-respaldo' };
     // Reparación determinista: «lista» con referencia de evidencia es «cita».
     if (v.respaldo === 'lista' && evidenciaPorId(evidencia, v.referencia)) v.respaldo = 'cita';
+    let refResuelta = inv.referencia;
     if (v.referencia !== inv.referencia) {
       // El juez puede citar otra evidencia válida que respalde el texto.
+      // La referencia resuelta se guarda aparte: el inventario no se muta.
       const evJuez = evidenciaPorId(evidencia, v.referencia);
       const tokens = new Set(normalizarTexto(inv.texto).split(' ').filter((t) => t.length > 2));
       const evTokens = new Set(normalizarTexto(evJuez?.texto || '').split(' '));
       let hits = 0;
       for (const t of tokens) if (evTokens.has(t)) hits++;
       if (!evJuez || tokens.size === 0 || hits / tokens.size < 0.4) return { ok: false, aprobado: false, motivo: 'referencia-distinta' };
-      inv.referencia = v.referencia;
+      refResuelta = v.referencia;
     }
+    referenciasResueltas[inv.id] = refResuelta;
     if (!opciones.permitirPrecioRegistro && extraerMontos(inv.texto).length > 0) return { ok: false, aprobado: false, motivo: 'precio-en-ruta-general' };
     if (v.respaldo === 'cita' && extraerMontos(inv.texto).length > 0) return { ok: false, aprobado: false, motivo: 'precio-con-cita' };
     if (v.respaldo === 'cita' && !evidenciaPorId(evidencia, v.referencia)) return { ok: false, aprobado: false, motivo: 'cita-inexistente' };
@@ -157,7 +161,7 @@ export function validarVeredictoJuez(obj, inventario, evidencia, registro, opcio
     if (!validacion.ok) return { ok: false, aprobado: false, motivo: 'guarda-o-puerta', validacion };
   }
   if (vistos.size !== invPorId.size) return { ok: false, aprobado: false, motivo: 'conjunto-distinto' };
-  return { ok: true, aprobado: obj.aprobado === true, motivo: obj.aprobado ? 'aprobado' : 'juez-rechazo' };
+  return { ok: true, aprobado: obj.aprobado === true, motivo: obj.aprobado ? 'aprobado' : 'juez-rechazo', referencias: referenciasResueltas };
 }
 
 export function ensamblarRespuesta(inventario, evidencia) {
