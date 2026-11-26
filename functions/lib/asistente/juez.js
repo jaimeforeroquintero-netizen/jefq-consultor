@@ -137,7 +137,18 @@ export function validarVeredictoJuez(obj, inventario, evidencia, registro, opcio
     if (v.respaldo === 'cita' && (typeof v.referencia !== 'string' || v.referencia.trim().length === 0)) v.referencia = inv.referencia;
     if (typeof v.referencia !== 'string') return { ok: false, aprobado: false, motivo: 'referencia-invalida' };
     if (v.respaldo === 'ninguno') return { ok: false, aprobado: false, motivo: 'sin-respaldo' };
-    if (v.referencia !== inv.referencia) return { ok: false, aprobado: false, motivo: 'referencia-distinta' };
+    // Reparación determinista: «lista» con referencia de evidencia es «cita».
+    if (v.respaldo === 'lista' && evidenciaPorId(evidencia, v.referencia)) v.respaldo = 'cita';
+    if (v.referencia !== inv.referencia) {
+      // El juez puede citar otra evidencia válida que respalde el texto.
+      const evJuez = evidenciaPorId(evidencia, v.referencia);
+      const tokens = new Set(normalizarTexto(inv.texto).split(' ').filter((t) => t.length > 2));
+      const evTokens = new Set(normalizarTexto(evJuez?.texto || '').split(' '));
+      let hits = 0;
+      for (const t of tokens) if (evTokens.has(t)) hits++;
+      if (!evJuez || tokens.size === 0 || hits / tokens.size < 0.4) return { ok: false, aprobado: false, motivo: 'referencia-distinta' };
+      inv.referencia = v.referencia;
+    }
     if (!opciones.permitirPrecioRegistro && extraerMontos(inv.texto).length > 0) return { ok: false, aprobado: false, motivo: 'precio-en-ruta-general' };
     if (v.respaldo === 'cita' && extraerMontos(inv.texto).length > 0) return { ok: false, aprobado: false, motivo: 'precio-con-cita' };
     if (v.respaldo === 'cita' && !evidenciaPorId(evidencia, v.referencia)) return { ok: false, aprobado: false, motivo: 'cita-inexistente' };
