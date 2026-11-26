@@ -18,7 +18,13 @@ export function buscarCorpusLocal(consulta, limite = 4) {
     .map((chunk) => {
       const t = tokens(chunk.titulo + ' ' + chunk.texto);
       let score = 0;
-      for (const token of t) if (q.has(token)) score++;
+      for (const token of t) {
+        for (const qt of q) {
+          let cp = 0;
+          while (cp < token.length && cp < qt.length && token[cp] === qt[cp]) cp++;
+          if (token === qt || cp >= 4 || (cp >= 3 && Math.abs(token.length - qt.length) <= 3 && token.length >= 5 && qt.length >= 5)) { score++; break; }
+        }
+      }
       return { ...chunk, score };
     })
     .filter((c) => c.score > 0)

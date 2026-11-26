@@ -306,6 +306,9 @@ async function handler(context) {
   // Respaldo extractivo final: si el resultado quedó cerrado sin ser rechazo
   // de condición, se entrega el texto publicado más cercano con su fuente.
   const LEXICO_CONDICION_FINAL = LEXICO_CONDICION_TEXTO;
+  if (resultado.reply === RESPUESTA_CERRADA && LEXICO_CONDICION_FINAL.test(mensajeActual) && !['mixta', 'frescura'].includes(resultado.ruta)) {
+    resultado = { reply: RESPUESTA_FIJA_CONDICION, ruta: 'fija-condicion', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: true, juez_ok: false, motivo: 'guarda-condicion' };
+  }
   if (resultado.reply === RESPUESTA_CERRADA && !['fija-condicion', 'mixta', 'frescura', 'precio-servicio', 'aclaracion'].includes(resultado.ruta) && !LEXICO_CONDICION_FINAL.test(mensajeActual)) {
     let evidencia = await buscarEvidencia(env, mensajeActual, 4);
     // Sin IA disponible (cuota o fallo), el corpus local léxico sostiene el
