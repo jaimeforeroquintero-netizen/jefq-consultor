@@ -236,6 +236,12 @@ async function handler(context) {
 
   let resultado = await procesarIntento(env, modelo, presupuesto, snapshot, history, mensajeActual);
 
+  // Reintento único de la ruta general ante fallos de validación del modelo.
+  if (resultado.ruta === 'general' && !resultado.juez_ok && resultado.motivo !== 'sin-evidencia' && presupuesto.intento < presupuesto.maxIntentos) {
+    presupuesto.nuevoIntento();
+    resultado = await procesarIntento(env, modelo, presupuesto, snapshot, history, mensajeActual);
+  }
+
   // Linealización: si la época cambió antes del envío, se reprocesa una vez.
   let epochAntes = snapshot.epoch;
   try {
