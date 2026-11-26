@@ -113,6 +113,7 @@ async function rutaPrecioServicio(snapshot, mensaje) {
   if (seleccion.motivo === 'diagnostico-ambiguo') {
     return { reply: aclaracionDiagnostico(), ruta: 'aclaracion', puerta_ok: true, juez_ok: false, motivo: seleccion.motivo };
   }
+  if (seleccion.motivo === 'sin-entidad') return null;
   if (esPrecio || campos.includes('cobertura') || seleccion.motivo === 'varios-campos') {
     return { reply: RESPUESTA_CERRADA, ruta: 'precio-servicio', puerta_ok: true, juez_ok: false, motivo: seleccion.motivo };
   }

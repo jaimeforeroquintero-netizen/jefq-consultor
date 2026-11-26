@@ -57,7 +57,7 @@ export function validarInventario(obj, evidencia = []) {
         for (const t of tokens) if (evTokens.has(t)) hits++;
         return { id: e.id, score: hits / tokens.size };
       }).sort((a, b) => b.score - a.score);
-      if (!puntuadas[0] || puntuadas[0].score < 0.6 || (puntuadas[1] && puntuadas[1].score >= puntuadas[0].score)) return { ok: false, motivo: 'referencia-vacia' };
+      if (!puntuadas[0] || puntuadas[0].score < 0.4 || (puntuadas[1] && puntuadas[0].score - puntuadas[1].score < 0.15)) return { ok: false, motivo: 'referencia-vacia' };
       norm.referencia = puntuadas[0].id;
     }
     afirmaciones.push(norm);
