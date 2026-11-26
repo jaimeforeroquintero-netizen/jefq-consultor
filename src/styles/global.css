@@ -124,7 +124,7 @@ button, input, select, textarea{font:inherit}
 .benefits p{margin:5px 0 0;font-size:.86rem}
 .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:19px}
 .price-card{position:relative;padding:30px;background:linear-gradient(155deg,rgba(14,38,65,.84),rgba(5,17,31,.97));border:1px solid var(--line);border-radius:var(--radius)}
-.price-card.featured{border-color:rgba(87,199,163,.58);box-shadow:0 20px 70px rgba(0,174,232,.13)}
+.price-card.featured{border-color:rgba(87,199,163,.58);box-shadow:0 20px 70px rgba(216,162,74,.13)}
 
 .price-card .badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);z-index:1;margin-bottom:0;white-space:nowrap}
 .badge{display:inline-block;margin-bottom:12px;padding:6px 10px;color:#14100A;background:var(--emerald);border-radius:999px;font-size:.66rem;font-weight:950}
@@ -317,7 +317,7 @@ button, input, select, textarea{font:inherit}
 
 
 .price-card{transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
-.price-card:hover{transform:translateY(-6px);border-color:rgba(87,199,163,.5);box-shadow:0 22px 60px rgba(0,174,232,.14)}
+.price-card:hover{transform:translateY(-6px);border-color:rgba(87,199,163,.5);box-shadow:0 22px 60px rgba(216,162,74,.14)}
 .price-card.featured:hover{transform:translateY(-12px)}
 
 .service-card:hover{box-shadow:0 18px 44px rgba(0,0,0,.35)}
@@ -583,7 +583,7 @@ button, input, select, textarea{font:inherit}
 .service-detail-card{padding:23px}}
 @media (prefers-reduced-motion:reduce){.orbit, .service-detail-orb{animation:none !important}}
 /* --- base estructural consolidada: audit-v2-fixes.css --- */
-.service-trust-links{padding:4.5rem 0;background:linear-gradient(180deg,rgba(11,31,53,.32),rgba(4,12,25,.7));border-top:1px solid rgba(84,153,204,.18)}
+.service-trust-links{padding:4.5rem 0;background:linear-gradient(180deg,rgba(16,20,27,.32),rgba(7,9,13,.7));border-top:1px solid rgba(42,51,66,.6)}
 .service-trust-links h2{max-width:700px;margin:.75rem 0;font-size:clamp(2rem,4vw,3.4rem);line-height:1.05}
 .service-trust-links p{max-width:760px;color:#C9C2B4}
 .service-trust-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.5rem}
@@ -620,17 +620,17 @@ button, input, select, textarea{font:inherit}
 .commercial-hero h1{max-width:900px;margin:14px 0 18px;font-size:clamp(2.7rem,7vw,5.6rem);line-height:.98;letter-spacing:-.055em}
 .commercial-intro{max-width:760px;color:#C9C2B4;font-size:1.08rem}
 .commercial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.commercial-card{padding:26px;background:linear-gradient(150deg,rgba(23,29,39,.92),rgba(23,29,39,.96));border:1px solid rgba(79,212,255,.22);border-radius:20px}
+.commercial-card{padding:26px;background:linear-gradient(150deg,rgba(23,29,39,.92),rgba(23,29,39,.96));border:1px solid rgba(216,162,74,.22);border-radius:20px}
 .commercial-card h2{margin:10px 0}
 .commercial-card p{color:#C9C2B4}
 .commercial-card ul{padding-left:19px;color:#C9C2B4}
 .commercial-card.featured{border-color:rgba(216,162,74,.62);box-shadow:0 20px 55px rgba(0,0,0,.24)}
 .commercial-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
-.commercial-form{display:grid;gap:18px;padding:26px;background:#10141B;border:1px solid rgba(79,212,255,.22);border-radius:22px}
+.commercial-form{display:grid;gap:18px;padding:26px;background:#10141B;border:1px solid rgba(216,162,74,.22);border-radius:22px}
 .commercial-form fieldset{border:0;padding:0;margin:0}
 .commercial-form legend{font-weight:800;margin-bottom:10px}
 .commercial-options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.commercial-option{display:flex;align-items:center;gap:9px;padding:13px;background:#10141B;border:1px solid rgba(142,182,215,.2);border-radius:12px;cursor:pointer}
+.commercial-option{display:flex;align-items:center;gap:9px;padding:13px;background:#10141B;border:1px solid rgba(201,194,180,.2);border-radius:12px;cursor:pointer}
 .commercial-option:has(input:checked){border-color:#D8A24A;background:rgba(216,162,74,.08)}
 .commercial-result{padding:24px;border:1px solid rgba(87,199,163,.4);background:rgba(87,199,163,.06);border-radius:18px}
 .commercial-result[hidden]{display:none}
