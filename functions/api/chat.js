@@ -13,7 +13,7 @@ import { withSentry } from '../_sentry.js';
 import { contar, ipCliente } from '../lib/redis.js';
 import { ESQUEMA_CLASIFICADOR_V210, PROMPT_CLASIFICADOR, clasificadorSinModelo, normalizarClasificacion, rutaDesdeClasificacion, validarClasificacion } from '../lib/asistente/clasificador.js';
 import { validarTextoComercial } from '../lib/asistente/guardas.js';
-import { PROMPT_GENERADOR, PROMPT_JUEZ, ensamblarRespuesta, validarInventario, validarVeredictoJuez } from '../lib/asistente/juez.js';
+import { ESQUEMA_GENERADOR_V210, ESQUEMA_JUEZ_V210, PROMPT_GENERADOR, PROMPT_JUEZ, ensamblarRespuesta, validarInventario, validarVeredictoJuez } from '../lib/asistente/juez.js';
 import { crearPresupuestoLlamadas, llamarModeloJSON } from '../lib/asistente/modelo.js';
 import { buscarEvidencia } from '../lib/asistente/rag.js';
 import {
@@ -69,6 +69,7 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
     usuario: `Consulta del visitante:\n${consulta}\n\n${contextoExtra}\nEvidencia vigente:\n${evidenciaTexto}`,
     presupuesto,
     maxTokens: 1024,
+    esquema: ESQUEMA_GENERADOR_V210,
   });
   if (!gen.ok) return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: false, juez_ok: false, motivo: gen.motivo };
   const inv = validarInventario(gen.json, evidencia);
@@ -79,6 +80,7 @@ async function rutaGeneral(env, modelo, presupuesto, snapshot, consulta, context
     usuario: `Inventario:\n${JSON.stringify(inv.afirmaciones)}\n\nEvidencia:\n${evidenciaTexto}\n\nRegistro comercial resumido (sin precios; los precios no se entregan en esta ruta):\n${JSON.stringify({ version: snapshot.version, hay_descuentos: snapshot.registro.descuentos.length > 0, hay_acuerdos: snapshot.registro.acuerdos !== 'ninguno', entradas: snapshot.registro.entradas.map((e) => ({ id: e.id, nombre: e.nombre, unidad: e.unidad })) })}\n${contextoExtra}`,
     presupuesto,
     maxTokens: 1024,
+    esquema: ESQUEMA_JUEZ_V210,
   });
   if (!juez.ok) return { reply: RESPUESTA_CERRADA, ruta: 'general', puerta_ok: false, juez_ok: false, motivo: juez.motivo };
   const veredicto = validarVeredictoJuez(juez.json, inv.afirmaciones, evidencia, snapshot.registro);
@@ -137,6 +139,7 @@ async function rutaMixta(env, modelo, presupuesto, snapshot, clasificacion, mens
       usuario: `Inventario:\n${JSON.stringify(inventario)}\n\n${contexto}\nConfirme la separación: la afirmación debe sostenerse sin usar la premisa falsa.`,
       presupuesto,
       maxTokens: 512,
+      esquema: ESQUEMA_JUEZ_V210,
     });
     if (!juez.ok) return { reply: RESPUESTA_CERRADA, ruta: 'mixta', puerta_ok: false, juez_ok: false, motivo: juez.motivo };
     const veredicto = validarVeredictoJuez(juez.json, inventario, [], snapshot.registro, { permitirPrecioRegistro: true });

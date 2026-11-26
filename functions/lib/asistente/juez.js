@@ -4,6 +4,46 @@ import { aliasDelRegistro, entradaPorId } from './registro.js';
 import { extraerMontos, validarTextoComercial } from './guardas.js';
 import { evidenciaPorId } from './rag.js';
 
+export const ESQUEMA_GENERADOR_V210 = {
+  type: 'object',
+  required: ['afirmaciones'],
+  additionalProperties: false,
+  properties: {
+    afirmaciones: {
+      type: 'array', minItems: 0, maxItems: 6,
+      items: {
+        type: 'object', required: ['id', 'texto', 'referencia'], additionalProperties: false,
+        properties: {
+          id: { type: 'string', pattern: '^c[1-9][0-9]*$' },
+          texto: { type: 'string', minLength: 1 },
+          referencia: { type: 'string', minLength: 1 },
+        },
+      },
+    },
+  },
+};
+
+export const ESQUEMA_JUEZ_V210 = {
+  type: 'object',
+  required: ['aprobado', 'afirmaciones'],
+  additionalProperties: false,
+  properties: {
+    aprobado: { type: 'boolean' },
+    afirmaciones: {
+      type: 'array', minItems: 1, maxItems: 6,
+      items: {
+        type: 'object', required: ['id', 'texto', 'respaldo', 'referencia'], additionalProperties: false,
+        properties: {
+          id: { type: 'string', pattern: '^c[1-9][0-9]*$' },
+          texto: { type: 'string', minLength: 1 },
+          respaldo: { type: 'string', enum: ['lista', 'cita', 'ninguno'] },
+          referencia: { type: 'string', minLength: 1 },
+        },
+      },
+    },
+  },
+};
+
 export const PROMPT_GENERADOR = `Redacte solo desde la evidencia entregada. No use conocimiento propio. No mencione precios salvo que la evidencia sea el registro y el dato esté en la afirmación.
 
 Devuelva SOLO JSON:
