@@ -164,5 +164,20 @@ const schema = {
 })();
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "387bbd7642f3491582f483094d2535c1"}'></script><!-- End Cloudflare Web Analytics -->
+
+<script>
+(function(){
+  var h=document.querySelector('.header'), y=window.scrollY;
+  window.addEventListener('scroll', function(){ var n=window.scrollY; if(h){ if(n>140 && n>y+4) h.classList.add('header-oculta'); else if(n<y-4 || n<140) h.classList.remove('header-oculta'); } y=n; }, {passive:true});
+  var p=document.getElementById('pista-servicios');
+  if(p){ var b=document.getElementById('carrusel-barra');
+    function upd(){ var max=p.scrollWidth-p.clientWidth; var f=max>0?p.scrollLeft/max:0; if(b){ b.style.width=(100*Math.min(1,p.clientWidth/p.scrollWidth))+'%'; b.style.transform='translateX('+(f*(100/Math.max(.01,p.clientWidth/p.scrollWidth)-100))+'%)'; } }
+    p.addEventListener('scroll', upd, {passive:true}); upd();
+    var a=document.getElementById('carrusel-antes'), d=document.getElementById('carrusel-despues');
+    if(a) a.addEventListener('click', function(){ p.scrollBy({left:-360,behavior:'smooth'}); });
+    if(d) d.addEventListener('click', function(){ p.scrollBy({left:360,behavior:'smooth'}); });
+  }
+})();
+</script>
 </body>
 </html>

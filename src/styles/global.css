@@ -982,3 +982,30 @@ footer{background:#081831;color:#C9D6E8}
 
 .hero h1 span{color:#7FC4E8;text-shadow:0 0 18px rgba(127,196,232,.45)}
 .hero-canvas{opacity:.95}
+
+/* Estructura de animaciones tipo portal corporativo (código propio) */
+.header{transition:transform .35s ease}
+.header.header-oculta{transform:translateY(-100%)}
+[data-reveal]{transition:opacity .7s ease,transform .7s cubic-bezier(.22,.61,.36,1)}
+.service-grid .service-card:nth-child(2),.trust-grid .trust-card:nth-child(2),.plans-grid>*:nth-child(2){transition-delay:.08s}
+.service-grid .service-card:nth-child(3),.trust-grid .trust-card:nth-child(3),.plans-grid>*:nth-child(3){transition-delay:.16s}
+.service-grid .service-card:nth-child(4){transition-delay:.24s}
+.service-grid .service-card:nth-child(5){transition-delay:.32s}
+.service-grid .service-card:nth-child(6){transition-delay:.4s}
+.service-grid .service-card:nth-child(7){transition-delay:.48s}
+.section-head h2{transition:color 1s ease}
+.section-head:not(.visible) h2{color:#8FA3B8}
+.carrusel{position:relative}
+.carrusel-pista{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 2px 14px}
+.carrusel-pista::-webkit-scrollbar{display:none}
+.carrusel-pista>*{flex:0 0 min(340px,86vw);scroll-snap-align:start}
+.carrusel-nav{display:flex;align-items:center;gap:14px;margin-top:6px}
+.carrusel-btn{width:40px;height:40px;border:1px solid #D8DEE7;background:#fff;color:#0B1F3A;border-radius:4px;cursor:pointer;font-size:18px;line-height:1}
+.carrusel-btn:hover{border-color:#C8102E;color:#C8102E}
+.carrusel-progreso{flex:1;height:3px;background:#E3E9F1;border-radius:2px;overflow:hidden}
+.carrusel-progreso i{display:block;height:100%;width:20%;background:#C8102E;transition:transform .35s ease}
+.hero .hero-copy>*{animation:heroEntra .8s ease both}
+.hero .hero-copy>*:nth-child(2){animation-delay:.12s}
+.hero .hero-copy>*:nth-child(3){animation-delay:.24s}
+.hero .hero-copy>*:nth-child(4){animation-delay:.36s}
+@keyframes heroEntra{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
