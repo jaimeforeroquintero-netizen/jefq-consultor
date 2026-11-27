@@ -22,8 +22,8 @@
 <style>
   .video-grid {
     display:grid;
-    grid-template-columns:minmax(240px, 340px) 1fr;
-    gap:clamp(1.5rem, 4vw, 3.5rem);
+    grid-template-columns:minmax(300px, 400px) 1fr;
+    gap:clamp(2rem, 5vw, 4.5rem);
     align-items:center;
   }
   .video-frame {
@@ -32,7 +32,7 @@
   }
   .video-frame video {
     width:100%;
-    max-width:340px;
+    max-width:400px;
     max-height:70vh;
     aspect-ratio:9 / 16;
     border-radius:18px;
@@ -55,4 +55,7 @@
     }
   }
 .video-frame video{border-color:var(--line);background:var(--night)}
+  .video-copy{max-width:620px}
+  .video-copy h2{font-size:clamp(2.4rem,4vw,3.4rem)}
+  .video-promo{padding:76px 0}
 </style>
