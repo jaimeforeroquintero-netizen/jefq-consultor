@@ -5,7 +5,7 @@
 import { normalizarParaCoincidencia } from './guardas.js';
 import { CORPUS_SITIO } from './corpus-data.js';
 
-const STOP = new Set(['que', 'de', 'la', 'el', 'en', 'y', 'a', 'los', 'las', 'un', 'una', 'para', 'con', 'por', 'es', 'se', 'su', 'al', 'del', 'lo', 'como', 'mas', 'o', 'si', 'no', 'me', 'mi', 'le', 'les', 'esto', 'eso', 'cual', 'cuales', 'cuanto', 'cuanta', 'dice', 'jefq', 'sobre', 'cuentame', 'quiero', 'saber', 'explica', 'explicame', 'consiste', 'funciona', 'informacion', 'hola', 'buenas', 'tardes', 'gracias', 'favor', 'puedes', 'podrias', 'tiene', 'tienen', 'hace', 'hacen', 'pasa', 'despues']);
+const STOP = new Set(['que', 'de', 'la', 'el', 'en', 'y', 'a', 'los', 'las', 'un', 'una', 'para', 'con', 'por', 'es', 'se', 'su', 'al', 'del', 'lo', 'como', 'mas', 'o', 'si', 'no', 'me', 'mi', 'le', 'les', 'esto', 'eso', 'cual', 'cuales', 'cuanto', 'cuanta', 'dice', 'jefq', 'sobre', 'cuentame', 'quiero', 'saber', 'explica', 'explicame', 'consiste', 'funciona', 'informacion', 'hola', 'buenas', 'tardes', 'gracias', 'favor', 'puedes', 'podrias', 'tiene', 'tienen', 'hace', 'hacen', 'pasa', 'despues', 'ofrece', 'ofrecen', 'explicas']);
 
 function tokens(texto) {
   return normalizarParaCoincidencia(texto).split(' ').filter((t) => t.length > 2 && !STOP.has(t));

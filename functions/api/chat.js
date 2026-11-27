@@ -323,7 +323,7 @@ async function handler(context) {
     const mejor = ordenada[0];
     const margen = mejor && ordenada[1] ? (mejor.score ?? 0) - (ordenada[1].score ?? 0) : 1;
     // Guarda adicional: solape de tokens pregunta↔evidencia ≥0,34.
-    const VACIAS = new Set(['cuentame', 'quiero', 'saber', 'sobre', 'dice', 'jefq', 'explica', 'explicame', 'consiste', 'funciona', 'hola', 'informacion', 'buenas', 'tardes', 'gracias', 'favor', 'puedes', 'podrias', 'tiene', 'tienen', 'hace', 'hacen', 'pasa', 'despues', 'donde', 'cuando', 'cual', 'cuales', 'como', 'para', 'este', 'esta', 'esto', 'esos', 'esas']);
+    const VACIAS = new Set(['cuentame', 'quiero', 'saber', 'sobre', 'dice', 'jefq', 'explica', 'explicame', 'consiste', 'funciona', 'hola', 'informacion', 'buenas', 'tardes', 'gracias', 'favor', 'puedes', 'podrias', 'tiene', 'tienen', 'hace', 'hacen', 'pasa', 'despues', 'donde', 'cuando', 'cual', 'cuales', 'como', 'para', 'este', 'esta', 'esto', 'esos', 'esas', 'ofrece', 'ofrecen', 'explicas', 'elegir']);
     const tokensQ = new Set(mensajeActual.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/).filter((t) => t.length > 3 && !VACIAS.has(t)));
     const evTokens = new Set(mejor ? `${mejor.titulo} ${mejor.texto}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/) : []);
     let hits = 0;
