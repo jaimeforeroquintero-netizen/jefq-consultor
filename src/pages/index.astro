@@ -92,14 +92,13 @@ btn.addEventListener('click',calc);inp.addEventListener('keydown',function(e){if
 // prefers-reduced-motion y se pausa fuera de pantalla.
 (function(){
   var c=document.getElementById('hero-particles'); if(!c) return;
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var ctx=c.getContext('2d'), W=0,H=0, pts=[], mouse={x:-9999,y:-9999}, visible=true;
   var COLORS=['127,196,232','255,255,255','255,120,140'];
   function size(){ var r=c.parentElement.getBoundingClientRect(); W=c.width=r.width; H=c.height=r.height;
-    var n=Math.min(170, Math.floor(W*H/9000)); pts=[];
+    var n=Math.max(60, Math.min(190, Math.floor(W*H/8000))); pts=[];
     for(var i=0;i<n;i++) pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,r:Math.random()*2.4+.8,col:COLORS[i%3],ph:Math.random()*6.28});
   }
-  size(); window.addEventListener('resize', size);
+  size(); window.addEventListener('resize', size); window.addEventListener('load', size); setTimeout(size, 300);
   c.parentElement.addEventListener('mousemove', function(e){ var r=c.getBoundingClientRect(); mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top; });
   c.parentElement.addEventListener('mouseleave', function(){ mouse.x=-9999; mouse.y=-9999; });
   new IntersectionObserver(function(es){ visible=es[0].isIntersecting; }).observe(c);
