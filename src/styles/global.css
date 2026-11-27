@@ -971,6 +971,8 @@ body{background:#FFFFFF;color:#0B1F3A}
 .badge{background:#C8102E;color:#FFFFFF}
 .price{color:#0B1F3A}
 .trust-card,.case,.benefits article{background:#FFFFFF;border:1px solid #D8DEE7;border-radius:6px}
+.trust-card{padding:26px 24px}
+.case{padding:26px 24px}
 .guarantee{background:#0B1F3A;color:#FFFFFF;border-radius:6px}
 .contact{background:#F4F6F9}
 .contact-form{background:#FFFFFF;border:1px solid #D8DEE7;border-radius:6px}
