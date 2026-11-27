@@ -136,7 +136,7 @@ if (!existsSync(dist)) {
 }
 
 console.log("== E. Espejos (fases C/D preparadas) ==");
-for (const rel of ["functions/api/chat.js", "api/chat.js"]) {
+for (const rel of ["functions/lib/asistente/registro.js", "api/chat.js"]) {
   const t = leer(rel);
   const faltan = Object.values(ESPERADOS).filter((n) => !contienePrecio(t, n));
   // El chat solo lista algunos precios en prosa; exige al menos los 3 planes + IA.
