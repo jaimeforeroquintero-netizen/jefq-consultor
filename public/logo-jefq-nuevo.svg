@@ -1,13 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 110" role="img" aria-label="JEFQ Consultor">
-  <!-- Logotipo JEFQ: símbolo monograma no literal + nombre legible. -->
-  <g transform="translate(4 2) scale(0.66)">
-    <circle cx="80" cy="78" r="58" fill="none" stroke="#0B1F3A" stroke-width="10"/>
-    <path d="M117 117 L139 139" fill="none" stroke="#C8102E" stroke-width="10" stroke-linecap="round"/>
-    <path d="M70 42 V104 C70 118 56 124 45 114" fill="none" stroke="#0B1F3A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M70 42 H106" fill="none" stroke="#0B1F3A" stroke-width="12" stroke-linecap="round"/>
-    <path d="M70 73 H98" fill="none" stroke="#C8102E" stroke-width="12" stroke-linecap="round"/>
-    <path d="M70 104 H102" fill="none" stroke="#0B1F3A" stroke-width="12" stroke-linecap="round"/>
+  <g transform="translate(7 7) scale(0.60)" fill="none" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M117.6 117.6 A56 56 0 1 1 129.6 99.8" stroke="#0B1F3A"/>
+    <path d="M64 43 V101 C64 116 50 119 42 110" stroke="#0B1F3A"/>
+    <path d="M64 43 H103 M64 72 H94 M64 101 H95" stroke="#0B1F3A"/>
+    <path d="M106 106 L136 136" stroke="#C8102E"/>
   </g>
-  <text x="124" y="62" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="800" fill="#0B1F3A" letter-spacing="1">JEFQ</text>
-  <text x="126" y="92" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#C8102E" letter-spacing="6">CONSULTOR</text>
+  <text x="115" y="64" font-family="Montserrat, Arial, sans-serif" font-size="46" font-weight="500" letter-spacing="3" fill="#0B1F3A">JEFQ</text>
+  <text x="118" y="84" font-family="Montserrat, Arial, sans-serif" font-size="12" font-weight="500" letter-spacing="4" fill="#C8102E">CONSULTOR</text>
 </svg>
