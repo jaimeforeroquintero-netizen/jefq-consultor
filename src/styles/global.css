@@ -1160,3 +1160,12 @@ img,video{max-width:100%}
 .service-proof-actions{display:grid;gap:12px;padding:26px;background:#FFFFFF;border:1px solid #E3E9F2;border-radius:16px;box-shadow:0 14px 34px rgba(11,31,58,.08)}
 .service-proof-actions .button{justify-content:center;text-align:center}
 @media(max-width:820px){.service-trust-grid{grid-template-columns:1fr}}
+
+/* Sección amenaza equilibrada 2026-11-27 */
+.amenaza-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.amenaza-card{padding:28px;background:#0B1F3A;border-radius:16px;color:#FFFFFF;box-shadow:0 18px 40px rgba(11,31,58,.16)}
+.amenaza-card h3{margin:0 0 14px;color:#FFFFFF;font-size:1.3rem}
+.amenaza-card ul{margin:0 0 20px;padding:0;list-style:none;display:grid;gap:10px}
+.amenaza-card li{color:#D7E2F2}
+.amenaza-card li:before{content:"✓";margin-right:9px;color:#C8102E;font-weight:900}
+@media(max-width:820px){.amenaza-grid{grid-template-columns:1fr}}
