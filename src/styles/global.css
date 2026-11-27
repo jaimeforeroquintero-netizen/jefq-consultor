@@ -1092,3 +1092,11 @@ body{color:#1D2A44}
 .orbit-core{background:transparent!important}
 .orbit-core img{width:72px;height:72px;display:block}
 .brand img{height:48px;width:auto}
+
+/* Logo en producción con animación delicada 2026-11-27 */
+@keyframes logoOrbita{to{transform:rotate(360deg)}}
+@keyframes logoRespira{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+.why-visual .o2{animation:logoOrbita 26s linear infinite}
+.why-visual .o1{animation:logoOrbita 38s linear infinite reverse}
+.shield img{animation:logoRespira 6s ease-in-out infinite}
+.perfil-foto-fallback:after{animation:logoOrbita 30s linear infinite}
