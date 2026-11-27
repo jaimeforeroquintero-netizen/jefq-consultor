@@ -1108,3 +1108,18 @@ body{color:#1D2A44}
 .proof-grid>a:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(11,31,58,.12);border-color:#E3E9F2;border-top-color:#0B1F3A}
 .proof-grid>a b{font-family:var(--font-serif);font-size:1.28rem;color:#0B1F3A}
 .proof-grid>a span{margin-top:6px;font-size:.86rem;color:#42506A}
+
+/* Panel del héroe con propósito claro 2026-11-27 */
+.visual-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;color:#C9D6E8;font-size:.72rem;letter-spacing:.12em}
+.visual-head b{color:#FFFFFF;font-weight:700;letter-spacing:.04em;text-transform:none}
+.visual-steps div{padding:14px 12px;text-align:left}
+.visual-steps span{font-size:.92rem;color:#FFFFFF;font-weight:700}
+.visual-steps p{margin:5px 0 0;color:#C9D6E8;font-size:.76rem;line-height:1.35}
+.visual-result{margin-top:16px;padding:20px;background:#FFFFFF;border-radius:14px;color:#0B1F3A}
+.visual-result span{color:#C8102E;font-size:.72rem;font-weight:800;letter-spacing:.12em}
+.visual-result h3{margin:7px 0 10px;font-size:1.25rem;color:#0B1F3A}
+.visual-result ul{margin:0 0 14px;padding:0;list-style:none;display:grid;gap:7px}
+.visual-result li{color:#33415C;font-size:.9rem}
+.visual-result li:before{content:"✓";margin-right:8px;color:#C8102E;font-weight:900}
+.visual-result a{color:#C8102E;font-weight:800;text-decoration:none}
+.visual-result a:hover{text-decoration:underline}
