@@ -18,7 +18,7 @@ import ScanTerminal from "../components/ScanTerminal.astro";
 import VideoPromo from "../components/VideoPromo.astro";
 ---
 <Layout title="JEFQ Consultor | Ciberseguridad para empresas en Colombia" description="Diagnóstico, hardening, pruebas autorizadas e informes de ciberseguridad para PYMES y empresas en Bogotá y toda Colombia.">
-<section class="hero"><div class="container hero-grid">
+<section class="hero"><canvas class="hero-canvas" id="hero-particles" aria-hidden="true"></canvas><div class="container hero-grid">
   <div class="hero-copy" data-reveal><div class="eyebrow"><i></i>Ciberseguridad práctica para Colombia</div><h1>Diagnóstico de ciberseguridad <span>para PYMES en Colombia</span></h1><p>Sepa exactamente dónde está expuesto antes de que un incidente lo descubra por usted. <a class="inline-link" href="/servicios/diagnostico-seguridad">Evaluación autorizada</a>, informe ejecutivo que su gerencia sí entiende y ruta de remediación priorizada — desde {formatearCOP(precioDe("esencial"))}, con atención directa del consultor.</p><div class="hero-actions"><a class="button primary" href="/valoracion">Solicitar valoración</a><a class="button secondary" href="#servicios">Explorar servicios</a><a class="button secondary" href="/api/whatsapp?text=Hola%20Jaime%2C%20quiero%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20JEFQ%20Consultor.">Prefiero escribir por WhatsApp</a></div><div class="hero-trust"><span>Autorización previa</span><span>Alcance controlado</span><span>Informes accionables</span></div></div>
   <div class="visual" data-reveal><div class="visual-steps"><div><b>01</b><span>Diagnosticar</span></div><div><b>02</b><span>Priorizar</span></div><div><b>03</b><span>Fortalecer</span></div></div><ScanTerminal /></div>
 </div></section>
@@ -84,5 +84,37 @@ function fmt(n){return '$'+Math.round(n).toLocaleString('es-CO');}
 function calc(){var m=parseFloat(String(inp.value).replace(/[^\d.]/g,''))||0;if(m<=0){res.hidden=true;return;}var day=m/30;document.getElementById('calc-day').textContent=fmt(day);document.getElementById('calc-loss-val').textContent=fmt(day);
 var mx=Math.max(day,DIAG);document.getElementById('calc-fill-loss').style.width=Math.max(4,(day/mx*100))+'%';document.getElementById('calc-fill-diag').style.width=Math.max(4,(DIAG/mx*100))+'%';res.hidden=false;}
 btn.addEventListener('click',calc);inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();calc();}});})();
+</script>
+
+<script>
+// Partículas del encabezado: puntos que derivan, se enlazan entre sí y
+// reaccionan suavemente al cursor. Respeta prefers-reduced-motion.
+(function(){
+  var c=document.getElementById('hero-particles'); if(!c) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var ctx=c.getContext('2d'), W=0,H=0, pts=[], mouse={x:-9999,y:-9999};
+  function size(){ var r=c.parentElement.getBoundingClientRect(); W=c.width=r.width; H=c.height=r.height;
+    var n=Math.min(110, Math.floor(W*H/16000)); pts=[];
+    for(var i=0;i<n;i++) pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*1.8+.6});
+  }
+  size(); window.addEventListener('resize', size);
+  c.parentElement.addEventListener('mousemove', function(e){ var r=c.getBoundingClientRect(); mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top; });
+  c.parentElement.addEventListener('mouseleave', function(){ mouse.x=-9999; mouse.y=-9999; });
+  (function tick(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<pts.length;i++){ var p=pts[i];
+      var dx=p.x-mouse.x, dy=p.y-mouse.y, d2=dx*dx+dy*dy;
+      if(d2<14400){ var d=Math.sqrt(d2)||1; p.x+=dx/d*1.2; p.y+=dy/d*1.2; }
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.2832); ctx.fillStyle='rgba(127,196,232,.85)'; ctx.fill();
+    }
+    for(var a=0;a<pts.length;a++) for(var b=a+1;b<pts.length;b++){
+      var p1=pts[a],p2=pts[b],ddx=p1.x-p2.x,ddy=p1.y-p2.y,dd=ddx*ddx+ddy*ddy;
+      if(dd<12100){ ctx.beginPath(); ctx.moveTo(p1.x,p1.y); ctx.lineTo(p2.x,p2.y); ctx.strokeStyle='rgba(127,196,232,'+(0.22*(1-dd/12100))+')'; ctx.lineWidth=1; ctx.stroke(); }
+    }
+    requestAnimationFrame(tick);
+  })();
+})();
 </script>
 </Layout>

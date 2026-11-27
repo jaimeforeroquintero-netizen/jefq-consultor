@@ -907,3 +907,73 @@ input:focus,select:focus,textarea:focus,.contact-form input:focus,.contact-form 
 #evidencia .section-head h2{color:var(--bone)}
 .why-visual{height:100%;background:radial-gradient(circle at 50% 42%,rgba(216,162,74,.16),transparent 62%),var(--surface);border:1px solid var(--line);border-radius:24px}
 .shield{width:200px;height:230px;background:linear-gradient(145deg,var(--gold),var(--gold));font-size:4.6rem;filter:drop-shadow(0 20px 35px rgba(216,162,74,.22))}
+
+/* ===== Rediseño corporativo 2026-11-27 (inspirado en patrones de portales
+   de ciberseguridad: fondo claro, azul marino, acento rojo, tarjetas
+   nítidas). Solo diseño: textos, precios y estructura intactos. ===== */
+:root{
+  --night:#FFFFFF; --surface:#F4F6F9; --raised:#FFFFFF; --line:#D8DEE7;
+  --bone:#0B1F3A; --muted:#42506A; --gold:#C8102E; --on-gold:#FFFFFF;
+  --emerald:#0B5FA5; --risk:#C8102E; --paper:#EEF2F7; --paper-ink:#0B1F3A;
+  --paper-muted:#42506A; --copper:#C8102E;
+  --bg:#FFFFFF; --text:#0B1F3A; --border:#D8DEE7;
+  --shadow:0 12px 32px rgba(11,31,58,.10); --radius:6px;
+  --ok:#0B5FA5; --ok-bg:rgba(11,95,165,.10); --warn:#C8102E; --warn-bg:rgba(200,16,46,.08);
+  --bad:#C8102E; --bad-bg:rgba(200,16,46,.08); --info:#0B1F3A; --info-bg:#F4F6F9;
+  --card-dark-bg-start:#FFFFFF; --card-dark-bg-end:#FFFFFF; --card-dark-title:#0B1F3A;
+  --card-dark-text:#42506A; --card-dark-border:#D8DEE7; --card-dark-border-hover:#C8102E;
+  --card-dark-number-bg:#C8102E; --card-dark-number-text:#FFFFFF;
+  --note-light-bg:#EEF2F7; --note-light-text:#0B1F3A;
+}
+body{background:#FFFFFF;color:#0B1F3A}
+.topbar{background:#0B1F3A;border-bottom:0;color:#D8DEE7}
+.header{background:rgba(255,255,255,.96);border-bottom:2px solid #C8102E;backdrop-filter:blur(10px)}
+.brand-mark{color:#FFFFFF;background:#C8102E;clip-path:none;border-radius:6px}
+.menu>a{color:#0B1F3A;font-weight:600}
+.menu>a:hover{color:#C8102E}
+.nav-cta{color:#FFFFFF !important;background:#C8102E;border-radius:4px;font-weight:700}
+.hero{background:#081831;color:#FFFFFF;min-height:calc(100vh - 110px)}
+.hero h1{color:#FFFFFF}
+.hero h1 span{color:#7FC4E8;background:none}
+.hero-copy>p{color:#C9D6E8}
+.eyebrow{color:#FFFFFF;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25)}
+.eyebrow i{background:#C8102E;box-shadow:0 0 10px #C8102E}
+.button{border-radius:4px;font-weight:700}
+.primary{color:#FFFFFF;background:#C8102E;box-shadow:0 10px 24px rgba(200,16,46,.35)}
+.primary:hover{background:#A50D26}
+.button.secondary{color:#0B1F3A;background:#FFFFFF;border:1px solid #B9C4D4}
+.hero .button.secondary{color:#FFFFFF;background:transparent;border:1px solid rgba(255,255,255,.55)}
+.hero-trust{color:#C9D6E8}
+.hero-trust span:before{color:#7FC4E8}
+.visual{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.22);border-radius:8px;box-shadow:none}
+.visual-steps div{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);border-radius:6px}
+.visual-steps b{color:#7FC4E8}
+.visual-steps span{color:#C9D6E8}
+.proof{background:#0B1F3A;border-block:0}
+.proof article{border-right:1px solid rgba(255,255,255,.18)}
+.proof b{color:#FFFFFF;font-size:1.3rem}
+.proof span{color:#C9D6E8}
+.section{padding:84px 0}
+.contrast{background:#F4F6F9;border-block:1px solid #D8DEE7}
+.section-head>span,.label{color:#C8102E}
+.section-head h2,.why h2,.contact h2{color:#0B1F3A}
+.service-card{background:#FFFFFF;border:1px solid #D8DEE7;border-top:4px solid #C8102E;border-radius:6px;box-shadow:0 4px 14px rgba(11,31,58,.06)}
+.service-card:hover{border-color:#C8102E;box-shadow:0 12px 28px rgba(11,31,58,.12)}
+.service-top small{color:#C8102E}
+.service-card h3{color:#0B1F3A}
+.service-card p{color:#42506A}
+.service-card a{color:#C8102E}
+.promise{background:#EEF2F7;border-color:#D8DEE7;border-radius:6px}
+.promise b{color:#C8102E}
+.shield{color:#FFFFFF;background:#0B1F3A;filter:drop-shadow(0 16px 28px rgba(11,31,58,.25))}
+.price-card{background:#FFFFFF;border:1px solid #D8DEE7;border-radius:6px;box-shadow:0 4px 14px rgba(11,31,58,.06)}
+.price-card.featured{border:2px solid #C8102E}
+.badge{background:#C8102E;color:#FFFFFF}
+.price{color:#0B1F3A}
+.trust-card,.case,.benefits article{background:#FFFFFF;border:1px solid #D8DEE7;border-radius:6px}
+.guarantee{background:#0B1F3A;color:#FFFFFF;border-radius:6px}
+.contact{background:#F4F6F9}
+.contact-form{background:#FFFFFF;border:1px solid #D8DEE7;border-radius:6px}
+input,select,textarea{background:#FFFFFF;border:1px solid #B9C4D4;color:#0B1F3A;border-radius:4px}
+footer{background:#081831;color:#C9D6E8}
+.hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
