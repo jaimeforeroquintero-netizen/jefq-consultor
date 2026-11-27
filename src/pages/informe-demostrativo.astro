@@ -19,27 +19,27 @@ import HallazgoAnatomia from "../components/HallazgoAnatomia.astro";
     <section class="section">
       <div class="container">
         <div class="report-metrics-v4">
-          <article><span>Nivel general</span><strong>{NIVEL_GENERAL_DEMO}</strong></article>
-          <article><span>Hallazgos</span><strong>{findings.length}</strong></article>
-          <article><span>Prioridad alta</span><strong>{counts.high}</strong></article>
-          <article><span>Acciones</span><strong>{totalActions}</strong></article>
+          <a href="#conclusion-ejecutiva"><span>Nivel general</span><strong>{NIVEL_GENERAL_DEMO}</strong></a>
+          <a href="#hallazgos"><span>Hallazgos</span><strong>{findings.length}</strong></a>
+          <a href="#hallazgos"><span>Prioridad alta</span><strong>{counts.high}</strong></a>
+          <a href="#ruta-mejora"><span>Acciones</span><strong>{totalActions}</strong></a>
         </div>
 
-        <article class="executive-conclusion-v4">
+        <article class="executive-conclusion-v4" id="conclusion-ejecutiva">
           <p class="section-label">CONCLUSIÓN EJECUTIVA ILUSTRATIVA</p>
           <h2>La prioridad inicial se concentra en accesos y exposición externa</h2>
           <p>La muestra presenta oportunidades de mejora en control de privilegios, servicios publicados, consistencia de configuración, autenticación y recuperación. La secuencia recomendada comienza por reducir accesos y exposición innecesaria, continúa con la estandarización y finaliza con la validación periódica de controles.</p>
         </article>
 
         <div class="severity-scale-v4" aria-label="Escala ilustrativa de prioridad">
-          <article class="high"><strong>Alta</strong><span>Impacto relevante o exposición que requiere atención prioritaria.</span></article>
-          <article class="medium"><strong>Media</strong><span>Debilidad que conviene planificar y corregir en el corto plazo.</span></article>
-          <article class="low"><strong>Baja</strong><span>Oportunidad de mejora o control que debe formalizarse.</span></article>
+          <a class="high" href="#hallazgos"><strong>Alta</strong><span>Impacto relevante o exposición que requiere atención prioritaria.</span></a>
+          <a class="medium" href="#hallazgos"><strong>Media</strong><span>Debilidad que conviene planificar y corregir en el corto plazo.</span></a>
+          <a class="low" href="#hallazgos"><strong>Baja</strong><span>Oportunidad de mejora o control que debe formalizarse.</span></a>
         </div>
       </div>
     </section>
 
-    <section class="section dark-section">
+    <section class="section dark-section" id="hallazgos">
       <div class="container">
         <header class="section-header">
           <span>HALLAZGOS ILUSTRATIVOS</span>
@@ -70,7 +70,7 @@ import HallazgoAnatomia from "../components/HallazgoAnatomia.astro";
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="ruta-mejora">
       <div class="container">
         <header class="section-header"><span>RUTA DE MEJORA</span><h2>Una secuencia clara para avanzar</h2></header>
         <RemediationTimeline />

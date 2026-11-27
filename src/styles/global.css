@@ -1023,3 +1023,32 @@ footer{background:#081831;color:#C9D6E8}
 @keyframes heroEntra{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 .service-card,.trust-card,.plan-card{transition:transform .3s ease,box-shadow .3s ease,opacity .7s ease}
 .service-card:hover,.trust-card:hover{transform:translateY(-4px);box-shadow:0 10px 26px rgba(11,31,58,.12)}
+
+/* Revalidación 2026-11-27: contraste legible, tarjetas con enlace e insignia sin línea de margen */
+body{color:#1D2A44}
+.section p,.section li,.section-head p,.section-header p,.landing-list li,.service-detail-card li,.service-detail-card p,.landing-card p,.authority-card p,.authority-grid p,.commercial-card p,.related-service-grid p,.service-process-grid p,.service-review-card p,.service-fit-card p,.finding-v4 p,.report-cta-v4 p,.muestra-portada p,.muestra-tabla td,.muestra-tabla th,.perfil-lista span{color:#33415C}
+.section-head h2,.section-header h2,.landing-card h2,.landing-card h3,.service-detail-card h2,.service-detail-copy h1,.authority-grid h3,.perfil-datos h2,.finding-v4 h3,.muestra-portada h3{color:#0B1F3A}
+.service-detail-lead,.landing-hero p,.authority-hero p,.report-lead{color:#33415C}
+.service-detail-promise{color:#0B1F3A}
+.landing-list li:before,.service-detail-card li span{color:#C8102E}
+[data-reveal] .section-head h2,[data-reveal] .section-header h2,.section-head[data-reveal]:not(.is-visible) h2,.section-header[data-reveal]:not(.is-visible) h2{color:#0B1F3A}
+.proof-grid a,.benefits>a,.cases>a,.report-metrics-v4>a,.severity-scale-v4>a,.authority-grid>a,.landing-card-link{display:block;text-decoration:none;color:inherit}
+.proof-grid a:hover,.benefits>a:hover,.cases>a:hover,.report-metrics-v4>a:hover,.severity-scale-v4>a:hover,.authority-grid>a:hover,.landing-card-link:hover{border-color:#C8102E;box-shadow:0 14px 34px rgba(11,31,58,.12)}
+.report-metrics-v4>a{padding:24px;background:#FFFFFF;border:1px solid #D8DEE9;border-radius:18px}
+.report-metrics-v4>a span{color:#42506A}
+.report-metrics-v4>a strong{color:#1457A8}
+.severity-scale-v4>a{padding:20px;border-radius:16px;background:#FFFFFF;border:1px solid #D8DEE9}
+.severity-scale-v4>a span{color:#33415C}
+.perfil-foto{border:0!important;background:transparent!important;box-shadow:none!important}
+.perfil-foto-fallback{background:transparent!important}
+.perfil-foto-fallback span{box-shadow:none!important;filter:none!important;outline:0!important}
+.shield{filter:none!important;box-shadow:none!important;outline:0!important}
+.why-visual{border:0!important;box-shadow:none!important}
+
+.benefits>a,.authority-grid>a{padding:20px;background:#FFFFFF;border:1px solid #D8DEE9;border-radius:15px}
+.authority-grid>a{padding:24px;border-radius:18px}
+.proof-grid>a{padding:18px;background:#FFFFFF;border:1px solid #D8DEE9;border-radius:14px}
+.proof-grid>a b{display:block;color:#0B1F3A}
+.proof-grid>a span{color:#33415C}
+.perfil-lista a{display:grid;gap:6px;text-decoration:none;color:inherit}
+.perfil-lista a:hover b{color:#C8102E}
