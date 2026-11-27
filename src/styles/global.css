@@ -976,6 +976,8 @@ body{background:#FFFFFF;color:#0B1F3A}
 .guarantee{background:#0B1F3A;color:#FFFFFF;border-radius:6px}
 .contact{background:#F4F6F9}
 .contact-form{background:#FFFFFF;border:1px solid #D8DEE7;border-radius:6px}
+.section-cta{background:transparent;border:0;padding:10px 0}
+.section-cta span{color:#42506A}
 input,select,textarea{background:#FFFFFF;border:1px solid #B9C4D4;color:#0B1F3A;border-radius:4px}
 footer{background:#081831;color:#C9D6E8}
 .hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
