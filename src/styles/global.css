@@ -1148,3 +1148,15 @@ img,video{max-width:100%}
 .pricing-grid [data-reveal]:nth-child(2),.benefits [data-reveal]:nth-child(2){transition-delay:.08s}
 .pricing-grid [data-reveal]:nth-child(3),.benefits [data-reveal]:nth-child(3){transition-delay:.16s}
 .pricing-grid [data-reveal]:nth-child(4),.benefits [data-reveal]:nth-child(4){transition-delay:.24s}
+
+/* Sección entregable equilibrada 2026-11-27 */
+.service-trust-links{background:#F4F7FB!important;padding:64px 0}
+.service-trust-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.service-trust-grid h2{color:#0B1F3A;font-size:clamp(2rem,3.6vw,3rem)}
+.service-trust-grid p{color:#42506A;max-width:560px}
+.service-trust-actions{display:grid;gap:12px;padding:26px;background:#FFFFFF;border:1px solid #E3E9F2;border-radius:16px;box-shadow:0 14px 34px rgba(11,31,58,.08)}
+.service-trust-actions .button{justify-content:center;text-align:center}
+.service-proof-section{background:#F4F7FB!important}
+.service-proof-actions{display:grid;gap:12px;padding:26px;background:#FFFFFF;border:1px solid #E3E9F2;border-radius:16px;box-shadow:0 14px 34px rgba(11,31,58,.08)}
+.service-proof-actions .button{justify-content:center;text-align:center}
+@media(max-width:820px){.service-trust-grid{grid-template-columns:1fr}}
