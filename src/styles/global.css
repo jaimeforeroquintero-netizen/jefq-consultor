@@ -1174,3 +1174,9 @@ img,video{max-width:100%}
 .why-visual .orbit{display:none!important}
 .why-visual .shield{border:0!important;background:transparent!important}
 .why-visual .shield img{width:230px!important;height:230px!important}
+
+/* Logo sin anillos en Quién soy y servicios 2026-11-27 */
+.perfil-foto-fallback:before,.perfil-foto-fallback:after{display:none!important}
+.perfil-foto-fallback span img{width:150px!important;height:150px!important}
+.orbit-node,.service-orbit .orbit{display:none!important}
+.orbit-core img{width:96px!important;height:96px!important}
