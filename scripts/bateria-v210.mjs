@@ -98,7 +98,7 @@ async function correrCaso(c) {
     try {
       const res = await fetch(URL_CHAT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', content: c.q }] }) });
       status = res.status;
-      if (status === 429) { await new Promise((r) => setTimeout(r, 20000)); continue; }
+      if (status === 429 || status === 503) { await new Promise((r) => setTimeout(r, 20000)); continue; }
       const d = await res.json().catch(() => ({}));
       reply = d.reply || '';
     } catch { await new Promise((r) => setTimeout(r, 5000)); }

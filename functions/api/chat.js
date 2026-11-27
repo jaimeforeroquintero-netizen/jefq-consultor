@@ -229,6 +229,10 @@ async function procesarIntento(env, modelo, presupuesto, snapshot, history, mens
         const respuesta = respuestaDesdeAfirmacion(sinModelo.afirmacion, snapshot.registro);
         if (respuesta.ok) return { reply: respuesta.texto, ruta: 'sin-modelo', etiqueta: 1, confianza: 1, puerta_ok: true, juez_ok: false, motivo: 'lista-blanca-tras-error' };
       }
+      // Sin clasificador, el selector determinista aún resuelve precio,
+      // cobertura y aclaraciones sin modelo.
+      const precio = await rutaPrecioServicio(snapshot, mensajeActual);
+      if (precio) return { ...precio, etiqueta: null, confianza: null };
     }
     return { reply: RESPUESTA_CERRADA, ruta: 'clasificacion', etiqueta: null, confianza: null, puerta_ok: false, juez_ok: false, motivo: clas.motivo };
   }
