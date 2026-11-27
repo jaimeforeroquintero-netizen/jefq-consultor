@@ -333,6 +333,23 @@ async function handler(context) {
     if (mejor && (sinIA || ((mejor.score ?? 0) >= 0.45 && margen >= 0.03)) && solape >= 0.34 && extractivoSeguro(mejor.texto, snapshot.registro)) {
       resultado = { reply: `${mejor.texto} (Fuente: ${mejor.titulo})`, ruta: 'general', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: true, juez_ok: false, motivo: 'extractivo-final' };
     }
+    if (resultado.reply === RESPUESTA_CERRADA && !sinIA) {
+      // Si la búsqueda semántica no supera las guardas, el corpus local
+      // léxico tiene la última palabra con el mismo solape mínimo.
+      const locales = buscarCorpusLocal(mensajeActual, 4);
+      const mejorLocal = locales[0];
+      if (mejorLocal) {
+        const evLocal = new Set(`${mejorLocal.titulo} ${mejorLocal.texto}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/));
+        let hitsLocal = 0;
+        for (const t of tokensQ) {
+          for (const et of evLocal) { let cp = 0; while (cp < t.length && cp < et.length && t[cp] === et[cp]) cp++; if (et === t || (cp >= 4) || (cp >= 3 && Math.abs(t.length - et.length) <= 3 && t.length >= 5 && et.length >= 5)) { hitsLocal++; break; } }
+        }
+        const solapeLocal = tokensQ.size ? hitsLocal / tokensQ.size : 0;
+        if (solapeLocal >= 0.34 && extractivoSeguro(mejorLocal.texto, snapshot.registro)) {
+          resultado = { reply: `${mejorLocal.texto} (Fuente: ${mejorLocal.titulo})`, ruta: 'general', etiqueta: resultado.etiqueta ?? null, confianza: resultado.confianza ?? null, puerta_ok: true, juez_ok: false, motivo: 'extractivo-final' };
+        }
+      }
+    }
   }
 
   // Linealización: si la época cambió antes del envío, se reprocesa una vez.
