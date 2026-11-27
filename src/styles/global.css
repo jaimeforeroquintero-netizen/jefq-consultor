@@ -1009,3 +1009,15 @@ footer{background:#081831;color:#C9D6E8}
 .hero .hero-copy>*:nth-child(3){animation-delay:.24s}
 .hero .hero-copy>*:nth-child(4){animation-delay:.36s}
 @keyframes heroEntra{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* Corrección carrusel de servicios + animaciones visibles */
+.carrusel-pista{align-items:stretch}
+.carrusel-pista .service-card{display:flex;flex-direction:column;gap:10px;padding:26px 24px;min-height:0}
+.carrusel-pista .service-card h3{grid-column:auto;margin:0}
+.carrusel-pista .service-card p{grid-column:auto;margin:0}
+.carrusel-pista .service-card .service-card-link{margin-top:auto}
+[data-reveal]{transform:translateY(28px)}
+.hero .hero-copy>*{animation:heroEntra 1s cubic-bezier(.22,.61,.36,1) both}
+@keyframes heroEntra{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.service-card,.trust-card,.plan-card{transition:transform .3s ease,box-shadow .3s ease,opacity .7s ease}
+.service-card:hover,.trust-card:hover{transform:translateY(-4px);box-shadow:0 10px 26px rgba(11,31,58,.12)}
