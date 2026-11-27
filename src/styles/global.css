@@ -979,3 +979,6 @@ body{background:#FFFFFF;color:#0B1F3A}
 input,select,textarea{background:#FFFFFF;border:1px solid #B9C4D4;color:#0B1F3A;border-radius:4px}
 footer{background:#081831;color:#C9D6E8}
 .hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+
+.hero h1 span{color:#7FC4E8;text-shadow:0 0 18px rgba(127,196,232,.45)}
+.hero-canvas{opacity:.95}
