@@ -17,16 +17,20 @@ const CANONICAL_STEPS = [
   ["04", "Entregar y acompañar", "Prioridades, remediación y seguimiento."],
 ];
 const { candidato = false, steps = CANONICAL_STEPS } = Astro.props;
+const HREFS = ["/valoracion", "/como-trabajamos", "/servicios/diagnostico-seguridad", "/informe-demostrativo"];
 ---
 
 <div class="process-diagram">
   {candidato && <p class="diagram-candidato">CANDIDATO — NO PUBLICADO</p>}
   <ol class="diagram-steps">
-    {steps.map(([n, t, d]) => (
+    {steps.map(([n, t, d], i) => (
       <li>
-        <span class="diagram-num font-datos" aria-hidden="true">{n}</span>
-        <h3>{t}</h3>
-        <p>{d}</p>
+        <a class="diagram-link" href={HREFS[i]}>
+          <span class="diagram-num font-datos" aria-hidden="true">{n}</span>
+          <h3>{t}</h3>
+          <p>{d}</p>
+          <span class="diagram-ver">Ver más →</span>
+        </a>
       </li>
     ))}
   </ol>
@@ -66,4 +70,8 @@ const { candidato = false, steps = CANONICAL_STEPS } = Astro.props;
 .timeline-phase{color:var(--emerald)}
 .diagram-candidato{color:var(--bone);background:var(--surface);border-color:var(--risk)}
 .timeline-seal{color:var(--gold);background:rgba(216,162,74,.12);border-color:var(--gold)}
+.diagram-link{display:block;text-decoration:none;color:inherit}
+.diagram-ver{display:inline-block;margin-top:10px;color:#C8102E;font-size:.85rem;font-weight:800}
+.diagram-link:hover h3{color:#C8102E}
+.diagram-link:hover .diagram-ver{text-decoration:underline}
 </style>
