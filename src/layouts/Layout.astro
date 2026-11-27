@@ -177,6 +177,13 @@ const schema = {
     if(a) a.addEventListener('click', function(){ p.scrollBy({left:-360,behavior:'smooth'}); });
     if(d) d.addEventListener('click', function(){ p.scrollBy({left:360,behavior:'smooth'}); });
   }
+  // Movimientos: progreso de desplazamiento, parallax suave, pasos automáticos y contadores
+  var barra=document.createElement('div'); barra.id='progreso-scroll'; document.body.appendChild(barra);
+  var par=document.querySelectorAll('.visual,.why-visual');
+  function alDesplazar(){ var max=document.documentElement.scrollHeight-window.innerHeight; var f=max>0?window.scrollY/max:0; barra.style.transform='scaleX('+f+')'; par.forEach(function(el){ var r=el.getBoundingClientRect(); var d=(r.top+r.height/2-window.innerHeight/2)*-.03; d=Math.max(-14,Math.min(14,d)); el.style.transform='translateY('+d+'px)'; }); }
+  window.addEventListener('scroll', function(){ requestAnimationFrame(alDesplazar); }, {passive:true}); alDesplazar();
+  var pasos=document.querySelectorAll('.visual-steps div'); if(pasos.length){ var pi=0; pasos[0].classList.add('paso-activo'); setInterval(function(){ pasos[pi].classList.remove('paso-activo'); pi=(pi+1)%pasos.length; pasos[pi].classList.add('paso-activo'); },2400); }
+  var contadores=document.querySelectorAll('[data-count]'); if(contadores.length && 'IntersectionObserver' in window){ var io2=new IntersectionObserver(function(es){ es.forEach(function(e){ if(!e.isIntersecting) return; io2.unobserve(e.target); var fin=parseInt(e.target.getAttribute('data-count'),10)||0, ini=performance.now(); function paso(t){ var k=Math.min(1,(t-ini)/1100); e.target.textContent=Math.round(fin*k); if(k<1) requestAnimationFrame(paso); } requestAnimationFrame(paso); }); },{threshold:.4}); contadores.forEach(function(c){ io2.observe(c); }); }
 })();
 </script>
 </body>

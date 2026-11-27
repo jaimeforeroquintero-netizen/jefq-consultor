@@ -20,9 +20,9 @@ import HallazgoAnatomia from "../components/HallazgoAnatomia.astro";
       <div class="container">
         <div class="report-metrics-v4">
           <a href="#conclusion-ejecutiva"><span>Nivel general</span><strong>{NIVEL_GENERAL_DEMO}</strong></a>
-          <a href="#hallazgos"><span>Hallazgos</span><strong>{findings.length}</strong></a>
-          <a href="#hallazgos"><span>Prioridad alta</span><strong>{counts.high}</strong></a>
-          <a href="#ruta-mejora"><span>Acciones</span><strong>{totalActions}</strong></a>
+          <a href="#hallazgos"><span>Hallazgos</span><strong data-count={findings.length}>0</strong></a>
+          <a href="#hallazgos"><span>Prioridad alta</span><strong data-count={counts.high}>0</strong></a>
+          <a href="#ruta-mejora"><span>Acciones</span><strong data-count={totalActions}>0</strong></a>
         </div>
 
         <article class="executive-conclusion-v4" id="conclusion-ejecutiva">

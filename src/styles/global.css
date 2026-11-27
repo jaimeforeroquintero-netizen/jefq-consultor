@@ -1135,3 +1135,16 @@ body{color:#1D2A44}
 .service-card,.price-card,.case,.benefit{padding:26px}
 .button{min-height:48px}
 img,video{max-width:100%}
+
+/* Movimientos completos 2026-11-27 */
+#progreso-scroll{position:fixed;top:0;left:0;width:100%;height:3px;background:#C8102E;transform:scaleX(0);transform-origin:left;z-index:1200}
+.visual,.why-visual{will-change:transform}
+.visual-steps div{transition:background .5s ease,border-color .5s ease,transform .5s ease}
+.visual-steps div.paso-activo{background:rgba(200,16,46,.22);border-color:rgba(255,255,255,.45);transform:translateY(-3px)}
+.service-card,.benefits>a,.benefits>article,.case,.trust-card,.price-card{transition:background .45s ease,transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+.service-card:hover,.benefits>a:hover,.case:hover,.trust-card:hover{background:#EEF3FA}
+[data-reveal]{transform:translateY(26px) scale(.985);transform-origin:bottom}
+[data-reveal].visible{transform:none}
+.pricing-grid [data-reveal]:nth-child(2),.benefits [data-reveal]:nth-child(2){transition-delay:.08s}
+.pricing-grid [data-reveal]:nth-child(3),.benefits [data-reveal]:nth-child(3){transition-delay:.16s}
+.pricing-grid [data-reveal]:nth-child(4),.benefits [data-reveal]:nth-child(4){transition-delay:.24s}
