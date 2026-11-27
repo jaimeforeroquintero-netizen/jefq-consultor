@@ -26,7 +26,7 @@ candidata A (scripts/generar-og-candidata-a.py, public/og-image-candidata-a.png)
    Consultor presta atención remota en Bogotá y toda Colombia"
    (src/data/faq.ts:24); la home lo afirma en la tarjeta "Nacional"
    ("Atención remota en Colombia", src/pages/index.astro:26); y es un
-   servicio con precio S1 ("Consultoría remota desde $130.500/h",
+   servicio con precio S1 ("Consultoría remota desde $123.975/h",
    src/data/precios.ts:70-73). Solo se eliminó la afirmación no verificada
    ("24/7"); nada más cambió (misma "J", mismo titular, mismos colores,
    misma banda ámbar).
