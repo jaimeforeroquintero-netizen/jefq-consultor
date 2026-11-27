@@ -169,8 +169,19 @@ import Layout from "../layouts/Layout.astro";
       const assets = document.getElementById('assets').value;
       const need = document.getElementById('need').value;
       const context = document.getElementById('context').value.trim();
-      const recommendation = details[need];
+      let key = need;
+      const ctx = context.toLowerCase();
+      if (/per[ií]metro|desactualiz|parche|actualiz|firewall|red\b/.test(ctx)) key = 'hardening';
+      else if (/ataque|incidente|ransomware|virus|hack|robo|filtraci/.test(ctx)) key = 'acompanamiento';
+      else if (/inteligencia artificial|chatgpt|gemini|copilot|\bia\b/.test(ctx)) key = 'ia';
+      else if (/simulacro|phishing|ejercicio/.test(ctx)) key = 'simulacro';
+      else if (/informe|auditor|document/.test(ctx)) key = 'informe';
+      else if (/prueba|pentest|vulnerab/.test(ctx)) key = 'pruebas';
+      const recommendation = details[key];
       if (!org || !assets || !recommendation) return;
+      const activosGrandes = /21|51|101|más de|mas de/.test(assets);
+      const planFinal = activosGrandes && recommendation.plan === 'Diagnóstico Esencial' ? 'Evaluación PYME' : recommendation.plan;
+      const porque = context ? `Según su contexto («${context}»), el punto de partida es ${recommendation.service}.` : `Según su necesidad principal, el punto de partida es ${recommendation.service}.`;
 
       const message = [
         'Hola, Jaime. Solicito una valoración inicial.',
@@ -178,13 +189,14 @@ import Layout from "../layouts/Layout.astro";
         `Activos aproximados: ${assets}`,
         `Necesidad: ${recommendation.service}`,
         context ? `Contexto general: ${context}` : '',
-        `Recomendación mostrada: ${recommendation.plan}`
+        `Recomendación mostrada: ${planFinal}`
       ].filter(Boolean).join('\n');
 
       result.innerHTML = `
         <p class="smart-kicker">PUNTO DE PARTIDA RECOMENDADO</p>
-        <h2>${recommendation.plan}</h2>
+        <h2>${planFinal}</h2>
         <p><strong>${recommendation.service}</strong></p>
+        <p>${porque}</p>
         <p>${recommendation.reason}</p>
         <div class="result-facts">
           <span>Alcance: se confirma antes de intervenir</span>
