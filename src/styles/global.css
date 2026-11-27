@@ -1065,3 +1065,21 @@ body{color:#1D2A44}
 .shield{width:190px;height:218px;background:linear-gradient(160deg,#E11D3F 0%,#C8102E 55%,#9E0C24 100%)!important;color:#FFFFFF!important;clip-path:polygon(50% 0,100% 18%,91% 78%,50% 100%,9% 78%,0 18%)!important;border-radius:0!important;font-family:var(--font-serif);font-size:4.8rem;filter:drop-shadow(0 24px 38px rgba(0,0,0,.35))!important}
 .shield span{display:none!important}
 @media(max-width:900px){.why-visual{min-height:340px}.why-visual .o2{width:330px;height:330px}.shield{width:150px;height:172px;font-size:3.8rem}}
+
+/* Ajuste 2026-11-27: sin panel azul; solo contorno circular y logo mejorado en paneles aplicables */
+.why-visual{background:transparent!important;box-shadow:none!important;border:0!important;border-radius:0!important;min-height:420px}
+.why-visual:before{display:none!important}
+.why-visual .orbit{display:block!important}
+.why-visual .o1{border:1.5px solid rgba(11,31,58,.55)!important}
+.why-visual .o2{border:1.5px dashed rgba(200,16,46,.45)!important}
+.why-visual .o1:before{background:#C8102E;box-shadow:0 0 0 5px rgba(200,16,46,.14)}
+.why-visual .o2:before{background:#0B1F3A;box-shadow:0 0 0 5px rgba(11,31,58,.10)}
+.shield,.perfil-foto-fallback span{background:linear-gradient(160deg,#F0445E 0%,#C8102E 52%,#8F0B21 100%)!important;color:#FFFFFF!important;clip-path:polygon(50% 0,100% 18%,91% 78%,50% 100%,9% 78%,0 18%)!important;border:0!important;box-shadow:none!important;outline:0!important;text-shadow:0 2px 10px rgba(0,0,0,.22)}
+.shield{filter:drop-shadow(0 18px 30px rgba(200,16,46,.22))!important}
+.perfil-foto-fallback{background:transparent!important}
+.perfil-foto-fallback:before,.perfil-foto-fallback:after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.perfil-foto-fallback:before{width:190px;height:190px;border:1.5px solid rgba(11,31,58,.55)}
+.perfil-foto-fallback:after{width:238px;height:238px;border:1.5px dashed rgba(200,16,46,.45)}
+.perfil-foto-fallback span{position:relative;z-index:1;width:104px;height:118px;font-family:var(--font-serif);font-size:2rem;filter:drop-shadow(0 14px 24px rgba(200,16,46,.20))!important}
+.orbit-core{background:linear-gradient(160deg,#F0445E 0%,#C8102E 52%,#8F0B21 100%)!important;color:#FFFFFF!important;text-shadow:0 2px 10px rgba(0,0,0,.22)}
+@media(max-width:900px){.why-visual{min-height:330px}}
