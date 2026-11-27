@@ -1169,3 +1169,8 @@ img,video{max-width:100%}
 .amenaza-card li{color:#D7E2F2}
 .amenaza-card li:before{content:"✓";margin-right:9px;color:#C8102E;font-weight:900}
 @media(max-width:820px){.amenaza-grid{grid-template-columns:1fr}}
+
+/* Logo sin anillos en Por qué JEFQ 2026-11-27 */
+.why-visual .orbit{display:none!important}
+.why-visual .shield{border:0!important;background:transparent!important}
+.why-visual .shield img{width:230px!important;height:230px!important}
