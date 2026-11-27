@@ -5,7 +5,7 @@ import { withSentry } from '../../_sentry.js';
 
 const CATALOGO = {
   esencial: { nombre: 'Diagnóstico Esencial · JEFQ Consultor', centavos: 40042500 },
-  PYME: { nombre: 'Evaluación PYME · JEFQ Consultor', centavos: 91247500 },
+  pyme: { nombre: 'Evaluación PYME · JEFQ Consultor', centavos: 91247500 },
   integral: { nombre: 'Seguridad Integral · JEFQ Consultor', centavos: 183397500 },
 };
 
