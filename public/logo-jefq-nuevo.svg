@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 110" role="img" aria-label="JEFQ Consultor">
+  <!-- Logotipo JEFQ: símbolo monograma no literal + nombre legible. -->
+  <g transform="translate(4 2) scale(0.66)">
+    <circle cx="80" cy="78" r="58" fill="none" stroke="#0B1F3A" stroke-width="10"/>
+    <path d="M117 117 L139 139" fill="none" stroke="#C8102E" stroke-width="10" stroke-linecap="round"/>
+    <path d="M70 42 V104 C70 118 56 124 45 114" fill="none" stroke="#0B1F3A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M70 42 H106" fill="none" stroke="#0B1F3A" stroke-width="12" stroke-linecap="round"/>
+    <path d="M70 73 H98" fill="none" stroke="#C8102E" stroke-width="12" stroke-linecap="round"/>
+    <path d="M70 104 H102" fill="none" stroke="#0B1F3A" stroke-width="12" stroke-linecap="round"/>
+  </g>
+  <text x="124" y="62" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="800" fill="#0B1F3A" letter-spacing="1">JEFQ</text>
+  <text x="126" y="92" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#C8102E" letter-spacing="6">CONSULTOR</text>
+</svg>

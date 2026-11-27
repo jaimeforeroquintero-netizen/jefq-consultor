@@ -1083,3 +1083,12 @@ body{color:#1D2A44}
 .perfil-foto-fallback span{position:relative;z-index:1;width:104px;height:118px;font-family:var(--font-serif);font-size:2rem;filter:drop-shadow(0 14px 24px rgba(200,16,46,.20))!important}
 .orbit-core{background:linear-gradient(160deg,#F0445E 0%,#C8102E 52%,#8F0B21 100%)!important;color:#FFFFFF!important;text-shadow:0 2px 10px rgba(0,0,0,.22)}
 @media(max-width:900px){.why-visual{min-height:330px}}
+
+/* Logo JEFQ no literal 2026-11-27 */
+.shield{background:transparent!important;clip-path:none!important;filter:none!important;width:190px;height:190px}
+.shield img{width:170px;height:170px;display:block}
+.perfil-foto-fallback span{background:transparent!important;clip-path:none!important;width:128px;height:128px;filter:none!important}
+.perfil-foto-fallback span img{width:120px;height:120px;display:block}
+.orbit-core{background:transparent!important}
+.orbit-core img{width:72px;height:72px;display:block}
+.brand img{height:48px;width:auto}
