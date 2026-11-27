@@ -1052,3 +1052,16 @@ body{color:#1D2A44}
 .proof-grid>a span{color:#33415C}
 .perfil-lista a{display:grid;gap:6px;text-decoration:none;color:inherit}
 .perfil-lista a:hover b{color:#C8102E}
+
+/* Mejora visual 2026-11-27: emblema Por qué JEFQ compuesto, sin bloque suelto */
+.why-visual{background:radial-gradient(circle at 50% 44%,rgba(200,16,46,.28),transparent 46%),radial-gradient(circle at 82% 12%,rgba(255,255,255,.14),transparent 34%),linear-gradient(150deg,#0B1F3A 0%,#10294D 58%,#0B1F3A 100%)!important;border:0!important;border-radius:24px;box-shadow:0 24px 60px rgba(11,31,58,.18)!important;min-height:460px}
+.why-visual:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(circle at 50% 48%,#000 30%,transparent 78%)}
+.why-visual .orbit{display:block!important;border-color:rgba(255,255,255,.22)}
+.why-visual .o1{width:300px;height:300px}
+.why-visual .o2{width:420px;height:420px;border-color:rgba(255,255,255,.14)}
+.why-visual .o1:before,.why-visual .o2:before{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:#C8102E;box-shadow:0 0 0 5px rgba(200,16,46,.18)}
+.why-visual .o1:before{top:12%;right:8%}
+.why-visual .o2:before{bottom:16%;left:6%;background:#FFFFFF;box-shadow:0 0 0 5px rgba(255,255,255,.14)}
+.shield{width:190px;height:218px;background:linear-gradient(160deg,#E11D3F 0%,#C8102E 55%,#9E0C24 100%)!important;color:#FFFFFF!important;clip-path:polygon(50% 0,100% 18%,91% 78%,50% 100%,9% 78%,0 18%)!important;border-radius:0!important;font-family:var(--font-serif);font-size:4.8rem;filter:drop-shadow(0 24px 38px rgba(0,0,0,.35))!important}
+.shield span{display:none!important}
+@media(max-width:900px){.why-visual{min-height:340px}.why-visual .o2{width:330px;height:330px}.shield{width:150px;height:172px;font-size:3.8rem}}
