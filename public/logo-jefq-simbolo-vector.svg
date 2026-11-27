@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="JEFQ Consultor">
+  <!-- Concepto Vector con GPT Plus: firma geométrica ascendente; J en el retorno, E/F en niveles, Q en la curva con diagonal roja. -->
+  <g fill="none" stroke="#0B1F3A" stroke-width="13" stroke-linecap="square" stroke-linejoin="round">
+    <path d="M40 54 H115 C147 54 166 73 166 104 C166 135 146 154 115 154 H103"/>
+    <path d="M40 86 H115"/>
+    <path d="M40 118 H89 V143 Q89 167 65 167 Q41 167 41 143"/>
+  </g>
+  <path d="M124 119 L166 161" fill="none" stroke="#C8102E" stroke-width="13" stroke-linecap="square"/>
+</svg>
