@@ -12,8 +12,8 @@ binding = "AI"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "jefq-asistente-prueba"
-database_id = "f1604c89-7c72-41a7-8119-7a34fb13108f"
+database_name = "jefq-asistente"
+database_id = "aa839a21-7d96-4c1a-855b-c67b716d8116"
 
 [[vectorize]]
 binding = "VECTORIZE"
