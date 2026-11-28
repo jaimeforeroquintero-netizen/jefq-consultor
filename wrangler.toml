@@ -17,7 +17,7 @@ database_id = "aa839a21-7d96-4c1a-855b-c67b716d8116"
 
 [[vectorize]]
 binding = "VECTORIZE"
-index_name = "jefq-sitio-prueba"
+index_name = "jefq-sitio"
 
 # Asistente V2.10: configurar en el despliegue de prueba antes de publicar.
 # D1 guarda el registro canónico y la auditoría técnica; Vectorize guarda el
